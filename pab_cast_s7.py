@@ -122,7 +122,7 @@ class CreatureCastMixin(CastMixin):
     def _resolve_creature_s7(self,physical_uid,name,devour):
         if self.stack_cards.get(physical_uid)!=name:
             raise BridgeError('S7: resolving a creature spell that is not on the stack ledger')
-        self.zones._require_in_zone(physical_uid,'hand')
+        self.zones._require_in_zone(physical_uid,'stack' if getattr(self,'cp06_stack_enabled',False) else 'hand')
         spec=CREATURES[name]
         devoured=[]
         for u in devour:                                               # CR 702.82a: chosen as it enters
