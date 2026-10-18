@@ -21,12 +21,12 @@ BASELINE_SHA='c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381'
 R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
                'PABTRV3_CARD_COVERAGE.json','README.md',
                'PHASE8_R02_FILE_MANIFEST.json','R02_PATCH_NOTES.md','R01_PATCH_NOTES.md',
-               'pab_kernel.py','pab_r01_pest_rescuer.py','pab_r47_r48_sba.py','R47_R48_PATCH_NOTES.md','PHASE_CLOCK_DEPENDENCY_MAP.md','UPKEEP_AUDIT_NOTES.md','pab_turn_clock.py','R49_S1_PATCH_NOTES.md','pab_clock_s2.py','S2_PATCH_NOTES.md','pab_clock_s3.py','S3_PATCH_NOTES.md','pab_clock_s4.py','S4_PATCH_NOTES.md','pab_turn_loop.py','S5_PATCH_NOTES.md','HARD_STOP_2026-10-18.md','00_HANDOFF_2026-10-18.md','C41_C47_EXECUTION_NOTES.md','C48_C64_EXECUTION_NOTES.md','C65_C77_EXECUTION_NOTES.md','C78_C94_EXECUTION_NOTES.md','CONTRACTS_C41_C94_STATUS.md','pab_cast_s6.py','S6_PATCH_NOTES.md','pab_r52_village_rites.py','R52_R53_PATCH_NOTES.md','pab_cast_s7.py','S7_PATCH_NOTES.md','pab_opponents_s8.py','S8_PATCH_NOTES.md'}
+               'pab_kernel.py','pab_r01_pest_rescuer.py','pab_r47_r48_sba.py','R47_R48_PATCH_NOTES.md','PHASE_CLOCK_DEPENDENCY_MAP.md','UPKEEP_AUDIT_NOTES.md','pab_turn_clock.py','R49_S1_PATCH_NOTES.md','pab_clock_s2.py','S2_PATCH_NOTES.md','pab_clock_s3.py','S3_PATCH_NOTES.md','pab_clock_s4.py','S4_PATCH_NOTES.md','pab_turn_loop.py','S5_PATCH_NOTES.md','HARD_STOP_2026-10-18.md','00_HANDOFF_2026-10-18.md','C41_C47_EXECUTION_NOTES.md','C48_C64_EXECUTION_NOTES.md','C65_C77_EXECUTION_NOTES.md','C78_C94_EXECUTION_NOTES.md','CONTRACTS_C41_C94_STATUS.md','pab_cast_s6.py','S6_PATCH_NOTES.md','pab_r52_village_rites.py','R52_R53_PATCH_NOTES.md','pab_cast_s7.py','S7_PATCH_NOTES.md','pab_opponents_s8.py','S8_PATCH_NOTES.md','pab_lands_s9.py','S9_PATCH_NOTES.md','s9_tests/__init__.py','s9_tests/test_v08_mana_tokens_s9.py'}
 # Outputs the runner itself produces. Never verified as inputs.
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=622   # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=640   # sum of per-file counts asserted below
 
 def sha(path):
     path=Path(path)
@@ -122,6 +122,7 @@ def preflight(root=ROOT):
     assert n('test_cast_s6.py')==33, 'test_cast_s6.py count'
     assert n('test_cast_s7.py')==71, 'test_cast_s7.py count'
     assert n('test_opponents_s8.py')==21, 'test_opponents_s8.py count'
+    assert n('test_lands_s9.py')==18, 'test_lands_s9.py count'
     assert n('test_r52_village_rites.py')==4, 'test_r52_village_rites.py count'
     assert n('test_integrated_turn_loop_s5.py')==7, 'test_integrated_turn_loop_s5.py count'
     assert n('test_priority_s3.py')==11, 'test_priority_s3.py count'
@@ -181,8 +182,9 @@ def run_suites(root=ROOT,J=None):
     r01_legacy_ok=(r01_legacy_failed==set(pab_kernel.SUPERSEDED_FROZEN_CONTRACTS)
                    and r01_legacy_passed==149-len(pab_kernel.SUPERSEDED_FROZEN_CONTRACTS))
     k7,e7,_=_replay(root,'test_v07_zone_bridge.py','PhysicalZoneGame',pab_kernel.PhysicalZoneGame)
-    k8,e8,_=_replay(root,'test_v08_mana_tokens.py','PhysicalZoneGame',pab_kernel.PhysicalZoneGame)
-    kernel_bridge_ok=(k7==52 and k8==54 and e7 is None and e8 is None)
+    k8,e8,failed8=_replay(root,'test_v08_mana_tokens.py','PhysicalZoneGame',pab_kernel.PhysicalZoneGame)
+    sup8=set(pab_kernel.SUPERSEDED_V08_CONTRACTS)                       # S9: frozen 274/307 pinned fail-closed lands
+    kernel_bridge_ok=(k7==52 and k8==54-len(sup8) and failed8==sup8 and e7 is None)
     # Corrected full copy of the v0.5 fixture file (112/113 fixed) as a replay.
     spec=importlib.util.spec_from_file_location('r01_corrected_copy',root/'r01_tests'/'test_v05_fixture_cards_r01.py')
     mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
@@ -195,6 +197,12 @@ def run_suites(root=ROOT,J=None):
     log=io.StringIO(); rc52=unittest.TextTestRunner(stream=log).run(unittest.defaultTestLoader.loadTestsFromModule(mod))
     corrected52_passed=rc52.testsRun-len(rc52.errors)-len(rc52.failures)-len(rc52.skipped)
     corrected_ok=corrected_ok and rc52.wasSuccessful() and rc52.testsRun==25
+    # S9: corrected full copy of the v0.8 bridge file (274/307: Blooming Marsh and Overgrown Tomb playable) as a replay.
+    spec=importlib.util.spec_from_file_location('s9_corrected_copy',root/'s9_tests'/'test_v08_mana_tokens_s9.py')
+    mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+    log=io.StringIO(); rc9=unittest.TextTestRunner(stream=log).run(unittest.defaultTestLoader.loadTestsFromModule(mod))
+    corrected9_passed=rc9.testsRun-len(rc9.errors)-len(rc9.failures)-len(rc9.skipped)
+    corrected_ok=corrected_ok and rc9.wasSuccessful() and rc9.testsRun==54
 
     # Contract execution record: one entry per contract class in the contract
     # test modules (CONTRACT/STATUS/SUBSTITUTIONS attributes), with its own
@@ -258,6 +266,9 @@ def run_suites(root=ROOT,J=None):
      'kernel_v08_bridge_54_replay_passes':k8,
      'kernel_corrected_v05_copy_38_replay_passes':corrected_passed,
      'kernel_corrected_v04_copy_25_replay_passes':corrected52_passed,
+     'kernel_corrected_v08_copy_54_replay_passes':corrected9_passed,
+     'kernel_v08_replay_failures':sorted(failed8),
+     'superseded_v08_fixtures':pab_kernel.SUPERSEDED_V08_CONTRACTS,
      'frozen_engines_modified':False,
      'contracts_executed':contracts,
      'r02_release_gate_tests_run':gate_run,
@@ -267,8 +278,9 @@ def run_suites(root=ROOT,J=None):
      'shared_game_zone_mana_symbols_in_v08':True,
      'event_tokens_mirrored_with_distinct_physical_uids_in_v08':True,
      'complete_physical_board':False,
-     'partial_land_mana_paths':['Forest','Swamp','Command Tower'],
-     'other_land_names_unimplemented':18,
+     'partial_land_mana_paths':['Forest','Swamp','Command Tower'],   # frozen zones path
+     'partial_land_mana_paths_s9_bridge':['Blooming Marsh','Deathcap Glade','Woodland Cemetery','Undergrowth Stadium','Overgrown Tomb','Underground Mortuary','Darkbore Pathway // Slitherbore Pathway','Llanowar Wastes','Nurturing Peatland'],
+     'other_land_names_unimplemented':9,
      'partial_demonic_tutor_resolution_only':True,
      'full_card_behavior_verified':0,
      'upstream_engine_edited':False,
@@ -292,7 +304,7 @@ def main():
              'r02_release_gate_tests_run','r02_release_gate_tests_passed',
              'kernel_version','kernel_legacy_149_replay_failures',
              'kernel_v07_bridge_52_replay_passes','kernel_v08_bridge_54_replay_passes',
-             'kernel_corrected_v05_copy_38_replay_passes','kernel_corrected_v04_copy_25_replay_passes')}
+             'kernel_corrected_v05_copy_38_replay_passes','kernel_corrected_v04_copy_25_replay_passes','kernel_corrected_v08_copy_54_replay_passes','kernel_v08_replay_failures')}
     summary['contracts']={k:f"{v['status']} {v['tests_passed']}/{v['tests_run']}"+(f" (+{v['expected_failures']} expected failures)" if v['expected_failures'] else '') for k,v in result['contracts_executed'].items()}
     print(json.dumps(summary,indent=2))
     if not ok: sys.exit(1)

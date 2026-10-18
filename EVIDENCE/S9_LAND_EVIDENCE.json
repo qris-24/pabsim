@@ -1,0 +1,125 @@
+{
+  "recorded": "2026-10-18",
+  "stage": "S9 (Task 3b)",
+  "source_kind": "same source as EVIDENCE/S7_CARD_EVIDENCE.json: the user-provided Scryfall bulk export oracle-cards-20261017210157.jsonl via the audit reference JSON; secondary-official; scryfall unreachable from the build environment on 2026-10-18, locators recorded, not visited",
+  "reference_file_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+  "selection_rule": "the nine nonbasic lands of the deck whose produced_mana includes both B and G",
+  "cards": {
+    "Blooming Marsh": {
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control two or fewer other lands.\n{T}: Add {B} or {G}.",
+      "produced_mana": [
+        "B",
+        "G"
+      ],
+      "oracle_id": "66fa2326-1b5d-41fb-b919-83bf9f383577",
+      "printing_id": "861caabb-0573-4e94-8b03-342f90465064",
+      "locator_not_fetched": "https://api.scryfall.com/cards/861caabb-0573-4e94-8b03-342f90465064"
+    },
+    "Deathcap Glade": {
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control two or more other lands.\n{T}: Add {B} or {G}.",
+      "produced_mana": [
+        "B",
+        "G"
+      ],
+      "oracle_id": "f6d24565-5b32-4eff-b2e0-6e2c25516ff0",
+      "printing_id": "78897104-80e1-4d8a-9958-145b40f679e8",
+      "locator_not_fetched": "https://api.scryfall.com/cards/78897104-80e1-4d8a-9958-145b40f679e8"
+    },
+    "Woodland Cemetery": {
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control a Swamp or a Forest.\n{T}: Add {B} or {G}.",
+      "produced_mana": [
+        "B",
+        "G"
+      ],
+      "oracle_id": "c9fe1383-1331-4a58-a45a-3320250221a9",
+      "printing_id": "4d6f6c96-f813-4864-b4e1-b2a0aa8be1e8",
+      "locator_not_fetched": "https://api.scryfall.com/cards/4d6f6c96-f813-4864-b4e1-b2a0aa8be1e8"
+    },
+    "Undergrowth Stadium": {
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you have two or more opponents.\n{T}: Add {B} or {G}.",
+      "produced_mana": [
+        "B",
+        "G"
+      ],
+      "oracle_id": "7c69f718-acc8-4851-8e5d-0cbaaa86192c",
+      "printing_id": "f25aa8aa-e2f7-4634-8a96-2082e76c6503",
+      "locator_not_fetched": "https://api.scryfall.com/cards/f25aa8aa-e2f7-4634-8a96-2082e76c6503"
+    },
+    "Overgrown Tomb": {
+      "type_line": "Land — Swamp Forest",
+      "oracle_text": "({T}: Add {B} or {G}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+      "produced_mana": [
+        "B",
+        "G"
+      ],
+      "oracle_id": "975ec9a3-6f20-4177-8211-82526e092538",
+      "printing_id": "ad7e18e2-c033-4b6c-86e8-d0e5cc824cfd",
+      "locator_not_fetched": "https://api.scryfall.com/cards/ad7e18e2-c033-4b6c-86e8-d0e5cc824cfd"
+    },
+    "Underground Mortuary": {
+      "type_line": "Land — Swamp Forest",
+      "oracle_text": "({T}: Add {B} or {G}.)\nThis land enters tapped.\nWhen this land enters, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",
+      "produced_mana": [
+        "B",
+        "G"
+      ],
+      "oracle_id": "840119bf-e60f-4ff7-9c9b-d420d09df545",
+      "printing_id": "f6ca59cd-8779-4a84-a54b-e863b79c61f0",
+      "locator_not_fetched": "https://api.scryfall.com/cards/f6ca59cd-8779-4a84-a54b-e863b79c61f0"
+    },
+    "Darkbore Pathway // Slitherbore Pathway": {
+      "type_line": "Land // Land",
+      "oracle_text": "",
+      "produced_mana": [
+        "B",
+        "G"
+      ],
+      "oracle_id": "868e6e68-4367-4073-a864-235d5961ae56",
+      "printing_id": "87a4e5fe-161f-42da-9ca2-67c8e8970e94",
+      "locator_not_fetched": "https://api.scryfall.com/cards/87a4e5fe-161f-42da-9ca2-67c8e8970e94",
+      "card_faces": [
+        {
+          "colors": [],
+          "mana_cost": "",
+          "name": "Darkbore Pathway",
+          "oracle_text": "{T}: Add {B}.",
+          "type_line": "Land"
+        },
+        {
+          "colors": [],
+          "mana_cost": "",
+          "name": "Slitherbore Pathway",
+          "oracle_text": "{T}: Add {G}.",
+          "type_line": "Land"
+        }
+      ]
+    },
+    "Llanowar Wastes": {
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{T}: Add {B} or {G}. This land deals 1 damage to you.",
+      "produced_mana": [
+        "B",
+        "C",
+        "G"
+      ],
+      "oracle_id": "32116127-cf96-4a1b-8896-a1ebc087b597",
+      "printing_id": "266316d3-3bbc-4283-aab8-69629855909f",
+      "locator_not_fetched": "https://api.scryfall.com/cards/266316d3-3bbc-4283-aab8-69629855909f"
+    },
+    "Nurturing Peatland": {
+      "type_line": "Land",
+      "oracle_text": "{T}, Pay 1 life: Add {B} or {G}.\n{1}, {T}, Sacrifice this land: Draw a card.",
+      "produced_mana": [
+        "B",
+        "G"
+      ],
+      "oracle_id": "8ed932ff-986c-4592-ad70-53b3fac80d69",
+      "printing_id": "2744ac83-a79f-4042-8720-688b5adda382",
+      "locator_not_fetched": "https://api.scryfall.com/cards/2744ac83-a79f-4042-8720-688b5adda382"
+    }
+  }
+}

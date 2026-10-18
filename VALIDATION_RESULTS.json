@@ -367,62 +367,62 @@
       "unexpected_successes": 0
     },
     "C65": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R35"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Blooming Marsh / Deathcap Glade conditional ETB not modeled; probe asserts fail-closed only"
+        "S9 (2026-10-18) executes the contract: other-land counts 1, 2, 3 for both lands; the boundary-2 comparison; a nontoken land entering earlier in the turn is the pre-state (fixture land-drop reset)"
       ],
       "tests_passed": 1,
       "tests_run": 1,
       "unexpected_successes": 0
     },
     "C66": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R35"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Undergrowth Stadium opponent-count ETB not modeled (no opponent count state); probe asserts fail-closed only"
+        "S9 + S8 execute the contract: the opponent count is the number of seats still in the game (seats 1-3 minus those that left at 0 life), never an assumed pod size"
       ],
       "tests_passed": 1,
       "tests_run": 1,
       "unexpected_successes": 0
     },
     "C67": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R35",
         "R38"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Overgrown Tomb life payment and Underground Mortuary surveil not modeled; probe asserts fail-closed only. The Forest control from the contract IS executed."
+        "S9 executes the contract: Tomb pay 2 life -> untapped (pay_life trace names the cause), no payment -> tapped; Mortuary always tapped and surveils 1 (top card traced, kept or milled by the pre-committed choice). Forest control retained."
       ],
       "tests_passed": 2,
       "tests_run": 2,
       "unexpected_successes": 0
     },
     "C68": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R35",
         "R15"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Modal double-faced Pathway face selection not modeled; probe asserts fail-closed only"
+        "S9 executes the contract: one reset game per face; the selected face is recorded on the permanent and fixes the only available colour; the other colour is refused. The permanent keeps the full card name (bridge identity rule), documented in S9_PATCH_NOTES.md"
       ],
       "tests_passed": 1,
       "tests_run": 1,
@@ -491,15 +491,15 @@
       "unexpected_successes": 0
     },
     "C73": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R38"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Llanowar Wastes damage and Nurturing Peatland life payment not modeled; probe asserts fail-closed only"
+        "S9 executes the contract: Wastes {C} no damage; Wastes {B} one damage (traced as damage, applied as life loss, CR 120.3e; no prevention modeled); Peatland {B} pays 1 life (pay_life trace). No gain event in any case."
       ],
       "tests_passed": 1,
       "tests_run": 1,
@@ -906,6 +906,7 @@
   "full_card_behavior_verified": 0,
   "kernel_corrected_v04_copy_25_replay_passes": 25,
   "kernel_corrected_v05_copy_38_replay_passes": 38,
+  "kernel_corrected_v08_copy_54_replay_passes": 54,
   "kernel_legacy_149_replay_failures": [
     "test_112_teacher_pest_blocks_rescuer_at_upkeep_start",
     "test_113_teacher_pest_entered_before_rescuer_trigger_resolves",
@@ -914,8 +915,12 @@
   "kernel_legacy_149_replay_passes": 146,
   "kernel_legacy_failures_exactly_superseded_set": true,
   "kernel_v07_bridge_52_replay_passes": 52,
-  "kernel_v08_bridge_54_replay_passes": 54,
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8",
+  "kernel_v08_bridge_54_replay_passes": 52,
+  "kernel_v08_replay_failures": [
+    "test_274_unsupported_land_fails_closed",
+    "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
+  ],
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9",
   "land_source_verified": false,
   "lands": 34,
   "lesson_sideboard": 1,
@@ -927,12 +932,23 @@
   "nonlands": 65,
   "old_compiler_contracts_failing": 15,
   "old_compiler_contracts_passing": 10,
-  "other_land_names_unimplemented": 18,
+  "other_land_names_unimplemented": 9,
   "partial_demonic_tutor_resolution_only": true,
   "partial_land_mana_paths": [
     "Forest",
     "Swamp",
     "Command Tower"
+  ],
+  "partial_land_mana_paths_s9_bridge": [
+    "Blooming Marsh",
+    "Deathcap Glade",
+    "Woodland Cemetery",
+    "Undergrowth Stadium",
+    "Overgrown Tomb",
+    "Underground Mortuary",
+    "Darkbore Pathway // Slitherbore Pathway",
+    "Llanowar Wastes",
+    "Nurturing Peatland"
   ],
   "phase8_previous_bridge_contract_passes": 52,
   "phase8_previous_bridge_contract_replays": 52,
@@ -952,7 +968,8 @@
     "R52",
     "R53",
     "S7",
-    "S8"
+    "S8",
+    "S9"
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
@@ -970,8 +987,12 @@
     "test_113_teacher_pest_entered_before_rescuer_trigger_resolves",
     "test_91_village_rejects_mana_shortage_before_sac"
   ],
-  "tests_passed": 622,
-  "tests_run": 622,
+  "superseded_v08_fixtures": [
+    "test_274_unsupported_land_fails_closed",
+    "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
+  ],
+  "tests_passed": 640,
+  "tests_run": 640,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

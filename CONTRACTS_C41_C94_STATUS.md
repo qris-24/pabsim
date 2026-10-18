@@ -35,15 +35,15 @@ Kernel v0.8+R02+R01+R47+R48. Reference fixtures: 420. Statuses from the live tes
 | C62 | R33 | BLOCKED_UNSUPPORTED | 1 | 0 |
 | C63 | R33,R01 | EXECUTED_WITH_SUBSTITUTION | 3 | 0 |
 | C64 | R34 | EXECUTED_WITH_SUBSTITUTION | 2 | 0 |
-| C65 | R35 | BLOCKED_UNSUPPORTED | 1 | 0 |
-| C66 | R35 | BLOCKED_UNSUPPORTED | 1 | 0 |
-| C67 | R35,R38 | BLOCKED_UNSUPPORTED | 2 | 0 |
-| C68 | R35,R15 | BLOCKED_UNSUPPORTED | 1 | 0 |
+| C65 | R35 | EXECUTED (S9) | 1 | 1 |
+| C66 | R35 | EXECUTED (S9) | 1 | 1 |
+| C67 | R35,R38 | EXECUTED (S9) | 2 | 2 |
+| C68 | R35,R15 | EXECUTED (S9) | 1 | 1 |
 | C69 | R36 | PARTIAL_EXECUTED | 4 | 0 |
 | C70 | R36,R37,R38 | BLOCKED_UNSUPPORTED | 1 | 0 |
 | C71 | R37 | BLOCKED_UNSUPPORTED | 1 | 0 |
 | C72 | R37 | BLOCKED_UNSUPPORTED | 1 | 0 |
-| C73 | R38 | BLOCKED_UNSUPPORTED | 1 | 0 |
+| C73 | R38 | EXECUTED (S9) | 1 | 1 |
 | C74 | R38 | BLOCKED_UNSUPPORTED | 1 | 0 |
 | C75 | R39 | BLOCKED_UNSUPPORTED | 1 | 0 |
 | C76 | R40 | BLOCKED_UNSUPPORTED | 1 | 0 |
@@ -73,3 +73,6 @@ Kernel v0.8+R02+R01+R47+R48. Reference fixtures: 420. Statuses from the live tes
 
 ## Blocked mechanics (what the kernel must model before the BLOCKED contracts can execute)
 offspring/copy tokens; Chatterfang activation and -X/-X; opponent permanents and targeting (Blood Artist, Abrupt Decay, Trophy, Rise); lore counters and a phase/step clock; devour; Beledros untap; Treasure mana ability; command-zone replacement; regeneration; hexproof/exile; Channel; modal spells (Charms, Command); Grist; Shigeki; all 18 unsupported lands (conditional ETBs, surveil, MDFC faces, fetch, utility activations, painlands, Castle Locthwain, symmetrical draws).
+
+
+S9 (2026-10-18): C65, C66, C67, C68 and C73 executed against the promoted kernel once the nine B/G fixer lands became playable (pab_lands_s9.py); see C65_C77_EXECUTION_NOTES.md.

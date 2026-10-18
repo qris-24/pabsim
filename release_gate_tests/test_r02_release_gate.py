@@ -129,12 +129,13 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(reg_before,(d/'PABTRV3_CARD_COVERAGE.json').read_bytes())
         self.assertEqual(man_before,(d/'PHASE8_R02_FILE_MANIFEST.json').read_bytes())
         res=json.loads((d/'VALIDATION_RESULTS.json').read_text())
-        self.assertEqual((res['tests_run'],res['tests_passed']),(622,622))
+        self.assertEqual((res['tests_run'],res['tests_passed']),(640,640))
         self.assertEqual(res['candidate_historical_contract_passes'],149)
         self.assertEqual(res['phase8_previous_bridge_contract_passes'],52)
         self.assertEqual(res['kernel_legacy_149_replay_failures'],sorted(['test_112_teacher_pest_blocks_rescuer_at_upkeep_start','test_113_teacher_pest_entered_before_rescuer_trigger_resolves','test_91_village_rejects_mana_shortage_before_sac']))
         self.assertTrue(res['kernel_legacy_failures_exactly_superseded_set'])
-        self.assertEqual((res['kernel_v07_bridge_52_replay_passes'],res['kernel_v08_bridge_54_replay_passes'],res['kernel_corrected_v05_copy_38_replay_passes'],res['kernel_corrected_v04_copy_25_replay_passes']),(52,54,38,25))
+        self.assertEqual((res['kernel_v07_bridge_52_replay_passes'],res['kernel_v08_bridge_54_replay_passes'],res['kernel_corrected_v05_copy_38_replay_passes'],res['kernel_corrected_v04_copy_25_replay_passes'],res['kernel_corrected_v08_copy_54_replay_passes']),(52,52,38,25,54))
+        self.assertEqual(res['kernel_v08_replay_failures'],['test_274_unsupported_land_fails_closed','test_307_unsupported_named_nonbasic_mana_does_not_fallback'])   # S9 supersedes exactly these two
 
 if __name__=='__main__':
     unittest.main()
