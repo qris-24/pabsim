@@ -72,7 +72,7 @@ class OpponentsMixin(CreatureCastMixin):
             name=b['name']; power=b.get('power',1); toughness=b.get('toughness',1); colors=b.get('colors','')
             if not isinstance(power,int) or not isinstance(toughness,int) or toughness<1 or power<0:
                 raise BridgeError('S8: opponent body needs integer power >= 0 and toughness >= 1')
-            p=self.add(name,controller=seat,colors=colors,creature=True,artifact=False,power=power,toughness=toughness)
+            p=self.add(name,controller=seat,colors=colors,creature=True,artifact=False,power=power,toughness=toughness,mana_value=b.get('mana_value',0))   # mana_value: S15 targets
             uids.append(p.uid)
         self.trace.append(('opponent_board_declared',seat,tuple(uids)))
         return uids
@@ -108,7 +108,7 @@ class OpponentsMixin(CreatureCastMixin):
     def edict_choice(self,seat):
         """Stand-in for 'a creature of their choice': lowest power, then toughness, then uid."""
         cs=self.opponent_creatures(seat)
-        return min(cs,key=lambda p:(p.power+p.counters-p.minus_counters,p.toughness,p.uid)) if cs else None
+        return min(cs,key=lambda p:(p.power+p.counters-p.minus_counters,p.toughness+p.counters-p.minus_counters,p.uid)) if cs else None   # S15: counters count on both
 
     def _edict_each_opponent(self,source):
         self.edicts_resolved+=1

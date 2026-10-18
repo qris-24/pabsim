@@ -1,0 +1,100 @@
+{
+  "recorded": "2026-10-18",
+  "stage": "S15",
+  "source_kind": "same source as the S7–S14 evidence (user-provided Scryfall bulk export via the audit reference JSON; secondary-official)",
+  "reference_file_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+  "selection_rule": "the nine deck spells with no kernel behaviour before S15, plus Grist (recorded; not modeled in S15)",
+  "cards": {
+    "Abrupt Decay": {
+      "mana_cost": "{B}{G}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "This spell can't be countered.\nDestroy target nonland permanent with mana value 3 or less.",
+      "oracle_id": "1c747fe2-289e-492a-a846-aa77707e2dc3",
+      "printing_id": "a8e328c6-3a84-49cf-a1a3-1d1e5373d274",
+      "locator_not_fetched": "https://api.scryfall.com/cards/a8e328c6-3a84-49cf-a1a3-1d1e5373d274"
+    },
+    "Assassin's Trophy": {
+      "mana_cost": "{B}{G}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "Destroy target permanent an opponent controls. Its controller may search their library for a basic land card, put it onto the battlefield, then shuffle.",
+      "oracle_id": "ac10d218-f9a6-4058-9cda-a15ca1b0b7b5",
+      "printing_id": "aaf258fc-3ba4-4b83-bdbf-10a07e0b6c03",
+      "locator_not_fetched": "https://api.scryfall.com/cards/aaf258fc-3ba4-4b83-bdbf-10a07e0b6c03"
+    },
+    "Witherbloom Charm": {
+      "mana_cost": "{B}{G}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "Choose one —\n• You may sacrifice a permanent. If you do, draw two cards.\n• You gain 5 life.\n• Destroy target nonland permanent with mana value 2 or less.",
+      "oracle_id": "ee1db746-f5c1-4dce-82eb-24b273cc9507",
+      "printing_id": "254437f7-7a8a-4b11-9cea-e8e7ea23c59e",
+      "locator_not_fetched": "https://api.scryfall.com/cards/254437f7-7a8a-4b11-9cea-e8e7ea23c59e"
+    },
+    "Golgari Charm": {
+      "mana_cost": "{B}{G}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "Choose one —\n• All creatures get -1/-1 until end of turn.\n• Destroy target enchantment.\n• Regenerate each creature you control.",
+      "oracle_id": "f0ab7166-9fcf-46e5-af2c-b7f628db4789",
+      "printing_id": "9d467e61-bbec-4cea-bd5d-f10555910c9d",
+      "locator_not_fetched": "https://api.scryfall.com/cards/9d467e61-bbec-4cea-bd5d-f10555910c9d"
+    },
+    "Heroic Intervention": {
+      "mana_cost": "{1}{G}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "Permanents you control gain hexproof and indestructible until end of turn.",
+      "oracle_id": "24882fa2-3fe9-4c1b-aa3d-0e6488b9db27",
+      "printing_id": "e32c67d1-187f-40df-b3b3-6036f5c92834",
+      "locator_not_fetched": "https://api.scryfall.com/cards/e32c67d1-187f-40df-b3b3-6036f5c92834"
+    },
+    "Infuse with Vitality": {
+      "mana_cost": "{B}{G}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "Until end of turn, target creature gains deathtouch and \"When this creature dies, return it to the battlefield tapped under its owner's control.\"\nYou gain 2 life.",
+      "oracle_id": "6799217a-030c-4c1b-9de3-99725c6ef4cf",
+      "printing_id": "840600a9-3e78-48a6-b75b-860446b82c1b",
+      "locator_not_fetched": "https://api.scryfall.com/cards/840600a9-3e78-48a6-b75b-860446b82c1b"
+    },
+    "Grisly Salvage": {
+      "mana_cost": "{B}{G}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "Reveal the top five cards of your library. You may put a creature or land card from among them into your hand. Put the rest into your graveyard.",
+      "oracle_id": "a89ebf63-63c9-42cd-98b4-ec852cd9b0a8",
+      "printing_id": "12a90f7a-28df-4017-b221-0e9234ff74a7",
+      "locator_not_fetched": "https://api.scryfall.com/cards/12a90f7a-28df-4017-b221-0e9234ff74a7"
+    },
+    "Rise of the Witch-king": {
+      "mana_cost": "{2}{B}{G}",
+      "cmc": 4.0,
+      "type_line": "Sorcery",
+      "oracle_text": "Each player sacrifices a creature of their choice. If you sacrificed a creature this way, you may return another permanent card from your graveyard to the battlefield.",
+      "oracle_id": "3c86541c-3601-4a38-8872-39705e41303a",
+      "printing_id": "3f440fa1-5387-41d6-a80f-5b19dbb21514",
+      "locator_not_fetched": "https://api.scryfall.com/cards/3f440fa1-5387-41d6-a80f-5b19dbb21514"
+    },
+    "Witherbloom Command": {
+      "mana_cost": "{B}{G}",
+      "cmc": 2.0,
+      "type_line": "Sorcery",
+      "oracle_text": "Choose two —\n• Target player mills three cards, then you return a land card from your graveyard to your hand.\n• Destroy target noncreature, nonland permanent with mana value 2 or less.\n• Target creature gets -3/-1 until end of turn.\n• Target opponent loses 2 life and you gain 2 life.",
+      "oracle_id": "7cc81fb3-495c-47cd-8c56-96197d87e9e0",
+      "printing_id": "0d68dee5-56ff-45bb-a37e-9e2dfc07c5a7",
+      "locator_not_fetched": "https://api.scryfall.com/cards/0d68dee5-56ff-45bb-a37e-9e2dfc07c5a7"
+    },
+    "Grist, the Hunger Tide": {
+      "mana_cost": "{1}{B}{G}",
+      "cmc": 3.0,
+      "type_line": "Legendary Planeswalker — Grist",
+      "oracle_text": "As long as Grist isn't on the battlefield, it's a 1/1 Insect creature in addition to its other types.\n+1: Create a 1/1 black and green Insect creature token, then mill a card. If an Insect card was milled this way, put a loyalty counter on Grist and repeat this process.\n−2: You may sacrifice a creature. When you do, destroy target creature or planeswalker.\n−5: Each opponent loses life equal to the number of creature cards in your graveyard.",
+      "oracle_id": "0efb0d7e-dea0-4817-a243-15066e9ef333",
+      "printing_id": "1925dc45-4dee-4772-aa16-3b4ca54be6c7",
+      "locator_not_fetched": "https://api.scryfall.com/cards/1925dc45-4dee-4772-aa16-3b4ca54be6c7",
+      "loyalty": "3"
+    }
+  }
+}

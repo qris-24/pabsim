@@ -15,10 +15,11 @@ from pab_interaction_s11 import InteractionMixin      # S11: scripted opponent i
 from pab_cast_s12 import PermanentCastMixin           # S12: the 15 noncreature permanents from the physical hand (includes S11)
 from pab_cast_s13 import SpellCastMixin               # S13: the eight remaining frozen-behaviour spells from the physical hand (includes S12)
 from pab_lands_s14 import RemainingLandsMixin         # S14: the nine remaining nonbasic lands and their abilities (includes S13)
+from pab_cast_s15 import InteractionSpellsMixin       # S15: the nine interaction spells (removal, charms, protection, Rise) (includes S14)
 from pab_r52_village_rites import VillageRitesCostMixin, EXPECTED_LEGACY_FAILURES   # R52: Village Rites costs {B}; supersedes frozen test_91 (+R01's 112/113)
 class Game(VillageRitesCostMixin,TurnBasedActionsMixin,_sba.Game): pass
-class PhysicalZoneGame(VillageRitesCostMixin,RemainingLandsMixin,_sba.PhysicalZoneGame): pass
-KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14'
-PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14"]
+class PhysicalZoneGame(VillageRitesCostMixin,InteractionSpellsMixin,_sba.PhysicalZoneGame): pass
+KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15'
+PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15"]
 SUPERSEDED_FROZEN_CONTRACTS=sorted(EXPECTED_LEGACY_FAILURES)
 SUPERSEDED_V08_CONTRACTS=sorted(SUPERSEDED_V08_FIXTURES)

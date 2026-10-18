@@ -79,7 +79,8 @@ class Edicts(_B):
         self.assertEqual(g.opponent_sacrifices,9); self.assertEqual(len(trace(g,'edict_no_creature')),3)
         for s in OPPONENT_SEATS: self.assertEqual(g.opponent_creatures(s),[])
     def test_counters_count_toward_the_policy(self):
-        g=self.game(boards=(1,)); bear=next(p for p in g.opponent_creatures(1) if p.name=='Bear'); bear.minus_counters=2   # Bear at 0 power, lower uid than Wall
+        g=self.game(boards=(1,)); bear=next(p for p in g.opponent_creatures(1) if p.name=='Bear'); wall=next(p for p in g.opponent_creatures(1) if p.name=='Wall')
+        bear.minus_counters=1; wall.counters=3     # Bear 1/1 ties Goblin 1/1 and wins on uid; Wall 3/7 (S15: a creature at 0 toughness would die to the SBA before any edict)
         p=self.pest(g); g.sacrifice(p.uid); g.resolve(); self.assertEqual(self.names(g,1),['Goblin','Wall'])
     def test_frozen_fixture_paths_without_boards_unchanged(self):
         g=self.game(boards=()); p=self.pest(g); g.sacrifice(p.uid); g.resolve()
