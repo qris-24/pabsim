@@ -915,7 +915,7 @@
   "kernel_legacy_failures_exactly_superseded_set": true,
   "kernel_v07_bridge_52_replay_passes": 52,
   "kernel_v08_bridge_54_replay_passes": 54,
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53",
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7",
   "land_source_verified": false,
   "lands": 34,
   "lesson_sideboard": 1,
@@ -950,7 +950,8 @@
     "S5",
     "S6",
     "R52",
-    "R53"
+    "R53",
+    "S7"
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
@@ -968,8 +969,8 @@
     "test_113_teacher_pest_entered_before_rescuer_trigger_resolves",
     "test_91_village_rejects_mana_shortage_before_sac"
   ],
-  "tests_passed": 530,
-  "tests_run": 530,
+  "tests_passed": 601,
+  "tests_run": 601,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

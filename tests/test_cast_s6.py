@@ -166,9 +166,10 @@ class SakuraTribeElder(_B):
 # ---------------------------------------------------------------- fail closed / integrity
 class FailClosed(_B):
     def test_every_other_hand_card_is_refused_without_mutation(self):
+        from pab_cast_s7 import S7_NAMES                        # S7 (2026-10-18) widened the castable set; everything else still fails closed
         g=self.bridge(); g.add_mana('B','G','C','C','C')
         for u in list(g.zones.zones['library']):
-            if g.zones.cards[u].name in CASTABLE: continue
+            if g.zones.cards[u].name in CASTABLE or g.zones.cards[u].name in S7_NAMES: continue
             g.zones.search_library(selected_uid=u,destination='hand'); self.refused(g,u); g.zones.move(u,'library')
         self.assertEqual(trace(g,'cast'),[])
     def test_kw_timing_refused_once_clock_engaged(self):
