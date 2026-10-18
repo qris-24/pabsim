@@ -3,6 +3,7 @@
   "build": "pab_reliability_v0_8_r02_r01",
   "files_sha256": {
     ".gitignore": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
+    "00_HANDOFF_2026-10-18.md": "fb660d51d69b0aa654704b3d6bbffb2db2efffd77d555d55fb942c88fd392e64",
     "C41_C47_EXECUTION_NOTES.md": "a664cc634345f1293add758078a2c469e4c173bf34edf47bd1dbcd5e5c3f1cca",
     "C48_C64_EXECUTION_NOTES.md": "75e4b0d7d59193e47ef8647f9ae63b3311ac1de94dc1f3b14806424987fae2ad",
     "C65_C77_EXECUTION_NOTES.md": "e5c1ebfe6e25bf672542467c3d3af4f818aa2132a8d8143f985be6f4e7b7a699",
@@ -89,7 +90,7 @@
     "r01_tests/test_v05_fixture_cards_r01.py": "e510418f9ee9ba35f9f779fd4ce67f4895cbc30c60c635fa7726299b7db1e794",
     "release_gate_tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "release_gate_tests/test_r02_release_gate.py": "8e250980edd5c1bae18f5465c7ae046c5959794b2a1d947a05e140bce9d2e583",
-    "run_validation.py": "fa7b3f8ed6c59dfe1a39468d42c119fad9e0e62bae76571547ab0272b0f35f88",
+    "run_validation.py": "a40bc358d4169080b7a1783d9e252cb8493a210f718cbcef78f88bcda2df3ea4",
     "tests/test_c41_c47_contracts.py": "edefe2f147c73e4ea11fa48aa40904535188aa226ae94b9e3f0ee74220fdbd7e",
     "tests/test_c48_c64_contracts.py": "14b5cb2b31d0a5be5ee9954290050f84733faaa120a4b8ea8cc998ad4ac2d543",
     "tests/test_c65_c77_contracts.py": "4b100050ca2ad4c2b236ab5f708e1c7efec927923032f765d6578f2b7d67e504",
