@@ -28,6 +28,7 @@ from pab_policy_s18 import run_game, check_invariants_s18
 from pab_opponents_s8 import OPPONENT_SEATS
 from pab_turn_clock import STEPS
 from pab_turn_loop import opening_hand
+from pab_terminal_audit_cp04 import no_steps_after_terminal
 
 DEFAULT_BOARD=[{'name':'Bear','power':2,'toughness':2,'mana_value':2},{'name':'Knight','power':3,'toughness':3,'mana_value':3}]
 DEFAULT_POLICY={1:{'removal_budget':2,'attack':'all'},2:{'wipe_at':4,'edict_budget':1,'attack':'all'},3:{'graveyard_hate_at':5,'attack':'all','exile_instead':True,'removal_budget':1}}
@@ -82,6 +83,8 @@ def clock_legal(g):
                 if ap!=nxt and ap not in lost: problems.append(('seat rotation',turn,pap,ap,tuple(sorted(lost))))
                 if ap in lost and step=='untap': problems.append(('lost seat began a turn',turn,ap))
         prev=(turn,ap,step)
+    term_ok,term_errors=no_steps_after_terminal(g.trace)
+    if not term_ok: problems.extend(term_errors)
     return (not problems),problems[:5]
 
 def validate_game(seed,config):
