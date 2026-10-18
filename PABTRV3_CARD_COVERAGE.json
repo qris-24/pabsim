@@ -1093,7 +1093,7 @@
       "C94"
     ],
     "contracts_c41_c94_all_executed_or_probed": true,
-    "contracts_c95_c99_status": "C95, C96, C98, C99 EXECUTED (tests/test_turn_clock_s2.py); C97 proposed (S3)",
+    "contracts_c95_c99_status": "C95, C96, C98, C99 EXECUTED (tests/test_turn_clock_s2.py); C97 EXECUTED_WITH_SUBSTITUTION (tests/test_priority_s3.py)",
     "contracts_executed_against_kernel": [
       "C41",
       "C42",
@@ -1125,7 +1125,7 @@
     ],
     "contracts_oracle_cr_authenticated": 0,
     "cr_evidence": "EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)",
-    "current_reference_test_count": 461,
+    "current_reference_test_count": 473,
     "event_candidate_five_draw_call_sites_normalized": true,
     "explicit_mana_reference_only": true,
     "full_casting_engine": false,
@@ -1139,7 +1139,7 @@
       "R51: mana pools never empty (CR 106.4)"
     ],
     "issues_r50_r51_status": "CLOSED by S2 for Pest Rescuer, Beledros, Moseo, Roaster and the mana pool; untap/draw/land-play reset remain caller-driven until S4",
-    "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2",
+    "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3",
     "land_count": 34,
     "land_exact_card_text_complete": false,
     "learn_sideboard_default": false,
@@ -1167,7 +1167,8 @@
     "phase8_mirrored_event_tokens": true,
     "phase8_shared_mana_pool_fixture": true,
     "phase_clock_design": "PHASE_CLOCK_DEPENDENCY_MAP.md (design only; implementation not authorized)",
-    "phase_clock_stage": "S2 promoted: boundaries drive each-upkeep, controller end step, mana emptying, cleanup expiry (pab_clock_s2.py); S3–S4 not authorized",
+    "phase_clock_stage": "S3 promoted: SBA between resolutions with look-back, retired inline Yawgmoth check, set_trigger_order() (pab_clock_s3.py); S4 not authorized",
+    "phase_clock_stage_history": "S2 promoted: boundaries drive each-upkeep, controller end step, mana emptying, cleanup expiry (pab_clock_s2.py); S3–S4 not authorized",
     "physical_bridge_full_board_reconciliation": false,
     "promoted_patches": [
       "R02",
@@ -1176,7 +1177,8 @@
       "R48",
       "R49",
       "S1",
-      "S2"
+      "S2",
+      "S3"
     ],
     "proposed_contracts_c95_c99": "EVIDENCE/PROPOSED_CONTRACTS_C95_C99.json (PROPOSED_NOT_EXECUTED)",
     "r01_pest_rescuer_token_predicate_promoted": true,

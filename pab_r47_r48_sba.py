@@ -59,13 +59,17 @@ class SbaFixesMixin:
                 target.minus_counters+=1
                 self.trace.append(('minus_one_counter',target_uid))
             self._fixture_draw(1,'Yawgmoth')
-            if target_uid is not None:
-                target=self.permanents.get(target_uid)
-                if target and target.toughness + target.counters - target.minus_counters<=0:
-                    # R48: SBA death, not destruction; indestructible is irrelevant.
-                    self.trace.append(('sba_zero_toughness',target_uid,'Yawgmoth'))
-                    self._leave(target_uid,sacrificed=False)
+            self._inline_zero_toughness_check(target_uid,'Yawgmoth')
         self.pending.append(Trigger('Yawgmoth activation',resolve_yawgmoth))
+
+    def _inline_zero_toughness_check(self,target_uid,source):
+        """R48 inline SBA (pre-S3). S3 replaces this with the general check between resolutions."""
+        if target_uid is None: return
+        target=self.permanents.get(target_uid)
+        if target and target.toughness + target.counters - target.minus_counters<=0:
+            # R48: SBA death, not destruction; indestructible is irrelevant.
+            self.trace.append(('sba_zero_toughness',target_uid,source))
+            self._leave(target_uid,sacrificed=False)
 
 class Game(SbaFixesMixin, r01.Game):
     """R47+R48 event-kernel candidate."""

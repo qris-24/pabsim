@@ -70,7 +70,7 @@ class C79(_Base):
     def test_contract_zero_toughness_still_dies_despite_indestructible(self):
         g,p=self.protected_pest(); self.zero_toughness_via_yawgmoth(g,p.uid); g.resolve()
         self.assertNotIn(p.uid,g.permanents)                  # contract / CR 704.5f
-        self.assertEqual(trace(g,'sba_zero_toughness'),[('sba_zero_toughness',p.uid,'Yawgmoth')])
+        self.assertEqual(trace(g,'sba_zero_toughness'),[('sba_zero_toughness',p.uid,'state-based')])   # S3: general check
         self.assertEqual(trace(g,'destroy_prevented_indestructible'),[])
         self.assertEqual([t for t in trace(g,'sacrifice') if t[1]==p.uid],[])
     def test_frozen_v07_engine_indestructible_blocks_zero_toughness_death(self):

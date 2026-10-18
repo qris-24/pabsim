@@ -46,7 +46,7 @@ Not unblocked by the clock (need other work): opponent permanents/targeting (C52
 |---|---|---|
 | S1 ✅ promoted 2026-10-18 | `TurnClock` object: seats, active player, current step; `advance()` emits step-boundary events; **no behaviour change** to existing methods (they keep working when called directly) | done: `pab_turn_clock.py`, 11 fixtures, all prior fixtures unchanged |
 | S2 ✅ promoted 2026-10-18 | Route `begin_upkeep`/`*_end_step` through boundary events with player scoping (K3); add K4 pool emptying at boundaries; K6 expiry at cleanup | done: `pab_clock_s2.py`; C95, C96, C98, C99 executed; C63's clock substitution removed (queue-order choice remains) |
-| S3 | Priority loop K5: SBA check between resolutions, APNAP trigger placement; migrate in-ability SBA calls (Yawgmoth, Skullclamp) to the general check | C97 executed; C52/C78 de-substituted |
+| S3 ✅ promoted 2026-10-18 | Priority loop K5: SBA check between resolutions (look-back for simultaneous deaths), controller trigger ordering API; Yawgmoth's inline check retired (Skullclamp's immediate check kept: equip has no stack here) | done: `pab_clock_s3.py`; C97 executed; C63 fully de-substituted; C52 still needs opponent permanents; C78 still needs Golgari Charm |
 | S4 | K7 turn-based actions on the physical bridge; K8 LKI (fixes R49) | C99 executed; C57/C58/C64 partially de-substituted |
 
 Rules for every stage: frozen files untouched; new layer module + `pab_kernel.py` promotion; tests that pin the pre-clock behaviour stay as frozen-engine pins; reference count pinned in the runner; manifest regenerated; approval before promotion.

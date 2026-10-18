@@ -21,12 +21,12 @@ BASELINE_SHA='c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381'
 R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
                'PABTRV3_CARD_COVERAGE.json','README.md',
                'PHASE8_R02_FILE_MANIFEST.json','R02_PATCH_NOTES.md','R01_PATCH_NOTES.md',
-               'pab_kernel.py','pab_r01_pest_rescuer.py','pab_r47_r48_sba.py','R47_R48_PATCH_NOTES.md','PHASE_CLOCK_DEPENDENCY_MAP.md','UPKEEP_AUDIT_NOTES.md','pab_turn_clock.py','R49_S1_PATCH_NOTES.md','pab_clock_s2.py','S2_PATCH_NOTES.md','C41_C47_EXECUTION_NOTES.md','C48_C64_EXECUTION_NOTES.md','C65_C77_EXECUTION_NOTES.md','C78_C94_EXECUTION_NOTES.md','CONTRACTS_C41_C94_STATUS.md'}
+               'pab_kernel.py','pab_r01_pest_rescuer.py','pab_r47_r48_sba.py','R47_R48_PATCH_NOTES.md','PHASE_CLOCK_DEPENDENCY_MAP.md','UPKEEP_AUDIT_NOTES.md','pab_turn_clock.py','R49_S1_PATCH_NOTES.md','pab_clock_s2.py','S2_PATCH_NOTES.md','pab_clock_s3.py','S3_PATCH_NOTES.md','C41_C47_EXECUTION_NOTES.md','C48_C64_EXECUTION_NOTES.md','C65_C77_EXECUTION_NOTES.md','C78_C94_EXECUTION_NOTES.md','CONTRACTS_C41_C94_STATUS.md'}
 # Outputs the runner itself produces. Never verified as inputs.
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=461   # 311 frozen + 13 R01 + 2 corrections + contracts C41–C94 + audit + clock S1/S2 (per-file counts asserted below)
+REFERENCE_TEST_COUNT=473   # sum of per-file counts asserted below
 
 def sha(path):
     path=Path(path)
@@ -115,17 +115,19 @@ def preflight(root=ROOT):
     # Suite shape (static counts; preflight imports no test modules).
     def n(f): return len(re.findall(r'^\s+def test_',(root/'tests'/f).read_text(),re.M))
     assert sum(n(p) for p in OLD_TEST_FILES)==149, 'v0.5 regression contracts changed'
-    assert n('test_v07_zone_bridge.py')==52, 'v0.7 test count'
-    assert n('test_v08_mana_tokens.py')==54, 'v0.8 test count'
-    assert n('test_r01_pest_rescuer.py')==13, 'R01 control count'
-    assert n('test_v05_r01_corrections.py')==2, 'R01 correction count'
-    assert n('test_c41_c47_contracts.py')==19, 'C41–C47 contract test count'
-    assert n('test_c48_c64_contracts.py')==33, 'C48–C64 contract test count'
-    assert n('test_c65_c77_contracts.py')==20, 'C65–C77 contract test count'
-    assert n('test_c78_c94_contracts.py')==23, 'C78–C94 contract test count'
-    assert n('test_upkeep_trigger_audit.py')==14, 'upkeep/trigger audit count'
-    assert n('test_turn_clock_s1.py')==10, 'clock S1 count'
-    assert n('test_turn_clock_s2.py')==16, 'clock S2 count'
+    assert n('test_c41_c47_contracts.py')==19, 'test_c41_c47_contracts.py count'
+    assert n('test_c48_c64_contracts.py')==34, 'test_c48_c64_contracts.py count'
+    assert n('test_c65_c77_contracts.py')==20, 'test_c65_c77_contracts.py count'
+    assert n('test_c78_c94_contracts.py')==23, 'test_c78_c94_contracts.py count'
+    assert n('test_priority_s3.py')==11, 'test_priority_s3.py count'
+    assert n('test_r01_pest_rescuer.py')==13, 'test_r01_pest_rescuer.py count'
+    assert n('test_turn_clock_s1.py')==10, 'test_turn_clock_s1.py count'
+    assert n('test_turn_clock_s2.py')==16, 'test_turn_clock_s2.py count'
+    assert n('test_upkeep_trigger_audit.py')==14, 'test_upkeep_trigger_audit.py count'
+    assert n('test_v05_r01_corrections.py')==2, 'test_v05_r01_corrections.py count'
+    assert n('test_v06_physical_zones.py')==56, 'test_v06_physical_zones.py count'
+    assert n('test_v07_zone_bridge.py')==52, 'test_v07_zone_bridge.py count'
+    assert n('test_v08_mana_tokens.py')==54, 'test_v08_mana_tokens.py count'
     total=sum(n(f.name) for f in (root/'tests').glob('test_*.py'))
     assert total==REFERENCE_TEST_COUNT, f'expected {REFERENCE_TEST_COUNT} reference tests, found {total}'
     return J
@@ -186,7 +188,7 @@ def run_suites(root=ROOT,J=None):
     # test modules (CONTRACT/STATUS/SUBSTITUTIONS attributes), with its own
     # pass count from a fresh run of that class.
     contracts={}
-    for modname in ['test_c41_c47_contracts.py','test_c48_c64_contracts.py','test_c65_c77_contracts.py','test_c78_c94_contracts.py','test_turn_clock_s2.py']:
+    for modname in ['test_c41_c47_contracts.py','test_c48_c64_contracts.py','test_c65_c77_contracts.py','test_c78_c94_contracts.py','test_turn_clock_s2.py','test_priority_s3.py']:
         spec=importlib.util.spec_from_file_location('contracts_'+modname,root/'tests'/modname)
         mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
         for cls in [getattr(mod,k) for k in dir(mod)]:
@@ -197,7 +199,7 @@ def run_suites(root=ROOT,J=None):
                     'tests_passed':rr.testsRun-len(rr.failures)-len(rr.errors)-len(rr.skipped)-len(rr.expectedFailures),
                     'expected_failures':len(rr.expectedFailures),'unexpected_successes':len(rr.unexpectedSuccesses),
                     'engine_test_executed':cls.STATUS!='BLOCKED_UNSUPPORTED','oracle_cr_authenticated':False}
-    contracts_ok=(len(contracts)==58 and all(c['tests_run']>0 and c['tests_passed']+c['expected_failures']==c['tests_run']
+    contracts_ok=(len(contracts)==59 and all(c['tests_run']>0 and c['tests_passed']+c['expected_failures']==c['tests_run']
                      and c['unexpected_successes']==0 for c in contracts.values()))
 
     # R02 release-gate tests: a separate suite, never counted in the 311.

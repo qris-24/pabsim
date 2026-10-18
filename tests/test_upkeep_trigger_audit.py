@@ -88,7 +88,7 @@ class R48Confirmed(unittest.TestCase):
         g=Game(); g.add(SAVRA); y=g.add('Yawgmoth, Thran Physician'); g.resolve()
         p=g.make_tokens(PEST)[0]; c=g.add('Deathgreeter'); g.resolve(); g.indestructible_until_eot.add(p.uid)
         g.yawgmoth_sacrifice(y.uid,c.uid,target_uid=p.uid); g.resolve()
-        self.assertNotIn(p.uid,g.permanents); self.assertIn(('sba_zero_toughness',p.uid,'Yawgmoth'),g.trace)
+        self.assertNotIn(p.uid,g.permanents); self.assertIn(('sba_zero_toughness',p.uid,'state-based'),g.trace)   # S3: general check
     def test_sba_performed_after_full_resolution_not_mid_effect(self):
         """CR 704.3/117.5: SBAs happen when a player would receive priority, i.e. after the
         ability has fully resolved (counter then draw), not between its own effects."""

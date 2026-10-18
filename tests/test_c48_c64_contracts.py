@@ -277,9 +277,12 @@ class C62(_Base):
 
 
 class C63(_Base):
-    CONTRACT='C63'; ISSUES=['R33','R01']; STATUS='EXECUTED_WITH_SUBSTITUTION'
-    SUBSTITUTIONS=['The alternate resolution order is produced by reordering the pending queue (the controller\'s '
-                   'APNAP ordering choice is not yet an API). Since S2 the upkeep boundary itself is clock-driven.']
+    CONTRACT='C63'; ISSUES=['R33','R01']
+    STATUS='EXECUTED'; SUBSTITUTIONS=[]   # S2: clock-driven upkeep; S3: set_trigger_order() is the controller's ordering choice
+    def test_s3_ordering_api_beledros_first_one_pest(self):
+        g=self.game('Beledros Witherbloom','Pest Rescuer'); g.set_trigger_order(lambda batch: list(reversed(batch)))
+        g.advance_to('upkeep',active_player=0)
+        self.assertEqual(labels(g),['Beledros each upkeep','Pest Rescuer conditional upkeep']); g.resolve(); self.assertEqual(len(tokens(g,PEST)),1)
     def test_clock_driven_upkeep_admits_both_rescuer_first(self):
         g=self.game('Beledros Witherbloom','Pest Rescuer'); g.advance_to('upkeep',active_player=0)
         self.assertEqual(labels(g),['Pest Rescuer conditional upkeep','Beledros each upkeep']); g.resolve(); self.assertEqual(len(tokens(g,PEST)),2)

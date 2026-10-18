@@ -69,9 +69,10 @@
       "117.5",
       "603.10"
     ],
-    "status": "PROPOSED_NOT_EXECUTED",
-    "engine_test_executed": false,
-    "oracle_cr_authenticated": false
+    "status": "EXECUTED_WITH_SUBSTITUTION",
+    "engine_test_executed": true,
+    "oracle_cr_authenticated": false,
+    "executed_in": "tests/test_priority_s3.py"
   },
   {
     "id": "C98",

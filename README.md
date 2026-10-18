@@ -76,3 +76,6 @@ Step boundaries now drive each-upkeep triggers, the controller's end step, mana 
 
 ## Clock S2 promoted
 Step boundaries now drive each-upkeep triggers, the controller's end step, mana emptying and cleanup expiry (`pab_clock_s2.py`). C95/C96/C98/C99 executed. See S2_PATCH_NOTES.md.
+
+## Clock S3 promoted
+SBA between resolutions with simultaneous-death look-back; Yawgmoth inline check retired; `set_trigger_order()`. C97 executed; C63 de-substituted. See S3_PATCH_NOTES.md.
