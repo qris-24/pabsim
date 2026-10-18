@@ -19,12 +19,13 @@ from pab_cast_s15 import InteractionSpellsMixin       # S15: the nine interactio
 from pab_grist_s16 import GristMixin                  # S16: Grist, the Hunger Tide (includes S15)
 from pab_combat_s17 import CombatMixin                # S17: combat — the controller attacks (includes S16)
 from pab_policy_s18 import PolicyOpponentsMixin       # S18: policy opponents — reactive actions and attacks on the controller (includes S17)
-from pab_auditfix_cp02 import AuditFixCP02Mixin  # CP02: audited blocked-state and terminal driver              # S20: Shigeki, Jukai Visionary (the one creature outside BODIES) (includes S18)
+from pab_auditfix_cp02 import AuditFixCP02Mixin  # CP02 blocked-state + terminal driver
+from pab_auditfix_cp03 import AuditFixCP03Mixin  # CP03 Infuse deathtouch during combat
 from pab_r52_village_rites import VillageRitesCostMixin, EXPECTED_LEGACY_FAILURES   # R52: Village Rites costs {B}; supersedes frozen test_91 (+R01's 112/113)
 class Game(VillageRitesCostMixin,TurnBasedActionsMixin,_sba.Game): pass
-class PhysicalZoneGame(VillageRitesCostMixin,AuditFixCP02Mixin,_sba.PhysicalZoneGame): pass
+class PhysicalZoneGame(VillageRitesCostMixin,AuditFixCP03Mixin,_sba.PhysicalZoneGame): pass
 # S19 (pab_validation_s19.py) is a validation tool over this kernel, not a layer; it imports this module.
-KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19+S20+CP02'
-PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19", "S20", "CP02"]
+KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19+S20+CP02+CP03'
+PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19", "S20", "CP02", "CP03"]
 SUPERSEDED_FROZEN_CONTRACTS=sorted(EXPECTED_LEGACY_FAILURES)
 SUPERSEDED_V08_CONTRACTS=sorted(SUPERSEDED_V08_FIXTURES)

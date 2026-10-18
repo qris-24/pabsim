@@ -1135,7 +1135,7 @@
     "contracts_oracle_cr_authenticated": 0,
     "coverage_stage_s20": "S20 promoted: Shigeki, Jukai Visionary physical path (pab_shigeki_s20.py; the one deck card no stage had modeled — earlier \"every nonland card\" claims in S15/S16 notes were wrong by this card) and the per-card model-coverage registry PABTRV3_MODEL_COVERAGE_S20.json (build_model_coverage_s20.py): every one of the 88 distinct names has a modeled list and an explicit not-modeled list; certified=0; value_for_optimization=null for all; no ranking",
     "cr_evidence": "EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)",
-    "current_reference_test_count": 751,
+    "current_reference_test_count": 758,
     "event_candidate_five_draw_call_sites_normalized": true,
     "explicit_mana_reference_only": true,
     "fixer_lands_stage_s9": "S9 promoted: the nine B/G-producing nonbasic lands playable and tappable on the physical bridge (pab_lands_s9.py) with their entry conditions, Pathway faces, Mortuary surveil, Wastes damage and Peatland life (EVIDENCE/S9_LAND_EVIDENCE.json); the other nine nonbasics still fail closed; frozen SUPPORTED_LAND_MANA untouched",
