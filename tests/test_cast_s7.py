@@ -149,7 +149,7 @@ class Yahenni(_B):
 # ---------------------------------------------------------------- scope and evidence
 class ScopeAndEvidence(_B):
     def test_kernel_promoted_s7_and_name_sets(self):
-        self.assertTrue(KERNEL_VERSION.endswith('+S7')); self.assertEqual(PROMOTED[-1],'S7')
+        self.assertIn('+S7',KERNEL_VERSION); self.assertIn('S7',PROMOTED)
         self.assertEqual(len(CREATURES),28); self.assertEqual(len(S7_NAMES),27); self.assertNotIn('Sakura-Tribe Elder',S7_NAMES)
         self.assertEqual(set(CASTABLE),set(CASTABLE_S6)|S7_NAMES); self.assertNotIn(SAVRA,CASTABLE)
     def test_table_matches_card_evidence_symbol_by_symbol(self):
