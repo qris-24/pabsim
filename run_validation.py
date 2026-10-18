@@ -26,7 +26,7 @@ R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=736   # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=751   # sum of per-file counts asserted below
 
 def sha(path):
     path=Path(path)
@@ -133,6 +133,7 @@ def preflight(root=ROOT):
     assert n('test_combat_s17.py')==8, 'test_combat_s17.py count'
     assert n('test_policy_s18.py')==9, 'test_policy_s18.py count'
     assert n('test_validation_s19.py')==4, 'test_validation_s19.py count'
+    assert n('test_auditfix_cp02.py')==15, 'test_auditfix_cp02.py count'
     assert n('test_shigeki_s20.py')==4, 'test_shigeki_s20.py count'
     assert n('test_r52_village_rites.py')==4, 'test_r52_village_rites.py count'
     assert n('test_integrated_turn_loop_s5.py')==7, 'test_integrated_turn_loop_s5.py count'
