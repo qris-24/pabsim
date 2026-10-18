@@ -1,0 +1,26 @@
+{
+  "recorded": "2026-10-18",
+  "stage": "S10",
+  "source_kind": "same source as S7/S9 evidence (user-provided Scryfall bulk export via the audit reference JSON; secondary-official; scryfall unreachable from the build environment)",
+  "reference_file_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+  "card": {
+    "name": "Savra, Queen of the Golgari",
+    "mana_cost": "{2}{B}{G}",
+    "cmc": 4.0,
+    "power": "2",
+    "toughness": "2",
+    "colors": [
+      "B",
+      "G"
+    ],
+    "type_line": "Legendary Creature — Elf Shaman",
+    "oracle_text": "Whenever you sacrifice a black creature, you may pay 2 life. If you do, each other player sacrifices a creature of their choice.\nWhenever you sacrifice a green creature, you may gain 2 life.",
+    "oracle_id": "641db975-cf94-44c6-a391-f540a952e0d8",
+    "printing_id": "e189f09e-d637-4631-bae3-a5a583ada429"
+  },
+  "cr_903": {
+    "903.9a": "If a commander is in a graveyard or in exile and that card was put into that zone since the last time state-based actions were checked, its owner may put it into the command zone.",
+    "903.9b": "If a commander would be put into its owner's hand or library from anywhere, its owner may put it into the command zone instead. This replacement effect may apply more than once to the same event.",
+    "source": "secondary transcription read 2026-10-18 at https://github.com/magefree/mage/issues/6866 (quoting the CR); the official 20260619 PDF fetch truncated before section 903; 903.8 (commander tax, {2} more per previous cast from the command zone) taken from general knowledge — NOT yet in EVIDENCE/CR_20260619_EVIDENCE.json"
+  }
+}

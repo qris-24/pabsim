@@ -28,8 +28,9 @@ def check_invariants(g):
         for u in uids:
             if z.cards[u].zone!=zone: raise InvariantError(f'card {u} zone label {z.cards[u].zone} != {zone}')
     if len({u for v in z.zones.values() for u in v})!=inzones: raise InvariantError('a card is in two zones')
-    if len(z.zones['command'])+sum(1 for u in z.zones['battlefield'] if z.cards[u].name=='Savra, Queen of the Golgari')<1:
-        raise InvariantError('Savra neither in command zone nor on battlefield')
+    savra_zones=[z.cards[u].zone for zone in ('command','battlefield','graveyard','exile') for u in z.zones[zone] if z.cards[u].name=='Savra, Queen of the Golgari']
+    if len(savra_zones)!=1:                 # S10 (2026-10-18): she may pass through graveyard/exile between death and the next SBA check (903.9a); check_invariants_s10 bounds that
+        raise InvariantError('Savra must be in exactly one of command, battlefield, graveyard or exile')
     if z.land_plays_this_turn>1: raise InvariantError('more than one land play this turn')
     if z.failed_draws: raise InvariantError('a draw from an empty library happened')
     if any(z.cards[u].tapped for u in z.zones['hand']+z.zones['library']+z.zones['graveyard']):

@@ -193,10 +193,12 @@ def play_land_policy(g):
         kw['surveil_graveyard']=not (top is not None and top.is_land and not hand_has_land)
     return u,kw
 
-def tap_lands_policy(g):
+def tap_lands_policy(g,extra=None):
     """Tap every untapped linked land; dual lands give the colour the hand is short of;
-    Llanowar Wastes gives {C} unless a colour is short; Peatland pays its life."""
+    Llanowar Wastes gives {C} unless a colour is short; Peatland pays its life.
+    `extra` (S10): additional colour needs, e.g. Savra in the command zone."""
     produced=[]; need=_need(g)
+    for k,v in (extra or {}).items(): need[k]=need.get(k,0)+v
     for ev,ph in list(g.linked_battlefield.items()):
         p=g.permanents.get(ev); c=g.zones.cards[ph]
         if p is None or p.tapped or not c.is_land or c.name not in LAND_MANA: continue
