@@ -313,7 +313,7 @@ def run_suites(root=ROOT,J=None):
 def main():
     J=preflight(ROOT)                      # no writes before this returns
     result,ok=run_suites(ROOT,J)
-    (ROOT/'VALIDATION_RESULTS.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+    (ROOT/'VALIDATION_RESULTS.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')   # CP08: LF on Windows
     summary={k:result[k] for k in ('release','tests_run','tests_passed','failures','errors',
              'candidate_historical_contract_passes','phase8_previous_bridge_contract_passes',
              'r02_release_gate_tests_run','r02_release_gate_tests_passed',
