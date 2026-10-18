@@ -18,7 +18,7 @@ def build(root=HERE):
     files={}; outputs={}
     for p in sorted(root.rglob('*')):
         if not p.is_file() or '__pycache__' in p.parts or '.git' in p.parts or p.name==NAME: continue
-        rel=str(p.relative_to(root))
+        rel=p.relative_to(root).as_posix()
         (outputs if rel in RUNNER_OUTPUTS else files)[rel]=sha(p)  # top-level only; nested frozen copies are inputs
     return {
       'build':'pab_reliability_v0_8_r02_r01',

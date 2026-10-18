@@ -103,7 +103,7 @@ def preflight(root=ROOT):
         assert path!=R02_MANIFEST, 'R02 manifest must not pin itself'
         assert sha(root/path)==digest, f'R02 package changed: {path}'
     listed=set(r02['files_sha256'])
-    on_disk={str(p.relative_to(root)) for p in root.rglob('*') if p.is_file()
+    on_disk={p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()
              and '__pycache__' not in p.parts and '.git' not in p.parts}-RUNNER_OUTPUTS-{R02_MANIFEST}
     assert on_disk==listed, f'R02 manifest file set mismatch: +{sorted(on_disk-listed)} -{sorted(listed-on_disk)}'
 
