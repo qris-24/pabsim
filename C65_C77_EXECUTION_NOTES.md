@@ -28,3 +28,12 @@ Blocked until modeled: conditional ETBs (land count, opponent count, life paymen
 | C67 | EXECUTED | 2 | Tomb pay 2 life -> untapped (life 38, pay_life trace); no payment -> tapped (life 40). Mortuary tapped and surveils 1: top card kept or milled per pre-committed choice, traced. Forest control retained. |
 | C68 | EXECUTED | 1 (2 subTests) | Each face in a reset game: face recorded on the permanent, only that colour available, the other refused. |
 | C73 | EXECUTED | 1 | Wastes {C} no damage; Wastes {B} one damage (life loss, no prevention); Peatland {B} pays 1 life. No gain events. |
+
+## S14 update (2026-10-18)
+| C70 | EXECUTED | 1 (4 subTests) | Verdant: pay 1 life then sacrifice as costs; Swamp/Tomb(paid, declined)/Mortuary fetched by land type with their own entry rules; Woodland Cemetery refused before any cost. |
+| C71 | EXECUTED | 1 | Tower: sacrifice as mana-ability cost, {B}{B} added at once, Savra black/green and Pest dies-gain pending as distinct triggers; {C} control. |
+| C72 | EXECUTED | 1 | High Market gains on resolution, Grim Backwoods draws on resolution, costs first; sacrifice-free activation refused. |
+| C74 | EXECUTED | 1 | Castle: two in hand -> loses 3 (draw first); zero-hand control loses 1; empty library records a failed draw. |
+| C75 | PARTIAL_EXECUTED | 1 (4 subTests) | Takenuma channel discount 3/2/1/0 for 0/1/2/4 legends, discard as cost, not a land play; Boseiju channel refused (no legal target). |
+| C76 | PARTIAL_EXECUTED | 1 | Controller side of Sanitarium (draw, discard) and Mikokoro (draw); opponents unmodeled. |
+| C77 | EXECUTED | 4 | Grim Backwoods {C} added; colourless never conflated with coloured. |

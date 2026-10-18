@@ -1,0 +1,98 @@
+{
+  "recorded": "2026-10-18",
+  "stage": "S14",
+  "source_kind": "same source as S7/S9/S10/S12/S13 evidence (user-provided Scryfall bulk export via the audit reference JSON; secondary-official; scryfall unreachable from the build environment)",
+  "reference_file_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+  "selection_rule": "the nine nonbasic lands still unsupported after S9",
+  "cards": {
+    "Phyrexian Tower": {
+      "type_line": "Legendary Land",
+      "oracle_text": "{T}: Add {C}.\n{T}, Sacrifice a creature: Add {B}{B}.",
+      "produced_mana": [
+        "B",
+        "C"
+      ],
+      "oracle_id": "1861e642-21d5-4232-89f3-b5557f2946c1",
+      "printing_id": "0b47f6d2-9f65-47a4-bfc4-15619befe53d",
+      "locator_not_fetched": "https://api.scryfall.com/cards/0b47f6d2-9f65-47a4-bfc4-15619befe53d"
+    },
+    "High Market": {
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{T}, Sacrifice a creature: You gain 1 life.",
+      "produced_mana": [
+        "C"
+      ],
+      "oracle_id": "86fb3749-37d6-48a6-8524-71e996850307",
+      "printing_id": "894aa6b6-0d08-4c43-8734-9cb7b31359c6",
+      "locator_not_fetched": "https://api.scryfall.com/cards/894aa6b6-0d08-4c43-8734-9cb7b31359c6"
+    },
+    "Grim Backwoods": {
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{2}{B}{G}, {T}, Sacrifice a creature: Draw a card.",
+      "produced_mana": [
+        "C"
+      ],
+      "oracle_id": "5effaa94-7f87-4485-8959-473d584c5034",
+      "printing_id": "606c5f42-fe5f-4dcd-b8f4-b67beabe3f0a",
+      "locator_not_fetched": "https://api.scryfall.com/cards/606c5f42-fe5f-4dcd-b8f4-b67beabe3f0a"
+    },
+    "Castle Locthwain": {
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control a Swamp.\n{T}: Add {B}.\n{1}{B}{B}, {T}: Draw a card, then you lose life equal to the number of cards in your hand.",
+      "produced_mana": [
+        "B"
+      ],
+      "oracle_id": "be811e70-aaaa-41f3-bf9e-5d3f9f719b49",
+      "printing_id": "19336e3a-2242-4a30-a563-32f2e4fc18e9",
+      "locator_not_fetched": "https://api.scryfall.com/cards/19336e3a-2242-4a30-a563-32f2e4fc18e9"
+    },
+    "Verdant Catacombs": {
+      "type_line": "Land",
+      "oracle_text": "{T}, Pay 1 life, Sacrifice this land: Search your library for a Swamp or Forest card, put it onto the battlefield, then shuffle.",
+      "produced_mana": null,
+      "oracle_id": "67d60b24-d429-4ded-90d9-06e49f28c396",
+      "printing_id": "94c229ea-90da-4aa0-bfda-b162fb3b5b8b",
+      "locator_not_fetched": "https://api.scryfall.com/cards/94c229ea-90da-4aa0-bfda-b162fb3b5b8b"
+    },
+    "Boseiju, Who Endures": {
+      "type_line": "Legendary Land",
+      "oracle_text": "{T}: Add {G}.\nChannel — {1}{G}, Discard this card: Destroy target artifact, enchantment, or nonbasic land an opponent controls. That player may search their library for a land card with a basic land type, put it onto the battlefield, then shuffle. This ability costs {1} less to activate for each legendary creature you control.",
+      "produced_mana": [
+        "G"
+      ],
+      "oracle_id": "bf1341dd-41a3-49f6-87ec-63170dde4324",
+      "printing_id": "2135ac5a-187b-4dc9-8f82-34e8d1603416",
+      "locator_not_fetched": "https://api.scryfall.com/cards/2135ac5a-187b-4dc9-8f82-34e8d1603416"
+    },
+    "Takenuma, Abandoned Mire": {
+      "type_line": "Legendary Land",
+      "oracle_text": "{T}: Add {B}.\nChannel — {3}{B}, Discard this card: Mill three cards, then return a creature or planeswalker card from your graveyard to your hand. This ability costs {1} less to activate for each legendary creature you control.",
+      "produced_mana": [
+        "B"
+      ],
+      "oracle_id": "ac2dd694-d2f1-4025-8400-12332bdc882a",
+      "printing_id": "499037cc-a577-41cb-8ca2-5e117945634f",
+      "locator_not_fetched": "https://api.scryfall.com/cards/499037cc-a577-41cb-8ca2-5e117945634f"
+    },
+    "Geier Reach Sanitarium": {
+      "type_line": "Legendary Land",
+      "oracle_text": "{T}: Add {C}.\n{2}, {T}: Each player draws a card, then discards a card.",
+      "produced_mana": [
+        "C"
+      ],
+      "oracle_id": "7b9fafe7-d26a-4ed5-b4c4-ce13763770b5",
+      "printing_id": "4b9c92f0-4242-4a3e-9ede-6a4935f5c75d",
+      "locator_not_fetched": "https://api.scryfall.com/cards/4b9c92f0-4242-4a3e-9ede-6a4935f5c75d"
+    },
+    "Mikokoro, Center of the Sea": {
+      "type_line": "Legendary Land",
+      "oracle_text": "{T}: Add {C}.\n{2}, {T}: Each player draws a card.",
+      "produced_mana": [
+        "C"
+      ],
+      "oracle_id": "a4580a1d-141e-449b-9018-e0258130634b",
+      "printing_id": "d80eb098-5433-4b1e-aad5-0fd31bf598dd",
+      "locator_not_fetched": "https://api.scryfall.com/cards/d80eb098-5433-4b1e-aad5-0fd31bf598dd"
+    }
+  }
+}

@@ -49,8 +49,10 @@ class Scope(_B):
         self.assertEqual([f['name'] for f in ev[PATHWAY]['card_faces']],['Darkbore Pathway','Slitherbore Pathway'])
     def test_other_nonbasics_still_fail_closed_and_frozen_zone_path_untouched(self):
         g=self.game()
-        for name in sorted(LAND_NAMES-set(LAND_MANA)):
-            uid=self.to_hand(g,name); self.refused(g,uid,exc=UnsupportedZoneMechanic)
+        for name in sorted(LAND_NAMES-set(LAND_MANA)):                                    # S14 (2026-10-18) made these nine playable on the bridge; the frozen zones path still refuses them
+            uid=self.to_hand(g,name)
+            with self.assertRaises(UnsupportedZoneMechanic): g.zones.play_land(uid)
+            self.assertEqual(g.zones.cards[uid].zone,'hand')
         self.assertEqual(len(LAND_NAMES-set(LAND_MANA)),9)
         uid=self.to_hand(g,'Blooming Marsh')
         with self.assertRaises(UnsupportedZoneMechanic): g.zones.play_land(uid)        # frozen zones path unchanged

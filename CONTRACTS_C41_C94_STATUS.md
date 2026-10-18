@@ -40,14 +40,14 @@ Kernel v0.8+R02+R01+R47+R48. Reference fixtures: 420. Statuses from the live tes
 | C67 | R35,R38 | EXECUTED (S9) | 2 | 2 |
 | C68 | R35,R15 | EXECUTED (S9) | 1 | 1 |
 | C69 | R36 | PARTIAL_EXECUTED | 4 | 0 |
-| C70 | R36,R37,R38 | BLOCKED_UNSUPPORTED | 1 | 0 |
-| C71 | R37 | BLOCKED_UNSUPPORTED | 1 | 0 |
-| C72 | R37 | BLOCKED_UNSUPPORTED | 1 | 0 |
+| C70 | R36,R37,R38 | EXECUTED (S14) | 1 | 1 |
+| C71 | R37 | EXECUTED (S14) | 1 | 1 |
+| C72 | R37 | EXECUTED (S14) | 1 | 1 |
 | C73 | R38 | EXECUTED (S9) | 1 | 1 |
-| C74 | R38 | BLOCKED_UNSUPPORTED | 1 | 0 |
-| C75 | R39 | BLOCKED_UNSUPPORTED | 1 | 0 |
-| C76 | R40 | BLOCKED_UNSUPPORTED | 1 | 0 |
-| C77 | R40 | PARTIAL_EXECUTED | 4 | 0 |
+| C74 | R38 | EXECUTED (S14) | 1 | 1 |
+| C75 | R39 | PARTIAL_EXECUTED (S14) | 1 | 1 |
+| C76 | R40 | PARTIAL_EXECUTED (S14) | 1 | 1 |
+| C77 | R40 | EXECUTED (S14) | 4 | 4 |
 | C78 | R41 | EXECUTED_WITH_SUBSTITUTION | 1 | 0 |
 | C79 | R42 | EXECUTED_WITH_SUBSTITUTION | 5 | 0 |
 | C80 | R41,R43 | BLOCKED_UNSUPPORTED | 2 | 0 |
@@ -76,3 +76,5 @@ offspring/copy tokens; Chatterfang activation and -X/-X; opponent permanents and
 
 
 S9 (2026-10-18): C65, C66, C67, C68 and C73 executed against the promoted kernel once the nine B/G fixer lands became playable (pab_lands_s9.py); see C65_C77_EXECUTION_NOTES.md.
+
+S14 (2026-10-18): C70, C71, C72, C74, C77 executed; C75, C76 partially executed (Boseiju channel has no target; opponents have no hands); see C65_C77_EXECUTION_NOTES.md.

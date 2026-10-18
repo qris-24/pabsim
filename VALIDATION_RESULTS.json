@@ -444,7 +444,7 @@
       "unexpected_successes": 0
     },
     "C70": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R36",
@@ -452,39 +452,39 @@
         "R38"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Verdant Catacombs activation (tap, pay 1 life, sacrifice) and subtype search not modeled; probe asserts fail-closed only"
+        "S14 (2026-10-18) executes the contract: tap + pay 1 life + sacrifice as the activation cost (land to graveyard, life traced), search by Swamp/Forest TYPE (Swamp, Forest, Overgrown Tomb, Underground Mortuary; Woodland Cemetery refused), fetched land enters by its own rule (Tomb paid/declined), shuffle. Not asserted: resources lacking beyond life/tap (Verdant has no mana cost)."
       ],
       "tests_passed": 1,
       "tests_run": 1,
       "unexpected_successes": 0
     },
     "C71": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R37"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Phyrexian Tower sacrifice mana ability not modeled; probe asserts fail-closed only"
+        "S14 executes the contract: the creature is sacrificed as the mana-ability cost (frozen sacrifice()), {B}{B} is added at once (no stack), and the Pest death-gain and Savra sacrifice triggers are distinct pending triggers; {C} ability and High Market as controls."
       ],
       "tests_passed": 1,
       "tests_run": 1,
       "unexpected_successes": 0
     },
     "C72": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R37"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "High Market and Grim Backwoods activations not modeled; probe asserts fail-closed only"
+        "S14 executes the contract: for both lands the sacrifice (and Grim Backwoods' {2}{B}{G}) is paid before the ability goes on the stack; High Market gains 1 on resolution, Grim Backwoods draws on resolution; a sacrifice-free activation (a land as the creature) is refused."
       ],
       "tests_passed": 1,
       "tests_run": 1,
@@ -506,45 +506,45 @@
       "unexpected_successes": 0
     },
     "C74": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R38"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Castle Locthwain draw-then-lose not modeled; probe asserts fail-closed only"
+        "S14 executes the contract: with two cards in hand the draw happens first and the loss equals the resulting hand size (3); zero-card control loses 1; an empty library records a failed draw rather than ignoring it."
       ],
       "tests_passed": 1,
       "tests_run": 1,
       "unexpected_successes": 0
     },
     "C75": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R39"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "PARTIAL_EXECUTED",
       "substitutions": [
-        "Channel (discard-from-hand activation with legendary-creature discount) not modeled; probe asserts fail-closed for the land play and that no channel API exists"
+        "S14: Takenuma executed \u2014 channel from hand (discard as the cost, not a land play or cast), generic 3 reduced by one per legendary creature you control to a floor of 0 (0, 1, 2, 4 legends). Boseiju NOT executed: no opponent controls an artifact, enchantment or nonbasic land in this kernel, so its channel has no legal target and is refused. Controls not asserted: a legendary non-creature land, Grist."
       ],
       "tests_passed": 1,
       "tests_run": 1,
       "unexpected_successes": 0
     },
     "C76": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R40"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "PARTIAL_EXECUTED",
       "substitutions": [
-        "Geier Reach Sanitarium / Mikokoro symmetrical draw effects not modeled (no opponent hands/libraries); probe asserts fail-closed only"
+        "S14: the controller's side executed \u2014 Sanitarium draws then discards, Mikokoro only draws, both {2} + tap, no tokens. Opponents have no hands or libraries (S8), so their draws/discards are traced as unmodeled, not asserted."
       ],
       "tests_passed": 1,
       "tests_run": 1,
@@ -557,9 +557,9 @@
         "R40"
       ],
       "oracle_cr_authenticated": false,
-      "status": "PARTIAL_EXECUTED",
+      "status": "EXECUTED",
       "substitutions": [
-        "Grim Backwoods {C} not modeled (fails closed). Tower/Forest/Swamp via the physical bridge; Sol Ring via the rock fixture"
+        "Tower/Forest/Swamp via the physical bridge; Sol Ring via the rock fixture; Grim Backwoods {C} via S14 (2026-10-18), colourless never conflated with coloured"
       ],
       "tests_passed": 4,
       "tests_run": 4,
@@ -920,7 +920,7 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13",
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14",
   "land_source_verified": false,
   "lands": 34,
   "lesson_sideboard": 1,
@@ -932,7 +932,7 @@
   "nonlands": 65,
   "old_compiler_contracts_failing": 15,
   "old_compiler_contracts_passing": 10,
-  "other_land_names_unimplemented": 9,
+  "other_land_names_unimplemented": 0,
   "partial_demonic_tutor_resolution_only": false,
   "partial_land_mana_paths": [
     "Forest",
@@ -973,7 +973,8 @@
     "S10",
     "S11",
     "S12",
-    "S13"
+    "S13",
+    "S14"
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
@@ -995,8 +996,8 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "tests_passed": 678,
-  "tests_run": 678,
+  "tests_passed": 690,
+  "tests_run": 690,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

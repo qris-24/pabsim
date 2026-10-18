@@ -69,6 +69,8 @@ SUPERSEDED_V08_FIXTURES=frozenset({'test_274_unsupported_land_fails_closed','tes
 LAND_MANA={**SUPPORTED_LAND_MANA,**{n:s['mana'] for n,s in FIXERS.items()}}   # everything a linked land can tap for after S9
 
 class FixerLandsMixin(OpponentsMixin):
+    def _land_spec(self,name): return FIXERS[name]          # S14 extends the table through this hook
+    def _has_land_spec(self,name): return name in FIXERS
     # ---- play -----------------------------------------------------------------
     def play_physical_land(self,physical_uid,*,face=None,pay_life=False,surveil_graveyard=False,**kw):
         card=self.zones.cards.get(physical_uid)
@@ -107,7 +109,7 @@ class FixerLandsMixin(OpponentsMixin):
         raise BridgeError('S9: unknown entry rule')
 
     def _play_fixer(self,physical_uid,card,*,face,pay_life,surveil_graveyard,main_phase=None,stack_empty=None):
-        spec=FIXERS[card.name]
+        spec=self._land_spec(card.name)
         self._land_timing(main_phase,stack_empty)
         self.zones._require_in_zone(physical_uid,'hand')
         if self.zones.land_plays_this_turn>=1: raise BridgeError('S9: only one land play per turn (305.2)')
@@ -142,13 +144,13 @@ class FixerLandsMixin(OpponentsMixin):
     # ---- tap ------------------------------------------------------------------
     def tap_physical_land_for_mana(self,event_uid,*,color=None):
         p=self.permanents.get(event_uid)
-        if p is None or p.name not in S9_NAMES: return super().tap_physical_land_for_mana(event_uid,color=color)
+        if p is None or not self._has_land_spec(p.name): return super().tap_physical_land_for_mana(event_uid,color=color)
         physical_uid=self.linked_battlefield.get(event_uid)
         if physical_uid is None: raise BridgeError('S9: land is not a linked physical land')
         card=self.zones._require_in_zone(physical_uid,'battlefield')
         if not card.is_land or card.controller!=0 or card.tapped or p.tapped or p.name!=card.name:
             raise BridgeError('S9: land must be a coherent, controlled, untapped linked land')
-        spec=FIXERS[p.name]
+        spec=self._land_spec(p.name)
         if spec.get('modal'):
             choices=(PATHWAY_FACES[p.face],)
         else: choices=spec['mana']
@@ -167,9 +169,10 @@ class FixerLandsMixin(OpponentsMixin):
         return color
 
 # ---- driver ------------------------------------------------------------------
-def playable_land_in_hand(g):
+def playable_land_in_hand(g,land_mana=None):
+    land_mana=LAND_MANA if land_mana is None else land_mana          # S14 passes a wider table
     for u in g.zones.zones['hand']:
-        if g.zones.cards[u].name in LAND_MANA: return u
+        if g.zones.cards[u].name in land_mana: return u
     return None
 
 def _need(g):
@@ -177,11 +180,11 @@ def _need(g):
     return {'B':sum(_s7.CASTABLE[n]['cost'][0] for n in hand if n in _s7.CASTABLE),
             'G':sum(_s7.CASTABLE[n]['cost'][1] for n in hand if n in _s7.CASTABLE)}
 
-def play_land_policy(g):
+def play_land_policy(g,land_mana=None):
     """Fixed, documented choices: Pathway face = the colour the hand needs more (G ties to B);
     Overgrown Tomb: pay 2 life while life > 10; Mortuary surveil: keep a land on top when the
     hand holds no land, otherwise mill. Returns the kwargs for play_physical_land."""
-    u=playable_land_in_hand(g)
+    u=playable_land_in_hand(g,land_mana)
     if u is None: return None,{}
     name=g.zones.cards[u].name; kw={}
     if name==PATHWAY:
@@ -193,17 +196,18 @@ def play_land_policy(g):
         kw['surveil_graveyard']=not (top is not None and top.is_land and not hand_has_land)
     return u,kw
 
-def tap_lands_policy(g,extra=None):
+def tap_lands_policy(g,extra=None,land_mana=None):
     """Tap every untapped linked land; dual lands give the colour the hand is short of;
     Llanowar Wastes gives {C} unless a colour is short; Peatland pays its life.
     `extra` (S10): additional colour needs, e.g. Savra in the command zone."""
-    produced=[]; need=_need(g)
+    produced=[]; need=_need(g); land_mana=LAND_MANA if land_mana is None else land_mana
     for k,v in (extra or {}).items(): need[k]=need.get(k,0)+v
     for ev,ph in list(g.linked_battlefield.items()):
         p=g.permanents.get(ev); c=g.zones.cards[ph]
-        if p is None or p.tapped or not c.is_land or c.name not in LAND_MANA: continue
+        if p is None or p.tapped or not c.is_land or c.name not in land_mana: continue
         spec=FIXERS.get(c.name); color=None
-        choices=(PATHWAY_FACES[p.face],) if spec and spec.get('modal') else LAND_MANA[c.name]
+        choices=(PATHWAY_FACES[p.face],) if spec and spec.get('modal') else land_mana[c.name]
+        if not choices: continue                                       # S14: Verdant Catacombs has no mana ability
         if len(choices)>1:
             pool=g.mana_pool+produced
             short=[x for x in ('G','B') if pool.count(x)<need[x] and x in choices]
