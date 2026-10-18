@@ -6,9 +6,9 @@ are never edited; each promotion layers on top and is verified by run_validation
 """
 from pab_r01_pest_rescuer import EXPECTED_LEGACY_FAILURES
 import pab_r47_r48_sba as _sba                        # R47+R48+R49 layered on R01
-from pab_clock_s3 import PriorityMixin                # S3: SBA between resolutions + trigger ordering (includes S1/S2)
-class Game(PriorityMixin,_sba.Game): pass
-class PhysicalZoneGame(PriorityMixin,_sba.PhysicalZoneGame): pass
-KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3'
-PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3"]
+from pab_clock_s4 import TurnBasedActionsMixin        # S4: untap/draw/land window (includes S1–S3)
+class Game(TurnBasedActionsMixin,_sba.Game): pass
+class PhysicalZoneGame(TurnBasedActionsMixin,_sba.PhysicalZoneGame): pass
+KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4'
+PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4"]
 SUPERSEDED_FROZEN_CONTRACTS=sorted(EXPECTED_LEGACY_FAILURES)

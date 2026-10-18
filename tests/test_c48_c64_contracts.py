@@ -273,7 +273,7 @@ class C62(_Base):
     SUBSTITUTIONS=['Beledros "Pay 10 life: untap all lands" and once-per-turn tracking are not modeled; the event kernel has no lands']
     def test_blocked_untap_ability_not_modeled(self):
         g=self.game('Beledros Witherbloom')
-        self.assertFalse(any('untap' in n.lower() or 'beledros' in n.lower() for n in dir(g)))
+        self.assertFalse(any('beledros' in n.lower() or 'pay_ten' in n.lower() for n in dir(g)))   # S4 added a generic untap step; Beledros' ability is still absent
 
 
 class C63(_Base):

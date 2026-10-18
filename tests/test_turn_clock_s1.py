@@ -48,7 +48,7 @@ class UnengagedCompatibility(unittest.TestCase):
     def test_physical_bridge_zones_untouched_by_advancing(self):
         g=PhysicalZoneGame(); g.add(SAVRA); g.resolve()
         z=g.zones; before=({k:tuple(v) for k,v in z.zones.items()},z.land_plays_this_turn)
-        g.advance_to('upkeep',active_player=2)
+        g.advance_to('upkeep',active_player=0)        # before the draw step: nothing has moved yet
         self.assertEqual(({k:tuple(v) for k,v in z.zones.items()},z.land_plays_this_turn),before); g.assert_bridge_integrity()
 
 if __name__=='__main__':
