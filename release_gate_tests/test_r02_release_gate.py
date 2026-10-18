@@ -15,7 +15,7 @@ def load(root,name):
 
 def clone():
     d=Path(tempfile.mkdtemp(prefix='pab_r02_'))/'pkg'
-    shutil.copytree(ROOT,d,ignore=shutil.ignore_patterns('__pycache__'))
+    shutil.copytree(ROOT,d,ignore=shutil.ignore_patterns('__pycache__','.git'))
     return d
 
 def preflight_message(root):
@@ -50,9 +50,9 @@ class RegistryDeterminism(unittest.TestCase):
 class PreflightReadOnly(unittest.TestCase):
     def test_clean_clone_passes_and_writes_nothing(self):
         d=clone()
-        snap={p:p.read_bytes() for p in d.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+        snap={p:p.read_bytes() for p in d.rglob('*') if p.is_file() and '__pycache__' not in p.parts and '.git' not in p.parts}
         self.assertIsNone(preflight_message(d))
-        after={p:p.read_bytes() for p in d.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+        after={p:p.read_bytes() for p in d.rglob('*') if p.is_file() and '__pycache__' not in p.parts and '.git' not in p.parts}
         self.assertEqual(snap,after)
 
 class TamperFailClosed(unittest.TestCase):
