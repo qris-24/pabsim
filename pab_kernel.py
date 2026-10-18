@@ -13,10 +13,11 @@ from pab_lands_s9 import FixerLandsMixin, SUPERSEDED_V08_FIXTURES   # S9: the ni
 from pab_commander_s10 import CommanderMixin          # S10: Savra from the command zone (cast, tax, 903.9a return) (includes S9)
 from pab_interaction_s11 import InteractionMixin      # S11: scripted opponent interaction (removal, wipes, graveyard hate, edicts) (includes S10)
 from pab_cast_s12 import PermanentCastMixin           # S12: the 15 noncreature permanents from the physical hand (includes S11)
+from pab_cast_s13 import SpellCastMixin               # S13: the eight remaining frozen-behaviour spells from the physical hand (includes S12)
 from pab_r52_village_rites import VillageRitesCostMixin, EXPECTED_LEGACY_FAILURES   # R52: Village Rites costs {B}; supersedes frozen test_91 (+R01's 112/113)
 class Game(VillageRitesCostMixin,TurnBasedActionsMixin,_sba.Game): pass
-class PhysicalZoneGame(VillageRitesCostMixin,PermanentCastMixin,_sba.PhysicalZoneGame): pass
-KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12'
-PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12"]
+class PhysicalZoneGame(VillageRitesCostMixin,SpellCastMixin,_sba.PhysicalZoneGame): pass
+KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13'
+PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13"]
 SUPERSEDED_FROZEN_CONTRACTS=sorted(EXPECTED_LEGACY_FAILURES)
 SUPERSEDED_V08_CONTRACTS=sorted(SUPERSEDED_V08_FIXTURES)

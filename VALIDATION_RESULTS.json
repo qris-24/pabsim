@@ -920,7 +920,7 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12",
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13",
   "land_source_verified": false,
   "lands": 34,
   "lesson_sideboard": 1,
@@ -933,7 +933,7 @@
   "old_compiler_contracts_failing": 15,
   "old_compiler_contracts_passing": 10,
   "other_land_names_unimplemented": 9,
-  "partial_demonic_tutor_resolution_only": true,
+  "partial_demonic_tutor_resolution_only": false,
   "partial_land_mana_paths": [
     "Forest",
     "Swamp",
@@ -972,7 +972,8 @@
     "S9",
     "S10",
     "S11",
-    "S12"
+    "S12",
+    "S13"
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
@@ -994,8 +995,8 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "tests_passed": 668,
-  "tests_run": 668,
+  "tests_passed": 678,
+  "tests_run": 678,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

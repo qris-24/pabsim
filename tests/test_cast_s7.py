@@ -170,7 +170,7 @@ class ScopeAndEvidence(_B):
         self.assertEqual(trace(g,'physical_creature_spell_resolved')[-1][1],'Sakura-Tribe Elder')
     def test_savra_lands_and_lesson_still_fail_closed(self):
         g=self.bridge(); g.add_mana('B','G','C','C')
-        for name in ('Forest','Swamp','Demonic Tutor','Abrupt Decay'):     # S12: Grave Pact and Sol Ring are castable now
+        for name in ('Forest','Swamp','Abrupt Decay','Golgari Charm'):     # S12/S13 widened the castable set; these still fail closed
             uid=self.to_hand(g,name); self.refused(g,uid)
         self.assertEqual(g.zones.cards[g.zones.zones['command'][0]].name,SAVRA); self.refused(g,g.zones.zones['command'][0],exc=(BridgeError,ZoneError))
         self.refused(g,g.zones.zones['outside_game'][0])

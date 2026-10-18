@@ -82,8 +82,8 @@ def build(here=HERE):
       'old_compiler_25_contract_failures':sum(not t['pass'] for t in old_contracts),
       'current_reference_test_count':sum(len(re.findall(r'^\s+def test_',f.read_text(encoding='utf-8'),re.M)) for f in sorted((here/'tests').glob('test_*.py'))),  # static count; no test-module imports
       'new_reference_changes_from_v05':'v0.6 added 56 physical-zone fixtures; v0.7 added 52 opt-in bridge fixtures; v0.8 adds 54 shared-mana and token-identity fixtures; R01 adds 13 Pest Rescuer token-predicate controls (11 run on both kernel and bridge) and 2 promoted corrections. All coverage values are partial.',
-      'kernel_version':'v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12',
-      'promoted_patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12"],
+      'kernel_version':'v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13',
+      'promoted_patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13"],
       'r01_pest_rescuer_token_predicate_promoted':True,
       'superseded_frozen_contracts':['test_112_teacher_pest_blocks_rescuer_at_upkeep_start','test_113_teacher_pest_entered_before_rescuer_trigger_resolves','test_91_village_rejects_mana_shortage_before_sac'],
       'superseded_frozen_v08_fixtures_s9':['test_274_unsupported_land_fails_closed','test_307_unsupported_named_nonbasic_mana_does_not_fallback'],
@@ -95,6 +95,7 @@ def build(here=HERE):
       'cr_evidence':'EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)',
       'issue_r49_status':'PROMOTED (LKI fallback in pab_r47_r48_sba.py)',
       'cast_from_hand_stage':'S6 promoted: cast_from_hand() on the physical bridge for Village Rites, Deadly Dispute, Tend the Pests, Nature\'s Lore, Sakura-Tribe Elder (pab_cast_s6.py); clock-derived timing, shared-pool mana, card leaves hand on resolution; all other names fail closed',
+      'cast_from_hand_stage_s13':'S13 promoted: Demonic Tutor, Diabolic Intent, Hunt for Specimens, Pest Summoning (after Learn), Unearth, Plumb the Forbidden, Immoral Bargain, Pest Infestation cast from the physical hand (pab_cast_s13.py; EVIDENCE/S13_SPELL_EVIDENCE.json); tutors search the real library; Immoral Bargain pays and destroys; 56/65 nonland cards castable, 9 spells and 9 lands still fail closed',
       'cast_from_hand_stage_s12':'S12 promoted: the 15 NONCREATURE permanents cast from the physical hand (pab_cast_s12.py; EVIDENCE/S12_PERMANENT_EVIDENCE.json); hand now casts 5 S6 spells + 28 creatures + 15 permanents + Savra from the command zone; 17 spells and 9 lands still fail closed',
       'interaction_stage_s11':'S11 promoted: scripted opponent interaction (pab_interaction_s11.py) — destroy_commander, destroy_creature, exile_creature, board_wipe (one event, CR 603.10a look-back), graveyard_exile, edict — firing on the scripted seat\'s precombat main with fixed target policies; opponents still never decide',
       'commander_stage_s10':'S10 promoted: Savra cast from the command zone with commander tax (pab_commander_s10.py); on death she goes to the graveyard (dies triggers fire) and returns to the command zone at the next SBA check (CR 903.9a, fixed policy); fixture add(SAVRA) path untouched; EVIDENCE/S10_COMMANDER_EVIDENCE.json (903.x from a secondary transcription)',

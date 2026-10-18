@@ -1,0 +1,81 @@
+{
+  "recorded": "2026-10-18",
+  "stage": "S13",
+  "source_kind": "same source as S7/S9/S10/S12 evidence (user-provided Scryfall bulk export via the audit reference JSON; secondary-official; scryfall unreachable from the build environment)",
+  "reference_file_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+  "selection_rule": "the eight deck spells with frozen fixture methods not yet wired to the physical card",
+  "cards": {
+    "Demonic Tutor": {
+      "mana_cost": "{1}{B}",
+      "cmc": 2.0,
+      "type_line": "Sorcery",
+      "oracle_text": "Search your library for a card, put that card into your hand, then shuffle.",
+      "oracle_id": "82004860-e589-4e38-8d61-8c0210e4ea39",
+      "printing_id": "a24b4cb6-cebb-428b-8654-74347a6a8d63",
+      "locator_not_fetched": "https://api.scryfall.com/cards/a24b4cb6-cebb-428b-8654-74347a6a8d63"
+    },
+    "Diabolic Intent": {
+      "mana_cost": "{1}{B}",
+      "cmc": 2.0,
+      "type_line": "Sorcery",
+      "oracle_text": "As an additional cost to cast this spell, sacrifice a creature.\nSearch your library for a card, put that card into your hand, then shuffle.",
+      "oracle_id": "038519b9-bca8-4b27-b5ac-2409595469d0",
+      "printing_id": "d72ab698-de67-4ca8-8e42-b05346bf52fa",
+      "locator_not_fetched": "https://api.scryfall.com/cards/d72ab698-de67-4ca8-8e42-b05346bf52fa"
+    },
+    "Hunt for Specimens": {
+      "mana_cost": "{1}{B}",
+      "cmc": 2.0,
+      "type_line": "Sorcery",
+      "oracle_text": "Create a 1/1 black and green Pest creature token with \"When this token dies, you gain 1 life.\"\nLearn. (You may reveal a Lesson card you own from outside the game and put it into your hand, or discard a card to draw a card.)",
+      "oracle_id": "53f1bcff-55fb-4d38-b108-dcbed623f488",
+      "printing_id": "8ff0f47f-75cb-42b0-ba4d-78522cad9861",
+      "locator_not_fetched": "https://api.scryfall.com/cards/8ff0f47f-75cb-42b0-ba4d-78522cad9861"
+    },
+    "Pest Summoning": {
+      "mana_cost": "{1}{B/G}{B/G}",
+      "cmc": 3.0,
+      "type_line": "Sorcery — Lesson",
+      "oracle_text": "Create two 1/1 black and green Pest creature tokens with \"When this token dies, you gain 1 life.\"",
+      "oracle_id": "f6e0cb77-4115-4948-8e1e-fdb774b1b254",
+      "printing_id": "6267e19a-a777-4767-8433-86b6624362b6",
+      "locator_not_fetched": "https://api.scryfall.com/cards/6267e19a-a777-4767-8433-86b6624362b6"
+    },
+    "Unearth": {
+      "mana_cost": "{B}",
+      "cmc": 1.0,
+      "type_line": "Sorcery",
+      "oracle_text": "Return target creature card with mana value 3 or less from your graveyard to the battlefield.\nCycling {2} ({2}, Discard this card: Draw a card.)",
+      "oracle_id": "4e0b647a-6e1a-421b-bca9-8d5e346bda80",
+      "printing_id": "b1f73271-b70f-40ae-be64-f8de7805923a",
+      "locator_not_fetched": "https://api.scryfall.com/cards/b1f73271-b70f-40ae-be64-f8de7805923a"
+    },
+    "Plumb the Forbidden": {
+      "mana_cost": "{1}{B}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "As an additional cost to cast this spell, you may sacrifice one or more creatures. When you do, copy this spell for each creature sacrificed this way.\nYou draw a card and lose 1 life.",
+      "oracle_id": "b099fc54-cdbc-46cb-b4e4-7c2ca77b115b",
+      "printing_id": "79c27df1-0c05-4208-a80c-73185ab35424",
+      "locator_not_fetched": "https://api.scryfall.com/cards/79c27df1-0c05-4208-a80c-73185ab35424"
+    },
+    "Immoral Bargain": {
+      "mana_cost": "{1}{B}{G}",
+      "cmc": 3.0,
+      "type_line": "Sorcery",
+      "oracle_text": "As an additional cost to cast this spell, sacrifice X creatures.\nDestroy X target nonland permanents.",
+      "oracle_id": "c82cc78b-ffd6-4f72-881d-85913830feb2",
+      "printing_id": "fc01f092-80fb-4643-8ada-c2e5aeb68658",
+      "locator_not_fetched": "https://api.scryfall.com/cards/fc01f092-80fb-4643-8ada-c2e5aeb68658"
+    },
+    "Pest Infestation": {
+      "mana_cost": "{X}{X}{G}",
+      "cmc": 1.0,
+      "type_line": "Sorcery",
+      "oracle_text": "Destroy up to X target artifacts and/or enchantments. Create twice X 1/1 black and green Pest creature tokens with \"When this token dies, you gain 1 life.\"",
+      "oracle_id": "1b704798-0c69-4c18-ac7e-42933ce90028",
+      "printing_id": "c9b8626d-d3d8-4460-9adf-112f48f173f6",
+      "locator_not_fetched": "https://api.scryfall.com/cards/c9b8626d-d3d8-4460-9adf-112f48f173f6"
+    }
+  }
+}
