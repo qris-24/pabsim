@@ -23,10 +23,10 @@ def build(root=HERE):
     return {
       'build':'pab_reliability_v0_8_r02_r01',
       'scope':'frozen Savra deterministic rules reference only; R02 runner integrity + R01 Pest Rescuer token predicate + R47 Roaster resolution-time count + R48 zero-toughness SBA promoted; frozen files, deck and Oracle untouched',
-      'patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17"],
+      'patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18"],
       'parent_manifest':'PHASE8_FILE_MANIFEST.json',
       'baseline_sha256':sha(root/'upstream_frozen/FROZEN_PABTRV3_BASELINE.txt'),
-      'unique_fixture_tests':719,
+      'unique_fixture_tests':728,
       'full_card_verified':0,
       'files_sha256':files,
       'runner_outputs_sha256_at_build':outputs,

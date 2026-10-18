@@ -82,8 +82,8 @@ def build(here=HERE):
       'old_compiler_25_contract_failures':sum(not t['pass'] for t in old_contracts),
       'current_reference_test_count':sum(len(re.findall(r'^\s+def test_',f.read_text(encoding='utf-8'),re.M)) for f in sorted((here/'tests').glob('test_*.py'))),  # static count; no test-module imports
       'new_reference_changes_from_v05':'v0.6 added 56 physical-zone fixtures; v0.7 added 52 opt-in bridge fixtures; v0.8 adds 54 shared-mana and token-identity fixtures; R01 adds 13 Pest Rescuer token-predicate controls (11 run on both kernel and bridge) and 2 promoted corrections. All coverage values are partial.',
-      'kernel_version':'v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17',
-      'promoted_patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17"],
+      'kernel_version':'v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18',
+      'promoted_patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18"],
       'r01_pest_rescuer_token_predicate_promoted':True,
       'superseded_frozen_contracts':['test_112_teacher_pest_blocks_rescuer_at_upkeep_start','test_113_teacher_pest_entered_before_rescuer_trigger_resolves','test_91_village_rejects_mana_shortage_before_sac'],
       'superseded_frozen_v08_fixtures_s9':['test_274_unsupported_land_fails_closed','test_307_unsupported_named_nonbasic_mana_does_not_fallback'],
@@ -95,6 +95,7 @@ def build(here=HERE):
       'cr_evidence':'EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)',
       'issue_r49_status':'PROMOTED (LKI fallback in pab_r47_r48_sba.py)',
       'cast_from_hand_stage':'S6 promoted: cast_from_hand() on the physical bridge for Village Rites, Deadly Dispute, Tend the Pests, Nature\'s Lore, Sakura-Tribe Elder (pab_cast_s6.py); clock-derived timing, shared-pool mana, card leaves hand on resolution; all other names fail closed',
+      'policy_opponents_stage_s18':'S18 promoted: policy opponents (pab_policy_s18.py) — reactive wipe/removal/graveyard-hate/edict rules with budgets through the S11 primitives, opponents untap and attack the controller, controller blocks by policy, the controller can lose; R55 bridge reanimation order fixed by override; whole games end (run_game)',
       'combat_stage_s17':'S17 promoted: the controller attacks (pab_combat_s17.py) — declaration rules, attack triggers, block policies none/all with menace, simultaneous damage with deathtouch and Pest bonuses, lethal-damage SBA, damage wears off, commander damage (903.10a); opponents never attack',
       'planeswalker_stage_s16':'S16 promoted: Grist, the Hunger Tide — cast, loyalty 3, +1/-2/-5 at sorcery speed once per turn, 704.5i, creature-card static off the battlefield (pab_grist_s16.py; EVIDENCE/S16_PLANESWALKER_EVIDENCE.json); every nonland card and every land now has a modeled physical path',
       'cast_from_hand_stage_s15':'S15 promoted: Abrupt Decay, Assassin\'s Trophy, Witherbloom Charm, Golgari Charm, Heroic Intervention, Infuse with Vitality, Grisly Salvage, Rise of the Witch-king, Witherbloom Command from the physical hand (pab_cast_s15.py; EVIDENCE/S15_SPELL_EVIDENCE.json) with until-end-of-turn P/T, hexproof vs scripted removal, regeneration, every-cleanup expiry; 64/65 nonland cards castable (Grist not modeled)',
@@ -134,7 +135,7 @@ def build(here=HERE):
       'old_event_kernel_still_has_no_real_draw_or_library_zone':True,
       'full_casting_engine':False,
       'full_stack_and_priority_engine':False,
-      'opponent_exogenous_events_only':True,   # S8/S11: boards and scripted actions, still no opponent decisions
+      'opponent_exogenous_events_only':False,  # S18: fixed-rule policies decide when scripted primitives fire; still no opponent spells
       'new_module_is_patch_to_original_engine':False,
       'zones_integrated_with_event_engine':False,
       'bounded_opt_in_zone_event_bridge':True,
