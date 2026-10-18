@@ -913,7 +913,7 @@
   "kernel_legacy_failures_exactly_superseded_set": true,
   "kernel_v07_bridge_52_replay_passes": 52,
   "kernel_v08_bridge_54_replay_passes": 54,
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5",
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6",
   "land_source_verified": false,
   "lands": 34,
   "lesson_sideboard": 1,
@@ -945,7 +945,8 @@
     "S2",
     "S3",
     "S4",
-    "S5"
+    "S5",
+    "S6"
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
@@ -962,8 +963,8 @@
     "test_112_teacher_pest_blocks_rescuer_at_upkeep_start",
     "test_113_teacher_pest_entered_before_rescuer_trigger_resolves"
   ],
-  "tests_passed": 492,
-  "tests_run": 492,
+  "tests_passed": 525,
+  "tests_run": 525,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

@@ -1,0 +1,14 @@
+{
+  "recorded": "2026-10-18",
+  "source_kind": "scryfall.com card pages fetched from the build environment (api.scryfall.com was unreachable). Scryfall mirrors Oracle text but is not Wizards' official feed; status: secondary-official.",
+  "cards": {
+    "Village Rites": {"mana_cost": "{B}", "type_line": "Instant", "oracle_text": "As an additional cost to cast this spell, sacrifice a creature.\nDraw two cards.", "source": "https://scryfall.com/card/sta/35", "corroboration": "https://mtg.wtf/card/inr/392/Village-Rites"},
+    "Deadly Dispute": {"mana_cost": "{1}{B}", "type_line": "Instant", "oracle_text": "As an additional cost to cast this spell, sacrifice an artifact or creature.\nDraw two cards and create a Treasure token. (It's an artifact with \"{T}, Sacrifice this artifact: Add one mana of any color.\")", "source": "https://scryfall.com/card/pip/184"},
+    "Tend the Pests": {"mana_cost": "{B}{G}", "type_line": "Instant", "oracle_text": "As an additional cost to cast this spell, sacrifice a creature.\nCreate X 1/1 black and green Pest creature tokens with \"When this creature dies, you gain 1 life,\" where X is the sacrificed creature's power.", "source": "https://scryfall.com/card/stx/242"},
+    "Nature's Lore": {"mana_cost": "{1}{G}", "type_line": "Sorcery", "oracle_text": "Search your library for a Forest card, put that card onto the battlefield, then shuffle.", "source": "https://scryfall.com/card/cmm/904"},
+    "Sakura-Tribe Elder": {"mana_cost": "{1}{G}", "type_line": "Creature — Snake Shaman", "power_toughness": "1/1", "oracle_text": "Sacrifice this creature: Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.", "source": "https://scryfall.com/card/soc/285/sakura-tribe-elder"}
+  },
+  "discrepancies": {
+    "R52": "pab_focus_engine_v07.cast_pab_spell costs Village Rites as (black=1, generic=1) = {1}{B}; printed cost is {B}. Frozen tests/test_v04_cost_and_copy.py::test_91 pins the frozen cost. S6 uses {B}. Frozen file and test untouched."
+  }
+}
