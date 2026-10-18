@@ -3,7 +3,7 @@
   "build": "pab_reliability_v0_8_r02_r01",
   "files_sha256": {
     ".gitignore": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
-    "00_HANDOFF_2026-10-18.md": "377345c19e70270be042ee612b0c35567ec40673a0b88f9f35c058a469eb54d2",
+    "00_HANDOFF_2026-10-18.md": "83ef6ef3b027bbd18e0ad842c2bdf59d3695b2fe6279c857ac24fb2e48529dc8",
     "C41_C47_EXECUTION_NOTES.md": "a664cc634345f1293add758078a2c469e4c173bf34edf47bd1dbcd5e5c3f1cca",
     "C48_C64_EXECUTION_NOTES.md": "75e4b0d7d59193e47ef8647f9ae63b3311ac1de94dc1f3b14806424987fae2ad",
     "C65_C77_EXECUTION_NOTES.md": "6c1e7d6b30194da516d4da3a213f7e5ddc1231615a1e0ea3c2ee3e85f0a0657e",
@@ -41,7 +41,7 @@
     "S6_PATCH_NOTES.md": "fe94aa8cd7fbe3296b5824428090970ba60008e7614a8a08a528443f2b0f423e",
     "S7_PATCH_NOTES.md": "6f02934a33f08e59ba2171c24718a2a7f6d5777b99f5e7c2c1cbf339e98288ec",
     "S8_PATCH_NOTES.md": "e2b5f83730763acec2e076a9bbc39f2779459318c0adc60af77160c8af26b9c6",
-    "S9_PATCH_NOTES.md": "52bc8ed26f21c48b4b8f7c4efddfa46d3a8bd6eb0252127f8aaf6b64dabc0a88",
+    "S9_PATCH_NOTES.md": "f370340d55441fad5e20c9768bb8c704100c1ef8d5f3cc1179f574730439d2f5",
     "UPKEEP_AUDIT_NOTES.md": "726ac5edfbc79c0f39662950c06df65a364b00702092295c8199de677fd09136",
     "build_manifest.py": "328e2667c3c9b5ba02ed29e5f0aa89cc97fbeb20aa949809087968dbdd9c4698",
     "build_registry.py": "5c91bcd7418472cf2b2fa6cc3b790e1245eb2ed8ae61ed8fa9b5c63280c6a7cc",
@@ -160,7 +160,7 @@
     "S9"
   ],
   "runner_outputs_sha256_at_build": {
-    "VALIDATION_RESULTS.json": "e031ec857fe81b6ac07f9fcdad2441d58e642d4396862c1053619ed9c815ede4",
+    "VALIDATION_RESULTS.json": "cc22bed779647293c5964708167f144b62a0ff1c43e48e811165b02c4466c46d",
     "validation_stdout.txt": "a596c8d2e73630eb250d8f763cd7d47b1a1619d761a8b95d98d6039f26798583"
   },
   "scope": "frozen Savra deterministic rules reference only; R02 runner integrity + R01 Pest Rescuer token predicate + R47 Roaster resolution-time count + R48 zero-toughness SBA promoted; frozen files, deck and Oracle untouched",
