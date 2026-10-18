@@ -138,7 +138,7 @@ class CastMixin(TurnBasedActionsMixin):
     def _resolve_cast(self,physical_uid,name,*,power,selected_land_uid):
         if self.stack_cards.get(physical_uid)!=name:
             raise BridgeError('S6: resolving a spell that is not on the stack ledger')
-        self.zones._require_in_zone(physical_uid,'hand')
+        self.zones._require_in_zone(physical_uid,'stack' if getattr(self,'cp06_stack_enabled',False) else 'hand')
         if name in ('Village Rites','Deadly Dispute'): self._fixture_draw(2,name)
         if name=='Deadly Dispute': self.make_tokens(TREASURE)
         if name=='Tend the Pests': self.make_tokens(PEST,power)
@@ -164,7 +164,7 @@ class CastMixin(TurnBasedActionsMixin):
         if ledger:
             for uid,name in ledger.items():
                 c=self.zones.cards.get(uid)
-                if c is None or c.zone!='hand' or c.name!=name:
+                if c is None or c.zone not in (('hand','stack') if getattr(self,'cp06_stack_enabled',False) else ('hand',)) or c.name!=name:
                     raise AssertionError('S6 stack ledger card is not the named card in hand')
         return True
 
@@ -178,7 +178,7 @@ def check_invariants_s6(g):
     _loop.check_invariants(g)
     for uid,name in g.stack_cards.items():
         c=g.zones.cards[uid]
-        if c.zone!='hand' or c.name!=name: raise _loop.InvariantError('stack ledger card not in hand')
+        if c.zone!=('stack' if getattr(g,'cp06_stack_enabled',False) else 'hand') or c.name!=name: raise _loop.InvariantError('stack ledger card not in expected physical zone')
     if g.stack_cards and not g.pending: raise _loop.InvariantError('cards on the stack ledger with nothing pending')
 
 def _fodder(g):

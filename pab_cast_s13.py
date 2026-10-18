@@ -78,7 +78,7 @@ class SpellCastMixin(PermanentCastMixin):
 
     def _finish_to_graveyard(self,physical_uid,name):
         if self.stack_cards.get(physical_uid)!=name: raise BridgeError('S13: resolving a spell that is not on the stack ledger')
-        self.zones._require_in_zone(physical_uid,'hand')
+        self.zones._require_in_zone(physical_uid,'stack' if getattr(self,'cp06_stack_enabled',False) else 'hand')
         self.zones.move(physical_uid,'graveyard'); del self.stack_cards[physical_uid]
         self.trace.append(('physical_spell_resolved',name,physical_uid)); self.assert_bridge_integrity()
 

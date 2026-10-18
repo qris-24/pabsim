@@ -32,7 +32,7 @@ class _B(unittest.TestCase):
         return next(u for u in g.zones.zones['library'] if g.zones.cards[u].name=='Forest')
     def cast(self,g,uid,**kw):
         g.cast_from_hand(uid,**kw); check_invariants_s6(g)
-        self.assertIn(uid,g.stack_cards); self.assertEqual(g.zones.cards[uid].zone,'hand')
+        self.assertIn(uid,g.stack_cards); self.assertEqual(g.zones.cards[uid].zone,'stack')  # CP06 approved supersession of S6 hand-on-stack fixture
         g.resolve(); check_invariants_s6(g)
         self.assertNotIn(uid,g.stack_cards)
     def refused(self,g,uid,exc=BridgeError,**kw):

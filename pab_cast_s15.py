@@ -180,7 +180,7 @@ class InteractionSpellsMixin(RemainingLandsMixin):
         def resolve():
             plan['resolve']()
             if self.stack_cards.get(physical_uid)!=name: raise BridgeError('S15: ledger mismatch')
-            self.zones._require_in_zone(physical_uid,'hand'); self.zones.move(physical_uid,'graveyard'); del self.stack_cards[physical_uid]
+            self.zones._require_in_zone(physical_uid,'stack' if getattr(self,'cp06_stack_enabled',False) else 'hand'); self.zones.move(physical_uid,'graveyard'); del self.stack_cards[physical_uid]
             self.trace.append(('physical_spell_resolved',name,physical_uid)); self.assert_bridge_integrity()
         self.pending.append(Trigger(name+' resolution (S15)',resolve)); self.sedgemoor_spell_cast_or_copied(); self.assert_bridge_integrity()
         return card

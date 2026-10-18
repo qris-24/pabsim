@@ -60,7 +60,7 @@ class GristMixin(InteractionSpellsMixin):
         return super().cast_from_hand(physical_uid,**kw)
     def _grist_enters(self,physical_uid):
         if self.stack_cards.get(physical_uid)!=GRIST: raise BridgeError('S16: Grist is not on the stack ledger')
-        self.zones._require_in_zone(physical_uid,'hand'); self.zones.move(physical_uid,'battlefield',controller=0); del self.stack_cards[physical_uid]
+        self.zones._require_in_zone(physical_uid,'stack' if getattr(self,'cp06_stack_enabled',False) else 'hand'); self.zones.move(physical_uid,'battlefield',controller=0); del self.stack_cards[physical_uid]
         p=self._add_grist(); self.linked_battlefield[p.uid]=physical_uid; self.trace.append(('physical_permanent_spell_resolved',GRIST,physical_uid,p.uid)); self.assert_bridge_integrity()
     def _add_grist(self,*,loyalty=None):
         p=self.add(GRIST,colors='BG',creature=False,artifact=False,mana_value=3); p.loyalty=GRIST_SPEC['loyalty'] if loyalty is None else loyalty

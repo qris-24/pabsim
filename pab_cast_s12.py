@@ -75,7 +75,7 @@ class PermanentCastMixin(InteractionMixin):
 
     def _resolve_permanent_s12(self,physical_uid,name):
         if self.stack_cards.get(physical_uid)!=name: raise BridgeError('S12: resolving a permanent spell that is not on the stack ledger')
-        self.zones._require_in_zone(physical_uid,'hand')
+        self.zones._require_in_zone(physical_uid,'stack' if getattr(self,'cp06_stack_enabled',False) else 'hand')
         spec=PERMANENTS[name]
         self.zones.move(physical_uid,'battlefield',controller=0)
         del self.stack_cards[physical_uid]                                   # off the stack before add(): ETB make_tokens asserts integrity

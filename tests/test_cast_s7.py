@@ -35,7 +35,7 @@ class _B(unittest.TestCase):
         p=g.make_tokens(PEST)[0]; g.resolve(); check_invariants_s6(g); return p
     def cast(self,g,uid,**kw):
         g.cast_from_hand(uid,**kw); check_invariants_s6(g)
-        self.assertIn(uid,g.stack_cards); self.assertEqual(g.zones.cards[uid].zone,'hand')
+        self.assertIn(uid,g.stack_cards); self.assertEqual(g.zones.cards[uid].zone,'stack')  # CP06 approved supersession
         g.resolve(); check_invariants_s6(g); self.assertNotIn(uid,g.stack_cards)
     def refused(self,g,uid,exc=BridgeError,**kw):
         hand=list(g.zones.zones['hand']); pool=list(g.mana_pool); perms=set(g.permanents); n=len(g.trace)

@@ -47,7 +47,7 @@ class ShigekiMixin(PolicyOpponentsMixin):
         return super().cast_from_hand(physical_uid,**kw)
     def _shigeki_enters(self,physical_uid):
         if self.stack_cards.get(physical_uid)!=SHIGEKI: raise BridgeError('S20: not on the ledger')
-        self.zones._require_in_zone(physical_uid,'hand'); self.zones.move(physical_uid,'battlefield',controller=0); del self.stack_cards[physical_uid]
+        self.zones._require_in_zone(physical_uid,'stack' if getattr(self,'cp06_stack_enabled',False) else 'hand'); self.zones.move(physical_uid,'battlefield',controller=0); del self.stack_cards[physical_uid]
         p=self.add(SHIGEKI,colors='G',creature=True,mana_value=2,power=1,toughness=3); p.enchantment=True; self.linked_battlefield[p.uid]=physical_uid
         self.trace.append(('physical_creature_spell_resolved',SHIGEKI,physical_uid,p.uid)); self.assert_bridge_integrity()
     def _tgt(self,uid,*,enchantment=False,**kw):
