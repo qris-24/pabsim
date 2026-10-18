@@ -1,0 +1,1239 @@
+{
+  "built_by": "build_model_coverage_s20.py",
+  "cards": {
+    "Abrupt Decay": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast, destroy target nonland permanent MV<=3 (any seat); fizzles if the target left"
+      ],
+      "not_modeled": [
+        "\"can't be countered\" (no counterspells exist)"
+      ],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Agent of the Iron Throne": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "commander grants: artifact or creature you control to graveyard from the battlefield -> each opponent loses 1 (frozen)"
+      ],
+      "not_modeled": [
+        "Background rules beyond the granted ability"
+      ],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Arcane Signet": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "mana rock (frozen fixture)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Assassin's Trophy": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast, destroy target permanent an opponent controls"
+      ],
+      "not_modeled": [
+        "the opponent's basic-land search (no libraries)"
+      ],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Bastion of Remembrance": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "ETB Human Soldier (frozen)",
+        "creature you control dies -> drain/gain (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Beledros Witherbloom": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "each-upkeep Pest (frozen, S2 clock)",
+        "flying body attacks"
+      ],
+      "not_modeled": [
+        "pay 10 life: untap lands"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Blight Mound": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "nontoken creature you control dies -> Pest (frozen)",
+        "attacking Pests +1/+0 and menace (S17)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Blood Artist": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "any creature dies -> target loses 1, gain 1 (frozen; target = lowest seat in the game, S8)"
+      ],
+      "not_modeled": [
+        "free choice of target player"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Blooming Marsh": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "entry condition (<=2 other lands), {B}/{G}"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Bogwater Lumaret": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "this or another creature you control enters -> gain 1 (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Boseiju, Who Endures": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "play, {G}"
+      ],
+      "not_modeled": [
+        "channel (no legal target exists in this kernel)"
+      ],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Carrion Feeder": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "sacrifice -> +1/+1 counter (frozen fixture)"
+      ],
+      "not_modeled": [
+        "can't block"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Castle Locthwain": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "entry condition (Swamp type), {B}, draw then lose by hand size"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Cauldron of Essence": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "creature you control dies -> drain/gain (frozen)"
+      ],
+      "not_modeled": [
+        "{1}{B}{G}, T, sacrifice: reanimate (frozen fixture only)"
+      ],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Chatterfang, Squirrel General": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "token-creation replacement (frozen)",
+        "{B} sacrifice-X activation (frozen fixture)"
+      ],
+      "not_modeled": [
+        "forestwalk"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Command Tower": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "play, {B} or {G}"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "frozen v0.8",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Dark Prophecy": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "creature you control dies -> draw, lose 1 (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Darkbore Pathway // Slitherbore Pathway": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "play one face, face decides the colour"
+      ],
+      "not_modeled": [
+        "the permanent keeps the full card name (bridge identity rule; documented)"
+      ],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Deadly Dispute": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast with artifact/creature sacrifice, draw 2 + Treasure"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S6",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Deathcap Glade": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "entry condition (>=2 other lands), {B}/{G}"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Deathgreeter": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "another creature dies -> may gain 1 (frozen; opposing deaths via S8)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Demonic Tutor": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast, any card from the real library to hand, shuffle"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S13",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Diabolic Intent": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast with sacrifice, any card to hand"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S13",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Dina, Soul Steeper": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "lifegain drain (frozen)",
+        "Dina pump activation (frozen fixture)"
+      ],
+      "not_modeled": [
+        "menace/combat use of the pump beyond the frozen fixture"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Essence Warden": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "another creature enters (any controller, incl. opponents' bodies) -> gain 1 (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Feral Appetite": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "attacking Pests +1/+0 and deathtouch (S17)",
+        "{1}{G}: exile card from a graveyard -> Pest (frozen fixture)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Forest": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "play, {G}"
+      ],
+      "not_modeled": [
+        "nothing: a basic land is fully modeled except that the frozen zones path (not the bridge) is the one that plays it"
+      ],
+      "physical_path_stage": "frozen v0.8",
+      "quantity": 6,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Geier Reach Sanitarium": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "{C}; {2}, T: you draw then discard"
+      ],
+      "not_modeled": [
+        "opponents' draw/discard"
+      ],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Golgari Charm": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "three modes: all creatures -1/-1 (SBA, any seat) / destroy enchantment / regenerate each creature you control"
+      ],
+      "not_modeled": [
+        "regeneration's remove-from-combat"
+      ],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Golgari Signet": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "{1}, T -> {B}{G} (frozen fixture)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Grave Pact": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "creature you control dies -> real edict against opposing boards (S8)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Grim Backwoods": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "{C}; {2}{B}{G}, T + sacrifice -> draw"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Grisly Salvage": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "reveal five, one creature or land to hand, rest to graveyard"
+      ],
+      "not_modeled": [
+        "event-kernel LKI for the milled creature cards"
+      ],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Grist, the Hunger Tide": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast as a planeswalker, loyalty 3",
+        "+1 Insect + mill (repeat loop present, cannot fire in this deck)",
+        "-2 sacrifice -> reflexive destroy",
+        "-5 drain by creature cards in graveyard",
+        "704.5i, creature-card static off the battlefield"
+      ],
+      "not_modeled": [
+        "opponents attacking her",
+        "responses to loyalty abilities"
+      ],
+      "physical_path_stage": "S16",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Heroic Intervention": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "hexproof + indestructible for your permanents until end of turn (every cleanup)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "High Market": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "{C}; T + sacrifice -> gain 1"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Hunt for Specimens": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast, Pest, Learn (lesson under the house rule / discard-draw / decline)"
+      ],
+      "not_modeled": [
+        "Learn's discard with an empty hand"
+      ],
+      "physical_path_stage": "S13",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Immoral Bargain": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast with X sacrifices, destroys X targets (own creatures/artifacts/enchantments, opposing creatures)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S13",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Infestation Sage": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "dies -> flying Insect (frozen)"
+      ],
+      "not_modeled": [
+        "flying as evasion"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Infuse with Vitality": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "target creature returns tapped when it dies this turn; gain 2"
+      ],
+      "not_modeled": [
+        "deathtouch (no combat consequence modeled for the target)"
+      ],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Llanowar Wastes": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "{C} free, {B}/{G} with 1 damage"
+      ],
+      "not_modeled": [
+        "damage prevention"
+      ],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Marauding Blight-Priest": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "lifegain drain (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Mikokoro, Center of the Sea": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "{C}; {2}, T: you draw"
+      ],
+      "not_modeled": [
+        "opponents' draw"
+      ],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Mirkwood Bats": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "token created/sacrificed drain (frozen)",
+        "flying body attacks"
+      ],
+      "not_modeled": [
+        "flying as evasion (opponents have no flyers; blocks ignore flying)"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Moldervine Reclamation": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "creature you control dies -> gain 1 and draw (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Moseo, Vein's New Dean": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "ETB attack-gain Pest (frozen)",
+        "end-step Infusion reanimation (frozen, S2 clock)",
+        "flying body attacks"
+      ],
+      "not_modeled": [
+        "flying as evasion"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Nature's Lore": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast, basic Forest to the battlefield untapped"
+      ],
+      "not_modeled": [
+        "nonbasic Forest-typed targets (Overgrown Tomb, Underground Mortuary)"
+      ],
+      "physical_path_stage": "S6",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Nurturing Peatland": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "pay 1 life per coloured tap"
+      ],
+      "not_modeled": [
+        "{1}, T, sacrifice: draw"
+      ],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Overgrown Tomb": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "pay 2 life or tapped, {B}/{G}, Swamp Forest types"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Pest Infestation": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast with X, up to X artifact/enchantment targets, 2X Pests (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S13",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Pest Rescuer": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "each-upkeep conditional Pest (R01, S2 clock)",
+        "lifegain +1 replacement (frozen)"
+      ],
+      "not_modeled": [
+        "Oracle text not from an official feed (flagged since R01)"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Pest Summoning": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "Lesson: into hand through Learn, cast with hybrid pips, two Pests"
+      ],
+      "not_modeled": [
+        "the Lesson outside the house rule"
+      ],
+      "physical_path_stage": "S13",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Phyrexian Altar": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "sacrifice -> one mana (frozen fixture)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Phyrexian Reclamation": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "{1}{B}, pay 2 life: creature card graveyard -> hand (frozen bridge)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Phyrexian Tower": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "{C}; T + sacrifice -> {B}{B} (mana ability)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Plumb the Forbidden": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast with 0+ sacrifices, copies, draw/lose per resolution (frozen)"
+      ],
+      "not_modeled": [
+        "copies as separate stack objects"
+      ],
+      "physical_path_stage": "S13",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Poison-Tip Archer": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "another creature dies -> each opponent loses 1 (frozen)",
+        "deathtouch in combat (S17)"
+      ],
+      "not_modeled": [
+        "reach (opponents have no flyers)"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Prosperous Innkeeper": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "ETB Treasure (frozen)",
+        "another creature you control enters -> gain 1 (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Reassembling Skeleton": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "{1}{B} graveyard return tapped (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Ribtruss Roaster": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast with devour (CR 702.82)",
+        "end-step Pests equal to +1/+1 counters (R47/R49)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Rise of the Witch-king": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "each player sacrifices (opponents by the S8 policy), return another permanent card (creature/land/artifact/enchantment)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Sakura-Tribe Elder": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "sacrifice -> basic land tapped (frozen bridge)"
+      ],
+      "not_modeled": [
+        "nonbasic search is not what the card does; nothing missing"
+      ],
+      "physical_path_stage": "S6",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Sangromancer": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "opposing creature dies -> may gain 3 (frozen; S8 deaths)",
+        "opponent discards -> gain 3 (frozen exogenous only)"
+      ],
+      "not_modeled": [
+        "flying",
+        "opponents never discard (no hands)"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Savra, Queen of the Golgari": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast from the command zone with commander tax",
+        "black-sacrifice trigger: pay 2 life, real edict against opposing boards (S8 policy)",
+        "green-sacrifice trigger: gain 2",
+        "dies -> graveyard (dies triggers) -> command zone at the next SBA (903.9a)",
+        "attacks, commander damage (903.10a)",
+        "targeted by scripted/policy removal; hexproof via Heroic Intervention"
+      ],
+      "not_modeled": [
+        "choosing to leave her in the graveyard",
+        "partner / commander damage from other sources"
+      ],
+      "physical_path_stage": "S10",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Sedgemoor Witch": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "Magecraft Pest on every instant/sorcery cast or copy (frozen)"
+      ],
+      "not_modeled": [
+        "menace",
+        "ward (no opponent targeting of our permanents is a spell/ability with a cost; policy removal ignores ward)"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Shigeki, Jukai Visionary": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast as a 1/3 enchantment creature (found missing from every frozen table while building this registry)",
+        "{1}{G}, T, return to hand: reveal four, a land tapped, rest to graveyard",
+        "channel {X}{X}{G}{G}: X nonlegendary cards from graveyard to hand"
+      ],
+      "not_modeled": [
+        "summoning-sick activation is refused (correct); nothing else"
+      ],
+      "physical_path_stage": "S20",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Skullclamp": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "equip and +1/-1 with death draw 2 (frozen fixture)"
+      ],
+      "not_modeled": [
+        "equip from the cast path (enters unattached)"
+      ],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Sol Ring": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "{C}{C} (frozen fixture)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "South Wind Avatar": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "another creature dies -> gain toughness (frozen)",
+        "lifegain drain (frozen)",
+        "deathtouch in combat (S17)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Starscape Cleric": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast for the printed cost",
+        "lifegain drain (frozen)"
+      ],
+      "not_modeled": [
+        "Offspring {2}{B} (token copy)",
+        "flying",
+        "can't block (blocks policy would need it)"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Swamp": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "play, {B}"
+      ],
+      "not_modeled": [
+        "nothing: a basic land is fully modeled except that the frozen zones path (not the bridge) is the one that plays it"
+      ],
+      "physical_path_stage": "frozen v0.8",
+      "quantity": 9,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Takenuma, Abandoned Mire": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "play, {B}, channel with legendary discount: mill 3, creature card to hand"
+      ],
+      "not_modeled": [
+        "planeswalker cards as the return target"
+      ],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Teacher's Pest": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "Pest subtype for Pest Rescuer (R01)",
+        "attack-gain (S17)",
+        "{B}{G} graveyard return tapped (frozen)"
+      ],
+      "not_modeled": [
+        "menace as evasion"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Tend the Pests": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast with sacrifice, X Pests by LKI power"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S6",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "The Hunger Tide Rises": {
+      "certified": false,
+      "kind": "permanent",
+      "modeled": [
+        "cast",
+        "chapters I–III Insects, IV sacrifice/search (frozen saga, S2 clock)"
+      ],
+      "not_modeled": [
+        "chapter IV search against the physical library (frozen fixture semantics)"
+      ],
+      "physical_path_stage": "S12",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Underground Mortuary": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "tapped, surveil 1, {B}/{G}, Swamp Forest types"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Undergrowth Stadium": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "entry condition (2+ opponents in the game), {B}/{G}"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Unearth": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast, MV<=3 creature card back (linked), Grist as a creature card (S16)",
+        "cycling (frozen bridge)"
+      ],
+      "not_modeled": [
+        "milled creature cards without event LKI (bridge limitation, except Grist)"
+      ],
+      "physical_path_stage": "S13",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Verdant Catacombs": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "T, pay 1 life, sacrifice: Swamp/Forest-typed card with its own entry rule, shuffle"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S14",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Village Rites": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "cast with sacrifice cost, draw 2 (R52 cost)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S6",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Viscera Seer": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "sacrifice -> scry 1 (frozen fixture; scry not applied to the physical library)"
+      ],
+      "not_modeled": [
+        "scry on the real library"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Warren Soultrader": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "pay 1 life + sacrifice -> Treasure (frozen fixture)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Witherbloom Charm": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "three modes: sacrifice a permanent + draw 2 / gain 5 / destroy nonland MV<=2"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Witherbloom Command": {
+      "certified": false,
+      "kind": "spell",
+      "modeled": [
+        "two modes of four: mill 3 + land back / destroy noncreature nonland MV<=2 / -3/-1 / target opponent loses 2, gain 2"
+      ],
+      "not_modeled": [
+        "an opponent's mill (no libraries)"
+      ],
+      "physical_path_stage": "S15",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Woodland Cemetery": {
+      "certified": false,
+      "kind": "land",
+      "modeled": [
+        "entry condition (Swamp/Forest type), {B}/{G}"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S9",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Wriggling Grub": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "dies -> two Worms (frozen)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Yahenni, Undying Partisan": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "opposing creature dies -> +1/+1 counter (frozen; S8 deaths)",
+        "sacrifice -> indestructible until end of turn (frozen; cleared every cleanup since S15)",
+        "haste (S17)"
+      ],
+      "not_modeled": [],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    },
+    "Yawgmoth, Thran Physician": {
+      "certified": false,
+      "kind": "creature",
+      "modeled": [
+        "cast",
+        "pay 1 life + sacrifice -> -1/-1 counter + draw (frozen, R48 SBA)",
+        "proliferate (frozen fixture)"
+      ],
+      "not_modeled": [
+        "protection from Humans"
+      ],
+      "physical_path_stage": "S7",
+      "quantity": 1,
+      "status": "PARTIAL",
+      "value_for_optimization": null
+    }
+  },
+  "summary": {
+    "card_text_source": "user-provided Scryfall bulk export (secondary-official); no official Oracle/CR authentication",
+    "cards_total": 101,
+    "certified": 0,
+    "distinct": 88,
+    "partial": 88,
+    "rule": "no card is scored; unmodeled parts are listed, never treated as zero",
+    "with_not_modeled_items": 42
+  }
+}
