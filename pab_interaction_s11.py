@@ -53,8 +53,17 @@ class InteractionMixin(CommanderMixin):
         for a in actions:
             if a.get('kind') not in KINDS or not isinstance(a.get('turn'),int) or a['turn']<1:
                 raise BridgeError('S11: action needs a known kind and a positive game turn')
+            owner=(a['turn']-1)%self.clock.seats                   # CP10 (AUD-02): fixed four-seat clock, turn 1 = seat 0, so turn t belongs to seat (t-1) % 4
+            if owner!=seat:
+                raise ValueError(f"S11: seat {seat} cannot act on turn {a['turn']}: that turn belongs to seat {owner} ((turn-1) % {self.clock.seats})")
+        for a in actions:                                          # validated as a whole before anything is scheduled
             self.opponent_script.append({'seat':seat,'turn':a['turn'],'kind':a['kind']})
         self.trace.append(('opponent_script_declared',seat,tuple((a['turn'],a['kind']) for a in actions)))
+
+    def assert_opponent_script_exhausted(self):
+        """CP10 (AUD-02): for scenario ends — every scheduled opponent action must have fired."""
+        if self.opponent_script:
+            raise AssertionError('S11: opponent script still pending: '+', '.join(f"seat {a['seat']} turn {a['turn']} {a['kind']}" for a in self.opponent_script))
 
     # ---- firing -----------------------------------------------------------
     def advance_step(self):

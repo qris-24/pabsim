@@ -2,15 +2,18 @@
 
 A: AUD-01 / A-S20-12 — tap_lands_policy counted produced colours twice (pool=g.mana_pool+produced
    while tap_physical_land_for_mana already appends to g.mana_pool).
+B: AUD-02 / A-S20-13 — script_opponent_actions accepted a (seat, turn) pair the fixed four-seat clock can
+   never reach (turn t belongs to seat (t-1) % 4); the entry stayed pending forever and never executed.
 """
 import sys, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 sys.path.insert(0,str(ROOT))
-from pab_focus_engine import SAVRA
+from pab_focus_engine import SAVRA, PEST
 from pab_kernel import PhysicalZoneGame
 from pab_lands_s9 import tap_lands_policy, _need, LAND_MANA
-from pab_opponents_s8 import check_invariants_s8
+from pab_opponents_s8 import check_invariants_s8, OPPONENT_SEATS
+from pab_interaction_s11 import check_invariants_s11
 
 class _Lands(unittest.TestCase):
     def game(self):
@@ -65,5 +68,39 @@ class TestCP10ColoredMana(_Lands):
         self.assertEqual(old,['G','B'])
         expected=self.expected_from_need(g,names); self.assertEqual(expected,['G','G'])
         got=tap_lands_policy(g); self.assertEqual(got,expected); self.assertNotEqual(got,old)
+
+BOARD=[{'name':'Bear','power':2,'toughness':2,'colors':'G'}]
+
+class TestCP10ScriptValidation(unittest.TestCase):
+    def game(self):
+        g=PhysicalZoneGame(); g.resolve()
+        for s in OPPONENT_SEATS: g.declare_opponent_board(s,BOARD)
+        check_invariants_s11(g); return g
+    def to_main(self,g,seat,turn):
+        while not (g.clock.step=='precombat_main' and g.clock.active_player==seat and g.clock.turn==turn):
+            g.advance_step(); g.resolve(); check_invariants_s11(g)
+    def test_seat_2_turn_2_is_impossible_and_raises_naming_the_owner(self):
+        g=self.game()
+        with self.assertRaises(ValueError) as cm: g.script_opponent_actions(2,[{'turn':2,'kind':'edict'}])
+        msg=str(cm.exception); self.assertIn('seat 2',msg); self.assertIn('turn 2',msg); self.assertIn('seat 1',msg)
+        self.assertEqual(g.opponent_script,[]); self.assertFalse([t for t in g.trace if t[0]=='opponent_script_declared'])
+    def test_seat_2_turn_3_is_accepted_and_executes_by_turn_3(self):
+        g=self.game(); g.script_opponent_actions(2,[{'turn':3,'kind':'edict'}]); p=g.make_tokens(PEST)[0]; g.resolve()
+        self.to_main(g,2,3)
+        self.assertEqual(g.opponent_actions_done,[(3,2,'edict')]); self.assertNotIn(p.uid,g.permanents)
+        self.assertEqual(g.opponent_script,[]); g.assert_opponent_script_exhausted()
+    def test_seat_1_turn_2_is_accepted(self):
+        g=self.game(); g.script_opponent_actions(1,[{'turn':2,'kind':'edict'}])
+        self.assertEqual(g.opponent_script,[{'seat':1,'turn':2,'kind':'edict'}])
+        for seat,turn in ((1,6),(2,7),(3,4),(3,8)): self.game().script_opponent_actions(seat,[{'turn':turn,'kind':'edict'}])
+    def test_whole_list_is_validated_before_anything_is_scheduled(self):
+        g=self.game()
+        with self.assertRaises(ValueError): g.script_opponent_actions(1,[{'turn':2,'kind':'edict'},{'turn':3,'kind':'edict'}])
+        self.assertEqual(g.opponent_script,[])
+    def test_exhausted_check_fails_while_a_valid_far_future_action_is_pending(self):
+        g=self.game(); g.script_opponent_actions(1,[{'turn':2,'kind':'edict'},{'turn':42,'kind':'edict'}]); g.make_tokens(PEST); g.resolve()
+        self.to_main(g,1,2); self.assertEqual(g.opponent_actions_done,[(2,1,'edict')])
+        with self.assertRaises(AssertionError) as cm: g.assert_opponent_script_exhausted()
+        self.assertIn('turn 42',str(cm.exception)); self.assertLess(g.clock.turn,42)
 
 if __name__=='__main__': unittest.main()

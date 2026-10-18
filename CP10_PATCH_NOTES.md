@@ -31,3 +31,36 @@ derives the expectation from need alone (`['G','G']`), asserts the policy matche
 former. Full gate: `Ran 785 tests` / `OK` (779 + 6), 18/18 release checks. All S9 pinned-seed driver
 fixtures (`tests/test_lands_s9.py`, `s9_tests/`) passed unchanged — no expectation moved, no
 `EVIDENCE/CP10_SUPERSEDED/` entry needed for this step.
+
+## CP10b — AUD-02 (A-S20-13): opponent scripts fail closed on impossible seat/turn
+
+### What
+`pab_interaction_s11.py` `InteractionMixin.script_opponent_actions`: each action's turn is checked against
+the seat that owns it; a mismatch raises `ValueError` naming the seat, the turn and the owning seat. The
+whole list is validated before any entry is appended, so a bad list schedules nothing. New method
+`assert_opponent_script_exhausted()` raises `AssertionError` (listing seat/turn/kind of every pending
+entry) when `opponent_script` is non-empty, for scenarios to call at their end. `advance_step` execution
+semantics are unchanged.
+
+### Formula confirmed
+`pab_turn_clock.TurnClock`: `SEATS=4`, initial state `turn=1, active_player=0`, and at each turn boundary
+`turn+=1; active_player=(active_player+1)%seats`. Hence turn t belongs to seat `(t-1) % 4`, checked
+empirically turns 1–12 (`{1:0, 2:1, 3:2, 4:3, 5:0, …}`). `pab_opponents_s8.LossAwareClock` skips a seat
+only after it has left the game, which cannot have happened when scripts are declared (declaration requires
+the clock not yet engaged); a seat that loses later leaves its own entries pending, which the new
+exhausted check now surfaces instead of hiding.
+
+### Why
+`script_opponent_actions(2,[{'turn':2,...}])` was accepted although turn 2 is seat 1's; the entry stayed in
+`opponent_script` forever and never fired, so a scenario could believe it had scripted interaction that
+never occurred.
+
+### Verification
+`tests/test_auditfix_cp10.py` class `TestCP10ScriptValidation` (5 tests): seat 2 / turn 2 edict raises
+`ValueError` mentioning seat 2, turn 2 and seat 1 and schedules nothing; seat 2 / turn 3 is accepted,
+fires at turn 3 (`opponent_actions_done == [(3,2,'edict')]`, the Pest token is gone) and the exhausted check
+then passes; seat 1 / turn 2 accepted (plus (1,6), (2,7), (3,4), (3,8)); a list with one bad entry schedules
+nothing; the exhausted check fails naming "turn 42" while a valid far-future action is pending at turn 2.
+All existing script call sites in the suite (seat 1 turns 2/6/10, seat 2 turn 3, seat 3 turn 4, and the
+S11/S15/S16/S20 driver scripts) already satisfied the formula; no expectation moved. Full gate:
+`Ran 790 tests` / `OK` (785 + 5), 18/18 release checks.
