@@ -1130,7 +1130,7 @@
     ],
     "contracts_oracle_cr_authenticated": 0,
     "cr_evidence": "EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)",
-    "current_reference_test_count": 650,
+    "current_reference_test_count": 662,
     "event_candidate_five_draw_call_sites_normalized": true,
     "explicit_mana_reference_only": true,
     "fixer_lands_stage_s9": "S9 promoted: the nine B/G-producing nonbasic lands playable and tappable on the physical bridge (pab_lands_s9.py) with their entry conditions, Pathway faces, Mortuary surveil, Wastes damage and Peatland life (EVIDENCE/S9_LAND_EVIDENCE.json); the other nine nonbasics still fail closed; frozen SUPPORTED_LAND_MANA untouched",
@@ -1139,6 +1139,7 @@
     "full_stack_and_priority_engine": false,
     "full_verified_cards": 0,
     "integrated_turn_loop": "S5 promoted: pab_turn_loop.py drives whole turns over existing capabilities with invariants checked at every boundary and action (8 seeds, up to 30 turns); no casting from the physical hand, no opponents",
+    "interaction_stage_s11": "S11 promoted: scripted opponent interaction (pab_interaction_s11.py) — destroy_commander, destroy_creature, exile_creature, board_wipe (one event, CR 603.10a look-back), graveyard_exile, edict — firing on the scripted seat's precombat main with fixed target policies; opponents still never decide",
     "issue_r49_status": "PROMOTED (LKI fallback in pab_r47_r48_sba.py)",
     "issues_r47_r48_status": "PROMOTED (fixed in pab_r47_r48_sba.py; frozen v0.7 behaviour pinned in C61/C79 tests)",
     "issues_r50_r51_design_only_historical": [
@@ -1147,7 +1148,7 @@
     ],
     "issues_r50_r51_status": "CLOSED: S2 (upkeep/end/cleanup/mana) + S4 (untap/draw/land-play reset)",
     "issues_r52_r53_r54_status": "PROMOTED 2026-10-18: R52 Village Rites costs {B} (pab_r52_village_rites.py; frozen test_91 superseded, corrected copy r52_tests/); R53 pab_turn_loop.opening_hand() shuffles first (CR 103.3); R54 S5 land-play test compared against a trace key never emitted into g.trace and passed vacuously — fixed and made non-vacuous",
-    "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10",
+    "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11",
     "land_count": 34,
     "land_exact_card_text_complete": false,
     "learn_sideboard_default": false,
@@ -1198,7 +1199,8 @@
       "S7",
       "S8",
       "S9",
-      "S10"
+      "S10",
+      "S11"
     ],
     "proposed_contracts_c95_c99": "EVIDENCE/PROPOSED_CONTRACTS_C95_C99.json (PROPOSED_NOT_EXECUTED)",
     "r01_pest_rescuer_token_predicate_promoted": true,

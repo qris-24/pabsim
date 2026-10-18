@@ -82,8 +82,8 @@ def build(here=HERE):
       'old_compiler_25_contract_failures':sum(not t['pass'] for t in old_contracts),
       'current_reference_test_count':sum(len(re.findall(r'^\s+def test_',f.read_text(encoding='utf-8'),re.M)) for f in sorted((here/'tests').glob('test_*.py'))),  # static count; no test-module imports
       'new_reference_changes_from_v05':'v0.6 added 56 physical-zone fixtures; v0.7 added 52 opt-in bridge fixtures; v0.8 adds 54 shared-mana and token-identity fixtures; R01 adds 13 Pest Rescuer token-predicate controls (11 run on both kernel and bridge) and 2 promoted corrections. All coverage values are partial.',
-      'kernel_version':'v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10',
-      'promoted_patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10"],
+      'kernel_version':'v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11',
+      'promoted_patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11"],
       'r01_pest_rescuer_token_predicate_promoted':True,
       'superseded_frozen_contracts':['test_112_teacher_pest_blocks_rescuer_at_upkeep_start','test_113_teacher_pest_entered_before_rescuer_trigger_resolves','test_91_village_rejects_mana_shortage_before_sac'],
       'superseded_frozen_v08_fixtures_s9':['test_274_unsupported_land_fails_closed','test_307_unsupported_named_nonbasic_mana_does_not_fallback'],
@@ -95,6 +95,7 @@ def build(here=HERE):
       'cr_evidence':'EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)',
       'issue_r49_status':'PROMOTED (LKI fallback in pab_r47_r48_sba.py)',
       'cast_from_hand_stage':'S6 promoted: cast_from_hand() on the physical bridge for Village Rites, Deadly Dispute, Tend the Pests, Nature\'s Lore, Sakura-Tribe Elder (pab_cast_s6.py); clock-derived timing, shared-pool mana, card leaves hand on resolution; all other names fail closed',
+      'interaction_stage_s11':'S11 promoted: scripted opponent interaction (pab_interaction_s11.py) — destroy_commander, destroy_creature, exile_creature, board_wipe (one event, CR 603.10a look-back), graveyard_exile, edict — firing on the scripted seat\'s precombat main with fixed target policies; opponents still never decide',
       'commander_stage_s10':'S10 promoted: Savra cast from the command zone with commander tax (pab_commander_s10.py); on death she goes to the graveyard (dies triggers fire) and returns to the command zone at the next SBA check (CR 903.9a, fixed policy); fixture add(SAVRA) path untouched; EVIDENCE/S10_COMMANDER_EVIDENCE.json (903.x from a secondary transcription)',
       'fixer_lands_stage_s9':'S9 promoted: the nine B/G-producing nonbasic lands playable and tappable on the physical bridge (pab_lands_s9.py) with their entry conditions, Pathway faces, Mortuary surveil, Wastes damage and Peatland life (EVIDENCE/S9_LAND_EVIDENCE.json); the other nine nonbasics still fail closed; frozen SUPPORTED_LAND_MANA untouched',
       'opponents_stage_s8':'S8 promoted: opponents as life totals + a fixed scripted board declared at game start (pab_opponents_s8.py); Savra-black and Grave Pact edicts resolve against real opposing creatures by a fixed policy (lowest power, toughness, uid); opponent_sacrifices counts observed sacrifices only; opponent deaths reach the frozen own-card triggers with frozen labels; seats at 0 life leave the game and the clock skips their later turns (CR 800.4a/g); opponents never act',
@@ -127,7 +128,7 @@ def build(here=HERE):
       'old_event_kernel_still_has_no_real_draw_or_library_zone':True,
       'full_casting_engine':False,
       'full_stack_and_priority_engine':False,
-      'opponent_exogenous_events_only':True,
+      'opponent_exogenous_events_only':True,   # S8/S11: boards and scripted actions, still no opponent decisions
       'new_module_is_patch_to_original_engine':False,
       'zones_integrated_with_event_engine':False,
       'bounded_opt_in_zone_event_bridge':True,
