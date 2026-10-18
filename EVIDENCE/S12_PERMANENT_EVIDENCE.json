@@ -1,0 +1,144 @@
+{
+  "recorded": "2026-10-18",
+  "stage": "S12",
+  "source_kind": "same source as S7/S9/S10 evidence (user-provided Scryfall bulk export via the audit reference JSON; secondary-official; scryfall unreachable from the build environment)",
+  "reference_file_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+  "selection_rule": "pab_focus_engine.NONCREATURE (15 names)",
+  "cards": {
+    "Agent of the Iron Throne": {
+      "mana_cost": "{2}{B}",
+      "cmc": 3.0,
+      "type_line": "Legendary Enchantment — Background",
+      "oracle_text": "Commander creatures you own have \"Whenever an artifact or creature you control is put into a graveyard from the battlefield, each opponent loses 1 life.\"",
+      "oracle_id": "325032d5-c452-4454-8976-82f86fee5ab8",
+      "printing_id": "5a5984d3-1e76-4d97-9373-b59cfa9c38ae",
+      "locator_not_fetched": "https://api.scryfall.com/cards/5a5984d3-1e76-4d97-9373-b59cfa9c38ae"
+    },
+    "Arcane Signet": {
+      "mana_cost": "{2}",
+      "cmc": 2.0,
+      "type_line": "Artifact",
+      "oracle_text": "{T}: Add one mana of any color in your commander's color identity.",
+      "oracle_id": "0bc7f093-bef0-4f1a-852c-4b75ebf54838",
+      "printing_id": "c6b6117c-faab-4bbb-b851-07bd8061ef03",
+      "locator_not_fetched": "https://api.scryfall.com/cards/c6b6117c-faab-4bbb-b851-07bd8061ef03"
+    },
+    "Bastion of Remembrance": {
+      "mana_cost": "{2}{B}",
+      "cmc": 3.0,
+      "type_line": "Enchantment",
+      "oracle_text": "When this enchantment enters, create a 1/1 white Human Soldier creature token.\nWhenever a creature you control dies, each opponent loses 1 life and you gain 1 life.",
+      "oracle_id": "c7f33cea-2ec8-4081-9208-a5b1d86721b3",
+      "printing_id": "6fe6ccad-e303-48f9-9dfa-0db7c1878031",
+      "locator_not_fetched": "https://api.scryfall.com/cards/6fe6ccad-e303-48f9-9dfa-0db7c1878031"
+    },
+    "Blight Mound": {
+      "mana_cost": "{2}{B}",
+      "cmc": 3.0,
+      "type_line": "Enchantment",
+      "oracle_text": "Attacking Pests you control get +1/+0 and have menace.\nWhenever a nontoken creature you control dies, create a 1/1 black and green Pest creature token with \"When this token dies, you gain 1 life.\"",
+      "oracle_id": "c4fe854e-8783-492e-bb2e-9f242ada8a5b",
+      "printing_id": "dc060028-e01c-4bc7-8b52-7d0e2a350061",
+      "locator_not_fetched": "https://api.scryfall.com/cards/dc060028-e01c-4bc7-8b52-7d0e2a350061"
+    },
+    "Cauldron of Essence": {
+      "mana_cost": "{1}{B}{G}",
+      "cmc": 3.0,
+      "type_line": "Artifact",
+      "oracle_text": "Whenever a creature you control dies, each opponent loses 1 life and you gain 1 life.\n{1}{B}{G}, {T}, Sacrifice a creature: Return target creature card from your graveyard to the battlefield. Activate only as a sorcery.",
+      "oracle_id": "a2f8cde8-bf7b-4234-89f0-a95f9dc937e3",
+      "printing_id": "b7091740-e70c-4cf2-8d3d-b8e1ac1fbbdd",
+      "locator_not_fetched": "https://api.scryfall.com/cards/b7091740-e70c-4cf2-8d3d-b8e1ac1fbbdd"
+    },
+    "Dark Prophecy": {
+      "mana_cost": "{B}{B}{B}",
+      "cmc": 3.0,
+      "type_line": "Enchantment",
+      "oracle_text": "Whenever a creature you control dies, you draw a card and you lose 1 life.",
+      "oracle_id": "f47659b5-d834-4153-b9fc-6a0702c503d9",
+      "printing_id": "ecf82c3b-7a35-43dd-8bf3-ebc68dc1b8fc",
+      "locator_not_fetched": "https://api.scryfall.com/cards/ecf82c3b-7a35-43dd-8bf3-ebc68dc1b8fc"
+    },
+    "Feral Appetite": {
+      "mana_cost": "{2}{G}",
+      "cmc": 3.0,
+      "type_line": "Enchantment",
+      "oracle_text": "Attacking Pests you control get +1/+0 and have deathtouch.\n{1}{G}: Exile target card from a graveyard. If a creature card is exiled this way, create a 1/1 black and green Pest creature token with \"When this token dies, you gain 1 life.\"",
+      "oracle_id": "adf731a1-fc4d-4260-bb85-535edb1d82e9",
+      "printing_id": "69dda877-c176-456c-8cd8-5a1ea288e4c9",
+      "locator_not_fetched": "https://api.scryfall.com/cards/69dda877-c176-456c-8cd8-5a1ea288e4c9"
+    },
+    "Golgari Signet": {
+      "mana_cost": "{2}",
+      "cmc": 2.0,
+      "type_line": "Artifact",
+      "oracle_text": "{1}, {T}: Add {B}{G}.",
+      "oracle_id": "1cf51f50-24e4-48d0-95b3-1dad3ffa4bf5",
+      "printing_id": "95103b4c-d0c0-40fa-9ddd-c7416455ca0c",
+      "locator_not_fetched": "https://api.scryfall.com/cards/95103b4c-d0c0-40fa-9ddd-c7416455ca0c"
+    },
+    "Grave Pact": {
+      "mana_cost": "{1}{B}{B}{B}",
+      "cmc": 4.0,
+      "type_line": "Enchantment",
+      "oracle_text": "Whenever a creature you control dies, each other player sacrifices a creature of their choice.",
+      "oracle_id": "6f4ac4a4-53ec-4bc9-8f5c-d4b801d867b2",
+      "printing_id": "f5a4970b-2ba6-4c91-a301-369369cdf360",
+      "locator_not_fetched": "https://api.scryfall.com/cards/f5a4970b-2ba6-4c91-a301-369369cdf360"
+    },
+    "Moldervine Reclamation": {
+      "mana_cost": "{3}{B}{G}",
+      "cmc": 5.0,
+      "type_line": "Enchantment",
+      "oracle_text": "Whenever a creature you control dies, you gain 1 life and draw a card.",
+      "oracle_id": "68639a3d-2192-4921-8298-c76bb0cd6b02",
+      "printing_id": "f3e93085-ffcb-4f48-8649-3fcbc5e97699",
+      "locator_not_fetched": "https://api.scryfall.com/cards/f3e93085-ffcb-4f48-8649-3fcbc5e97699"
+    },
+    "Phyrexian Altar": {
+      "mana_cost": "{3}",
+      "cmc": 3.0,
+      "type_line": "Artifact",
+      "oracle_text": "Sacrifice a creature: Add one mana of any color.",
+      "oracle_id": "8d02b297-97c4-4379-9862-0a462400f66f",
+      "printing_id": "95d9f93c-50a8-41a9-be98-d1900bf1c12f",
+      "locator_not_fetched": "https://api.scryfall.com/cards/95d9f93c-50a8-41a9-be98-d1900bf1c12f"
+    },
+    "Phyrexian Reclamation": {
+      "mana_cost": "{B}",
+      "cmc": 1.0,
+      "type_line": "Enchantment",
+      "oracle_text": "{1}{B}, Pay 2 life: Return target creature card from your graveyard to your hand.",
+      "oracle_id": "647ca69e-cc01-4b2b-b376-bee2a98331e8",
+      "printing_id": "10c09b68-1d92-42da-8d4d-0d60453a6aa7",
+      "locator_not_fetched": "https://api.scryfall.com/cards/10c09b68-1d92-42da-8d4d-0d60453a6aa7"
+    },
+    "Skullclamp": {
+      "mana_cost": "{1}",
+      "cmc": 1.0,
+      "type_line": "Artifact — Equipment",
+      "oracle_text": "Equipped creature gets +1/-1.\nWhenever equipped creature dies, draw two cards.\nEquip {1}",
+      "oracle_id": "65986c1b-8e51-4604-b685-d82fa7d1263a",
+      "printing_id": "1d8b007b-3169-4ee3-80c7-781fc096fc7a",
+      "locator_not_fetched": "https://api.scryfall.com/cards/1d8b007b-3169-4ee3-80c7-781fc096fc7a"
+    },
+    "Sol Ring": {
+      "mana_cost": "{1}",
+      "cmc": 1.0,
+      "type_line": "Artifact",
+      "oracle_text": "{T}: Add {C}{C}.",
+      "oracle_id": "6ad8011d-3471-4369-9d68-b264cc027487",
+      "printing_id": "8ee443cc-e17a-493b-9c93-1f9e141a30e4",
+      "locator_not_fetched": "https://api.scryfall.com/cards/8ee443cc-e17a-493b-9c93-1f9e141a30e4"
+    },
+    "The Hunger Tide Rises": {
+      "mana_cost": "{2}{G}",
+      "cmc": 3.0,
+      "type_line": "Enchantment — Saga",
+      "oracle_text": "(As this Saga enters and after your draw step, add a lore counter. Sacrifice after IV.)\nI, II, III — Create a 1/1 black and green Insect creature token.\nIV — Sacrifice any number of creatures. Search your library and/or graveyard for a creature card with mana value less than or equal to the number of creatures sacrificed this way and put it onto the battlefield. If you search your library this way, shuffle.",
+      "oracle_id": "356edd68-7dd5-4ab6-a738-6cb0eb2d4e56",
+      "printing_id": "4b44f01b-17e8-4d49-8f38-fd1128114b2f",
+      "locator_not_fetched": "https://api.scryfall.com/cards/4b44f01b-17e8-4d49-8f38-fd1128114b2f"
+    }
+  }
+}
