@@ -1,0 +1,597 @@
+"""PABTRV3 reference event kernel v0.2 (NOT a full Commander rules engine).
+
+Strictly scoped: controlled sacrifice/death/token/lifegain, limited named entry,
+upkeep, attack and recursion contracts. No full casting/mana, opponents, priority,
+or full game-state-based actions. All effects must be invoked explicitly; support
+boundaries are documented in COVERAGE.json and README.md.
+
+Facts are derived from the frozen PABTRV3 focus package's recorded text.
+The original simulator remains unchanged.
+"""
+from __future__ import annotations
+from collections import deque
+from dataclasses import dataclass
+from typing import Callable, Optional
+
+
+@dataclass(frozen=True)
+class TokenKind:
+    label: str
+    colors: str
+    subtypes: frozenset[str]
+    creature: bool = True
+    dies_gain: int = 0
+    attacks_gain: int = 0
+    flying: bool = False
+    artifact: bool = False
+
+
+PEST = TokenKind('ordinary Pest', 'BG', frozenset({'Pest'}), dies_gain=1)
+MOSEO_PEST = TokenKind('Moseo attack-gain Pest', 'BG', frozenset({'Pest'}), attacks_gain=1)
+INSECT = TokenKind('Hunger Tide Insect', 'BG', frozenset({'Insect'}))
+FLYING_INSECT = TokenKind('Infestation Sage Insect', 'BG', frozenset({'Insect'}), flying=True)
+WORM = TokenKind('Wriggling Grub Worm', 'BG', frozenset({'Worm'}))
+SQUIRREL = TokenKind('Chatterfang Squirrel', 'G', frozenset({'Squirrel'}))
+HUMAN = TokenKind('Bastion Human Soldier', 'W', frozenset({'Human', 'Soldier'}))
+TREASURE = TokenKind('Treasure', '', frozenset({'Treasure'}), creature=False, artifact=True)
+
+SAVRA='Savra, Queen of the Golgari'
+
+# Names here authorize only colors/types used by reference fixtures, not full cards.
+BODIES = {
+    SAVRA: 'BG', 'Dina, Soul Steeper': 'BG', 'Mirkwood Bats':'B',
+    'Pest Rescuer':'G', 'Chatterfang, Squirrel General':'G',
+    'Moseo, Vein\'s New Dean':'B', 'Blight Mound':'',
+    'Bastion of Remembrance':'', 'Cauldron of Essence':'',
+    'Reassembling Skeleton':'B', "Teacher's Pest":'BG',
+    'Infestation Sage':'B', 'Wriggling Grub':'B',
+    'Sedgemoor Witch':'B', 'Beledros Witherbloom':'BG',
+    'Ribtruss Roaster':'G', 'South Wind Avatar':'B',
+    'Agent of the Iron Throne':'', 'Deathgreeter':'B',
+    'Blood Artist':'B', 'Poison-Tip Archer':'BG',
+    'Marauding Blight-Priest':'B', 'Starscape Cleric':'B',
+    'Moldervine Reclamation':'', 'Dark Prophecy':'',
+    'Grave Pact':'', 'Prosperous Innkeeper':'G',
+    'Essence Warden':'G', 'Feral Appetite':'',
+    'Warren Soultrader':'B', 'Carrion Feeder':'B',
+    'Viscera Seer':'B', 'Bogwater Lumaret':'BG', 'Sangromancer':'B',
+    'Phyrexian Reclamation':'', 'Phyrexian Altar':'', 'Arcane Signet':'',
+    'Golgari Signet':'', 'Sol Ring':'', 'Skullclamp':''
+}
+NONCREATURE = {'Blight Mound','Bastion of Remembrance', 'Cauldron of Essence',
+               'Agent of the Iron Throne', 'Moldervine Reclamation',
+               'Dark Prophecy','Grave Pact','Feral Appetite','Phyrexian Reclamation',
+               'Phyrexian Altar','Arcane Signet','Golgari Signet','Sol Ring','Skullclamp'}
+ARTIFACT = {'Cauldron of Essence','Phyrexian Altar','Arcane Signet',
+            'Golgari Signet','Sol Ring','Skullclamp'}
+
+
+@dataclass
+class Permanent:
+    uid: int
+    name: str
+    controller: int
+    colors: str
+    creature: bool = True
+    token: Optional[TokenKind] = None
+    artifact: bool = False
+    tapped: bool = False
+    toughness: int = 1
+    counters: int = 0
+    mana_value: int = 0
+
+    @property
+    def subtypes(self):
+        if self.token: return self.token.subtypes
+        return frozenset({'Pest'}) if self.name == "Teacher's Pest" else frozenset()
+
+
+@dataclass
+class Trigger:
+    label: str
+    action: Callable[[], None]
+
+
+class IllegalAction(ValueError): pass
+
+
+class Game:
+    """Controlled-object event trace. Default priority/stack order is *chosen* by controller.
+
+    `pending` is in resolution order, including triggers from newer events, which
+    resolve before older triggers. Does not arbitrate APNAP or opponent interactions.
+    """
+    def __init__(self, *, learn_sideboard_allowed=False, pay_savra_black=True,
+                 choose_savra_green=True, choose_deathgreeter_gain=True,
+                 choose_sangromancer_gain=True):
+        self.life = [40,40,40,40]
+        self.permanents: dict[int, Permanent] = {}
+        self.graveyard: list[Permanent] = []
+        self.hand: list[str] = []
+        self.lesson_available = True
+        self.learn_sideboard_allowed = learn_sideboard_allowed
+        self.pay_savra_black = pay_savra_black
+        self.choose_savra_green = choose_savra_green
+        self.choose_deathgreeter_gain = choose_deathgreeter_gain
+        self.choose_sangromancer_gain = choose_sangromancer_gain
+        self.mana_pool: list[str] = []  # explicitly supplied mana, NO lands yet
+        self.next_uid = 1
+        self.pending: deque[Trigger] = deque()
+        self.trace: list[tuple] = []
+        self.edict_opportunities = 0
+        self.opponent_sacrifices = 0  # no opponent objects: never invent a sacrifice
+        self.cards_drawn = 0
+        self.game_lost = False  # player zero life at a modeled priority boundary
+        self.life_gained_turn = 0  # life gained by PAB controller, NOT net life
+        self.cards_exiled: list[str] = []
+
+    def has(self, name):
+        return sum(1 for p in self.permanents.values() if p.controller == 0 and p.name == name)
+
+    def add(self, name, *, controller=0, colors=None, creature=None,
+            artifact=None, toughness=1, mana_value=0, counters=0, tapped=False):
+        if colors is None:
+            if name not in BODIES:
+                raise IllegalAction(f'No verified partial card definition for {name}')
+            colors = BODIES[name]
+        if creature is None: creature = name not in NONCREATURE
+        if artifact is None: artifact = name in ARTIFACT
+        p = Permanent(self.next_uid,name,controller,colors,creature,None,artifact,
+                      tapped,toughness,counters,mana_value)
+        self.next_uid += 1
+        self.permanents[p.uid] = p
+        self.trace.append(('enter',p.uid,name))
+        if controller == 0:
+            if name == 'Bastion of Remembrance': self.make_tokens(HUMAN)
+            if name == "Moseo, Vein's New Dean": self.make_tokens(MOSEO_PEST)
+            if name == 'Prosperous Innkeeper': self.make_tokens(TREASURE)
+        if p.creature: self._enter_creature_triggers(p)
+        return p
+
+    def _enqueue(self, triggers):
+        # One controller orders its triggers in this reference policy; first resolves first.
+        if triggers: self.pending = deque(list(triggers)+list(self.pending))
+
+    def resolve(self, max_resolutions=1000):
+        n = 0
+        if self.life[0] <= 0:
+            self.game_lost=True; self.pending.clear()
+            return 0
+        while self.pending and not self.game_lost:
+            if n >= max_resolutions: raise RuntimeError('Unbounded trigger chain')
+            t=self.pending.popleft(); self.trace.append(('resolve',t.label))
+            t.action(); n+=1
+            # State-based actions occur between resolving stack objects, not between
+            # simultaneous effects inside the same resolving trigger.
+            if self.life[0] <= 0:
+                self.game_lost=True
+                self.trace.append(('lose_game','life_zero_or_less'))
+                self.pending.clear()
+        return n
+
+    def _enter_creature_triggers(self, entered):
+        effects=[]
+        for p in tuple(self.permanents.values()):
+            if p.controller == 0 and p.name == 'Bogwater Lumaret' and entered.controller == 0:
+                effects.append(Trigger('Bogwater Lumaret controlled ETB',
+                                       lambda: self.gain(1,'Bogwater Lumaret')))
+            if p.controller == 0 and p.name == 'Essence Warden' and p.uid != entered.uid:
+                effects.append(Trigger('Essence Warden ETB life',lambda: self.gain(1,'Essence Warden')))
+            if p.controller == 0 and p.name == 'Prosperous Innkeeper' and p.uid != entered.uid and entered.controller == 0:
+                effects.append(Trigger('Innkeeper ETB life',lambda: self.gain(1,'Prosperous Innkeeper')))
+        self._enqueue(effects)
+
+    def make_tokens(self, kind:TokenKind, count=1, *, controller=0):
+        if count < 0: raise IllegalAction('Negative token creation count')
+        # Chatterfang replaces the creation event ONCE, not recursively.
+        kinds = [kind]*count
+        if controller == 0 and self.has('Chatterfang, Squirrel General'):
+            kinds += [SQUIRREL]*count
+        effects=[]; produced=[]
+        for k in kinds:
+            p = Permanent(self.next_uid,k.label,controller,k.colors,k.creature,k,k.artifact)
+            self.next_uid+=1; self.permanents[p.uid]=p; produced.append(p)
+            self.trace.append(('token_created',p.uid,k.label,k.colors))
+            if controller == 0:
+                for bats in range(self.has('Mirkwood Bats')):
+                    effects.append(Trigger('Mirkwood Bats creation drain',
+                                           lambda: self.drain_opponents(1,'Mirkwood Bats create')))
+            if k.creature:
+                # Token enters simultanously in one creation event, and ETB checks all bodies.
+                # collect triggers below, after the complete batch exists.
+                pass
+        self._enqueue(effects)
+        for p in produced:
+            if p.creature: self._enter_creature_triggers(p)
+        return produced
+
+    def pay_life(self, amount, source):
+        if amount < 0 or self.life[0] < amount: return False
+        self.life[0]-=amount
+        self.trace.append(('pay_life',amount,source))
+        return True
+
+    def lose_life(self, amount,source):
+        if amount < 0: raise IllegalAction('Negative life loss')
+        self.life[0]-=amount
+        self.trace.append(('lose_life',amount,source))
+
+    def gain(self, amount,source):
+        if amount <= 0: return
+        amount += self.has('Pest Rescuer')  # replacement modifies one gain event
+        self.life[0]+=amount; self.life_gained_turn+=amount
+        self.trace.append(('gain',amount,source))
+        effects=[]
+        for name in ['Dina, Soul Steeper','Marauding Blight-Priest',
+                     'Starscape Cleric','South Wind Avatar']:
+            for _ in range(self.has(name)):
+                effects.append(Trigger(name+' lifegain drain',
+                    lambda n=name: self.drain_opponents(1,n+' lifegain')))
+        self._enqueue(effects)
+
+    def drain_opponents(self, amount, source):
+        if amount <= 0: return
+        for i in (1,2,3): self.life[i]-=amount
+        self.trace.append(('opponents_lose_each',amount,source))
+
+    def _leave(self, uid, *, sacrificed):
+        if uid not in self.permanents: raise IllegalAction('Permanent not on battlefield')
+        p=self.permanents[uid]
+        if p.controller != 0: raise IllegalAction('Reference only accepts own controlled object')
+        if not p.creature and not p.artifact: raise IllegalAction('Only creature/artifact sacrifice modeled')
+        before = tuple(self.permanents.values())
+        del self.permanents[uid]
+        self.trace.append(('sacrifice' if sacrificed else 'destroy',uid,p.name))
+        # No immediate token graveyard recursion; tokens disappear after death triggers are queued.
+        if not p.token: self.graveyard.append(p)
+        effects=[]
+        names = [x.name for x in before if x.controller==0]
+        if sacrificed and p.creature and SAVRA in names:
+            if 'B' in p.colors:
+                def savra_black():
+                    if self.pay_savra_black and self.pay_life(2,'Savra black option'):
+                        self.edict_opportunities+=1
+                        self.trace.append(('edict_opportunity',1,'Savra black'))
+                effects.append(Trigger('Savra black sacrifice',savra_black))
+            if 'G' in p.colors:
+                def savra_green():
+                    if self.choose_savra_green: self.gain(2,'Savra green option')
+                effects.append(Trigger('Savra green sacrifice',savra_green))
+        if sacrificed and p.token:
+            for _ in range(names.count('Mirkwood Bats')):
+                effects.append(Trigger('Mirkwood Bats token sacrifice',
+                          lambda: self.drain_opponents(1,'Mirkwood Bats sacrifice')))
+        # A token's own death trigger is derived from its SPEC, not its subtype.
+        if p.creature:
+            if p.token and p.token.dies_gain:
+                effects.append(Trigger('Pest dies-gain',
+                          lambda a=p.token.dies_gain: self.gain(a,'ordinary Pest death')))
+            if p.name == 'Infestation Sage':
+                effects.append(Trigger('Infestation Sage death Insect',
+                          lambda:self.make_tokens(FLYING_INSECT)))
+            if p.name == 'Wriggling Grub':
+                effects.append(Trigger('Wriggling Grub death Worms',
+                          lambda:self.make_tokens(WORM,2)))
+            # Trigger counts snapshot just BEFORE the death; allows LKI self-deaths.
+            for source in before:
+                if source.controller != 0: continue
+                name = source.name
+                if name=='Grave Pact':
+                    effects.append(Trigger('Grave Pact edict opportunity',
+                                           lambda:self._grave_pact_opportunity()))
+                if name=='Bastion of Remembrance':
+                    effects.append(Trigger('Bastion death drain/gain',
+                                           lambda:self._drain_and_gain('Bastion of Remembrance')))
+                if name=='Cauldron of Essence':
+                    effects.append(Trigger('Cauldron death drain/gain',
+                                           lambda:self._drain_and_gain('Cauldron of Essence')))
+                if name=='Dina, Soul Steeper': pass  # no death trigger
+                if name=='Deathgreeter' and source.uid != p.uid:
+                    if self.choose_deathgreeter_gain:
+                        effects.append(Trigger('Deathgreeter death life',lambda:self.gain(1,'Deathgreeter')))
+                if name=='South Wind Avatar' and source.uid != p.uid:
+                    effects.append(Trigger('South Wind Avatar toughness-gain',
+                                           lambda t=p.toughness:self.gain(t,'South Wind Avatar death')))
+                if name=='Poison-Tip Archer' and source.uid != p.uid:
+                    effects.append(Trigger('Poison-Tip Archer death drain',
+                                  lambda:self.drain_opponents(1,'Poison-Tip Archer')))
+                if name=='Moldervine Reclamation':
+                    effects.append(Trigger('Moldervine death life/draw',lambda:self._moldervine()))
+                if name=='Dark Prophecy':
+                    effects.append(Trigger('Dark Prophecy death draw/loss',lambda:self._dark_prophecy()))
+                if name=='Blood Artist':
+                    effects.append(Trigger('Blood Artist target drain',lambda:self._blood_artist()))
+                if name=='Blight Mound' and not p.token:
+                    effects.append(Trigger('Blight Mound nontoken death Pest',
+                                           lambda:self.make_tokens(PEST)))
+            if SAVRA in names and 'Agent of the Iron Throne' in names:
+                effects.append(Trigger('Agent-granted commander death drain',
+                                      lambda:self.drain_opponents(1,'Agent of the Iron Throne')))
+        elif p.artifact and SAVRA in names and 'Agent of the Iron Throne' in names:
+            effects.append(Trigger('Agent-granted commander artifact drain',
+                                   lambda:self.drain_opponents(1,'Agent of the Iron Throne')))
+        self._enqueue(effects)
+        return p
+
+    def opposing_creature_dies(self, name='opponent creature'):
+        """EXOGENOUS EVENT ONLY: no modeled opponent board, decision or removal.
+
+        Used to validate our *existing* own-card global death triggers.
+        """
+        self.trace.append(('external_opponent_creature_dies', name))
+        effects=[]
+        for source in tuple(self.permanents.values()):
+            if source.controller != 0: continue
+            if source.name=='Deathgreeter' and self.choose_deathgreeter_gain:
+                effects.append(Trigger('Deathgreeter opposing death',lambda:self.gain(1,'Deathgreeter')))
+            if source.name=='Poison-Tip Archer':
+                effects.append(Trigger('Poison-Tip Archer opposing death',
+                                       lambda:self.drain_opponents(1,'Poison-Tip Archer')))
+            if source.name=='Blood Artist':
+                effects.append(Trigger('Blood Artist opposing death',lambda:self._blood_artist()))
+            if source.name=='Sangromancer' and self.choose_sangromancer_gain:
+                effects.append(Trigger('Sangromancer opposing death',
+                                       lambda:self.gain(3,'Sangromancer opposing death')))
+        self._enqueue(effects)
+
+    def opponent_discards(self, count=1):
+        """Exogenously supplied distinct discard events, NOT discard policy."""
+        if count < 0: raise IllegalAction('Negative discard count')
+        for _ in range(count):
+            self.trace.append(('external_opponent_discard', 1))
+            if self.choose_sangromancer_gain:
+                self._enqueue([Trigger('Sangromancer discard',
+                     lambda:self.gain(3,'Sangromancer discard'))
+                    for __ in range(self.has('Sangromancer'))])
+
+    def _grave_pact_opportunity(self):
+        self.edict_opportunities+=1
+        self.trace.append(('edict_opportunity',1,'Grave Pact'))
+
+    def _drain_and_gain(self, source):
+        self.drain_opponents(1,source)
+        self.gain(1,source)
+
+    def _blood_artist(self):
+        # Fixture assumes targeting an opponent; not target-selection/hexproof validation.
+        self.life[1]-=1
+        self.trace.append(('target_opponent_loses',1,'Blood Artist'))
+        self.gain(1,'Blood Artist')
+
+    def _moldervine(self):
+        self.gain(1,'Moldervine Reclamation')
+        self.cards_drawn+=1
+        self.trace.append(('draw',1,'Moldervine Reclamation'))
+
+    def _dark_prophecy(self):
+        self.cards_drawn+=1
+        self.trace.append(('draw',1,'Dark Prophecy'))
+        self.lose_life(1,'Dark Prophecy')
+
+    def sacrifice(self,uid): return self._leave(uid,sacrificed=True)
+    def destroy(self,uid): return self._leave(uid,sacrificed=False)
+
+    def attack_with(self,uid):
+        p=self.permanents.get(uid)
+        if not p or not p.creature: raise IllegalAction('No attacking creature')
+        self.trace.append(('attack',uid))
+        effects=[]
+        if p.token and p.token.attacks_gain:
+            effects.append(Trigger('Moseo Pest attacks gain',lambda:self.gain(1,'Moseo Pest attack')))
+        if p.name == "Teacher's Pest":
+            effects.append(Trigger("Teacher's Pest attacks gain",lambda:self.gain(1,"Teacher's Pest attack")))
+        self._enqueue(effects)
+
+    def begin_upkeep(self):
+        # Conditional ability has an intervening-if check at trigger AND resolution.
+        effects=[]
+        if not any(x.controller==0 and x.token and 'Pest' in x.token.subtypes
+                   for x in self.permanents.values()):
+            for _ in range(self.has('Pest Rescuer')):
+                def rescuers_upkeep():
+                    if not any(x.controller==0 and x.token and 'Pest' in x.token.subtypes
+                               for x in self.permanents.values()):
+                        self.make_tokens(PEST)
+                effects.append(Trigger('Pest Rescuer conditional upkeep',rescuers_upkeep))
+        for _ in range(self.has('Beledros Witherbloom')):
+            effects.append(Trigger('Beledros each upkeep',lambda:self.make_tokens(PEST)))
+        self._enqueue(effects)
+
+    def saga_chapter(self,chapter):
+        if chapter not in (1,2,3):
+            raise IllegalAction('Only chapters I–III implemented; IV requires full target/search')
+        self.trace.append(('saga_chapter',chapter))
+        self.make_tokens(INSECT)
+
+    def pest_summoning(self): self.make_tokens(PEST,2)
+    def hunt_for_specimens(self, *, lesson=False):
+        if lesson and (not self.learn_sideboard_allowed or not self.lesson_available):
+            raise IllegalAction('Lesson outside game not allowed or unavailable')
+        self.make_tokens(PEST)
+        if lesson:
+            self.hand.append('Pest Summoning'); self.lesson_available=False
+            self.trace.append(('learn_lesson','Pest Summoning'))
+        else:
+            self.trace.append(('learn_choice','discard/draw or decline not modeled'))
+
+    def sedgemoor_spell_cast_or_copied(self):
+        for _ in range(self.has('Sedgemoor Witch')):
+            self._enqueue([Trigger('Sedgemoor Witch Magecraft',lambda:self.make_tokens(PEST))])
+
+    def cast_with_sacrifice_cost(self,spell,uid):
+        # Mana, target lock, copy mechanics, interactions and legal spell timing excluded.
+        if spell not in ('Village Rites','Diabolic Intent','Deadly Dispute','Tend the Pests'):
+            raise IllegalAction('Unsupported spell')
+        p=self.permanents.get(uid)
+        if not p or not p.creature or p.controller!=0:
+            raise IllegalAction('Controlled creature additional cost missing')
+        self.trace.append(('cost_start',spell))
+        self.sacrifice(uid)  # COST is paid before the cast event (Magecraft)
+        self.trace.append(('cast',spell))
+        self.sedgemoor_spell_cast_or_copied()
+        return p
+
+    def activate_feral_appetite(self, *, grave_card_is_creature:bool):
+        if not self.has('Feral Appetite'): raise IllegalAction('Feral Appetite not controlled')
+        # Mana payment & target legality must be checked by future full engine.
+        self.trace.append(('exile_target_gy_card',grave_card_is_creature))
+        if grave_card_is_creature: self.make_tokens(PEST)
+
+    def roaster_end_step(self):
+        for p in tuple(self.permanents.values()):
+            if p.name == 'Ribtruss Roaster' and p.controller == 0:
+                self._enqueue([Trigger('Ribtruss Roaster end-step',
+                        lambda n=p.counters:self.make_tokens(PEST,n))])
+
+    def _return_creature_from_graveyard(self, cand, source, *, tapped=False):
+        if cand not in self.graveyard or not cand.creature or cand.token:
+            return None
+        self.graveyard.remove(cand)
+        new=self.add(cand.name, controller=0, colors=cand.colors,
+                     creature=True, tapped=tapped, toughness=cand.toughness,
+                     mana_value=cand.mana_value, counters=0)
+        self.trace.append(('reanimate',cand.uid,new.uid,source,tapped))
+        return new
+
+    def moseo_end_step(self, target_uid=None):
+        if not self.has("Moseo, Vein's New Dean") or self.life_gained_turn==0:
+            return False
+        if target_uid is None:
+            self.trace.append(('moseo_choose_no_target',self.life_gained_turn))
+            return False
+        cand=next((p for p in self.graveyard if p.uid==target_uid and p.creature),None)
+        if cand is None or cand.mana_value>self.life_gained_turn:
+            raise IllegalAction('Illegal Moseo graveyard target or mana value')
+        threshold=self.life_gained_turn
+        def reanimate():
+            # Check target remains in graveyard on resolution.
+            if cand not in self.graveyard: return
+            self._return_creature_from_graveyard(cand,'Moseo',tapped=False)
+        self._enqueue([Trigger('Moseo infusion end step',reanimate)])
+        return True
+
+    def cauldron_reanimate(self, *, target_uid, sacrificed_uid):
+        c=next((p for p in self.permanents.values() if p.name=='Cauldron of Essence' and not p.tapped),None)
+        if not c: raise IllegalAction('No untapped Cauldron')
+        cand=next((p for p in self.graveyard if p.uid==target_uid and p.creature),None)
+        if not cand: raise IllegalAction('Target must be creature card in graveyard on activation')
+        if sacrificed_uid not in self.permanents: raise IllegalAction('Missing sacrifice creature')
+        if not self.permanents[sacrificed_uid].creature or self.permanents[sacrificed_uid].controller != 0:
+            raise IllegalAction('Must sacrifice your controlled creature')
+        c.tapped=True
+        self.trace.append(('target_locked',target_uid,'Cauldron of Essence'))
+        self.sacrifice(sacrificed_uid)
+        def reanimate():
+            if cand not in self.graveyard: return
+            self._return_creature_from_graveyard(cand,'Cauldron of Essence',tapped=False)
+        # The activated ability is on stack beneath triggers caused by its costs.
+        self.pending.append(Trigger('Cauldron activated reanimation',reanimate))
+        return cand
+
+    def immoral_bargain(self, x, sacrifices, targets):
+        if x<0 or len(sacrifices)!=x or len(targets)!=x or len(set(targets))!=x:
+            raise IllegalAction('X, cost sacrifice count and distinct target count mismatch')
+        if len(set(sacrifices))!=x or any(uid not in self.permanents or not self.permanents[uid].creature
+                                          or self.permanents[uid].controller != 0 for uid in sacrifices):
+            raise IllegalAction('Insufficient legal sacrifice creatures')
+        self.trace.append(('targets_locked',tuple(targets),'Immoral Bargain'))
+        for uid in sacrifices: self.sacrifice(uid)
+        self.trace.append(('cast','Immoral Bargain'))
+        self.sedgemoor_spell_cast_or_copied()
+        # Destruction of targeted opposing permanents is outside current reference kernel.
+
+    def add_mana(self, *symbols):
+        """Manually load observed floating mana; does not simulate land tapping."""
+        if any(symbol not in ('B','G','C') for symbol in symbols):
+            raise IllegalAction('Only explicit B/G/C mana in this reference')
+        self.mana_pool.extend(symbols)
+        self.trace.append(('mana_added',tuple(symbols)))
+
+    def pay_mana(self, *, black=0, green=0, generic=0):
+        """Atomically validate/pay actual B/G and generic mana (C is generic-only)."""
+        costs=(black,green,generic)
+        if any(not isinstance(n,int) or n<0 for n in costs):
+            raise IllegalAction('Invalid mana cost')
+        pool=self.mana_pool.copy()
+        for color,n in (('B',black),('G',green)):
+            if pool.count(color)<n: raise IllegalAction('Colored mana unavailable')
+            for _ in range(n): pool.remove(color)
+        if len(pool)<generic: raise IllegalAction('Generic mana unavailable')
+        paid=[pool.pop() for _ in range(generic)]
+        self.mana_pool=pool
+        self.trace.append(('mana_paid',{'B':black,'G':green,'generic_symbols':tuple(paid)}))
+
+    def _grave_target(self,uid):
+        return next((p for p in self.graveyard
+                     if p.uid==uid and p.creature and not p.token),None)
+
+    def skeleton_return(self,uid):
+        """{1}{B}: Reassembling Skeleton card, from graveyard tapped."""
+        p=self._grave_target(uid)
+        if not p or p.name!='Reassembling Skeleton':
+            raise IllegalAction('Skeleton must be in graveyard')
+        self.pay_mana(black=1,generic=1)
+        return self._return_creature_from_graveyard(p,'Reassembling Skeleton',tapped=True)
+
+    def teachers_pest_return(self,uid):
+        """{B}{G}: Teacher's Pest card, from graveyard tapped."""
+        p=self._grave_target(uid)
+        if not p or p.name!="Teacher's Pest":
+            raise IllegalAction("Teacher's Pest must be in graveyard")
+        self.pay_mana(black=1,green=1)
+        return self._return_creature_from_graveyard(p,"Teacher's Pest",tapped=True)
+
+    def phyrexian_reclamation(self,uid):
+        """{1}{B}, pay 2 life: return target creature card to hand, not play."""
+        if not self.has('Phyrexian Reclamation'):
+            raise IllegalAction('Phyrexian Reclamation not on battlefield')
+        p=self._grave_target(uid)
+        if not p: raise IllegalAction('Target is not creature card in own graveyard')
+        if self.life[0]<2: raise IllegalAction('Cannot pay two life')
+        self.pay_mana(black=1,generic=1)
+        self.pay_life(2,'Phyrexian Reclamation')
+        def retrieve():
+            if p not in self.graveyard: return
+            self.graveyard.remove(p)
+            self.hand.append(p.name)
+            self.trace.append(('return_to_hand',p.uid,p.name,'Phyrexian Reclamation'))
+        self.pending.append(Trigger('Phyrexian Reclamation returns to hand',retrieve))
+
+    def viscera_seer_sacrifice(self,uid):
+        """Reference sacrifice-cost and stack order; library scry is UNIMPLEMENTED."""
+        if not self.has('Viscera Seer'): raise IllegalAction('No Viscera Seer controlled')
+        target=self.permanents.get(uid)
+        if not target or not target.creature or target.controller!=0:
+            raise IllegalAction('No legal controlled creature to sacrifice')
+        self.sacrifice(uid)
+        self.pending.append(Trigger('Viscera Seer scry',
+            lambda:self.trace.append(('scry_unimplemented',1,'Viscera Seer'))))
+
+    def carrion_feeder_sacrifice(self,source_uid,sacrifice_uid):
+        feeder=self.permanents.get(source_uid)
+        sac=self.permanents.get(sacrifice_uid)
+        if not feeder or feeder.name!='Carrion Feeder' or feeder.controller!=0:
+            raise IllegalAction('No valid Carrion Feeder source')
+        if not sac or not sac.creature or sac.controller!=0:
+            raise IllegalAction('No controlled creature to sacrifice')
+        self.sacrifice(sacrifice_uid)
+        def add_counter():
+            if source_uid in self.permanents:
+                self.permanents[source_uid].counters+=1
+                self.trace.append(('plus_one_counter',source_uid))
+        self.pending.append(Trigger('Carrion Feeder activated +1/+1',add_counter))
+
+    def warren_soultrader_sacrifice(self,source_uid,sacrifice_uid):
+        trader=self.permanents.get(source_uid)
+        sac=self.permanents.get(sacrifice_uid)
+        if not trader or trader.name!='Warren Soultrader' or trader.controller!=0:
+            raise IllegalAction('No valid Warren Soultrader source')
+        if not sac or not sac.creature or sac.controller!=0 or source_uid==sacrifice_uid:
+            raise IllegalAction('Warren Soultrader requires another controlled creature')
+        if self.life[0]<1: raise IllegalAction('Cannot pay one life')
+        self.pay_life(1,'Warren Soultrader cost')
+        self.sacrifice(sacrifice_uid)
+        self.pending.append(Trigger('Warren Soultrader Treasure',
+             lambda:self.make_tokens(TREASURE)))
+
+    def reset_turn(self): self.life_gained_turn=0

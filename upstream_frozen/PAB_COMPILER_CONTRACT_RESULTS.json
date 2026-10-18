@@ -1,0 +1,127 @@
+[
+  {
+    "contract": "Savra separate BG sacrifice triggers",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Pest Summoning makes 2 tokens",
+    "pass": false,
+    "detail": "Pest Summoning: two BG Pest tokens not immediate lifegain; compiled effects=[{'k': 'gain', 'n': 1}]; statics=[]; unmodeled=[]; partial=[['create two 1/1 black and green pest creature tokens with \"when this token dies, you gain 1', ['the clause \"create two 1/1 black and green pest creature tokens with \"when this token dies\"']]]"
+  },
+  {
+    "contract": "Sedgemoor Witch magecraft makes token",
+    "pass": false,
+    "detail": "Sedgemoor Witch: Magecraft must create Pest; compiled effects=[{'k': 'gain', 'n': 1}]; statics=[]; unmodeled=[]; partial=[['magecraft \u2014 whenever you cast or copy an instant or sorcery spell, create a 1/1 black and ', ['the clause \"create a 1/1 black and green pest creature token with \"when this token dies\"']]]"
+  },
+  {
+    "contract": "Hunger Tide first chapters make BG Insects",
+    "pass": false,
+    "detail": "The Hunger Tide Rises: Saga creates INSECTS, not Pests; compiled effects=[]; statics=[]; unmodeled=[]; partial=[]"
+  },
+  {
+    "contract": "Hunger Tide fourth chapter sacrifices and searches",
+    "pass": false,
+    "detail": "The Hunger Tide Rises: IV should tutor/reanimate from library/gy after sacrifice; compiled effects=[]; statics=[]; unmodeled=[]; partial=[]"
+  },
+  {
+    "contract": "Wriggling Grub makes TWO BG worms",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Infestation Sage dies to BG flying Insect",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Pest Rescuer creates tokens",
+    "pass": false,
+    "detail": "Pest Rescuer: upkeep Pest creation; compiled effects=[{'k': 'gain', 'n': 1}]; statics=[]; unmodeled=[]; partial=[[\"at the beginning of each upkeep, if you don't control a pest creature token, create a 1/1 \", ['the condition \"if you don\\'t control a pest creature token\"']]]"
+  },
+  {
+    "contract": "Pest Rescuer lifegain replacement",
+    "pass": false,
+    "detail": "Pest Rescuer: gain that much plus one replacement; compiled effects=[{'k': 'gain', 'n': 1}]; statics=[]; unmodeled=[]; partial=[[\"at the beginning of each upkeep, if you don't control a pest creature token, create a 1/1 \", ['the condition \"if you don\\'t control a pest creature token\"']]]"
+  },
+  {
+    "contract": "Moseo ETB creates Pest",
+    "pass": false,
+    "detail": "Moseo, Vein's New Dean: ETB Pest; compiled effects=[{'k': 'gain', 'n': 1}]; statics=[]; unmodeled=[]; partial=[['when ~ enters, create a 1/1 black and green pest creature token with \"whenever this token ', ['the clause \"create a 1/1 black and green pest creature token with \"whenever this token attacks\"']]]"
+  },
+  {
+    "contract": "Moseo infusion reanimates",
+    "pass": false,
+    "detail": "Moseo, Vein's New Dean: end step life gained -> MV threshold reanimation; compiled effects=[{'k': 'gain', 'n': 1}]; statics=[]; unmodeled=[]; partial=[['when ~ enters, create a 1/1 black and green pest creature token with \"whenever this token ', ['the clause \"create a 1/1 black and green pest creature token with \"whenever this token attacks\"']]]"
+  },
+  {
+    "contract": "Cauldron of Essence death drain",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Cauldron of Essence activated reanimation",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "South Wind Avatar lifegain at death",
+    "pass": false,
+    "detail": "South Wind Avatar: gain on controlled death; compiled effects=[{'k': 'drain', 'n': 1, 'who': 'each_opp', 'gain': False}]; statics=[]; unmodeled=[]; partial=[]"
+  },
+  {
+    "contract": "South Wind Avatar drains on gain",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Teacher's Pest returns from graveyard",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Blight Mound makes BG tokens on nontoken death",
+    "pass": false,
+    "detail": "Blight Mound: BG Pest from nontoken creature deaths; compiled effects=[{'k': 'gain', 'n': 1}]; statics=[{'k': 'anthem', 'p': 1, 't': 0, 'sub': 'Pest', 'other': False, 'tokens': False, 'kw': ['menace'], 'attacking': True}]; unmodeled=[]; partial=[['whenever a nontoken creature you control dies, create a 1/1 black and green pest creature ', ['the clause \"create a 1/1 black and green pest creature to"
+  },
+  {
+    "contract": "Feral Appetite graveyard-targeted tokens",
+    "pass": false,
+    "detail": "Feral Appetite: exile creature graveyard card to make Pest; compiled effects=[{'k': 'gain', 'n': 1}, {'k': 'exile_gy', 'who': 'card'}]; statics=[{'k': 'anthem', 'p': 1, 't': 0, 'sub': 'Pest', 'other': False, 'tokens': False, 'kw': ['deathtouch'], 'attacking': True}]; unmodeled=[]; partial=[['{1}{g}: exile target card from a graveyard. if a creature card is exiled this way, create ', ['the conditio"
+  },
+  {
+    "contract": "Ribtruss Roaster makes BG tokens by counters",
+    "pass": false,
+    "detail": "Ribtruss Roaster: # Pests equal +1 counters, not fixed 1; compiled effects=[{'k': 'gain', 'n': 1}]; statics=[]; unmodeled=[]; partial=[['at the beginning of your end step, create a number of 1/1 black and green pest creature to', ['the sentence \"create a number of 1/1 black and green pest creature tokens equal to the number of +1/+1 counters on ~.\"', 'the clause \"they have \"when this token dies\"']"
+  },
+  {
+    "contract": "Immoral Bargain sacrifices X as cost",
+    "pass": false,
+    "detail": "Immoral Bargain: X sacrificed as additional cost; compiled effects=[]; statics=[]; unmodeled=['as an additional cost to cast ~, sacrifice x creatures.']; partial=[]"
+  },
+  {
+    "contract": "Chatterfang adds GREEN squirrels",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Beledros upkeep makes BG Pest",
+    "pass": false,
+    "detail": "Beledros Witherbloom: upkeep Pest creation; compiled effects=[{'k': 'gain', 'n': 1}, {'k': 'untap', 'what': 'land'}]; statics=[]; unmodeled=[]; partial=[['at the beginning of each upkeep, create a 1/1 black and green pest creature token with \"wh', ['the clause \"create a 1/1 black and green pest creature token with \"when this token dies\"']], ['pay 10 life: untap all lands you control. activate only"
+  },
+  {
+    "contract": "Witherbloom Charm modal sac/draw",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Witherbloom Command mill and land",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "contract": "Agent grants commander artifact/creature deaths",
+    "pass": false,
+    "detail": "Agent of the Iron Throne: commander-owned granted dies trigger; compiled effects=[]; statics=[]; unmodeled=[]; partial=[]"
+  }
+]

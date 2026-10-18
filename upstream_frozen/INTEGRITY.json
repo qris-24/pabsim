@@ -1,0 +1,17 @@
+{
+  "deck_hash_sha256": "c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381",
+  "commander": 1,
+  "mainboard": 99,
+  "lands": 34,
+  "nonlands": 65,
+  "lesson_sideboard": 1,
+  "snapshot_text_reviewed_nonlands": 61,
+  "snapshot_missing_colorless_nonlands": [
+    "Arcane Signet",
+    "Phyrexian Altar",
+    "Skullclamp",
+    "Sol Ring"
+  ],
+  "snapshot_not_full_legality_verified": true,
+  "all_65_rows_accounted_for": true
+}

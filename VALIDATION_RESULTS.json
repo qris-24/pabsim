@@ -1,0 +1,952 @@
+{
+  "baseline_sha256": "c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381",
+  "basic_land_fixture_only_in_v05_event_kernel": true,
+  "bounded_phase7_opt_in_bridge": true,
+  "candidate_historical_contract_passes": 149,
+  "candidate_historical_contract_replay_errors": [],
+  "candidate_historical_contract_replays": 149,
+  "colorless_nonlands_pinned": false,
+  "commander": 1,
+  "complete_physical_board": false,
+  "contracts_executed": {
+    "C41": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R22"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "High Market (unsupported land) replaced by an exogenous gain(1) after the end-step boundary; sacrifice cost modeled as sacrifice of a controlled creature",
+        "engine has no step clock: \"beginning of end step\" is the moseo_end_step() call; non-retroactivity is asserted on the trigger queue and trace, not on a timing model"
+      ],
+      "tests_passed": 3,
+      "tests_run": 3,
+      "unexpected_successes": 0
+    },
+    "C42": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R22",
+        "R21"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Infuse with Vitality (unsupported nonland) replaced by an exogenous gain(2) base event; the Pest Rescuer +1 replacement is the kernel's own"
+      ],
+      "tests_passed": 4,
+      "tests_run": 4,
+      "unexpected_successes": 0
+    },
+    "C43": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R23",
+        "R06",
+        "R09"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Treasure mana ability not modeled: the sacrifice is performed directly; no mana is added (mana creation is outside this contract's life-loss claims)"
+      ],
+      "tests_passed": 3,
+      "tests_run": 3,
+      "unexpected_successes": 0
+    },
+    "C44": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R23"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "No command zone: in branch B, Savra is removed from the battlefield by an exogenous harness deletion (no death event), standing in for the commander-zone replacement"
+      ],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C45": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R24",
+        "R01"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C46": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R25",
+        "R14"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C47": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R26",
+        "R14"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 3,
+      "tests_run": 3,
+      "unexpected_successes": 0
+    },
+    "C48": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R27",
+        "R14"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 3,
+      "tests_run": 3,
+      "unexpected_successes": 0
+    },
+    "C49": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R27",
+        "R30"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C50": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R27"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Offspring (token copy of Starscape Cleric on ETB) is not modeled; no copy characteristics exist to assert"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C51": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R28",
+        "R13"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Chatterfang {B} activation (X, target, -X/-X) not modeled; the X=2 Squirrel sacrifices are performed directly as the cost; only sacrifice-side observations are asserted"
+      ],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C52": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R28",
+        "R24"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Opponent creatures and -X/-X SBA are not modeled; the target's death is the exogenous opposing_creature_dies() event; the cost Squirrel sacrifice is performed directly"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C53": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R29"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Blood Artist target choice is fixed by the fixture to opponent 1; no target-selection or hexproof model"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C54": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R29"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C55": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R30",
+        "R21"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C56": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R30",
+        "R23"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Treasure mana ability not modeled; cash-in is a direct sacrifice with no mana added"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C57": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R31",
+        "R14"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "No lore-counter or phase clock: chapters I\u2013III are invoked directly via saga_chapter(n)"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C58": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R31"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Library is a fixture candidate list; shuffle is traced as unmodeled"
+      ],
+      "tests_passed": 3,
+      "tests_run": 3,
+      "unexpected_successes": 0
+    },
+    "C59": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R31"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C60": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R32"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Devour is not modeled: Roaster is added with counters=2 and the two devoured creatures are sacrificed directly before it enters (ordering as a fixture, not a replacement-effect model)"
+      ],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C61": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R32"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Counter added/removed by direct Permanent.counters mutation between trigger and resolution. R47 promoted: count is read at resolution. The frozen v0.7 engine's trigger-time snapshot is pinned below."
+      ],
+      "tests_passed": 4,
+      "tests_run": 4,
+      "unexpected_successes": 0
+    },
+    "C62": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R33"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Beledros \"Pay 10 life: untap all lands\" and once-per-turn tracking are not modeled; the event kernel has no lands"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C63": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R33",
+        "R01"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "The alternate resolution order is produced by reordering the pending queue (the controller's APNAP ordering choice is not yet an API). Since S2 the upkeep boundary itself is clock-driven."
+      ],
+      "tests_passed": 4,
+      "tests_run": 4,
+      "unexpected_successes": 0
+    },
+    "C64": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R34"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "The discard-a-card-to-draw Learn branch is not modeled (traced as not modeled); Hunt's cast is the direct method call"
+      ],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C65": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R35"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Blooming Marsh / Deathcap Glade conditional ETB not modeled; probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C66": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R35"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Undergrowth Stadium opponent-count ETB not modeled (no opponent count state); probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C67": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R35",
+        "R38"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Overgrown Tomb life payment and Underground Mortuary surveil not modeled; probe asserts fail-closed only. The Forest control from the contract IS executed."
+      ],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C68": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R35",
+        "R15"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Modal double-faced Pathway face selection not modeled; probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C69": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R36"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "PARTIAL_EXECUTED",
+      "substitutions": [
+        "Asserted: basic Forest qualifies, Swamp does not, Forest enters untapped, Sakura basic-only control. NOT asserted: Overgrown Tomb / Underground Mortuary qualifying by Forest subtype, and Woodland Cemetery / Pathway exclusion \u2014 nonbasic Forest-typed search is unmodeled and fails closed"
+      ],
+      "tests_passed": 4,
+      "tests_run": 4,
+      "unexpected_successes": 0
+    },
+    "C70": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R36",
+        "R37",
+        "R38"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Verdant Catacombs activation (tap, pay 1 life, sacrifice) and subtype search not modeled; probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C71": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R37"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Phyrexian Tower sacrifice mana ability not modeled; probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C72": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R37"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "High Market and Grim Backwoods activations not modeled; probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C73": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R38"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Llanowar Wastes damage and Nurturing Peatland life payment not modeled; probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C74": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R38"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Castle Locthwain draw-then-lose not modeled; probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C75": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R39"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Channel (discard-from-hand activation with legendary-creature discount) not modeled; probe asserts fail-closed for the land play and that no channel API exists"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C76": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R40"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Geier Reach Sanitarium / Mikokoro symmetrical draw effects not modeled (no opponent hands/libraries); probe asserts fail-closed only"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C77": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R40"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "PARTIAL_EXECUTED",
+      "substitutions": [
+        "Grim Backwoods {C} not modeled (fails closed). Tower/Forest/Swamp via the physical bridge; Sol Ring via the rock fixture"
+      ],
+      "tests_passed": 4,
+      "tests_run": 4,
+      "unexpected_successes": 0
+    },
+    "C78": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R41"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Golgari Charm's global -1/-1 mode is not modeled; the single modeled -1/-1 path (Yawgmoth counter) is used; cost-side triggers are discarded so only the target death is measured"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C79": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R42"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Heroic Intervention not modeled; indestructible is granted by adding the creature to indestructible_until_eot (the kernel's own until-end-of-turn set). Hexproof and exile are not modeled. R48 promoted: zero toughness is an SBA death. The frozen v0.7 behaviour is pinned below."
+      ],
+      "tests_passed": 5,
+      "tests_run": 5,
+      "unexpected_successes": 0
+    },
+    "C80": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R41",
+        "R43"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Witherbloom Charm (modes, optional resolution-time sacrifice) not modeled. The Village Rites additional-cost contrast from the contract IS executed as a control."
+      ],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C81": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R42"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Regeneration not modeled; Golgari Charm refused"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C82": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R42"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Infuse with Vitality (granted owner-return death trigger) not modeled; opponent-owned objects not modeled"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C83": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R43"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Abrupt Decay (targeting, MV filter, uncounterable, fizzle) not modeled; no opponent permanents"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C84": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R43"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Assassin's Trophy not modeled; no opponent permanents or opponent library search"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C85": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R44"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Rise of the Witch-king not modeled; no per-player sacrifice choices"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C86": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R44"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Rise of the Witch-king not modeled"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C87": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R45"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
+      "substitutions": [
+        "Grisly Salvage is not a kernel spell; its resolution is composed from physical-zone primitives in the fixture (top five by library order, chosen creature/land to hand, rest to graveyard, no shuffle)"
+      ],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C88": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R45"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Shigeki, Jukai Visionary not modeled (self-bounce cost, top-four reveal)"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C89": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R45",
+        "R18"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Shigeki Channel {X}{X}{G}{G} not modeled"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C90": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R45"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Shigeki Channel legendary-exclusion targeting not modeled"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C91": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R46"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Grist, the Hunger Tide not modeled; physical cards carry no type line, so zone-dependent types cannot be asserted"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C92": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R46"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Grist +1 (Insect token, mill, repeat on Insect card) not modeled; composing the loop from mill primitives would fabricate Grist, so only the refusal is asserted"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C93": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R46",
+        "R20"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Grist -2 reflexive trigger not modeled"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C94": {
+      "engine_test_executed": false,
+      "expected_failures": 0,
+      "issues": [
+        "R41",
+        "R43"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "BLOCKED_UNSUPPORTED",
+      "substitutions": [
+        "Witherbloom Command (two distinct modes, mill target player, return land) not modeled"
+      ],
+      "tests_passed": 1,
+      "tests_run": 1,
+      "unexpected_successes": 0
+    },
+    "C95": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R50",
+        "R01"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 3,
+      "tests_run": 3,
+      "unexpected_successes": 0
+    },
+    "C96": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R51"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 4,
+      "tests_run": 4,
+      "unexpected_successes": 0
+    },
+    "C98": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R22",
+        "R32",
+        "R50"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 5,
+      "tests_run": 5,
+      "unexpected_successes": 0
+    },
+    "C99": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R49",
+        "R32"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    }
+  },
+  "errors": 0,
+  "event_tokens_mirrored_with_distinct_physical_uids_in_v08": true,
+  "existing_v05_event_kernel_modified": false,
+  "failures": 0,
+  "frozen_deck_verified": true,
+  "frozen_engines_modified": false,
+  "full_card_behavior_verified": 0,
+  "kernel_corrected_v05_copy_38_replay_passes": 38,
+  "kernel_legacy_149_replay_failures": [
+    "test_112_teacher_pest_blocks_rescuer_at_upkeep_start",
+    "test_113_teacher_pest_entered_before_rescuer_trigger_resolves"
+  ],
+  "kernel_legacy_149_replay_passes": 147,
+  "kernel_legacy_failures_exactly_superseded_set": true,
+  "kernel_v07_bridge_52_replay_passes": 52,
+  "kernel_v08_bridge_54_replay_passes": 54,
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2",
+  "land_source_verified": false,
+  "lands": 34,
+  "lesson_sideboard": 1,
+  "mainboard": 99,
+  "mass_replacement_sweep_allowed": false,
+  "new_unique_phase7_tests": 52,
+  "new_unique_phase8_tests": 54,
+  "new_zone_kernel_integrated_with_v05_events": false,
+  "nonlands": 65,
+  "old_compiler_contracts_failing": 15,
+  "old_compiler_contracts_passing": 10,
+  "other_land_names_unimplemented": 18,
+  "partial_demonic_tutor_resolution_only": true,
+  "partial_land_mana_paths": [
+    "Forest",
+    "Swamp",
+    "Command Tower"
+  ],
+  "phase8_previous_bridge_contract_passes": 52,
+  "phase8_previous_bridge_contract_replays": 52,
+  "phase8_previous_bridge_replay_errors": [],
+  "promoted_patches": [
+    "R02",
+    "R01",
+    "R47",
+    "R48",
+    "R49",
+    "S1",
+    "S2"
+  ],
+  "r02_registry_rewritten_by_runner": false,
+  "r02_release_gate_errors": [],
+  "r02_release_gate_tests_passed": 18,
+  "r02_release_gate_tests_run": 18,
+  "real_individual_card_library_in_new_zone_kernel": true,
+  "reference_partial_nonlands": 54,
+  "reference_unsupported_nonlands": 11,
+  "release": "v0.8+R02+R01 promoted (runner integrity; Pest Rescuer token predicate in kernel; frozen files untouched)",
+  "scope": "v0.5 events + v0.6 physical zones + v0.7 bounded zone bridge + v0.8 shared-mana and mirrored token reference; NOT a playable engine",
+  "shared_game_zone_mana_symbols_in_v08": true,
+  "skipped": 0,
+  "superseded_frozen_contracts": [
+    "test_112_teacher_pest_blocks_rescuer_at_upkeep_start",
+    "test_113_teacher_pest_entered_before_rescuer_trigger_resolves"
+  ],
+  "tests_passed": 461,
+  "tests_run": 461,
+  "upstream_engine_edited": false,
+  "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
+}

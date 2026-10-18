@@ -1,0 +1,126 @@
+[
+  {
+    "id": "C95",
+    "issues": [
+      "R50",
+      "R01"
+    ],
+    "title": "'Each upkeep' triggers fire on every player's upkeep, scoped by the active player",
+    "setup": "Four-seat turn order with a clock. Control Pest Rescuer and Beledros Witherbloom. Advance through one full round (four upkeeps) with no Pest tokens at the start.",
+    "provisional_expectation": "Beledros creates one Pest at each of the four upkeeps (4 total). Pest Rescuer triggers only at an upkeep where its controller controls no Pest creature token (603.4 intervening-if at trigger and resolution). With Rescuer resolving first at the first upkeep: 2 tokens, then 1,1,1. The kernel's player-agnostic begin_upkeep() currently reproduces this only under caller discipline.",
+    "trace_requirements": [
+      "active player per upkeep",
+      "trigger admission per source per upkeep",
+      "Rescuer predicate at admission and resolution",
+      "token creation events per upkeep"
+    ],
+    "controls": "Pest token present before the round: Rescuer never triggers, Beledros still fires four times.",
+    "cr_refs": [
+      "503.1",
+      "603.2",
+      "603.4"
+    ],
+    "status": "EXECUTED",
+    "engine_test_executed": true,
+    "oracle_cr_authenticated": false,
+    "executed_in": "tests/test_turn_clock_s2.py"
+  },
+  {
+    "id": "C96",
+    "issues": [
+      "R51"
+    ],
+    "title": "Mana pools empty at the end of each step and phase",
+    "setup": "Add {B}{G} during the first main phase; pass to combat without spending.",
+    "provisional_expectation": "The pool is empty when combat begins (106.4). Mana added in the upkeep is not available in the draw step. The kernel currently never empties a pool (A05; test_mana_pool_not_emptied_by_any_turn_reset).",
+    "trace_requirements": [
+      "step boundary",
+      "pool contents before/after",
+      "mana lost event"
+    ],
+    "controls": "Spend before the boundary: no loss.",
+    "cr_refs": [
+      "106.4",
+      "500.4"
+    ],
+    "status": "EXECUTED",
+    "engine_test_executed": true,
+    "oracle_cr_authenticated": false,
+    "executed_in": "tests/test_turn_clock_s2.py"
+  },
+  {
+    "id": "C97",
+    "issues": [
+      "R24",
+      "R48"
+    ],
+    "title": "State-based actions are checked when a player would receive priority, between resolutions, not inside one",
+    "setup": "Resolve an effect that puts a -1/-1 counter on a 1/1 and then draws (Yawgmoth). Separately, resolve a single effect that creates two 1-toughness tokens and then gives each -1/-1 (synthetic).",
+    "provisional_expectation": "Death happens after the whole effect resolves (704.3, 117.5); triggers from that death go on the stack afterwards. In the synthetic case both tokens die simultaneously as one SBA event; their death triggers see each other (603.10 look-back).",
+    "trace_requirements": [
+      "resolution end",
+      "SBA check event",
+      "simultaneous deaths",
+      "trigger placement order"
+    ],
+    "controls": "No SBA mid-effect.",
+    "cr_refs": [
+      "704.3",
+      "117.5",
+      "603.10"
+    ],
+    "status": "PROPOSED_NOT_EXECUTED",
+    "engine_test_executed": false,
+    "oracle_cr_authenticated": false
+  },
+  {
+    "id": "C98",
+    "issues": [
+      "R22",
+      "R32",
+      "R50"
+    ],
+    "title": "'Your end step' triggers do not fire during opponents' end steps",
+    "setup": "Clock with four seats. Control Moseo (with life gained) and Ribtruss Roaster (counters 2). Advance through an opponent's end step, then your own.",
+    "provisional_expectation": "No Moseo or Roaster trigger at the opponent's end step; both at yours. Moseo's intervening-if is checked at your end step only. The kernel currently fires roaster_end_step()/moseo_end_step() whenever called.",
+    "trace_requirements": [
+      "active player at each end step",
+      "admission records",
+      "Roaster count at resolution"
+    ],
+    "controls": "Beledros fires at both players' upkeeps for contrast.",
+    "cr_refs": [
+      "513.1",
+      "603.4"
+    ],
+    "status": "EXECUTED",
+    "engine_test_executed": true,
+    "oracle_cr_authenticated": false,
+    "executed_in": "tests/test_turn_clock_s2.py"
+  },
+  {
+    "id": "C99",
+    "issues": [
+      "R49",
+      "R32"
+    ],
+    "title": "Ribtruss Roaster trigger uses last known information when Roaster leaves before resolution",
+    "setup": "Roaster with two +1/+1 counters; at your end step the trigger goes on the stack; in response Roaster is destroyed.",
+    "provisional_expectation": "The trigger resolves and creates two Pests using Roaster's last known counter count (608.2h). The promoted R47 branch currently creates none (test_kernel_observed_makes_nothing).",
+    "trace_requirements": [
+      "counter count at trigger",
+      "source zone change",
+      "LKI snapshot",
+      "tokens created"
+    ],
+    "controls": "Counter removed before Roaster leaves: LKI reflects the removal.",
+    "cr_refs": [
+      "608.2h",
+      "113.7a"
+    ],
+    "status": "EXECUTED",
+    "engine_test_executed": true,
+    "oracle_cr_authenticated": false,
+    "executed_in": "tests/test_turn_clock_s2.py"
+  }
+]

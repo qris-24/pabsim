@@ -1,0 +1,211 @@
+import sys,unittest
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
+from pab_focus_engine import *
+
+class PABReferenceContracts(unittest.TestCase):
+    def s(self, *cards, **kwargs):
+        g=Game(**kwargs)
+        for c in cards:g.add(c)
+        g.resolve()
+        return g
+    def tokens(self,g,label): return [p for p in g.permanents.values() if p.token and p.token.label==label]
+    def test_01_pest_savra_dina_two_gain_events(self):
+        g=self.s(SAVRA,'Dina, Soul Steeper')
+        p=g.make_tokens(PEST)[0]
+        g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life,[41,38,38,38]);self.assertEqual(g.edict_opportunities,1)
+        self.assertEqual([x[1] for x in g.trace if x[0]=='gain'],[2,1])
+        self.assertEqual(g.opponent_sacrifices,0)
+    def test_02_pest_rescuer_modifies_amount_not_event_count(self):
+        g=self.s(SAVRA,'Dina, Soul Steeper','Pest Rescuer')
+        p=g.make_tokens(PEST)[0];g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life,[43,38,38,38]);self.assertEqual([x[1] for x in g.trace if x[0]=='gain'],[3,2])
+    def test_03_insect_no_pest_dies_life(self):
+        g=self.s(SAVRA,'Dina, Soul Steeper');p=g.make_tokens(INSECT)[0];g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life,[40,39,39,39]);self.assertEqual(g.edict_opportunities,1)
+    def test_04_moseo_pest_attack_gain_not_death(self):
+        g=self.s(SAVRA,"Moseo, Vein's New Dean");p=self.tokens(g,MOSEO_PEST.label)[0]
+        self.assertEqual(p.token.dies_gain,0);g.attack_with(p.uid);g.resolve()
+        self.assertEqual(g.life[0],41)
+        g.sacrifice(p.uid);g.resolve();self.assertEqual(g.life[0],41)
+    def test_05_black_only_and_green_only_color(self):
+        g=self.s(SAVRA);p=g.add('Reassembling Skeleton');g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life[0],38);self.assertEqual(g.edict_opportunities,1)
+        q=g.make_tokens(SQUIRREL)[0];g.sacrifice(q.uid);g.resolve()
+        self.assertEqual(g.life[0],40);self.assertEqual(g.edict_opportunities,1)
+    def test_06_savra_self_sac_lki(self):
+        g=self.s(SAVRA);p=next(p for p in g.permanents.values() if p.name==SAVRA)
+        g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life[0],40);self.assertEqual(g.edict_opportunities,1)
+    def test_07_cannot_pay_two_life_at_one(self):
+        g=self.s(SAVRA);g.life[0]=1;p=g.make_tokens(INSECT)[0];g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life[0],3);self.assertEqual(g.edict_opportunities,0)
+    def test_08_savra_choices_optional(self):
+        g=self.s(SAVRA,pay_savra_black=False,choose_savra_green=False)
+        p=g.make_tokens(PEST)[0];g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life[0],41);self.assertEqual(g.edict_opportunities,0)
+    def test_09_destroy_is_not_sacrifice(self):
+        g=self.s(SAVRA);p=g.make_tokens(PEST)[0];g.destroy(p.uid);g.resolve()
+        self.assertEqual(g.life[0],41);self.assertEqual(g.edict_opportunities,0)
+    def test_10_chatterfang_is_green_only_and_nonrecursive(self):
+        g=self.s('Chatterfang, Squirrel General',SAVRA)
+        a=g.make_tokens(PEST,2)
+        self.assertEqual(len(a),4);self.assertEqual([p.colors for p in a],['BG','BG','G','G'])
+        self.assertEqual([p.token.dies_gain for p in a],[1,1,0,0])
+    def test_11_bastion_white_human_fodder_no_savra(self):
+        g=self.s(SAVRA,'Bastion of Remembrance');p=self.tokens(g,HUMAN.label)[0]
+        g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.edict_opportunities,0)
+        self.assertEqual(g.life,[41,39,39,39])
+    def test_12_worms_and_flying_insects_not_pests(self):
+        g=self.s(SAVRA);a=g.add('Wriggling Grub');b=g.add('Infestation Sage')
+        g.destroy(a.uid);g.destroy(b.uid);g.resolve()
+        self.assertEqual(len(self.tokens(g,WORM.label)),2)
+        self.assertEqual(len(self.tokens(g,FLYING_INSECT.label)),1)
+        self.assertTrue(self.tokens(g,FLYING_INSECT.label)[0].token.flying)
+        self.assertEqual(g.edict_opportunities,0)
+    def test_13_token_batch_bats_count(self):
+        g=self.s('Mirkwood Bats','Chatterfang, Squirrel General')
+        g.make_tokens(PEST,2);g.resolve()
+        self.assertEqual(g.life,[40,36,36,36]);self.assertEqual(len([x for x in g.trace if x[0]=='token_created']),4)
+    def test_14_bats_sacrifice_not_plain_death(self):
+        g=self.s('Mirkwood Bats');a=g.make_tokens(PEST)[0];g.resolve()
+        g.destroy(a.uid);g.resolve();self.assertEqual(g.life[1],39)
+        b=g.make_tokens(PEST)[0];g.resolve();g.sacrifice(b.uid);g.resolve();self.assertEqual(g.life[1],37)
+    def test_15_agent_grants_commander_token_and_artifact_death(self):
+        g=self.s(SAVRA,'Agent of the Iron Throne');p=g.make_tokens(PEST)[0];g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life[1],39)
+        t=g.make_tokens(TREASURE)[0];g.sacrifice(t.uid);g.resolve();self.assertEqual(g.life[1],38)
+        self.assertEqual(g.edict_opportunities,1)
+    def test_16_agent_without_commander_no_granted_trigger(self):
+        g=self.s('Agent of the Iron Throne');p=g.make_tokens(PEST)[0];g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.life[1],40)
+    def test_17_savra_self_sac_agent_lki(self):
+        g=self.s(SAVRA,'Agent of the Iron Throne')
+        p=next(p for p in g.permanents.values() if p.name==SAVRA)
+        g.sacrifice(p.uid);g.resolve();self.assertEqual(g.life,[40,39,39,39])
+    def test_18_rescuer_upkeep_condition_start(self):
+        g=self.s('Pest Rescuer');g.begin_upkeep();g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),1)
+        g.begin_upkeep();g.resolve();self.assertEqual(len(self.tokens(g,PEST.label)),1)
+    def test_19_rescuer_upkeep_condition_resolution(self):
+        g=self.s('Pest Rescuer');g.begin_upkeep();g.make_tokens(PEST);g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),1)
+    def test_20_beledros_each_upkeep(self):
+        g=self.s('Beledros Witherbloom');g.begin_upkeep();g.resolve();g.begin_upkeep();g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),2)
+    def test_21_hunger_saga_early_insects(self):
+        g=self.s(SAVRA)
+        for i in (1,2,3): g.saga_chapter(i)
+        self.assertEqual(len(self.tokens(g,INSECT.label)),3)
+        with self.assertRaises(IllegalAction):g.saga_chapter(4)
+    def test_22_pest_summoning_two_dies_gain_pests(self):
+        g=self.s();g.pest_summoning();self.assertEqual(len(self.tokens(g,PEST.label)),2)
+    def test_23_learn_sideboard_toggle(self):
+        g=self.s(learn_sideboard_allowed=True);g.hunt_for_specimens(lesson=True)
+        self.assertIn('Pest Summoning',g.hand)
+        h=self.s(learn_sideboard_allowed=False)
+        with self.assertRaises(IllegalAction):h.hunt_for_specimens(lesson=True)
+    def test_24_sedgemoor_witch_is_after_sac_cast_cost(self):
+        g=self.s('Sedgemoor Witch');p=g.add('Reassembling Skeleton');g.cast_with_sacrifice_cost('Village Rites',p.uid);g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),1)
+        tr=g.trace
+        i_cost=next(i for i,x in enumerate(tr) if x[0]=='sacrifice');i_cast=next(i for i,x in enumerate(tr) if x[0]=='cast')
+        i_create=next(i for i,x in enumerate(tr) if x[0]=='token_created')
+        self.assertLess(i_cost,i_cast);self.assertLess(i_cast,i_create)
+    def test_25_magecraft_source_sacrificed_before_cast_no_trigger(self):
+        g=self.s('Sedgemoor Witch');p=next(p for p in g.permanents.values() if p.name=='Sedgemoor Witch')
+        g.cast_with_sacrifice_cost('Village Rites',p.uid);g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),0)
+    def test_26_blight_mound_only_nontoken_death(self):
+        g=self.s('Blight Mound');p=g.make_tokens(PEST)[0];g.destroy(p.uid);g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),0)
+        n=g.add('Reassembling Skeleton');g.destroy(n.uid);g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),1)
+    def test_27_feral_appetite_creature_gy_only(self):
+        g=self.s('Feral Appetite');g.activate_feral_appetite(grave_card_is_creature=False)
+        self.assertEqual(len(self.tokens(g,PEST.label)),0)
+        g.activate_feral_appetite(grave_card_is_creature=True)
+        self.assertEqual(len(self.tokens(g,PEST.label)),1)
+    def test_28_roaster_counters_not_fixed_one(self):
+        g=self.s();g.add('Ribtruss Roaster',counters=3);g.roaster_end_step();g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),3)
+    def test_29_immoral_bargain_cost_target_count(self):
+        g=self.s('Sedgemoor Witch');ps=[g.add('Reassembling Skeleton') for _ in range(2)]
+        with self.assertRaises(IllegalAction):g.immoral_bargain(2,[ps[0].uid],['a','b'])
+        g.immoral_bargain(2,[p.uid for p in ps],['a','b']);g.resolve()
+        self.assertEqual(len(self.tokens(g,PEST.label)),1)
+        self.assertLess(next(i for i,x in enumerate(g.trace) if x[0]=='targets_locked'),
+                        next(i for i,x in enumerate(g.trace) if x[0]=='sacrifice'))
+    def test_30_avatar_gain_toughness_last_known(self):
+        g=self.s('South Wind Avatar');p=g.add('Reassembling Skeleton',toughness=4)
+        g.destroy(p.uid);g.resolve()
+        self.assertEqual(g.life,[44,39,39,39]);self.assertEqual(g.life_gained_turn,4)
+    def test_31_full_life_graph_separate_events(self):
+        g=self.s(SAVRA,'Dina, Soul Steeper','Deathgreeter','Cauldron of Essence','Marauding Blight-Priest')
+        p=g.make_tokens(PEST)[0];g.sacrifice(p.uid);g.resolve()
+        # Gain events: Savra +2, Pest +1, Deathgreeter +1, Cauldron +1 = 4
+        self.assertEqual(len([x for x in g.trace if x[0]=='gain']),4)
+        self.assertEqual(g.life[0],43) # 40 -2 + 2 +1+1+1
+        self.assertEqual(g.life[1],31) # 2 drains each of 4 gains + 1 from Cauldron
+    def test_32_cauldron_target_locked_before_cost_sac(self):
+        g=self.s('Cauldron of Essence');a=g.add('Reassembling Skeleton',mana_value=2)
+        g.destroy(a.uid);g.resolve();b=g.add('Infestation Sage')
+        g.add_mana('B','G','C')
+        g.cauldron_reanimate(target_uid=a.uid,sacrificed_uid=b.uid);g.resolve()
+        self.assertNotIn(a.uid,g.permanents)
+        self.assertTrue(any(p.name=='Reassembling Skeleton' and p.uid!=a.uid
+                            for p in g.permanents.values()))
+        i_target=next(i for i,x in enumerate(g.trace) if x[0]=='target_locked')
+        i_sac=next(i for i,x in enumerate(g.trace) if x[0]=='sacrifice')
+        self.assertLess(i_target,i_sac)
+    def test_33_cauldron_cannot_target_sacrifice_cost(self):
+        g=self.s('Cauldron of Essence');a=g.add('Reassembling Skeleton')
+        with self.assertRaises(IllegalAction):g.cauldron_reanimate(target_uid=a.uid,sacrificed_uid=a.uid)
+    def test_34_moseo_life_gained_not_net_life(self):
+        g=self.s("Moseo, Vein's New Dean",SAVRA);g.resolve()
+        x=g.add('Reassembling Skeleton',mana_value=2)
+        g.destroy(x.uid);g.resolve()
+        p=g.make_tokens(PEST)[0];g.sacrifice(p.uid);g.resolve()
+        # Net 0 after Savra black/green, but life gained this turn = 3.
+        self.assertEqual(g.life[0],41)  # +1 Pest death
+        self.assertEqual(g.life_gained_turn,3)
+        self.assertTrue(g.moseo_end_step(target_uid=x.uid));g.resolve()
+        self.assertNotIn(x.uid,g.permanents)
+        self.assertTrue(any(p.name=='Reassembling Skeleton' and p.uid!=x.uid
+                            for p in g.permanents.values()))
+    def test_35_noncreature_treasure_no_savra(self):
+        g=self.s(SAVRA);p=g.make_tokens(TREASURE)[0];g.sacrifice(p.uid);g.resolve()
+        self.assertEqual(g.edict_opportunities,0)
+    def test_36_paying_to_zero_loses_before_savra_green_can_resolve(self):
+        g=self.s(SAVRA)
+        g.life[0]=2; p=g.make_tokens(INSECT)[0]; g.sacrifice(p.uid);g.resolve()
+        self.assertTrue(g.game_lost);self.assertEqual(g.life[0],0)
+        self.assertNotIn(('gain',2,'Savra green option'),g.trace)
+    def test_37_two_pest_rescuers_stack_amount_modifiers(self):
+        g=self.s('Pest Rescuer','Pest Rescuer','Dina, Soul Steeper');g.gain(1,'manual');g.resolve()
+        self.assertEqual(g.life,[43,39,39,39]);self.assertEqual(len([x for x in g.trace if x[0]=='gain']),1)
+    def test_38_pest_rescuer_died_before_gain_is_not_active(self):
+        g=self.s('Pest Rescuer')
+        p=next(p for p in g.permanents.values() if p.name=='Pest Rescuer')
+        g.destroy(p.uid);g.resolve();g.gain(1,'manual');g.resolve()
+        self.assertEqual(g.life[0],41)
+    def test_39_deathgreeter_other_creature_not_itself(self):
+        g=self.s('Deathgreeter')
+        p=next(p for p in g.permanents.values() if p.name=='Deathgreeter')
+        g.destroy(p.uid);g.resolve()
+        self.assertEqual(g.life[0],40)
+    def test_40_deathgreeter_can_decline_own_gain(self):
+        g=self.s('Deathgreeter',choose_deathgreeter_gain=False)
+        p=g.add('Reassembling Skeleton');g.destroy(p.uid);g.resolve()
+        self.assertEqual(g.life[0],40)
+    def test_41_invalid_learn_choice_does_not_partially_resolve(self):
+        g=self.s(learn_sideboard_allowed=False)
+        with self.assertRaises(IllegalAction): g.hunt_for_specimens(lesson=True)
+        self.assertEqual(len(self.tokens(g,PEST.label)),0)
+    def test_42_no_unsupported_body_defaulted_to_zero(self):
+        g=self.s()
+        with self.assertRaises(IllegalAction):g.add('Some nonexistent card')
+
+if __name__=='__main__': unittest.main(verbosity=2)

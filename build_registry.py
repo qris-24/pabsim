@@ -1,0 +1,140 @@
+"""Build-only coverage registry generator (R02 patch).
+
+Importing this module has NO side effects. `build()` returns the registry;
+`canonical_bytes()` serialises it deterministically (sorted keys, fixed indent,
+trailing newline). Only `python build_registry.py` writes to disk. The release
+runner never calls the writer; it regenerates in memory and compares bytes.
+"""
+import csv, json, hashlib, re
+from collections import Counter
+from pathlib import Path
+from pab_focus_engine import BODIES, SAVRA
+
+HERE=Path(__file__).resolve().parent
+REGISTRY_NAME='PABTRV3_CARD_COVERAGE.json'
+
+def canonical_bytes(obj):
+    """Deterministic serialisation: key order and whitespace fixed regardless of
+    filesystem or dict insertion order."""
+    return (json.dumps(obj,indent=2,sort_keys=True,ensure_ascii=False)+'\n').encode('utf-8')
+
+def build(here=HERE):
+    """Return {'summary':..., 'cards':...}. Pure: reads only, never writes."""
+    source=here/'upstream_frozen'
+    with (source/'PABTRV3_MECHANICAL_INVENTORY.csv').open(encoding='utf-8') as fh:
+        rows=list(csv.DictReader(fh))
+    main=[r for r in rows if r['section']=='Mainboard']
+    assert sum(int(r['count']) for r in main)==99
+    assert sum(int(r['count']) for r in main if r['group']=='land')==34
+    assert sum(int(r['count']) for r in main if r['group']=='nonland')==65
+    assert len([r for r in rows if r['group']=='commander'])==1
+    assert len([r for r in rows if r['group']=='lesson'])==1
+    assert next(r for r in rows if r['group']=='commander')['name']==SAVRA
+    assert next(r for r in rows if r['group']=='lesson')['name']=='Pest Summoning'
+
+    # A partial reference capability only. Never mistake this for full-card resolution.
+    partial={
+     SAVRA,'Dina, Soul Steeper','Pest Rescuer','Chatterfang, Squirrel General',
+     "Moseo, Vein's New Dean",'Bastion of Remembrance','Cauldron of Essence',
+     'Reassembling Skeleton',"Teacher's Pest",'Infestation Sage',
+     'Wriggling Grub','Sedgemoor Witch','Beledros Witherbloom',
+     'Ribtruss Roaster','South Wind Avatar','Agent of the Iron Throne',
+     'Deathgreeter','Blood Artist','Poison-Tip Archer','Marauding Blight-Priest',
+     'Starscape Cleric','Moldervine Reclamation','Dark Prophecy','Grave Pact',
+     'Prosperous Innkeeper','Essence Warden','Blight Mound','Feral Appetite',
+     'Mirkwood Bats','Village Rites','Diabolic Intent','Deadly Dispute',
+     'Tend the Pests','Immoral Bargain','Hunt for Specimens','Pest Summoning',
+     'The Hunger Tide Rises', 'Bogwater Lumaret','Sangromancer',
+     'Carrion Feeder','Viscera Seer','Warren Soultrader','Phyrexian Reclamation',
+     'Yawgmoth, Thran Physician','Yahenni, Undying Partisan',
+     'Phyrexian Altar','Plumb the Forbidden',
+     'Arcane Signet','Golgari Signet','Sol Ring','Sakura-Tribe Elder',
+     "Nature's Lore",'Pest Infestation','Unearth','Skullclamp','Demonic Tutor'
+    }
+    # Actual standalone behavior contracts do not exhaust full text even for partial cards.
+    entry=[]
+    for row in rows:
+        land=row['group']=='land'
+        status=('SOURCE_AUDIT_PENDING' if land else
+                'PARTIAL_REFERENCE_TESTED' if row['name'] in partial else
+                'NOT_IN_REFERENCE_KERNEL')
+        entry.append({
+            'section':row['section'], 'quantity':int(row['count']),
+            'name':row['name'], 'group':row['group'],
+            'reported_mechanical_role':row['mechanical_role'],
+            'reported_rules_contract':row['rules_contract'],
+            'text_provenance':row['source_status'],
+            'status':status, 'full_card_behavior_verified':False,
+            'value_for_optimization':None
+        })
+    status_counts=dict(Counter(x['status'] for x in entry))
+
+    # Preserve fact that the 25 old compiler contracts did NOT pass.
+    old_contracts=json.loads((source/'PAB_COMPILER_CONTRACT_RESULTS.json').read_text())
+    assert len(old_contracts)==25
+    summary={
+      'source':'PABTRV3 focus audit ZIP, recorded card snapshot text (not independently verified live Oracle)',
+      'mainboard_count':99, 'commander_count':1, 'sideboard_count':1,
+      'land_count':34,'nonland_count':65,
+      'reference_coverage_status_counts':status_counts,
+      'full_verified_cards':0,
+      'old_compiler_25_contract_passes':sum(t['pass'] for t in old_contracts),
+      'old_compiler_25_contract_failures':sum(not t['pass'] for t in old_contracts),
+      'current_reference_test_count':sum(len(re.findall(r'^\s+def test_',f.read_text(encoding='utf-8'),re.M)) for f in sorted((here/'tests').glob('test_*.py'))),  # static count; no test-module imports
+      'new_reference_changes_from_v05':'v0.6 added 56 physical-zone fixtures; v0.7 added 52 opt-in bridge fixtures; v0.8 adds 54 shared-mana and token-identity fixtures; R01 adds 13 Pest Rescuer token-predicate controls (11 run on both kernel and bridge) and 2 promoted corrections. All coverage values are partial.',
+      'kernel_version':'v0.8+R02+R01+R47+R48+R49+S1+S2',
+      'promoted_patches':['R02','R01','R47','R48','R49','S1','S2'],
+      'r01_pest_rescuer_token_predicate_promoted':True,
+      'superseded_frozen_contracts':['test_112_teacher_pest_blocks_rescuer_at_upkeep_start','test_113_teacher_pest_entered_before_rescuer_trigger_resolves'],
+      'pest_rescuer_text_independently_authenticated':False,
+      'contracts_executed_against_kernel':['C41','C42','C43','C44','C45','C46','C47','C48','C49','C51','C52','C53','C54','C55','C56','C57','C58','C59','C60','C61','C63','C64','C69','C77','C78','C79','C87'],
+      'contracts_blocked_unsupported':['C50','C62','C65','C66','C67','C68','C70','C71','C72','C73','C74','C75','C76','C80','C81','C82','C83','C84','C85','C86','C88','C89','C90','C91','C92','C93','C94'],
+      'unsupported_land_names_verified_fail_closed':18,
+      'pest_rescuer_text_checked_against_two_web_sources_2026_10_18':'Aetherhub and EchoMTG both read "if you don\'t control a Pest creature token"; still not an official Oracle feed',
+      'cr_evidence':'EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)',
+      'issue_r49_status':'PROMOTED (LKI fallback in pab_r47_r48_sba.py)',
+      'phase_clock_stage':'S2 promoted: boundaries drive each-upkeep, controller end step, mana emptying, cleanup expiry (pab_clock_s2.py); S3–S4 not authorized',
+      'issues_r50_r51_status':'CLOSED by S2 for Pest Rescuer, Beledros, Moseo, Roaster and the mana pool; untap/draw/land-play reset remain caller-driven until S4',
+      'contracts_c95_c99_status':'C95, C96, C98, C99 EXECUTED (tests/test_turn_clock_s2.py); C97 proposed (S3)',
+      'issues_r50_r51_design_only_historical':['R50: no active player/step clock; each-upkeep and your-end-step scoping is caller discipline','R51: mana pools never empty (CR 106.4)'],
+      'proposed_contracts_c95_c99':'EVIDENCE/PROPOSED_CONTRACTS_C95_C99.json (PROPOSED_NOT_EXECUTED)',
+      'phase_clock_design':'PHASE_CLOCK_DEPENDENCY_MAP.md (design only; implementation not authorized)',
+      'issues_r47_r48_status':'PROMOTED (fixed in pab_r47_r48_sba.py; frozen v0.7 behaviour pinned in C61/C79 tests)',
+      'new_issues_observed_design_only':['R47: Ribtruss Roaster end-step trigger snapshots +1/+1 counter count at trigger time; contract C61 expects the count at resolution (CR 608.2h). Unapproved; no code change.',
+                                         'R48: the Yawgmoth -1/-1 state-based death path calls destroy(), so an indestructible creature at toughness 0 wrongly survives; contract C79 expects death (CR 704.5f; the Skullclamp path uses _leave directly and is correct). Unapproved; no code change.'],
+      'contracts_c41_c94_all_executed_or_probed':True,
+      'contract_execution_status_source':'VALIDATION_RESULTS.json: contracts_executed (EXECUTED vs EXECUTED_WITH_SUBSTITUTION, with substitutions listed)',
+      'contracts_oracle_cr_authenticated':0,
+      'explicit_mana_reference_only':True,
+      'full_land_engine':False,
+      'limited_land_names_implemented':['Forest','Swamp','Command Tower'],
+      'nonbasic_land_names_without_play_implementation':18,
+      'basic_land_fixture_only':True,
+      'real_library_in_separate_zone_prototype':True,
+      'old_event_kernel_still_has_no_real_draw_or_library_zone':True,
+      'full_casting_engine':False,
+      'full_stack_and_priority_engine':False,
+      'opponent_exogenous_events_only':True,
+      'new_module_is_patch_to_original_engine':False,
+      'zones_integrated_with_event_engine':False,
+      'bounded_opt_in_zone_event_bridge':True,
+      'phase8_shared_mana_pool_fixture':True,
+      'phase8_mirrored_event_tokens':True,
+      'phase8_full_mana_token_engine':False,
+      'physical_bridge_full_board_reconciliation':False,
+      'event_candidate_five_draw_call_sites_normalized':True,
+      'replacement_optimization_allowed':False,
+      'learn_sideboard_default':False,
+      'land_exact_card_text_complete':False,
+      'colorless_nonland_exact_card_text_complete':False,
+      'source_hashes_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(source.iterdir()) if p.is_file()}
+    }
+    return {'summary':summary,'cards':entry}
+
+def main():
+    data=build()
+    (HERE/REGISTRY_NAME).write_bytes(canonical_bytes(data))
+    print(json.dumps(data['summary'],indent=2,sort_keys=True))
+
+if __name__=='__main__':
+    main()
