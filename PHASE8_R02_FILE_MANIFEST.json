@@ -3,7 +3,7 @@
   "build": "pab_reliability_v0_8_r02_r01",
   "files_sha256": {
     ".gitignore": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
-    "00_HANDOFF_2026-10-18.md": "d2a96e25b5c12959979c601f8a752a9c2743fd06cebb068999a8a683494aa096",
+    "00_HANDOFF_2026-10-18.md": "c084911d9457d1487139a1755c44ef6d375d99e3fe8104b02e5ee3ca16b29aee",
     "C41_C47_EXECUTION_NOTES.md": "a664cc634345f1293add758078a2c469e4c173bf34edf47bd1dbcd5e5c3f1cca",
     "C48_C64_EXECUTION_NOTES.md": "75e4b0d7d59193e47ef8647f9ae63b3311ac1de94dc1f3b14806424987fae2ad",
     "C65_C77_EXECUTION_NOTES.md": "6467555e7013cecfc75587a261a9e5ccca4f0c0fa2b4b509c8e82e3bd3859a68",
@@ -189,7 +189,7 @@
     "S15"
   ],
   "runner_outputs_sha256_at_build": {
-    "VALIDATION_RESULTS.json": "050269e0284ad21fa38bc4b0ac9da93fba656ddfb76095dab0083d15a062c810",
+    "VALIDATION_RESULTS.json": "e18536acf3d6fa6ce24b2c3dec99b9dcae0bb926bbe95d1264de20cae590a2fe",
     "validation_stdout.txt": "a596c8d2e73630eb250d8f763cd7d47b1a1619d761a8b95d98d6039f26798583"
   },
   "scope": "frozen Savra deterministic rules reference only; R02 runner integrity + R01 Pest Rescuer token predicate + R47 Roaster resolution-time count + R48 zero-toughness SBA promoted; frozen files, deck and Oracle untouched",
