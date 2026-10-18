@@ -49,6 +49,8 @@ Not unblocked by the clock (need other work): opponent permanents/targeting (C52
 | S3 ✅ promoted 2026-10-18 | Priority loop K5: SBA check between resolutions (look-back for simultaneous deaths), controller trigger ordering API; Yawgmoth's inline check retired (Skullclamp's immediate check kept: equip has no stack here) | done: `pab_clock_s3.py`; C97 executed; C63 fully de-substituted; C52 still needs opponent permanents; C78 still needs Golgari Charm |
 | S4 ✅ promoted 2026-10-18 | K7 turn-based actions (untap, draw, land window) on event kernel and physical bridge; K8 LKI was delivered earlier with R49 | done: `pab_clock_s4.py`; opponents' draws remain unmodeled (no opponent libraries) |
 
+| S5 ✅ promoted 2026-10-18 | Integrated turn loop over existing capabilities with invariants at every boundary (`pab_turn_loop.py`) | done; hard stop reached (see HARD_STOP_2026-10-18.md) |
+
 Rules for every stage: frozen files untouched; new layer module + `pab_kernel.py` promotion; tests that pin the pre-clock behaviour stay as frozen-engine pins; reference count pinned in the runner; manifest regenerated; approval before promotion.
 
 ## 5. Locked

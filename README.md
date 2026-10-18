@@ -82,3 +82,6 @@ SBA between resolutions with simultaneous-death look-back; Yawgmoth inline check
 
 ## Clock S4 promoted
 Untap, draw and land-play window driven by the clock on both kernels (`pab_clock_s4.py`). Clock stages S1–S4 complete. See S4_PATCH_NOTES.md.
+
+## S5 promoted — integrated turn loop; HARD STOP
+`pab_turn_loop.py` drives whole turns over existing capabilities with invariants checked everywhere. See S5_PATCH_NOTES.md and HARD_STOP_2026-10-18.md.

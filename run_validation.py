@@ -21,12 +21,12 @@ BASELINE_SHA='c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381'
 R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
                'PABTRV3_CARD_COVERAGE.json','README.md',
                'PHASE8_R02_FILE_MANIFEST.json','R02_PATCH_NOTES.md','R01_PATCH_NOTES.md',
-               'pab_kernel.py','pab_r01_pest_rescuer.py','pab_r47_r48_sba.py','R47_R48_PATCH_NOTES.md','PHASE_CLOCK_DEPENDENCY_MAP.md','UPKEEP_AUDIT_NOTES.md','pab_turn_clock.py','R49_S1_PATCH_NOTES.md','pab_clock_s2.py','S2_PATCH_NOTES.md','pab_clock_s3.py','S3_PATCH_NOTES.md','pab_clock_s4.py','S4_PATCH_NOTES.md','C41_C47_EXECUTION_NOTES.md','C48_C64_EXECUTION_NOTES.md','C65_C77_EXECUTION_NOTES.md','C78_C94_EXECUTION_NOTES.md','CONTRACTS_C41_C94_STATUS.md'}
+               'pab_kernel.py','pab_r01_pest_rescuer.py','pab_r47_r48_sba.py','R47_R48_PATCH_NOTES.md','PHASE_CLOCK_DEPENDENCY_MAP.md','UPKEEP_AUDIT_NOTES.md','pab_turn_clock.py','R49_S1_PATCH_NOTES.md','pab_clock_s2.py','S2_PATCH_NOTES.md','pab_clock_s3.py','S3_PATCH_NOTES.md','pab_clock_s4.py','S4_PATCH_NOTES.md','pab_turn_loop.py','S5_PATCH_NOTES.md','HARD_STOP_2026-10-18.md','C41_C47_EXECUTION_NOTES.md','C48_C64_EXECUTION_NOTES.md','C65_C77_EXECUTION_NOTES.md','C78_C94_EXECUTION_NOTES.md','CONTRACTS_C41_C94_STATUS.md'}
 # Outputs the runner itself produces. Never verified as inputs.
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=486   # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=492   # sum of per-file counts asserted below
 
 def sha(path):
     path=Path(path)
@@ -119,6 +119,7 @@ def preflight(root=ROOT):
     assert n('test_c48_c64_contracts.py')==34, 'test_c48_c64_contracts.py count'
     assert n('test_c65_c77_contracts.py')==20, 'test_c65_c77_contracts.py count'
     assert n('test_c78_c94_contracts.py')==23, 'test_c78_c94_contracts.py count'
+    assert n('test_integrated_turn_loop_s5.py')==6, 'test_integrated_turn_loop_s5.py count'
     assert n('test_priority_s3.py')==11, 'test_priority_s3.py count'
     assert n('test_r01_pest_rescuer.py')==13, 'test_r01_pest_rescuer.py count'
     assert n('test_turn_actions_s4.py')==13, 'test_turn_actions_s4.py count'
