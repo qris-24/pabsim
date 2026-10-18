@@ -21,12 +21,12 @@ BASELINE_SHA='c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381'
 R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
                'PABTRV3_CARD_COVERAGE.json','README.md',
                'PHASE8_R02_FILE_MANIFEST.json','R02_PATCH_NOTES.md','R01_PATCH_NOTES.md',
-               'pab_kernel.py','pab_r01_pest_rescuer.py','pab_r47_r48_sba.py','R47_R48_PATCH_NOTES.md','PHASE_CLOCK_DEPENDENCY_MAP.md','UPKEEP_AUDIT_NOTES.md','pab_turn_clock.py','R49_S1_PATCH_NOTES.md','pab_clock_s2.py','S2_PATCH_NOTES.md','pab_clock_s3.py','S3_PATCH_NOTES.md','pab_clock_s4.py','S4_PATCH_NOTES.md','pab_turn_loop.py','S5_PATCH_NOTES.md','HARD_STOP_2026-10-18.md','00_HANDOFF_2026-10-18.md','C41_C47_EXECUTION_NOTES.md','C48_C64_EXECUTION_NOTES.md','C65_C77_EXECUTION_NOTES.md','C78_C94_EXECUTION_NOTES.md','CONTRACTS_C41_C94_STATUS.md','pab_cast_s6.py','S6_PATCH_NOTES.md'}
+               'pab_kernel.py','pab_r01_pest_rescuer.py','pab_r47_r48_sba.py','R47_R48_PATCH_NOTES.md','PHASE_CLOCK_DEPENDENCY_MAP.md','UPKEEP_AUDIT_NOTES.md','pab_turn_clock.py','R49_S1_PATCH_NOTES.md','pab_clock_s2.py','S2_PATCH_NOTES.md','pab_clock_s3.py','S3_PATCH_NOTES.md','pab_clock_s4.py','S4_PATCH_NOTES.md','pab_turn_loop.py','S5_PATCH_NOTES.md','HARD_STOP_2026-10-18.md','00_HANDOFF_2026-10-18.md','C41_C47_EXECUTION_NOTES.md','C48_C64_EXECUTION_NOTES.md','C65_C77_EXECUTION_NOTES.md','C78_C94_EXECUTION_NOTES.md','CONTRACTS_C41_C94_STATUS.md','pab_cast_s6.py','S6_PATCH_NOTES.md','pab_r52_village_rites.py','R52_R53_PATCH_NOTES.md'}
 # Outputs the runner itself produces. Never verified as inputs.
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=525   # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=530   # sum of per-file counts asserted below
 
 def sha(path):
     path=Path(path)
@@ -120,7 +120,8 @@ def preflight(root=ROOT):
     assert n('test_c65_c77_contracts.py')==20, 'test_c65_c77_contracts.py count'
     assert n('test_c78_c94_contracts.py')==23, 'test_c78_c94_contracts.py count'
     assert n('test_cast_s6.py')==33, 'test_cast_s6.py count'
-    assert n('test_integrated_turn_loop_s5.py')==6, 'test_integrated_turn_loop_s5.py count'
+    assert n('test_r52_village_rites.py')==4, 'test_r52_village_rites.py count'
+    assert n('test_integrated_turn_loop_s5.py')==7, 'test_integrated_turn_loop_s5.py count'
     assert n('test_priority_s3.py')==11, 'test_priority_s3.py count'
     assert n('test_r01_pest_rescuer.py')==13, 'test_r01_pest_rescuer.py count'
     assert n('test_turn_actions_s4.py')==13, 'test_turn_actions_s4.py count'
@@ -168,7 +169,7 @@ def run_suites(root=ROOT,J=None):
     phase8_replay_errors=[] if err is None else [err]
 
     # Promoted kernel (R01): replay every frozen contract family against it.
-    # The 149 v0.5 contracts must fail on EXACTLY the two superseded ones;
+    # The 149 v0.5 contracts must fail on EXACTLY the superseded ones (R01: 112/113; R52: 91);
     # the v0.7 bridge (52) and v0.8 bridge (54) contracts must all pass.
     import pab_kernel
     r01_legacy_passed=0; r01_legacy_failed=set()
@@ -186,6 +187,12 @@ def run_suites(root=ROOT,J=None):
     log=io.StringIO(); rc=unittest.TextTestRunner(stream=log).run(unittest.defaultTestLoader.loadTestsFromModule(mod))
     corrected_passed=rc.testsRun-len(rc.errors)-len(rc.failures)-len(rc.skipped)
     corrected_ok=rc.wasSuccessful() and rc.testsRun==38
+    # R52: corrected full copy of the v0.4 cost file (test_91 fixed: Village Rites costs {B}) as a replay.
+    spec=importlib.util.spec_from_file_location('r52_corrected_copy',root/'r52_tests'/'test_v04_cost_and_copy_r52.py')
+    mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+    log=io.StringIO(); rc52=unittest.TextTestRunner(stream=log).run(unittest.defaultTestLoader.loadTestsFromModule(mod))
+    corrected52_passed=rc52.testsRun-len(rc52.errors)-len(rc52.failures)-len(rc52.skipped)
+    corrected_ok=corrected_ok and rc52.wasSuccessful() and rc52.testsRun==25
 
     # Contract execution record: one entry per contract class in the contract
     # test modules (CONTRACT/STATUS/SUBSTITUTIONS attributes), with its own
@@ -248,6 +255,7 @@ def run_suites(root=ROOT,J=None):
      'kernel_v07_bridge_52_replay_passes':k7,
      'kernel_v08_bridge_54_replay_passes':k8,
      'kernel_corrected_v05_copy_38_replay_passes':corrected_passed,
+     'kernel_corrected_v04_copy_25_replay_passes':corrected52_passed,
      'frozen_engines_modified':False,
      'contracts_executed':contracts,
      'r02_release_gate_tests_run':gate_run,
@@ -282,7 +290,7 @@ def main():
              'r02_release_gate_tests_run','r02_release_gate_tests_passed',
              'kernel_version','kernel_legacy_149_replay_failures',
              'kernel_v07_bridge_52_replay_passes','kernel_v08_bridge_54_replay_passes',
-             'kernel_corrected_v05_copy_38_replay_passes')}
+             'kernel_corrected_v05_copy_38_replay_passes','kernel_corrected_v04_copy_25_replay_passes')}
     summary['contracts']={k:f"{v['status']} {v['tests_passed']}/{v['tests_run']}"+(f" (+{v['expected_failures']} expected failures)" if v['expected_failures'] else '') for k,v in result['contracts_executed'].items()}
     print(json.dumps(summary,indent=2))
     if not ok: sys.exit(1)

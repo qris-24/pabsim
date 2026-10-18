@@ -1,7 +1,7 @@
 """Stage S5 (approved 2026-10-18): integrated turn loop over EXISTING capabilities.
 
-Drives a PhysicalZoneGame through whole turns with the S1–S4 clock: opening
-hand, untap, draw, one supported land play per controller turn (Forest, Swamp,
+Drives a PhysicalZoneGame through whole turns with the S1–S4 clock: shuffle (R53,
+CR 103.3) and opening hand, untap, draw, one supported land play per controller turn (Forest, Swamp,
 Command Tower only; the other 18 fail closed), tapping linked lands for mana
 in the first main phase. No new card mechanics; no casting from the physical
 hand (not modeled yet); no opponents' libraries or boards.
@@ -38,6 +38,9 @@ def check_invariants(g):
     if g.life[0]<=0 and not g.game_lost: raise InvariantError('life <= 0 without loss adjudication')
 
 def opening_hand(g,n=OPENING_HAND):
+    """CR 103.3: shuffle the library, then draw the opening hand. R53 (approved 2026-10-18):
+    before this fix no shuffle happened, so every seed drew the frozen decklist order."""
+    g.zones.shuffle_library(); g.trace.append(('opening_shuffle_103_3',g.zones.seed))
     cards=g.zones.draw(n); g.trace.append(('opening_hand',len(cards))); check_invariants(g); return cards
 
 def playable_land_in_hand(g):

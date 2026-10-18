@@ -1,26 +1,28 @@
-.............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
 ----------------------------------------------------------------------
-Ran 525 tests in 0.337s
+Ran 530 tests in 0.390s
 
 OK
 {
   "release": "v0.8+R02+R01 promoted (runner integrity; Pest Rescuer token predicate in kernel; frozen files untouched)",
-  "tests_run": 525,
-  "tests_passed": 525,
+  "tests_run": 530,
+  "tests_passed": 530,
   "failures": 0,
   "errors": 0,
   "candidate_historical_contract_passes": 149,
   "phase8_previous_bridge_contract_passes": 52,
   "r02_release_gate_tests_run": 18,
   "r02_release_gate_tests_passed": 18,
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6",
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53",
   "kernel_legacy_149_replay_failures": [
     "test_112_teacher_pest_blocks_rescuer_at_upkeep_start",
-    "test_113_teacher_pest_entered_before_rescuer_trigger_resolves"
+    "test_113_teacher_pest_entered_before_rescuer_trigger_resolves",
+    "test_91_village_rejects_mana_shortage_before_sac"
   ],
   "kernel_v07_bridge_52_replay_passes": 52,
   "kernel_v08_bridge_54_replay_passes": 54,
   "kernel_corrected_v05_copy_38_replay_passes": 38,
+  "kernel_corrected_v04_copy_25_replay_passes": 25,
   "contracts": {
     "C41": "EXECUTED_WITH_SUBSTITUTION 3/3",
     "C42": "EXECUTED_WITH_SUBSTITUTION 4/4",

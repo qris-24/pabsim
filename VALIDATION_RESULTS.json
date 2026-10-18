@@ -904,16 +904,18 @@
   "frozen_deck_verified": true,
   "frozen_engines_modified": false,
   "full_card_behavior_verified": 0,
+  "kernel_corrected_v04_copy_25_replay_passes": 25,
   "kernel_corrected_v05_copy_38_replay_passes": 38,
   "kernel_legacy_149_replay_failures": [
     "test_112_teacher_pest_blocks_rescuer_at_upkeep_start",
-    "test_113_teacher_pest_entered_before_rescuer_trigger_resolves"
+    "test_113_teacher_pest_entered_before_rescuer_trigger_resolves",
+    "test_91_village_rejects_mana_shortage_before_sac"
   ],
-  "kernel_legacy_149_replay_passes": 147,
+  "kernel_legacy_149_replay_passes": 146,
   "kernel_legacy_failures_exactly_superseded_set": true,
   "kernel_v07_bridge_52_replay_passes": 52,
   "kernel_v08_bridge_54_replay_passes": 54,
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6",
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53",
   "land_source_verified": false,
   "lands": 34,
   "lesson_sideboard": 1,
@@ -946,7 +948,9 @@
     "S3",
     "S4",
     "S5",
-    "S6"
+    "S6",
+    "R52",
+    "R53"
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
@@ -961,10 +965,11 @@
   "skipped": 0,
   "superseded_frozen_contracts": [
     "test_112_teacher_pest_blocks_rescuer_at_upkeep_start",
-    "test_113_teacher_pest_entered_before_rescuer_trigger_resolves"
+    "test_113_teacher_pest_entered_before_rescuer_trigger_resolves",
+    "test_91_village_rejects_mana_shortage_before_sac"
   ],
-  "tests_passed": 525,
-  "tests_run": 525,
+  "tests_passed": 530,
+  "tests_run": 530,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

@@ -26,12 +26,16 @@ class TurnLoop(unittest.TestCase):
                 self.assertEqual(len(z.zones['library']),99-7-2)
                 self.assertEqual(g.clock.state(),(9,0,'beginning','untap'))
     def test_land_plays_never_exceed_one_and_only_supported_names(self):
+        total=0
         for seed in SEEDS:
             with self.subTest(seed=seed):
                 g=game(seed); opening_hand(g); ledger=run_turns(g,16)
                 played=[l for _,_,l,_ in ledger if l]
                 self.assertTrue(all(n in SUPPORTED_LAND_MANA for n in played))
-                self.assertEqual(len(played),len([x for x in g.trace if x[0]=='land_played']))
+                self.assertEqual(len(played),len([x for x in g.trace if x[0]=='physical_land_played']))   # R54: was 'land_played' (a zones-trace key, never in g.trace); passed vacuously while R53 kept hands landless
+                self.assertEqual(len(played),len([x for x in g.zones.trace if x[0]=='land_played']))
+                total+=len(played)
+        self.assertGreater(total,0)                                           # not vacuous: some seed plays a land in 16 turns
     def test_mana_produced_equals_untapped_linked_lands_and_empties_by_next_step(self):
         g=game(3); opening_hand(g); ledger=run_turns(g,12)
         for t,_,_,mana in ledger:
@@ -52,6 +56,16 @@ class TurnLoop(unittest.TestCase):
         self.assertEqual(g.zones.failed_draws,0)
         self.assertGreaterEqual(sum(1 for p in g.permanents.values() if p.token is not None),30)   # one Pest per upkeep, every seat
         check_invariants(g)
+    def test_r53_opening_hand_shuffles_first_so_seeds_differ(self):
+        hands=set()
+        for seed in SEEDS:
+            g=game(seed); opening_hand(g)
+            self.assertEqual(g.trace.index(('opening_shuffle_103_3',seed))+1,g.trace.index(('opening_hand',7)))   # shuffle immediately before the draw
+            self.assertEqual([x[0] for x in g.zones.trace[:2]],['library_shuffled','zone_move'])
+            hands.add(tuple(g.zones.cards[u].name for u in g.zones.zones['hand']))
+        self.assertGreater(len(hands),1)                                      # R53: before the fix every seed drew the frozen list order
+        g1=game(2); opening_hand(g1); g2=game(2); opening_hand(g2)
+        self.assertEqual(g1.zones.zones['hand'],g2.zones.zones['hand'])        # still deterministic per seed
 
 if __name__=='__main__':
     unittest.main()

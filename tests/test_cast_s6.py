@@ -66,10 +66,13 @@ class VillageRites(_B):
         g.advance_to('upkeep',active_player=2); g.add_mana('B'); g.add_mana('B'); q=g.make_tokens(PEST)[0]  # token ETB leaves nothing pending; sacrifice puts triggers on the stack
         g.sacrifice(q.uid); self.assertTrue(g.pending)                                # stack not empty
         self.cast(g,uid,sacrifice_uid=p.uid); self.assertEqual(g.cards_drawn,3)              # 1 draw-step draw on turn 1 + 2
-    def test_r52_frozen_path_charges_1B_but_oracle_cost_is_B(self):
-        g=self.bridge(); p=self.pest(g); g.add_mana('B')
-        with self.assertRaises(Exception): g.cast_pab_spell('Village Rites',p.uid)   # frozen test_91 pins {1}{B}
-        uid=self.to_hand(g,'Village Rites'); self.cast(g,uid,sacrifice_uid=p.uid)     # S6 pays {B}
+    def test_r52_frozen_engine_charges_1B_kernel_paths_charge_B(self):
+        from pab_focus_engine_v07 import Game as FrozenGame
+        f=FrozenGame(); q=f.add('Reassembling Skeleton'); f.add_mana('B')
+        with self.assertRaises(Exception): f.cast_pab_spell('Village Rites',q.uid)    # frozen, untouched: {1}{B}
+        g=self.bridge(); p=self.pest(g); g.add_mana('B'); g.cast_pab_spell('Village Rites',p.uid); g.resolve()   # R52 kernel path: {B}
+        self.assertEqual(g.mana_pool,[]); uid=self.to_hand(g,'Village Rites'); r=self.pest(g); g.add_mana('B')
+        self.cast(g,uid,sacrifice_uid=r.uid); self.assertEqual(g.mana_pool,[])                                     # S6 path: {B}
         self.assertEqual(CASTABLE['Village Rites']['cost'],(1,0,0))
 
 # ---------------------------------------------------------------- Deadly Dispute
@@ -200,15 +203,14 @@ class CastingTurnLoop(_B):
         lands=[g.zones.cards[u].name for u in g.zones.zones['battlefield'] if g.zones.cards[u].is_land]
         self.assertEqual(sorted(lands),['Forest','Forest','Swamp'])                   # Swamp T1, Forest T5, Forest fetched
         self.assertEqual(len(g.linked_battlefield),3)
-    def test_r53_s5_opening_hand_is_seed_independent_shuffled_is_not(self):
-        hands=set()
-        for seed in SEEDS:
-            g=self.game(seed); opening_hand(g); hands.add(tuple(g.zones.cards[u].name for u in g.zones.zones['hand']))
-        self.assertEqual(len(hands),1)                                                 # R53: S5 never shuffles (CR 103.3)
-        shuffled=set()
-        for seed in SEEDS:
-            g=self.game(seed); opening_hand_shuffled(g); shuffled.add(tuple(g.zones.cards[u].name for u in g.zones.zones['hand']))
-        self.assertGreater(len(shuffled),1); check_invariants_s6(g)
+    def test_r53_fixed_opening_hand_and_shuffled_alias_are_the_same_procedure(self):
+        a=self.game(11); opening_hand(a); b=self.game(11); opening_hand_shuffled(b)
+        self.assertEqual(a.zones.zones['hand'],b.zones.zones['hand']); self.assertEqual(a.zones.zones['library'],b.zones.zones['library'])
+        hands={tuple(self.game(s).zones.zones['library'][:7]) for s in SEEDS}; self.assertEqual(len(hands),1)   # unshuffled order is seed-independent
+        drawn=set()
+        for s in SEEDS:
+            g=self.game(s); opening_hand(g); drawn.add(tuple(g.zones.zones['hand']))
+        self.assertGreater(len(drawn),1); check_invariants_s6(g)
     def test_driver_casts_sacrifice_spell_when_fodder_and_mana_exist(self):
         g=self.game(0); opening_hand_shuffled(g); g.advance_to('precombat_main',active_player=0)
         uid=self.to_hand(g,'Village Rites'); self.pest(g); g.add_mana('B')

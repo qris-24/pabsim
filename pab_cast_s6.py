@@ -30,11 +30,10 @@ stack its physical card stays in zones['hand'] and is recorded in self.stack_car
 hand and refuses a second cast of the same card. This is a documented substitute
 for a real stack zone, not a claim that the hand still contains the card.
 
-R52 (found while building S6, NOT fixed in frozen code): the frozen
-cast_pab_spell charges Village Rites {1}{B}; the printed cost is {B}
-(scryfall.com card page, EVIDENCE/S6_CARD_EVIDENCE.json). S6 charges {B}. The
-frozen fixture test_91 (tests/test_v04_cost_and_copy.py) pins the wrong cost on
-the frozen path and is left untouched; superseding it needs approval.
+R52 (found while building S6; fixed the same day by pab_r52_village_rites.py,
+approved): the frozen cast_pab_spell charges Village Rites {1}{B}; the printed
+cost is {B} (scryfall.com card page, EVIDENCE/S6_CARD_EVIDENCE.json). S6 and the
+R52 layer both charge {B}; frozen test_91 is superseded, the frozen file untouched.
 
 Not modeled: the stack as a zone, targets (none of the five has one), spell
 copies, counterspells, opponents' priority passes, X costs, alternative costs,
@@ -171,10 +170,8 @@ class CastMixin(TurnBasedActionsMixin):
 
 # ---- invariants and driver --------------------------------------------------
 def opening_hand_shuffled(g,n=_loop.OPENING_HAND):
-    """CR 103.3: shuffle, then draw the opening hand. R53: pab_turn_loop.opening_hand()
-    never shuffles, so every S5 seed plays the frozen decklist order; the seed only
-    affects later searches. Left in S5 pending approval; S6 drivers use this."""
-    g.zones.shuffle_library(); g.trace.append(('opening_shuffle_103_3',g.zones.seed))
+    """Alias kept for S6 callers. R53 (approved 2026-10-18) moved the CR 103.3 shuffle
+    into pab_turn_loop.opening_hand() itself, so the two are now the same procedure."""
     return _loop.opening_hand(g,n)
 
 def check_invariants_s6(g):
