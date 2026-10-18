@@ -209,7 +209,7 @@ def tap_lands_policy(g,extra=None,land_mana=None):
         choices=(PATHWAY_FACES[p.face],) if spec and spec.get('modal') else land_mana[c.name]
         if not choices: continue                                       # S14: Verdant Catacombs has no mana ability
         if len(choices)>1:
-            pool=g.mana_pool+produced
+            pool=g.mana_pool                                           # CP10 (AUD-01): tap_physical_land_for_mana already appends each colour to g.mana_pool; adding `produced` counted it twice
             short=[x for x in ('G','B') if pool.count(x)<need[x] and x in choices]
             color=short[0] if short else ('C' if 'C' in choices else 'B')
         produced.append(g.tap_physical_land_for_mana(ev,color=color)); check_invariants_s8(g)
