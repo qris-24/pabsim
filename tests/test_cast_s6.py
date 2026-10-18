@@ -170,9 +170,10 @@ class FailClosed(_B):
         from pab_cast_s12 import S12_NAMES                      # S12 widened it again
         from pab_cast_s13 import S13_NAMES                      # S13 widened it again
         from pab_cast_s15 import S15_NAMES                      # S15 widened it again
+        from pab_grist_s16 import GRIST                         # S16: Grist castable
         g=self.bridge(); g.add_mana('B','G','C','C','C')
         for u in list(g.zones.zones['library']):
-            if g.zones.cards[u].name in CASTABLE or g.zones.cards[u].name in S7_NAMES or g.zones.cards[u].name in S12_NAMES or g.zones.cards[u].name in S13_NAMES or g.zones.cards[u].name in S15_NAMES: continue
+            if g.zones.cards[u].name in CASTABLE or g.zones.cards[u].name in S7_NAMES or g.zones.cards[u].name in S12_NAMES or g.zones.cards[u].name in S13_NAMES or g.zones.cards[u].name in S15_NAMES or g.zones.cards[u].name==GRIST: continue
             g.zones.search_library(selected_uid=u,destination='hand'); self.refused(g,u); g.zones.move(u,'library')
         self.assertEqual(trace(g,'cast'),[])
     def test_kw_timing_refused_once_clock_engaged(self):

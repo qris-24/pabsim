@@ -1,0 +1,19 @@
+{
+  "recorded": "2026-10-18",
+  "stage": "S16",
+  "source_kind": "same source as the S7–S15 evidence (user-provided Scryfall bulk export via the audit reference JSON; secondary-official)",
+  "reference_file_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+  "card": {
+    "name": "Grist, the Hunger Tide",
+    "mana_cost": "{1}{B}{G}",
+    "cmc": 3.0,
+    "type_line": "Legendary Planeswalker — Grist",
+    "loyalty": "3",
+    "oracle_text": "As long as Grist isn't on the battlefield, it's a 1/1 Insect creature in addition to its other types.\n+1: Create a 1/1 black and green Insect creature token, then mill a card. If an Insect card was milled this way, put a loyalty counter on Grist and repeat this process.\n−2: You may sacrifice a creature. When you do, destroy target creature or planeswalker.\n−5: Each opponent loses life equal to the number of creature cards in your graveyard.",
+    "oracle_id": "0efb0d7e-dea0-4817-a243-15066e9ef333",
+    "id": "1925dc45-4dee-4772-aa16-3b4ca54be6c7"
+  },
+  "insect_cards_in_deck": [
+    "Grist, the Hunger Tide (only; the +1 repeat cannot fire in this deck)"
+  ]
+}

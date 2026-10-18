@@ -53,8 +53,8 @@ class Scope(_B):
         for n in S15_NAMES:
             syms=re.findall(r'\{([^}]+)\}',ev[n]['mana_cost']); self.assertEqual((syms.count('B'),syms.count('G'),sum(int(s) for s in syms if s.isdigit())),SPELLS15[n]['cost'],n)
             self.assertEqual(SPELLS15[n]['kind'],'instant' if 'Instant' in ev[n]['type_line'] else 'sorcery',n)
-        g=self.game(); uid=self.to_hand(g,'Grist, the Hunger Tide'); g.add_mana('B','G','C')
-        with self.assertRaises(BridgeError): g.cast_from_hand(uid)                                   # Grist still fails closed
+        g=self.game(); uid=self.to_hand(g,'Golgari Charm'); g.add_mana('B','G'); g.advance_to('precombat_main',active_player=1); g.add_mana('B','G'); g.advance_to('precombat_main',active_player=1)   # (Grist is castable since S16; the S15 probe keeps a timing refusal instead)
+        with self.assertRaises(BridgeError): g.cast_from_hand(uid,mode=1,main_phase=True)              # kw timing refused once the clock is engaged
     def test_common_refusals(self):
         g=self.game(); bear=self.opp(g,1,'Bear')
         self.refused(g,'Abrupt Decay','B')                                                           # mana
