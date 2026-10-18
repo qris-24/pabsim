@@ -98,13 +98,31 @@ class InteractionSpellsMixin(RemainingLandsMixin):
     def _leave(self,uid,*,sacrificed):
         p=self.permanents.get(uid)
         if p is not None and p.controller!=0 and p.creature:
-            return self._opponent_creature_dies(uid,cause='sacrifice' if sacrificed else 'state-based')
+            return self._opponent_creature_dies(uid,cause='sacrifice' if sacrificed else 'state-based')   # CP10 (A-S20-11): the Infuse return for an opponent body is handled there, so destroy/wipe/edict deaths are covered too
         infused=uid in self.infused_eot and p is not None and p.controller==0 and p.creature and p.token is None
         departed=super()._leave(uid,sacrificed=sacrificed)
         if infused:
             self.infused_eot.discard(uid); cand=departed
             self.pending.append(Trigger('Infuse with Vitality return (S15)',lambda:self._return_creature_from_graveyard(cand,'Infuse with Vitality',tapped=True) if cand in self.graveyard else self.trace.append(('infuse_return_card_gone',uid))))
         return departed
+    def _opponent_creature_dies(self,uid,*,cause):
+        """CP10 (A-S20-11): an infused opponent-owned body returns tapped under its owner's control as a
+        NEW declared body (same name/P/T/colours/mana value; no counters or until-end-of-turn state carried).
+        Opponents have no cards or graveyards (S8), so the body is re-declared rather than moved."""
+        p=self.permanents.get(uid)
+        infused=uid in self.infused_eot and p is not None and p.controller!=0 and p.creature
+        if infused:
+            self.infused_eot.discard(uid); seat=p.controller
+            spec=dict(name=p.name,colors=p.colors,power=p.power,toughness=p.toughness,mana_value=p.mana_value)
+        out=super()._opponent_creature_dies(uid,cause=cause)
+        if infused:
+            self.pending.append(Trigger('Infuse with Vitality return (S15)',lambda:self._infuse_return_opponent_body(uid,seat,spec)))
+        return out
+    def _infuse_return_opponent_body(self,uid,seat,spec):
+        if seat in self.lost_seats: self.trace.append(('infuse_return_seat_gone',uid,seat)); return None
+        new=self.add(spec['name'],controller=seat,colors=spec['colors'],creature=True,artifact=False,tapped=True,
+                     power=spec['power'],toughness=spec['toughness'],mana_value=spec['mana_value'],counters=0)
+        self.trace.append(('reanimate',uid,new.uid,'Infuse with Vitality',True)); return new
     def destroy(self,uid):
         p=self.permanents.get(uid)
         if p is None: return super().destroy(uid)

@@ -4,6 +4,8 @@ A: AUD-01 / A-S20-12 — tap_lands_policy counted produced colours twice (pool=g
    while tap_physical_land_for_mana already appends to g.mana_pool).
 B: AUD-02 / A-S20-13 — script_opponent_actions accepted a (seat, turn) pair the fixed four-seat clock can
    never reach (turn t belongs to seat (t-1) % 4); the entry stayed pending forever and never executed.
+C: A-S20-11 — Infuse with Vitality on an opponent-owned declared body (S8) did not return it; it now returns
+   tapped under its owner's control as a new body, and the clause still expires at cleanup.
 """
 import sys, unittest
 from pathlib import Path
@@ -102,5 +104,57 @@ class TestCP10ScriptValidation(unittest.TestCase):
         self.to_main(g,1,2); self.assertEqual(g.opponent_actions_done,[(2,1,'edict')])
         with self.assertRaises(AssertionError) as cm: g.assert_opponent_script_exhausted()
         self.assertIn('turn 42',str(cm.exception)); self.assertLess(g.clock.turn,42)
+
+BOARD15=[{'name':'Bear','power':2,'toughness':2,'colors':'G','mana_value':2},{'name':'Wall','power':0,'toughness':4,'colors':'W','mana_value':3}]
+
+class TestCP10InfuseReturn(unittest.TestCase):
+    def game(self,*names):
+        g=PhysicalZoneGame(); g.add(SAVRA)
+        for n in names: g.add(n)
+        g.resolve()
+        for s in OPPONENT_SEATS: g.declare_opponent_board(s,BOARD15)
+        check_invariants_s11(g); return g
+    def to_hand(self,g,name):
+        uid=next(u for u in g.zones.zones['library'] if g.zones.cards[u].name==name); g.zones.search_library(selected_uid=uid,destination='hand'); return uid
+    def creature(self,g,name):
+        uid=self.to_hand(g,name); g.add_mana('B','B','G','G','C','C','C','C'); g.cast_from_hand(uid); g.resolve(); del g.mana_pool[:]; check_invariants_s11(g)
+        return next(p for p in g.permanents.values() if p.name==name)
+    def infuse(self,g,target_uid):
+        uid=self.to_hand(g,'Infuse with Vitality'); g.add_mana('B','G'); g.cast_from_hand(uid,target_uid=target_uid); g.resolve(); check_invariants_s11(g)
+        self.assertIn(target_uid,g.infused_eot); return uid
+    def opp(self,g,seat,name): return next(p for p in g.opponent_creatures(seat) if p.name==name)
+    def bears(self,g,seat): return [p for p in g.opponent_creatures(seat) if p.name=='Bear']
+    def test_control_controller_owned_creature_returns_tapped_as_a_new_object(self):
+        g=self.game(); w=self.creature(g,'Sedgemoor Witch'); wuid=g.linked_battlefield[w.uid]; self.infuse(g,w.uid)
+        g.sacrifice(w.uid); g.resolve(); check_invariants_s11(g)
+        back=next(p for p in g.permanents.values() if p.name=='Sedgemoor Witch')
+        self.assertNotEqual(back.uid,w.uid); self.assertTrue(back.tapped); self.assertEqual(g.linked_battlefield[back.uid],wuid)
+    def test_opponent_owned_body_returns_tapped_to_its_owner_after_destroy(self):
+        g=self.game(); bear=self.opp(g,2,'Bear'); self.infuse(g,bear.uid)
+        g.destroy(bear.uid); g.resolve(); check_invariants_s11(g)
+        self.assertNotIn(bear.uid,g.permanents); back=self.bears(g,2); self.assertEqual(len(back),1); back=back[0]
+        self.assertEqual((back.controller,back.tapped,back.power,back.toughness,back.colors,back.mana_value),(2,True,2,2,'G',2))
+        self.assertEqual([t for t in g.trace if t[0]=='reanimate'][-1],('reanimate',bear.uid,back.uid,'Infuse with Vitality',True))
+        self.assertEqual([t[1:4] for t in g.trace if t[0]=='opponent_creature_dies'],[(2,bear.uid,'Bear')])
+        self.assertEqual(len(self.bears(g,1)),1); self.assertEqual(len(self.bears(g,3)),1); self.assertEqual(g.infused_eot,set())
+    def test_opponent_owned_body_returns_after_a_sacrifice_through_leave(self):
+        g=self.game(); bear=self.opp(g,1,'Bear'); self.infuse(g,bear.uid)
+        g._leave(bear.uid,sacrificed=True); g.resolve(); check_invariants_s11(g)
+        back=self.bears(g,1); self.assertEqual(len(back),1); self.assertNotEqual(back[0].uid,bear.uid); self.assertTrue(back[0].tapped)
+    def test_opponent_owned_body_returns_after_a_scripted_board_wipe_look_back(self):
+        g=self.game(); bear=self.opp(g,3,'Bear'); self.infuse(g,bear.uid)
+        g._act_board_wipe(2); self.assertEqual(len([p for p in g.permanents.values() if p.creature]),0)
+        g.resolve(); check_invariants_s11(g)
+        back=self.bears(g,3); self.assertEqual(len(back),1); self.assertTrue(back[0].tapped); self.assertEqual(len(g.permanents),1)   # only the returned Bear
+    def test_returned_body_is_a_new_object_without_counters_or_eot_state(self):
+        g=self.game(); bear=self.opp(g,2,'Bear'); self.infuse(g,bear.uid); bear.counters=2; g.eot_pt[bear.uid]=(1,1)
+        g.destroy(bear.uid); g.resolve(); check_invariants_s11(g)
+        back=self.bears(g,2)[0]
+        self.assertNotEqual(back.uid,bear.uid); self.assertEqual((back.counters,back.minus_counters),(0,0)); self.assertNotIn(back.uid,g.eot_pt); self.assertNotIn(back.uid,g.infused_eot)
+    def test_clause_expires_at_cleanup_for_an_opponent_body(self):
+        g=self.game(); bear=self.opp(g,2,'Bear'); self.infuse(g,bear.uid)
+        g.advance_to('cleanup',active_player=0); self.assertEqual(g.infused_eot,set())
+        g.destroy(bear.uid); g.resolve(); check_invariants_s11(g)
+        self.assertEqual(self.bears(g,2),[]); self.assertFalse([t for t in g.trace if t[0]=='reanimate'])
 
 if __name__=='__main__': unittest.main()

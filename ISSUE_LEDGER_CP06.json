@@ -157,6 +157,8 @@
       "claim_full_mt_rules_certified": false,
       "cp05_status": "OPEN_UNMODIFIED",
       "cp06_status": "OPEN_UNMODIFIED",
+      "cp10_status": "REPAIRED_CP10c_pab_cast_s15_opponent_body_infuse_return",
+      "cp10_tests": "tests/test_auditfix_cp10.py",
       "evidence_class": "Source-and-code limitation newly separated from A-S20-04",
       "issue_id": "A-S20-11",
       "location": "pab_cast_s15.InteractionSpellsMixin._leave",
@@ -166,6 +168,8 @@
     },
     {
       "audit_id": "AUD-01",
+      "cp10_status": "REPAIRED_CP10a_pab_lands_s9_tap_lands_policy_counts_pool_once",
+      "cp10_tests": "tests/test_auditfix_cp10.py",
       "issue_id": "A-S20-12",
       "location": "pab_lands_s9.py:tap_lands_policy (pool=g.mana_pool+produced)",
       "priority": "P1",
@@ -176,6 +180,8 @@
     },
     {
       "audit_id": "AUD-02",
+      "cp10_status": "REPAIRED_CP10b_pab_interaction_s11_script_validation_and_exhausted_check",
+      "cp10_tests": "tests/test_auditfix_cp10.py",
       "issue_id": "A-S20-13",
       "location": "pab_interaction_s11.py",
       "priority": "P2",
