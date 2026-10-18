@@ -22,7 +22,8 @@ from pab_policy_s18 import PolicyOpponentsMixin       # S18: policy opponents â€
 from pab_r52_village_rites import VillageRitesCostMixin, EXPECTED_LEGACY_FAILURES   # R52: Village Rites costs {B}; supersedes frozen test_91 (+R01's 112/113)
 class Game(VillageRitesCostMixin,TurnBasedActionsMixin,_sba.Game): pass
 class PhysicalZoneGame(VillageRitesCostMixin,PolicyOpponentsMixin,_sba.PhysicalZoneGame): pass
-KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18'
-PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18"]
+# S19 (pab_validation_s19.py) is a validation tool over this kernel, not a layer; it imports this module.
+KERNEL_VERSION='v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19'
+PROMOTED=["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19"]
 SUPERSEDED_FROZEN_CONTRACTS=sorted(EXPECTED_LEGACY_FAILURES)
 SUPERSEDED_V08_CONTRACTS=sorted(SUPERSEDED_V08_FIXTURES)

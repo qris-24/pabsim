@@ -1134,7 +1134,7 @@
     ],
     "contracts_oracle_cr_authenticated": 0,
     "cr_evidence": "EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)",
-    "current_reference_test_count": 728,
+    "current_reference_test_count": 732,
     "event_candidate_five_draw_call_sites_normalized": true,
     "explicit_mana_reference_only": true,
     "fixer_lands_stage_s9": "S9 promoted: the nine B/G-producing nonbasic lands playable and tappable on the physical bridge (pab_lands_s9.py) with their entry conditions, Pathway faces, Mortuary surveil, Wastes damage and Peatland life (EVIDENCE/S9_LAND_EVIDENCE.json); the other nine nonbasics still fail closed; frozen SUPPORTED_LAND_MANA untouched",
@@ -1152,7 +1152,7 @@
     ],
     "issues_r50_r51_status": "CLOSED: S2 (upkeep/end/cleanup/mana) + S4 (untap/draw/land-play reset)",
     "issues_r52_r53_r54_status": "PROMOTED 2026-10-18: R52 Village Rites costs {B} (pab_r52_village_rites.py; frozen test_91 superseded, corrected copy r52_tests/); R53 pab_turn_loop.opening_hand() shuffles first (CR 103.3); R54 S5 land-play test compared against a trace key never emitted into g.trace and passed vacuously — fixed and made non-vacuous",
-    "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18",
+    "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19",
     "land_count": 34,
     "land_exact_card_text_complete": false,
     "lands_stage_s14": "S14 promoted: the nine remaining nonbasic lands playable with their abilities (pab_lands_s14.py; EVIDENCE/S14_LAND_EVIDENCE.json): Tower/High Market/Grim Backwoods sacrifice abilities, Castle Locthwain, Verdant Catacombs type fetch, Takenuma channel, Geier Reach/Mikokoro controller side; Boseiju channel refused (no target); all 34 lands playable on the bridge; frozen SUPPORTED_LAND_MANA untouched",
@@ -1214,7 +1214,8 @@
       "S15",
       "S16",
       "S17",
-      "S18"
+      "S18",
+      "S19"
     ],
     "proposed_contracts_c95_c99": "EVIDENCE/PROPOSED_CONTRACTS_C95_C99.json (PROPOSED_NOT_EXECUTED)",
     "r01_pest_rescuer_token_predicate_promoted": true,
@@ -1244,6 +1245,7 @@
       "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
     ],
     "unsupported_land_names_verified_fail_closed": 18,
+    "validation_stage_s19": "S19 promoted: whole-game validation tool (pab_validation_s19.py) — reproducibility, clock legality, life ledger reconciled from the trace, stack/count/identity checks over configurable opponents; observed counts only, no deck scores",
     "zones_integrated_with_event_engine": false
   }
 }

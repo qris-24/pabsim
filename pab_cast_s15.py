@@ -310,7 +310,7 @@ class InteractionSpellsMixin(RemainingLandsMixin):
                     if self._tgt(target_uid,creature=True): dp,dt=self.eot_pt.get(target_uid,(0,0)); self.eot_pt[target_uid]=(dp-3,dt-1); self.trace.append(('minus_three_minus_one',target_uid))
                     else: self._fizzle('Witherbloom Command mode 3')
                 elif m==4:
-                    if target_opponent in self.seats_in_game(): self.life[target_opponent]-=2; self.trace.append(('target_opponent_loses',2,'Witherbloom Command')); self.gain(2,'Witherbloom Command')
+                    if target_opponent in self.seats_in_game(): self.life[target_opponent]-=2; self.trace.append(('target_opponent_loses',2,'Witherbloom Command')); self.trace.append(('witherbloom_command_target',target_opponent,2)); self.gain(2,'Witherbloom Command')
                     else: self._fizzle('Witherbloom Command mode 4')
         return {'targets':targets,'resolve':resolve}
 
