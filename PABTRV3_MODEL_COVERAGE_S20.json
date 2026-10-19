@@ -538,11 +538,10 @@
       "certified": false,
       "kind": "spell",
       "modeled": [
-        "target creature returns tapped when it dies this turn; gain 2"
+        "target creature returns tapped when it dies this turn; gain 2",
+        "deathtouch until end of turn with lethal combat effects (CP03)"
       ],
-      "not_modeled": [
-        "deathtouch (no combat consequence modeled for the target)"
-      ],
+      "not_modeled": [],
       "physical_path_stage": "S15",
       "quantity": 1,
       "status": "PARTIAL",
@@ -1234,6 +1233,6 @@
     "distinct": 88,
     "partial": 88,
     "rule": "no card is scored; unmodeled parts are listed, never treated as zero",
-    "with_not_modeled_items": 42
+    "with_not_modeled_items": 41
   }
 }

@@ -88,7 +88,7 @@ CARDS={
  'Witherbloom Charm':card(S,'S15',['three modes: sacrifice a permanent + draw 2 / gain 5 / destroy nonland MV<=2'],[]),
  'Golgari Charm':card(S,'S15',['three modes: all creatures -1/-1 (SBA, any seat) / destroy enchantment / regenerate each creature you control'],['regeneration\'s remove-from-combat']),
  'Heroic Intervention':card(S,'S15',['hexproof + indestructible for your permanents until end of turn (every cleanup)'],[]),
- 'Infuse with Vitality':card(S,'S15',['target creature returns tapped when it dies this turn; gain 2'],['deathtouch (no combat consequence modeled for the target)']),
+ 'Infuse with Vitality':card(S,'S15',['target creature returns tapped when it dies this turn; gain 2','deathtouch until end of turn with lethal combat effects (CP03)'],[]),
  'Grisly Salvage':card(S,'S15',['reveal five, one creature or land to hand, rest to graveyard'],['event-kernel LKI for the milled creature cards']),
  'Rise of the Witch-king':card(S,'S15',['each player sacrifices (opponents by the S8 policy), return another permanent card (creature/land/artifact/enchantment)'],[]),
  'Witherbloom Command':card(S,'S15',['two modes of four: mill 3 + land back / destroy noncreature nonland MV<=2 / -3/-1 / target opponent loses 2, gain 2'],['an opponent\'s mill (no libraries)']),
