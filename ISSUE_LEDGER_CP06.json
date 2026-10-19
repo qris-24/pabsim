@@ -192,12 +192,15 @@
     },
     {
       "audit_id": "AUD-03",
+      "cp13_repair": "pab_cast_s13.py SpellCastMixin._tutor selects the library card at resolution (explicit choice if still in the library, else tutor_selection, else first library card); cast pays mana and the Diabolic Intent sacrifice only; cast_when_able no longer preselects",
+      "cp13_status": "CLOSED",
+      "cp13_tests": "tests/test_auditfix_cp13.py",
       "issue_id": "A-S20-14",
       "location": "pab_cast_s13.py",
       "priority": "P1",
       "source": "A01 audit 2026-10-18, probes replayed at CP06: persisting",
       "stage": "S13",
-      "status": "OPEN",
+      "status": "REPAIRED",
       "summary": "Tutor pre-commits library choice at cast"
     }
   ],

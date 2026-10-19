@@ -77,7 +77,10 @@ class Tutors(_B):
         self.assertIn(('demonic_tutor_resolved',sel),g.zones.trace); self.assertIn(('library_shuffled',n-1),g.zones.trace)
         di=self.to_hand(g,'Diabolic Intent'); p=self.pest(g); sel=self.lib(g,'Blood Artist'); g.add_mana('B','C'); life=g.life[0]
         self.cast(g,di,sacrifice_uid=p.uid,selected_land_uid=sel); self.assertEqual(g.zones.cards[sel].zone,'hand'); self.assertNotIn(p.uid,g.permanents); self.assertEqual(g.life[0],life-2+2+1)   # Savra black paid, green, Pest
-        g=self.bridge(); dt=self.to_hand(g,'Demonic Tutor'); g.add_mana('B','C'); self.refused(g,dt); self.refused(g,dt,selected_land_uid=dt)
+        g=self.bridge(); dt=self.to_hand(g,'Demonic Tutor'); g.add_mana('B','C'); n=len(g.zones.zones['library']); self.cast(g,dt)                       # CP13: no selection, chosen at resolution
+        self.assertEqual(len(g.zones.zones['library']),n-1); self.assertEqual(g.zones.cards[[t for t in g.zones.trace if t[0]=='demonic_tutor_resolved'][-1][1]].zone,'hand')
+        g=self.bridge(); dt=self.to_hand(g,'Demonic Tutor'); g.add_mana('B','C'); self.cast(g,dt,selected_land_uid=dt)                                  # CP13: stale explicit selection falls back
+        self.assertIn(('search_selection_gone','Demonic Tutor',dt),g.trace); self.assertEqual(g.zones.cards[[t for t in g.zones.trace if t[0]=='demonic_tutor_resolved'][-1][1]].zone,'hand')
         di=self.to_hand(g,'Diabolic Intent'); self.refused(g,di,selected_land_uid=self.lib(g,'Swamp'))        # no sacrifice
 
 class HuntAndLesson(_B):

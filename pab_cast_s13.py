@@ -6,8 +6,9 @@ Each spell's effect is the frozen kernel's existing procedure; S13 adds the phys
 in hand, timing from the clock, printed cost, stack ledger, card to the graveyard when the
 spell (its original) finishes resolving. EVIDENCE/S13_SPELL_EVIDENCE.json.
 
-  Demonic Tutor      {1}{B} sorcery; selected_land_uid is reused as `selected_uid` (any library
-                     card, chosen when the spell is cast as the S6 Nature's Lore convention);
+  Demonic Tutor      {1}{B} sorcery; selected_land_uid is reused as `selected_uid` (optional explicit
+                     library card); since CP13 the choice is made at resolution (explicit card if still
+                     in the library, else tutor_selection against the library as it is then);
                      resolution = frozen zones.resolve_demonic_tutor (card to hand, shuffle)
   Diabolic Intent    {1}{B} sorcery, additional cost sacrifice a creature (frozen sacrifice());
                      resolution = the same unrestricted search to hand; the frozen kernel
@@ -96,17 +97,20 @@ class SpellCastMixin(PermanentCastMixin):
 
     # ---- tutors ---------------------------------------------------------------
     def _tutor(self,physical_uid,name,cost,selected_uid):
-        if selected_uid is None or selected_uid not in self.zones.zones['library']:
-            raise BridgeError(f'S13: {name} needs a selected library card')
+        # CP13 (AUD-03 / A-S20-14): the library card is chosen when the spell resolves, against the
+        # library as it is then. Cast pays the mana and the Diabolic Intent sacrifice only.
         b,g,gen=SPELLS[name]['cost']
         self._begin(physical_uid,name,(b,g,gen)); self.pay_mana(black=b,green=g,generic=gen)
         if cost is not None: self.sacrifice(cost.uid)
         self.trace.append(('cast',name))
         def resolve():
-            if selected_uid in self.zones.zones['library']:
-                if name=='Demonic Tutor': self.zones.resolve_demonic_tutor(selected_uid)
-                else: self.zones.search_library(selected_uid=selected_uid,destination='hand',eligible='any'); self.trace.append(('diabolic_intent_resolved',selected_uid))
-            else: self.trace.append(('search_selection_gone',name,selected_uid))
+            lib=self.zones.zones['library']; sel=selected_uid
+            if sel is not None and sel not in lib: self.trace.append(('search_selection_gone',name,sel)); sel=None
+            if sel is None and lib:
+                sel=tutor_selection(self)                                        # policy at resolution
+                if sel is None or sel not in lib: sel=lib[0]                     # unrestricted search must find a card
+            if name=='Demonic Tutor': self.zones.resolve_demonic_tutor(sel)
+            else: self.zones.search_library(selected_uid=sel,destination='hand',eligible='any'); self.trace.append(('diabolic_intent_resolved',sel))
             self._finish_to_graveyard(physical_uid,name)
         self.pending.append(Trigger(name+' resolution (S13)',resolve)); self.sedgemoor_spell_cast_or_copied(); self.assert_bridge_integrity(); return self.zones.cards[physical_uid]
     def _s13_demonic_tutor(self,physical_uid,cost,*,selected_uid,**_): return self._tutor(physical_uid,'Demonic Tutor',None,selected_uid)
@@ -218,10 +222,7 @@ def cast_when_able(g):
         name=g.zones.cards[uid].name
         if name not in S13_NAMES or not _s7._affordable(g,SPELLS[name]): continue
         kw={}
-        if name in ('Demonic Tutor','Diabolic Intent'):
-            sel=tutor_selection(g)
-            if sel is None: continue
-            kw['selected_land_uid']=sel
+        if name in ('Demonic Tutor','Diabolic Intent'):                      # CP13: no preselection; _tutor selects at resolution
             if name=='Diabolic Intent':
                 f=_s7._fodder(g)
                 if f is None: continue
