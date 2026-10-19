@@ -1,7 +1,7 @@
 # CLAUDE.md — PABTRV3 kernel (pab_reliability_v0_8_r02_r01)
 
 ## Layout
-- `tests/` — kernel reference suite (`test_*.py`), part of the 805-test gate.
+- `tests/` — kernel reference suite (`test_*.py`), part of the 810-test gate.
 - `release_gate_tests/` — the 18 release integrity checks run by `run_validation.py`.
 - `s9_tests/` — S9 land/mana layer fixtures.
 - `r01_tests/` — R01 Pest rescuer fixtures.
@@ -13,7 +13,7 @@
 - `pab_kernel.py` is the only import point. Use `Game` / `PhysicalZoneGame` from it.
 
 ## Commands (Python 3.14.7 on Windows, PowerShell)
-- Full gate (expect `Ran 805 tests` / `OK`, and 18/18 in `VALIDATION_RESULTS.json`):
+- Full gate (expect `Ran 810 tests` / `OK`, and 18/18 in `VALIDATION_RESULTS.json`):
   `py -3.14 run_validation.py 2> ..\gate.txt | Out-Null; Get-Content ..\gate.txt -Tail 3`
 - Kernel suite only: `py -3.14 -m unittest discover -s tests -p "test_*.py" -q`
 - Re-pin after any tracked-file change: `py -3.14 build_manifest.py`

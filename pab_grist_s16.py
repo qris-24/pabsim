@@ -10,7 +10,9 @@ Grist {1}{B}{G}, Legendary Planeswalker — Grist, loyalty 3.
   Unearth / Takenuma / Grisly Salvage / Rise of the Witch-king treat the card as a creature
   card (an event-kernel LKI with creature=True, mana value 3 is kept in the graveyard list
   when Grist leaves the battlefield or is milled/discarded, so the frozen _grave_target()
-  finds it), and the frozen _return_creature_from_graveyard() is overridden for Grist so
+  finds it; since CP14 the milled/discarded LKI is made automatically by a wrapper around
+  the instance's zones.move, and dropped again when the physical card leaves the graveyard),
+  and the frozen _return_creature_from_graveyard() is overridden for Grist so
   she re-enters as a planeswalker, not as a 1/1 body.
   On the battlefield: a noncreature, non-artifact permanent with `loyalty` (counters on the
   Permanent's `counters` field are NOT used: loyalty is its own attribute). CR 704.5i: at
@@ -43,7 +45,33 @@ CREATURE_CARD_NAMES=frozenset(CREATURES)|{SAVRA,GRIST}
 
 class GristMixin(InteractionSpellsMixin):
     def __init__(self,*a,**kw):
-        super().__init__(*a,**kw); self.grist_activated_turn=None
+        super().__init__(*a,**kw); self.grist_activated_turn=None; self._wrap_zone_move_for_grist()
+
+    # ---- CP14 (A-S20-06): automatic graveyard LKI for a milled or discarded Grist ----
+    def _wrap_zone_move_for_grist(self):
+        """pab_zones.py is frozen, so the instance's zones.move is wrapped here instead. The wrapper closes
+        over the game (not the zones object) and resolves self.zones and its class at call time, because
+        pab_stack_cp06 later replaces self.zones with a StackEnabledZones built from the instance __dict__
+        (which carries this wrapper along). Non-Grist moves and tokens are untouched."""
+        game=self
+        def move(uid,destination,**kw):
+            z=game.zones; card=z.cards.get(uid)
+            src=card.zone if card is not None else None; is_grist=card is not None and not card.token and card.name==GRIST
+            type(z).move(z,uid,destination,**kw)
+            if not is_grist: return
+            if src in ('library','hand') and destination=='graveyard': game.grist_graveyard_lki()
+            elif src=='graveyard': game._drop_grist_graveyard_lki(uid)
+        self.zones.move=move
+    def _drop_grist_graveyard_lki(self,ph):
+        """Physical Grist left the graveyard: remove the event LKI linked to it and the link, if both are still
+        present (pab_cast_s15._return_permanent_card and the frozen Phyrexian Reclamation path remove them
+        themselves, the latter after the move; a half-removed pair is left to its caller)."""
+        ev=next((e for e,x in self.linked_graveyard.items() if x==ph),None)
+        if ev is None: return
+        lki=next((q for q in self.graveyard if q.uid==ev),None)
+        if lki is None: return
+        self.graveyard.remove(lki); del self.linked_graveyard[ev]
+        self.trace.append(('grist_lki_dropped',ev,ph)); self.assert_bridge_integrity()
 
     # ---- cast ----
     def cast_from_hand(self,physical_uid,**kw):
@@ -98,8 +126,10 @@ class GristMixin(InteractionSpellsMixin):
         if ph is not None: self.zones.move(ph,'battlefield',controller=0); self.linked_battlefield[p.uid]=ph
         self.trace.append(('reanimate',cand.uid,p.uid,source,tapped)); self.assert_bridge_integrity(); return p
     def grist_graveyard_lki(self):
-        """A milled or discarded Grist has no event-kernel LKI; make one (creature=True, MV 3) so Unearth /
-        Rise / Takenuma can target it. Returns the LKI or None."""
+        """A milled or discarded Grist has no event-kernel LKI of her own; make one (creature=True, MV 3) so
+        Unearth / Rise / Takenuma can target it. Since CP14 this is called automatically by the zones.move
+        wrapper when Grist enters the graveyard from the library or hand; calling it by hand is idempotent
+        and returns the same object. Returns the LKI or None."""
         ph=next((u for u in self.zones.zones['graveyard'] if self.zones.cards[u].name==GRIST),None)
         if ph is None: return None
         ev=next((e for e,x in self.linked_graveyard.items() if x==ph),None)
