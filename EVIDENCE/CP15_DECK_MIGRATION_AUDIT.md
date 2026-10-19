@@ -164,3 +164,112 @@ Passing the gate needs `py -3.14 build_manifest.py`, which rewrites `PHASE8_R02_
 forbids any .json edit and says to stop in that case. CP11 (also read-only) re-pinned the manifest in its commit.
 Committing without a re-pin would leave rp-CP15 failing the gate. Resolution: the user authorized the re-pin as a
 scope exception (see header). The full gate was then run once on the re-pinned tree; totals are in the rp-CP15 commit message.
+
+## 8. v3 delta (CP16)
+
+Read-only. Base: master `82e7135` (rp-CP15), 2026-10-19. v3 = accepted v2 with two swaps; no v3 deck file exists in
+the repo (it will be added later as a separate second target; the frozen baseline stays the regression reference).
+Card data: `C:\pabsim\data\golgari_commander.json` (outside the repo, read-only; Scryfall-format array of 9877 card
+objects), looked up by exact `name` with a scratch script; no Oracle text copied here. `upstream_frozen/` not read.
+**Scope exception (user-authorized 2026-10-19):** one line added to `CLAUDE.md` recording the card-data path, and
+`PHASE8_R02_FILE_MANIFEST.json` re-pinned with `build_manifest.py` (CLAUDE.md requires a re-pin after edits to it).
+No code, test, registry or frozen file changed.
+
+### 8.1 Swaps and v3 added-card list
+
+| OUT (v2 → v3) | IN (v2 → v3) |
+|---|---|
+| Rise of the Witch-king | Ooze Garden |
+| Yahenni, Undying Partisan | Scavenger's Talent |
+
+Both OUT cards are frozen-baseline cards kept in v2 (each appears once in the v2 file; both are records in
+`PABTRV3_CARD_COVERAGE.json`), not v2 added cards, so v3 removes none of v2's 17. Neither IN card is in v2.
+Relative to the frozen baseline, v3 therefore **adds 19** (v2's 17 + Ooze Garden + Scavenger's Talent) and removes 19
+mainboard cards (§1's 17 + Rise of the Witch-king + Yahenni) plus the Pest Summoning Lesson. Kept cards fall from 83 to
+81 by quantity (§6 step 4). Both IN cards are nonland (type line checked in the card data), so v3 stays 99 / 34 / 65.
+
+v3 added (19): Agadeem's Awakening // Agadeem, the Undercrypt, Altar of Dementia, Ashnod's Altar, Beifong's Bounty
+Hunters, Beseech the Mirror, Bitterblossom, Bojuka Bog, Creakwood Liege, Eldritch Evolution, Fiend Artisan,
+Gravecrawler, Greater Good, Ooze Garden, Pitiless Plunderer, Plunge into Darkness, Scavenger's Talent, Sylvan Library,
+Tom, Bert, and William, Victimize.
+
+### 8.2 Coverage status
+
+Coverage file: `PABTRV3_CARD_COVERAGE.json` (as in §3). Neither IN card has any occurrence in the repo outside
+`upstream_frozen/` (git grep, 0 files); the 17 are as §3 found them (repo unchanged since rp-CP15).
+**19/19 UNMODELED.**
+
+| Card | Coverage status | Oracle text in repo |
+|---|---|---|
+| Agadeem's Awakening // Agadeem, the Undercrypt | UNMODELED (absent) | no |
+| Altar of Dementia | UNMODELED (absent) | no |
+| Ashnod's Altar | UNMODELED (absent) | no |
+| Beifong's Bounty Hunters | UNMODELED (absent) | no |
+| Beseech the Mirror | UNMODELED (absent) | no |
+| Bitterblossom | UNMODELED (absent) | no |
+| Bojuka Bog | UNMODELED (absent; docstring mention only, §3) | no |
+| Creakwood Liege | UNMODELED (absent) | no |
+| Eldritch Evolution | UNMODELED (absent) | no |
+| Fiend Artisan | UNMODELED (absent) | no |
+| Gravecrawler | UNMODELED (absent) | no |
+| Greater Good | UNMODELED (absent) | no |
+| Ooze Garden | UNMODELED (absent) | no |
+| Pitiless Plunderer | UNMODELED (absent) | no |
+| Plunge into Darkness | UNMODELED (absent) | no |
+| Scavenger's Talent | UNMODELED (absent) | no |
+| Sylvan Library | UNMODELED (absent) | no |
+| Tom, Bert, and William | UNMODELED (absent) | no |
+| Victimize | UNMODELED (absent) | no |
+
+### 8.3 Oracle text sourcing (`C:\pabsim\data\golgari_commander.json`)
+
+Key = the object's `name` value (exact match, top-level `name` or a `card_faces[].name`); `[i]` = array index. Each
+found name matched exactly one object.
+
+| Card | In JSON | JSON key | Text field |
+|---|---|---|---|
+| Agadeem's Awakening // Agadeem, the Undercrypt | yes | `[3376]` name = full MDFC name (layout `modal_dfc`) | `card_faces[].oracle_text` |
+| Altar of Dementia | **no** | — | — |
+| Ashnod's Altar | **no** | — | — |
+| Beifong's Bounty Hunters | yes | `[5153]` | `oracle_text` |
+| Beseech the Mirror | yes | `[7859]` | `oracle_text` |
+| Bitterblossom | yes | `[9703]` | `oracle_text` |
+| Bojuka Bog | yes | `[211]` | `oracle_text` |
+| Creakwood Liege | yes | `[1194]` | `oracle_text` |
+| Eldritch Evolution | yes | `[603]` | `oracle_text` |
+| Fiend Artisan | yes | `[2639]` | `oracle_text` |
+| Gravecrawler | yes | `[402]` | `oracle_text` |
+| Greater Good | yes | `[8481]` | `oracle_text` |
+| Ooze Garden | yes | `[9128]` | `oracle_text` |
+| Pitiless Plunderer | yes | `[6473]` | `oracle_text` |
+| Plunge into Darkness | yes | `[318]` | `oracle_text` |
+| Scavenger's Talent | yes | `[6767]` (layout `class`) | `oracle_text` |
+| Sylvan Library | yes | `[5722]` | `oracle_text` |
+| Tom, Bert, and William | yes | `[572]` | `oracle_text` |
+| Victimize | yes | `[1395]` | `oracle_text` |
+
+**Missing from the JSON: Altar of Dementia, Ashnod's Altar** (no name variant containing "Ashnod"/"Dementia" with
+"Altar" either). Both are colorless artifacts; their text must come from another source. The JSON having text does
+not make any card sourced or certified: provenance still has to be recorded per card before modeling. Tom, Bert, and
+William and Beifong's Bounty Hunters (§6 step 6 priorities) are both present.
+
+### 8.4 Ledger effect of the two swaps
+
+- **A-S20-05** (menace block coordination): unchanged. Menace still comes only from Blight Mound; none of the four swap
+  cards has menace. Side effect: Yahenni is the only entry in `pab_combat_s17.HASTE_NAMES` (`pab_combat_s17.py:46`), so v3 has no
+  modeled haste card; this does not touch the menace logic.
+- **A-S20-09** (inherited v0.8 vs S20 counters): unchanged. v3 keeps 99 / 34 / 65 and, like v2, has no Lesson, so §5 stands.
+- **A-S20-10** (Witherbloom Command + Grist −2 targets): unchanged. Rise of the Witch-king appears in the Grist docstring
+  (`pab_grist_s16.py:10`) and in S15 (`pab_cast_s15.py:71`, `:278-287`), not in the A-S20-10 bookkeeping. Scavenger's Talent
+  has targets, so it will need target bookkeeping once modeled.
+- **Auditor constant-resolution fix:** unchanged. Savra, Darkbore Pathway and Shigeki are kept. Yahenni's CP11 record
+  uses exact literals, and its name in the `LEGENDARY_CARDS` constant is evidence only for other cards' records. The
+  constant and those records stay valid for the frozen deck.
+- **Pest Rescuer sourcing:** unchanged. Pest Rescuer and Teacher's Pest are kept, and none of the four swap cards
+  mentions Pests.
+
+### 8.5 Release-check failure counts under v3 (static reading, not executed)
+
+Unchanged: **2 / 3 / 13 / 16.** Scenarios A, A' and B depend only on the manifest file set and the `upstream_frozen/`
+source hashes, not on deck contents. C fails at the sha check (:59) for any bytes other than the baseline's. In D, v3
+still has 99 / 34 / 65 and no Lesson, so the same `lesson count` assertion (:54, `build()` :31) fires first.

@@ -9,6 +9,7 @@
 - `frozen_*/` — frozen phase 5/6/7 and previous-test snapshots; read-only.
 - `upstream_frozen/` — frozen upstream v0.5–v0.8 sources; read-only.
 - `EVIDENCE/` — before-copies and supersession records (e.g. `EVIDENCE/CP06_SUPERSEDED/`).
+- Card data (Oracle text lookup): `C:\pabsim\data\golgari_commander.json` — outside the repo, read-only.
 - Layer files are named `pab_<thing>_s<n>.py` (stage layers) or `pab_*_cp<nn>.py` (checkpoint repairs).
 - `pab_kernel.py` is the only import point. Use `Game` / `PhysicalZoneGame` from it.
 
