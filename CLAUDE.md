@@ -37,6 +37,7 @@
   expectation would move (then stop and ask).
 
 ## Session rules
+- Adding a test file also requires updating REFERENCE_TEST_COUNT and the per-file count in run_validation.py, the expected (tests_run, tests_passed) in release_gate_tests/test_r02_release_gate.py, build_registry.py output and the manifest; these are gate bookkeeping and always in scope.
 - One scoped task per session; file paths named explicitly.
 - Run tests with `-q`; read tails only. No decklists or results printed to the terminal.
 - Do not re-read files just edited.

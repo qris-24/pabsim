@@ -1,0 +1,3331 @@
+{
+  "task": "CP11",
+  "source_registry": "PABTRV3_MODEL_COVERAGE_S20.json",
+  "source_generator": "build_model_coverage_s20.py",
+  "method": {
+    "code": "Parse runtime pab_*.py ASTs; locate exact full-name string literal in live root kernel/layer/bridge/frozen runtime (exclude comments, docstrings, static generator and frozen snapshot copies). Record stage-specific mapping/dispatch or imported constant definition as code evidence; a literal name in a table is not by itself proof every ability works.",
+    "tests": "Source-text substring grep over tests/test_*.py only (full registry card name); this can undercount alias-based tests.",
+    "priority": "UNDERCLAIM when a not_modeled ability is implemented and behavior-tested; OVERCLAIM only for a contradicted modeled claim, not merely an honest PARTIAL unmodeled list; remaining verdict from code/test evidence presence.",
+    "limitations": "Structural evidence not an exhaustive behavioral/rules proof; frozen event fixtures and physical bridge may differ; no live Oracle/CR cross-check; no kernel changes or registry certification."
+  },
+  "counts": {
+    "SUPPORTED": 86,
+    "WEAK": 1,
+    "UNSUPPORTED": 0,
+    "OVERCLAIM": 0,
+    "UNDERCLAIM": 1
+  },
+  "records": [
+    {
+      "name": "Abrupt Decay",
+      "modeled_claim": {
+        "modeled": [
+          "cast, destroy target nonland permanent MV<=3 (any seat); fizzles if the target left"
+        ],
+        "not_modeled": [
+          "\"can't be countered\" (no counterspells exist)"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:348",
+          "source": "cands=[p for p in opp if name!='Abrupt Decay' or p.mana_value<=3]",
+          "context": "Compare/Assign/FunctionDef:cast_when_able"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py",
+        "tests/test_cast_s7.py",
+        "tests/test_grist_s16.py",
+        "tests/test_stack_cp06.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Agent of the Iron Throne",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "commander grants: artifact or creature you control to graveyard from the battlefield -> each opponent loses 1 (frozen)"
+        ],
+        "not_modeled": [
+          "Background rules beyond the granted ability"
+        ],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:30",
+          "source": "'Agent of the Iron Throne':{'cost':(1,0,2)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:930",
+          "source": "'Phyrexian Reclamation','Agent of the Iron Throne',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:932",
+          "source": "'Phyrexian Reclamation','Agent of the Iron Throne',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s12.py",
+        "tests/test_reference_events.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Arcane Signet",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "mana rock (frozen fixture)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:31",
+          "source": "'Arcane Signet':           {'cost':(0,0,2)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:852",
+          "source": "elif name=='Arcane Signet':",
+          "context": "Compare/FunctionDef:tap_mana_rock/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:854",
+          "source": "elif name=='Arcane Signet':",
+          "context": "Compare/FunctionDef:tap_mana_rock/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_v05_fixture_cards.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Assassin's Trophy",
+      "modeled_claim": {
+        "modeled": [
+          "cast, destroy target permanent an opponent controls"
+        ],
+        "not_modeled": [
+          "the opponent's basic-land search (no libraries)"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:218",
+          "source": "seat=self.permanents[target_uid].controller; self._destroy_any(target_uid,\"Assassin's Trophy\"); self.trace.append(('opponent_basic_land_search_unmodeled',seat,\"Assassin's Trophy\"))",
+          "context": "Call/FunctionDef:resolve/FunctionDef:_s15_assassins_trophy/ClassDef:InteractionSpellsMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Bastion of Remembrance",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "ETB Human Soldier (frozen)",
+          "creature you control dies -> drain/gain (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:32",
+          "source": "'Bastion of Remembrance':  {'cost':(1,0,2)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:928",
+          "source": "enchantments={\"Bastion of Remembrance\",'Moldervine Reclamation','Dark Prophecy',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:930",
+          "source": "enchantments={\"Bastion of Remembrance\",'Moldervine Reclamation','Dark Prophecy',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s12.py",
+        "tests/test_reference_events.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Beledros Witherbloom",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "each-upkeep Pest (frozen, S2 clock)",
+          "flying body attacks"
+        ],
+        "not_modeled": [
+          "pay 10 life: untap lands"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:56",
+          "source": "'Beledros Witherbloom':          {'cost':(1,1,5),'power':4,'toughness':4,'colors':'BG'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:432",
+          "source": "for _ in range(self.has('Beledros Witherbloom')):",
+          "context": "Call/Call/FunctionDef:begin_upkeep/ClassDef:Game"
+        },
+        {
+          "location": "pab_lands_s14.py:150",
+          "source": "legends=sum(1 for q in self.permanents.values() if q.controller==0 and q.creature and q.name in (SAVRA,'Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran",
+          "context": "Compare/Call/Assign/FunctionDef:channel_takenuma"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s13.py",
+        "tests/test_cast_s7.py",
+        "tests/test_integrated_turn_loop_s5.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_reference_events.py",
+        "tests/test_turn_actions_s4.py",
+        "tests/test_turn_clock_s1.py",
+        "tests/test_turn_clock_s2.py",
+        "tests/test_upkeep_trigger_audit.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Blight Mound",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "nontoken creature you control dies -> Pest (frozen)",
+          "attacking Pests +1/+0 and menace (S17)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:33",
+          "source": "'Blight Mound':            {'cost':(1,0,2)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:929",
+          "source": "'Grave Pact','Blight Mound','Feral Appetite',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:931",
+          "source": "'Grave Pact','Blight Mound','Feral Appetite',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_cast_s12.py",
+        "tests/test_combat_s17.py",
+        "tests/test_priority_s3.py",
+        "tests/test_reference_events.py",
+        "tests/test_v04_cost_and_copy.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Blood Artist",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "any creature dies -> target loses 1, gain 1 (frozen; target = lowest seat in the game, S8)"
+        ],
+        "not_modeled": [
+          "free choice of target player"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:60",
+          "source": "'Blood Artist':                  {'cost':(1,0,1),'power':0,'toughness':1,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:322",
+          "source": "if name=='Blood Artist':",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:329",
+          "source": "if name=='Blood Artist':",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s13.py",
+        "tests/test_cast_s15.py",
+        "tests/test_cast_s7.py",
+        "tests/test_commander_s10.py",
+        "tests/test_grist_s16.py",
+        "tests/test_interaction_s11.py",
+        "tests/test_lands_s14.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_priority_s3.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Blooming Marsh",
+      "modeled_claim": {
+        "modeled": [
+          "entry condition (<=2 other lands), {B}/{G}"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:55",
+          "source": "'Blooming Marsh':      {'mana':('B','G'),'enters':'tapped_unless_at_most_2_other_lands'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_zones.py:22",
+          "source": "'Blooming Marsh','Boseiju, Who Endures','Castle Locthwain','Command Tower',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp10.py",
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s9.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Bogwater Lumaret",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "this or another creature you control enters -> gain 1 (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:69",
+          "source": "'Bogwater Lumaret':              {'cost':(1,1,0),'power':2,'toughness':2,'colors':'BG'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:187",
+          "source": "if p.controller == 0 and p.name == 'Bogwater Lumaret' and entered.controller == 0:",
+          "context": "Compare/FunctionDef:_enter_creature_triggers/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:194",
+          "source": "if p.controller == 0 and p.name == 'Bogwater Lumaret' and entered.controller == 0:",
+          "context": "Compare/FunctionDef:_enter_creature_triggers/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s7.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Boseiju, Who Endures",
+      "modeled_claim": {
+        "modeled": [
+          "play, {G}"
+        ],
+        "not_modeled": [
+          "channel (no legal target exists in this kernel)"
+        ],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:51",
+          "source": "'Boseiju, Who Endures':      {'mana':('G',),'enters':'untapped'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_zones.py:22",
+          "source": "'Blooming Marsh','Boseiju, Who Endures','Castle Locthwain','Command Tower',",
+          "context": "Call/Assign"
+        },
+        {
+          "location": "pab_shigeki_s20.py:34",
+          "source": "LEGENDARY_CARDS={'Savra, Queen of the Golgari','Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran Physician','Yahenni, Undying Partisan','Agent of the Ir",
+          "context": "Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Carrion Feeder",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "sacrifice -> +1/+1 counter (frozen fixture)"
+        ],
+        "not_modeled": [
+          "can't block"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:67",
+          "source": "'Carrion Feeder':                {'cost':(1,0,0),'power':1,'toughness':1,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:675",
+          "source": "if not feeder or feeder.name!='Carrion Feeder' or feeder.controller!=0:",
+          "context": "Compare/FunctionDef:carrion_feeder_sacrifice/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:680",
+          "source": "if not feeder or feeder.name!='Carrion Feeder' or feeder.controller!=0:",
+          "context": "Compare/FunctionDef:carrion_feeder_sacrifice/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Castle Locthwain",
+      "modeled_claim": {
+        "modeled": [
+          "entry condition (Swamp type), {B}, draw then lose by hand size"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:111",
+          "source": "p,card=self._linked_land(land_uid,'Castle Locthwain'); pool=self.mana_pool",
+          "context": "Call/Assign/FunctionDef:castle_locthwain/ClassDef:RemainingLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:22",
+          "source": "'Blooming Marsh','Boseiju, Who Endures','Castle Locthwain','Command Tower',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Cauldron of Essence",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "creature you control dies -> drain/gain (frozen)"
+        ],
+        "not_modeled": [
+          "{1}{B}{G}, T, sacrifice: reanimate (frozen fixture only)"
+        ],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:34",
+          "source": "'Cauldron of Essence':     {'cost':(1,1,1)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:571",
+          "source": "c=next((p for p in self.permanents.values() if p.name=='Cauldron of Essence' and p.controller==0 and not p.tapped),None)",
+          "context": "Compare/Call/Assign/FunctionDef:cauldron_reanimate"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:576",
+          "source": "c=next((p for p in self.permanents.values() if p.name=='Cauldron of Essence' and p.controller==0 and not p.tapped),None)",
+          "context": "Compare/Call/Assign/FunctionDef:cauldron_reanimate"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s12.py",
+        "tests/test_reference_events.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v04_cost_and_copy.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Chatterfang, Squirrel General",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "token-creation replacement (frozen)",
+          "{B} sacrifice-X activation (frozen fixture)"
+        ],
+        "not_modeled": [
+          "forestwalk"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:49",
+          "source": "'Chatterfang, Squirrel General': {'cost':(0,1,2),'power':3,'toughness':3,'colors':'G'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:200",
+          "source": "if controller == 0 and self.has('Chatterfang, Squirrel General'):",
+          "context": "Call/FunctionDef:make_tokens/ClassDef:Game"
+        },
+        {
+          "location": "pab_lands_s14.py:150",
+          "source": "legends=sum(1 for q in self.permanents.values() if q.controller==0 and q.creature and q.name in (SAVRA,'Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran",
+          "context": "Compare/Call/Assign/FunctionDef:channel_takenuma"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_reference_events.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v04_hunger_saga.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Command Tower",
+      "modeled_claim": {
+        "modeled": [
+          "play, {B} or {G}"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "frozen v0.8",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_zones.py:22",
+          "source": "'Blooming Marsh','Boseiju, Who Endures','Castle Locthwain','Command Tower',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp10.py",
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s9.py",
+        "tests/test_v06_physical_zones.py",
+        "tests/test_v07_zone_bridge.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match.",
+      "supplemental_evidence": [
+        "pab_zones.py:20-28 (supported land mapping consumed by frozen physical play/tap path)"
+      ]
+    },
+    {
+      "name": "Dark Prophecy",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "creature you control dies -> draw, lose 1 (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:35",
+          "source": "'Dark Prophecy':           {'cost':(3,0,0)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:928",
+          "source": "enchantments={\"Bastion of Remembrance\",'Moldervine Reclamation','Dark Prophecy',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:930",
+          "source": "enchantments={\"Bastion of Remembrance\",'Moldervine Reclamation','Dark Prophecy',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s12.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Darkbore Pathway // Slitherbore Pathway",
+      "modeled_claim": {
+        "modeled": [
+          "play one face, face decides the colour"
+        ],
+        "not_modeled": [
+          "the permanent keeps the full card name (bridge identity rule; documented)"
+        ],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:49",
+          "source": "PATHWAY='Darkbore Pathway // Slitherbore Pathway'",
+          "context": "Assign"
+        },
+        {
+          "location": "pab_zones.py:23",
+          "source": "'Darkbore Pathway // Slitherbore Pathway','Deathcap Glade','Forest',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": "NONE",
+      "verdict": "WEAK",
+      "verdict_basis": "Runtime match exists but no test source contains the full registry name. tests/test_lands_s9.py checks imported PATHWAY alias (test_pathway_face_decides_the_colour_and_is_required), but its source does not contain the full card name, so strict card-name grep is WEAK, not proof of missing behavioral tests.",
+      "supplemental_evidence": [
+        "tests/test_lands_s9.py:11 (imports PATHWAY)",
+        "tests/test_lands_s9.py:110-117 (tests PATHWAY alias)"
+      ]
+    },
+    {
+      "name": "Deadly Dispute",
+      "modeled_claim": {
+        "modeled": [
+          "cast with artifact/creature sacrifice, draw 2 + Treasure"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S6",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s6.py:142",
+          "source": "if name in ('Village Rites','Deadly Dispute'): self._fixture_draw(2,name)",
+          "context": "Compare/FunctionDef:_resolve_cast/ClassDef:CastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:775",
+          "source": "costs={'Village Rites':(1,0,1),'Deadly Dispute':(1,0,1),",
+          "context": "Dict/Assign/FunctionDef:cast_pab_spell/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:779",
+          "source": "costs={'Village Rites':(1,0,1),'Deadly Dispute':(1,0,1),",
+          "context": "Dict/Assign/FunctionDef:cast_pab_spell/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s6.py",
+        "tests/test_r52_village_rites.py",
+        "tests/test_stack_cp06.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Deathcap Glade",
+      "modeled_claim": {
+        "modeled": [
+          "entry condition (>=2 other lands), {B}/{G}"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:56",
+          "source": "'Deathcap Glade':      {'mana':('B','G'),'enters':'tapped_unless_at_least_2_other_lands'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_zones.py:23",
+          "source": "'Darkbore Pathway // Slitherbore Pathway','Deathcap Glade','Forest',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s9.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Deathgreeter",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "another creature dies -> may gain 1 (frozen; opposing deaths via S8)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:59",
+          "source": "'Deathgreeter':                  {'cost':(1,0,0),'power':1,'toughness':1,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:309",
+          "source": "if name=='Deathgreeter' and source.uid != p.uid:",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:316",
+          "source": "if name=='Deathgreeter' and source.uid != p.uid:",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp02.py",
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s13.py",
+        "tests/test_cast_s15.py",
+        "tests/test_cast_s7.py",
+        "tests/test_commander_s10.py",
+        "tests/test_interaction_s11.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_policy_s18.py",
+        "tests/test_priority_s3.py",
+        "tests/test_reference_events.py",
+        "tests/test_stack_cp06.py",
+        "tests/test_turn_clock_s2.py",
+        "tests/test_upkeep_trigger_audit.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Demonic Tutor",
+      "modeled_claim": {
+        "modeled": [
+          "cast, any card from the real library to hand, shuffle"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S13",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:107",
+          "source": "if name=='Demonic Tutor': self.zones.resolve_demonic_tutor(selected_uid)",
+          "context": "Compare/FunctionDef:resolve/FunctionDef:_tutor/ClassDef:SpellCastMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s13.py",
+        "tests/test_v06_physical_zones.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Diabolic Intent",
+      "modeled_claim": {
+        "modeled": [
+          "cast with sacrifice, any card to hand"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S13",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:113",
+          "source": "def _s13_diabolic_intent(self,physical_uid,cost,*,selected_uid,**_): return self._tutor(physical_uid,'Diabolic Intent',cost,selected_uid)",
+          "context": "Call/FunctionDef:_s13_diabolic_intent/ClassDef:SpellCastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:519",
+          "source": "if spell not in ('Village Rites','Diabolic Intent','Deadly Dispute','Tend the Pests'):",
+          "context": "Compare/FunctionDef:cast_with_sacrifice_cost/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:524",
+          "source": "if spell not in ('Village Rites','Diabolic Intent','Deadly Dispute','Tend the Pests'):",
+          "context": "Compare/FunctionDef:cast_with_sacrifice_cost/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s13.py",
+        "tests/test_v04_cost_and_copy.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Dina, Soul Steeper",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "lifegain drain (frozen)",
+          "Dina pump activation (frozen fixture)"
+        ],
+        "not_modeled": [
+          "menace/combat use of the pump beyond the frozen fixture"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:46",
+          "source": "'Dina, Soul Steeper':            {'cost':(1,1,0),'power':1,'toughness':3,'colors':'BG'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:237",
+          "source": "for name in ['Dina, Soul Steeper','Marauding Blight-Priest',",
+          "context": "FunctionDef:gain/ClassDef:Game"
+        },
+        {
+          "location": "pab_lands_s14.py:150",
+          "source": "legends=sum(1 for q in self.permanents.values() if q.controller==0 and q.creature and q.name in (SAVRA,'Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran",
+          "context": "Compare/Call/Assign/FunctionDef:channel_takenuma"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_lands_s14.py",
+        "tests/test_reference_events.py",
+        "tests/test_shigeki_s20.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Essence Warden",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "another creature enters (any controller, incl. opponents' bodies) -> gain 1 (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:65",
+          "source": "'Essence Warden':                {'cost':(0,1,0),'power':1,'toughness':1,'colors':'G'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:190",
+          "source": "if p.controller == 0 and p.name == 'Essence Warden' and p.uid != entered.uid:",
+          "context": "Compare/FunctionDef:_enter_creature_triggers/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:197",
+          "source": "if p.controller == 0 and p.name == 'Essence Warden' and p.uid != entered.uid:",
+          "context": "Compare/FunctionDef:_enter_creature_triggers/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp10.py",
+        "tests/test_cast_s7.py",
+        "tests/test_commander_s10.py",
+        "tests/test_lands_s9.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Feral Appetite",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "attacking Pests +1/+0 and deathtouch (S17)",
+          "{1}{G}: exile card from a graveyard -> Pest (frozen fixture)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:36",
+          "source": "'Feral Appetite':          {'cost':(0,1,2)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:929",
+          "source": "'Grave Pact','Blight Mound','Feral Appetite',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:931",
+          "source": "'Grave Pact','Blight Mound','Feral Appetite',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_combat_s17.py",
+        "tests/test_reference_events.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Forest",
+      "modeled_claim": {
+        "modeled": [
+          "play, {G}"
+        ],
+        "not_modeled": [
+          "nothing: a basic land is fully modeled except that the frozen zones path (not the bridge) is the one that plays it"
+        ],
+        "kind": "land",
+        "physical_path_stage": "frozen v0.8",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_focus_engine.py:873",
+          "source": "obj={'name':name,'basic':True,'forest_subtype':name=='Forest'}",
+          "context": "Compare/Dict/Assign/FunctionDef:put_basic_land_in_fixture_library"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:875",
+          "source": "obj={'name':name,'basic':True,'forest_subtype':name=='Forest'}",
+          "context": "Compare/Dict/Assign/FunctionDef:put_basic_land_in_fixture_library"
+        },
+        {
+          "location": "pab_zones.py:232",
+          "source": "if eligible=='basic_forest' and selected.name!='Forest':",
+          "context": "Compare/FunctionDef:search_library/ClassDef:DeckZones"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_cast_s13.py",
+        "tests/test_cast_s15.py",
+        "tests/test_cast_s6.py",
+        "tests/test_cast_s7.py",
+        "tests/test_lands_s14.py",
+        "tests/test_lands_s9.py",
+        "tests/test_policy_s18.py",
+        "tests/test_stack_cp06.py",
+        "tests/test_turn_actions_s4.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v06_physical_zones.py",
+        "tests/test_v07_zone_bridge.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Geier Reach Sanitarium",
+      "modeled_claim": {
+        "modeled": [
+          "{C}; {2}, T: you draw then discard"
+        ],
+        "not_modeled": [
+          "opponents' draw/discard"
+        ],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:167",
+          "source": "p,card=self._linked_land(land_uid,'Geier Reach Sanitarium')",
+          "context": "Call/Assign/FunctionDef:geier_reach/ClassDef:RemainingLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:24",
+          "source": "'Geier Reach Sanitarium','Grim Backwoods','High Market','Llanowar Wastes',",
+          "context": "Call/Assign"
+        },
+        {
+          "location": "pab_shigeki_s20.py:34",
+          "source": "LEGENDARY_CARDS={'Savra, Queen of the Golgari','Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran Physician','Yahenni, Undying Partisan','Agent of the Ir",
+          "context": "Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Golgari Charm",
+      "modeled_claim": {
+        "modeled": [
+          "three modes: all creatures -1/-1 (SBA, any seat) / destroy enchantment / regenerate each creature you control"
+        ],
+        "not_modeled": [
+          "regeneration's remove-from-combat"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:242",
+          "source": "self.trace.append(('all_creatures_minus_one_minus_one','Golgari Charm'))",
+          "context": "Call/FunctionDef:resolve/FunctionDef:_s15_golgari_charm/ClassDef:InteractionSpellsMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py",
+        "tests/test_cast_s7.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Golgari Signet",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "{1}, T -> {B}{G} (frozen fixture)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:37",
+          "source": "'Golgari Signet':          {'cost':(0,0,2)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:856",
+          "source": "elif name=='Golgari Signet':",
+          "context": "Compare/FunctionDef:tap_mana_rock/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:858",
+          "source": "elif name=='Golgari Signet':",
+          "context": "Compare/FunctionDef:tap_mana_rock/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Grave Pact",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "creature you control dies -> real edict against opposing boards (S8)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:38",
+          "source": "'Grave Pact':              {'cost':(3,0,1)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:929",
+          "source": "'Grave Pact','Blight Mound','Feral Appetite',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:931",
+          "source": "'Grave Pact','Blight Mound','Feral Appetite',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s12.py",
+        "tests/test_cast_s13.py",
+        "tests/test_cast_s15.py",
+        "tests/test_cast_s6.py",
+        "tests/test_commander_s10.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Grim Backwoods",
+      "modeled_claim": {
+        "modeled": [
+          "{C}; {2}{B}{G}, T + sacrifice -> draw"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:103",
+          "source": "p,card=self._linked_land(land_uid,'Grim Backwoods'); self._own_creature(creature_uid)",
+          "context": "Call/Assign/FunctionDef:grim_backwoods/ClassDef:RemainingLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:24",
+          "source": "'Geier Reach Sanitarium','Grim Backwoods','High Market','Llanowar Wastes',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Grisly Salvage",
+      "modeled_claim": {
+        "modeled": [
+          "reveal five, one creature or land to hand, rest to graveyard"
+        ],
+        "not_modeled": [
+          "event-kernel LKI for the milled creature cards"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:70",
+          "source": "'Grisly Salvage':       {'kind':'instant','cost':(1,1,0)},",
+          "context": "Dict/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py",
+        "tests/test_grist_s16.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Grist, the Hunger Tide",
+      "modeled_claim": {
+        "modeled": [
+          "cast as a planeswalker, loyalty 3",
+          "+1 Insect + mill (repeat loop present, cannot fire in this deck)",
+          "-2 sacrifice -> reflexive destroy",
+          "-5 drain by creature cards in graveyard",
+          "704.5i, creature-card static off the battlefield"
+        ],
+        "not_modeled": [
+          "opponents attacking her",
+          "responses to loyalty abilities"
+        ],
+        "kind": "permanent",
+        "physical_path_stage": "S16",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_grist_s16.py:39",
+          "source": "GRIST='Grist, the Hunger Tide'",
+          "context": "Assign"
+        },
+        {
+          "location": "pab_cast_s15.py:267",
+          "source": "names=set(CREATURES)|{SAVRA,'Grist, the Hunger Tide'}",
+          "context": "Assign/FunctionDef:_s15_grisly_salvage/ClassDef:InteractionSpellsMixin"
+        },
+        {
+          "location": "pab_shigeki_s20.py:34",
+          "source": "LEGENDARY_CARDS={'Savra, Queen of the Golgari','Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran Physician','Yahenni, Undying Partisan','Agent of the Ir",
+          "context": "Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py",
+        "tests/test_grist_s16.py",
+        "tests/test_stack_cp06.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Heroic Intervention",
+      "modeled_claim": {
+        "modeled": [
+          "hexproof + indestructible for your permanents until end of turn (every cleanup)"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:256",
+          "source": "self.trace.append(('hexproof_indestructible_until_end_of_turn','Heroic Intervention',tuple(own)))",
+          "context": "Call/FunctionDef:resolve/FunctionDef:_s15_heroic_intervention/ClassDef:InteractionSpellsMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py",
+        "tests/test_policy_s18.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "High Market",
+      "modeled_claim": {
+        "modeled": [
+          "{C}; T + sacrifice -> gain 1"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:99",
+          "source": "p,card=self._linked_land(land_uid,'High Market'); self._own_creature(creature_uid)",
+          "context": "Call/Assign/FunctionDef:high_market/ClassDef:RemainingLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:24",
+          "source": "'Geier Reach Sanitarium','Grim Backwoods','High Market','Llanowar Wastes',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py",
+        "tests/test_turn_clock_s2.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Hunt for Specimens",
+      "modeled_claim": {
+        "modeled": [
+          "cast, Pest, Learn (lesson under the house rule / discard-draw / decline)"
+        ],
+        "not_modeled": [
+          "Learn's discard with an empty hand"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S13",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:123",
+          "source": "name='Hunt for Specimens'; self._begin(physical_uid,name,(1,0,1)); self.pay_mana(black=1,generic=1); self.trace.append(('cast',name))",
+          "context": "Assign/FunctionDef:_s13_hunt_for_specimens/ClassDef:SpellCastMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s13.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Immoral Bargain",
+      "modeled_claim": {
+        "modeled": [
+          "cast with X sacrifices, destroys X targets (own creatures/artifacts/enchantments, opposing creatures)"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S13",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:175",
+          "source": "name='Immoral Bargain'; self._begin(physical_uid,name,(1,1,1)); self.pay_mana(black=1,green=1,generic=1)",
+          "context": "Assign/FunctionDef:_s13_immoral_bargain/ClassDef:SpellCastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:599",
+          "source": "self.trace.append(('targets_locked',tuple(targets),'Immoral Bargain'))",
+          "context": "Call/FunctionDef:immoral_bargain/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:604",
+          "source": "self.trace.append(('targets_locked',tuple(targets),'Immoral Bargain'))",
+          "context": "Call/FunctionDef:immoral_bargain/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s13.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Infestation Sage",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "dies -> flying Insect (frozen)"
+        ],
+        "not_modeled": [
+          "flying as evasion"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:53",
+          "source": "'Infestation Sage':              {'cost':(1,0,0),'power':1,'toughness':1,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:289",
+          "source": "if p.name == 'Infestation Sage':",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:296",
+          "source": "if p.name == 'Infestation Sage':",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s7.py",
+        "tests/test_reference_events.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v04_hunger_saga.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Infuse with Vitality",
+      "modeled_claim": {
+        "modeled": [
+          "target creature returns tapped when it dies this turn; gain 2"
+        ],
+        "not_modeled": [
+          "deathtouch (no combat consequence modeled for the target)"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:106",
+          "source": "self.pending.append(Trigger('Infuse with Vitality return (S15)',lambda:self._return_creature_from_graveyard(cand,'Infuse with Vitality',tapped=True) if cand in self.graveyard else self.trace.append(('infuse_return_card_g",
+          "context": "Call/Call/Call/FunctionDef:_leave"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp03.py",
+        "tests/test_auditfix_cp10.py",
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py"
+      ],
+      "verdict": "UNDERCLAIM",
+      "verdict_basis": "The not_modeled note says deathtouch has no modeled combat consequence, but CP03 adds the infused_eot deathtouch override; tests demonstrate lethal combat effects for either controller.",
+      "supplemental_evidence": [
+        "pab_auditfix_cp03.py:10-13 (_deathtouch checks infused_eot)",
+        "pab_combat_s17.py:68-71,140 (deathtouch combat application)",
+        "tests/test_auditfix_cp03.py:42-63 (combat lethal tests)"
+      ]
+    },
+    {
+      "name": "Llanowar Wastes",
+      "modeled_claim": {
+        "modeled": [
+          "{C} free, {B}/{G} with 1 damage"
+        ],
+        "not_modeled": [
+          "damage prevention"
+        ],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:62",
+          "source": "'Llanowar Wastes':     {'mana':('B','G','C'),'enters':'untapped','colored_damage':1},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_zones.py:24",
+          "source": "'Geier Reach Sanitarium','Grim Backwoods','High Market','Llanowar Wastes',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp10.py",
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s9.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Marauding Blight-Priest",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "lifegain drain (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:62",
+          "source": "'Marauding Blight-Priest':       {'cost':(1,0,2),'power':3,'toughness':2,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:237",
+          "source": "for name in ['Dina, Soul Steeper','Marauding Blight-Priest',",
+          "context": "FunctionDef:gain/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:244",
+          "source": "for name in ['Dina, Soul Steeper','Marauding Blight-Priest',",
+          "context": "FunctionDef:gain/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s7.py",
+        "tests/test_reference_events.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Mikokoro, Center of the Sea",
+      "modeled_claim": {
+        "modeled": [
+          "{C}; {2}, T: you draw"
+        ],
+        "not_modeled": [
+          "opponents' draw"
+        ],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:177",
+          "source": "p,card=self._linked_land(land_uid,'Mikokoro, Center of the Sea')",
+          "context": "Call/Assign/FunctionDef:mikokoro/ClassDef:RemainingLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:25",
+          "source": "'Mikokoro, Center of the Sea','Nurturing Peatland','Overgrown Tomb',",
+          "context": "Call/Assign"
+        },
+        {
+          "location": "pab_shigeki_s20.py:34",
+          "source": "LEGENDARY_CARDS={'Savra, Queen of the Golgari','Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran Physician','Yahenni, Undying Partisan','Agent of the Ir",
+          "context": "Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Mirkwood Bats",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "token created/sacrificed drain (frozen)",
+          "flying body attacks"
+        ],
+        "not_modeled": [
+          "flying as evasion (opponents have no flyers; blocks ignore flying)"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:47",
+          "source": "'Mirkwood Bats':                 {'cost':(1,0,3),'power':2,'toughness':3,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:208",
+          "source": "for bats in range(self.has('Mirkwood Bats')):",
+          "context": "Call/Call/FunctionDef:make_tokens/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:215",
+          "source": "for bats in range(self.has('Mirkwood Bats')):",
+          "context": "Call/Call/FunctionDef:make_tokens/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s6.py",
+        "tests/test_cast_s7.py",
+        "tests/test_reference_events.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Moldervine Reclamation",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "creature you control dies -> gain 1 and draw (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:39",
+          "source": "'Moldervine Reclamation':  {'cost':(1,1,3)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:928",
+          "source": "enchantments={\"Bastion of Remembrance\",'Moldervine Reclamation','Dark Prophecy',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:930",
+          "source": "enchantments={\"Bastion of Remembrance\",'Moldervine Reclamation','Dark Prophecy',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s12.py",
+        "tests/test_v07_zone_bridge.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Moseo, Vein's New Dean",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "ETB attack-gain Pest (frozen)",
+          "end-step Infusion reanimation (frozen, S2 clock)",
+          "flying body attacks"
+        ],
+        "not_modeled": [
+          "flying as evasion"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:50",
+          "source": "\"Moseo, Vein's New Dean\":        {'cost':(1,0,2),'power':2,'toughness':1,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:156",
+          "source": "if name == \"Moseo, Vein's New Dean\": self.make_tokens(MOSEO_PEST)",
+          "context": "Compare/FunctionDef:add/ClassDef:Game"
+        },
+        {
+          "location": "pab_clock_s2.py:40",
+          "source": "self._moseo_admitted=self.has(\"Moseo, Vein's New Dean\") and self.life_gained_turn>0",
+          "context": "Call/Assign/FunctionDef:advance_step/ClassDef:StepRoutingMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_combat_s17.py",
+        "tests/test_lands_s9.py",
+        "tests/test_policy_s18.py",
+        "tests/test_reference_events.py",
+        "tests/test_turn_clock_s2.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Nature's Lore",
+      "modeled_claim": {
+        "modeled": [
+          "cast, basic Forest to the battlefield untapped"
+        ],
+        "not_modeled": [
+          "nonbasic Forest-typed targets (Overgrown Tomb, Underground Mortuary)"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S6",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s6.py:118",
+          "source": "if card.name==\"Nature's Lore\": self._preflight_basic(selected_land_uid,'basic_forest')",
+          "context": "Compare/FunctionDef:cast_from_hand/ClassDef:CastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:912",
+          "source": "self.trace.append(('cast',\"Nature's Lore\"))",
+          "context": "Call/FunctionDef:natures_lore/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:914",
+          "source": "self.trace.append(('cast',\"Nature's Lore\"))",
+          "context": "Call/FunctionDef:natures_lore/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_cast_s6.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Nurturing Peatland",
+      "modeled_claim": {
+        "modeled": [
+          "pay 1 life per coloured tap"
+        ],
+        "not_modeled": [
+          "{1}, T, sacrifice: draw"
+        ],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:63",
+          "source": "'Nurturing Peatland':  {'mana':('B','G'),'enters':'untapped','tap_life':1},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_zones.py:25",
+          "source": "'Mikokoro, Center of the Sea','Nurturing Peatland','Overgrown Tomb',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s9.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Overgrown Tomb",
+      "modeled_claim": {
+        "modeled": [
+          "pay 2 life or tapped, {B}/{G}, Swamp Forest types"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:107",
+          "source": "if not self.pay_life(2,'Overgrown Tomb'): raise BridgeError('S9: cannot pay 2 life for Overgrown Tomb')",
+          "context": "Call/FunctionDef:_enters_tapped/ClassDef:FixerLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:25",
+          "source": "'Mikokoro, Center of the Sea','Nurturing Peatland','Overgrown Tomb',",
+          "context": "Call/Assign"
+        },
+        {
+          "location": "pab_lands_s14.py:58",
+          "source": "SWAMP_TYPED=frozenset({'Swamp','Overgrown Tomb','Underground Mortuary'})",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py",
+        "tests/test_lands_s9.py",
+        "tests/test_v06_physical_zones.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Pest Infestation",
+      "modeled_claim": {
+        "modeled": [
+          "cast with X, up to X artifact/enchantment targets, 2X Pests (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S13",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:197",
+          "source": "name='Pest Infestation'; self._begin(physical_uid,name,(0,1,2*x))",
+          "context": "Assign/FunctionDef:_s13_pest_infestation/ClassDef:SpellCastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:938",
+          "source": "self.trace.append(('cast','Pest Infestation',x,targets))",
+          "context": "Call/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:940",
+          "source": "self.trace.append(('cast','Pest Infestation',x,targets))",
+          "context": "Call/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s13.py",
+        "tests/test_v05_fixture_cards.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Pest Rescuer",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "each-upkeep conditional Pest (R01, S2 clock)",
+          "lifegain +1 replacement (frozen)"
+        ],
+        "not_modeled": [
+          "Oracle text not from an official feed (flagged since R01)"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:48",
+          "source": "'Pest Rescuer':                  {'cost':(0,1,2),'power':2,'toughness':2,'colors':'G'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:233",
+          "source": "amount += self.has('Pest Rescuer')  # replacement modifies one gain event",
+          "context": "Call/FunctionDef:gain/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:240",
+          "source": "amount += self.has('Pest Rescuer')  # replacement modifies one gain event",
+          "context": "Call/FunctionDef:gain/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp10.py",
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_r01_pest_rescuer.py",
+        "tests/test_reference_events.py",
+        "tests/test_turn_clock_s2.py",
+        "tests/test_upkeep_trigger_audit.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v05_r01_corrections.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Pest Summoning",
+      "modeled_claim": {
+        "modeled": [
+          "Lesson: into hand through Learn, cast with hybrid pips, two Pests"
+        ],
+        "not_modeled": [
+          "the Lesson outside the house rule"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S13",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:143",
+          "source": "name='Pest Summoning'; self._begin(physical_uid,name,(b,g,1)); self.pay_mana(black=b,green=g,generic=1); self.trace.append(('cast',name))",
+          "context": "Assign/FunctionDef:_s13_pest_summoning/ClassDef:SpellCastMixin"
+        },
+        {
+          "location": "pab_zones.py:309",
+          "source": "if self.cards[u].name=='Pest Summoning'),None)",
+          "context": "Compare/Call/Assign/FunctionDef:learn_pest_summoning"
+        },
+        {
+          "location": "pab_focus_engine.py:508",
+          "source": "self.hand.append('Pest Summoning'); self.lesson_available=False",
+          "context": "Call/FunctionDef:hunt_for_specimens/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s13.py",
+        "tests/test_reference_events.py",
+        "tests/test_v06_physical_zones.py",
+        "tests/test_v07_zone_bridge.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Phyrexian Altar",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "sacrifice -> one mana (frozen fixture)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:40",
+          "source": "'Phyrexian Altar':         {'cost':(0,0,3)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:705",
+          "source": "if not self.has('Phyrexian Altar'):",
+          "context": "Call/FunctionDef:phyrexian_altar_sacrifice/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:710",
+          "source": "if not self.has('Phyrexian Altar'):",
+          "context": "Call/FunctionDef:phyrexian_altar_sacrifice/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Phyrexian Reclamation",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "{1}{B}, pay 2 life: creature card graveyard -> hand (frozen bridge)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:41",
+          "source": "'Phyrexian Reclamation':   {'cost':(1,0,0)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:930",
+          "source": "'Phyrexian Reclamation','Agent of the Iron Throne',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:932",
+          "source": "'Phyrexian Reclamation','Agent of the Iron Throne',",
+          "context": "Assign/FunctionDef:pest_infestation/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Phyrexian Tower",
+      "modeled_claim": {
+        "modeled": [
+          "{C}; T + sacrifice -> {B}{B} (mana ability)"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:95",
+          "source": "p,card=self._linked_land(land_uid,'Phyrexian Tower'); self._own_creature(creature_uid)",
+          "context": "Call/Assign/FunctionDef:tower_sacrifice/ClassDef:RemainingLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:26",
+          "source": "'Phyrexian Tower','Swamp','Takenuma, Abandoned Mire',",
+          "context": "Call/Assign"
+        },
+        {
+          "location": "pab_shigeki_s20.py:34",
+          "source": "LEGENDARY_CARDS={'Savra, Queen of the Golgari','Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran Physician','Yahenni, Undying Partisan','Agent of the Ir",
+          "context": "Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Plumb the Forbidden",
+      "modeled_claim": {
+        "modeled": [
+          "cast with 0+ sacrifices, copies, draw/lose per resolution (frozen)"
+        ],
+        "not_modeled": [
+          "copies as separate stack objects"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S13",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:159",
+          "source": "name='Plumb the Forbidden'; self._begin(physical_uid,name,(1,0,1))",
+          "context": "Assign/FunctionDef:_s13_plumb_the_forbidden/ClassDef:SpellCastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:817",
+          "source": "self.trace.append(('cast','Plumb the Forbidden'))",
+          "context": "Call/FunctionDef:plumb_the_forbidden/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:820",
+          "source": "self.trace.append(('cast','Plumb the Forbidden'))",
+          "context": "Call/FunctionDef:plumb_the_forbidden/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s13.py",
+        "tests/test_v04_cost_and_copy.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Poison-Tip Archer",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "another creature dies -> each opponent loses 1 (frozen)",
+          "deathtouch in combat (S17)"
+        ],
+        "not_modeled": [
+          "reach (opponents have no flyers)"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:61",
+          "source": "'Poison-Tip Archer':             {'cost':(1,1,2),'power':2,'toughness':3,'colors':'BG'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:315",
+          "source": "if name=='Poison-Tip Archer' and source.uid != p.uid:",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:322",
+          "source": "if name=='Poison-Tip Archer' and source.uid != p.uid:",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_policy_s18.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Prosperous Innkeeper",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "ETB Treasure (frozen)",
+          "another creature you control enters -> gain 1 (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:64",
+          "source": "'Prosperous Innkeeper':          {'cost':(0,1,1),'power':1,'toughness':1,'colors':'G'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:157",
+          "source": "if name == 'Prosperous Innkeeper': self.make_tokens(TREASURE)",
+          "context": "Compare/FunctionDef:add/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:164",
+          "source": "if name == 'Prosperous Innkeeper': self.make_tokens(TREASURE)",
+          "context": "Compare/FunctionDef:add/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s7.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Reassembling Skeleton",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "{1}{B} graveyard return tapped (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:51",
+          "source": "'Reassembling Skeleton':         {'cost':(1,0,1),'power':1,'toughness':1,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:633",
+          "source": "if not p or p.name!='Reassembling Skeleton':",
+          "context": "Compare/FunctionDef:skeleton_return/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:638",
+          "source": "if not p or p.name!='Reassembling Skeleton':",
+          "context": "Compare/FunctionDef:skeleton_return/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s6.py",
+        "tests/test_cast_s7.py",
+        "tests/test_r52_village_rites.py",
+        "tests/test_reference_events.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v04_hunger_saga.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v07_zone_bridge.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Ribtruss Roaster",
+      "modeled_claim": {
+        "modeled": [
+          "cast with devour (CR 702.82)",
+          "end-step Pests equal to +1/+1 counters (R47/R49)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:57",
+          "source": "'Ribtruss Roaster':              {'cost':(0,1,4),'power':3,'toughness':3,'colors':'G','devour':1},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:538",
+          "source": "if p.name == 'Ribtruss Roaster' and p.controller == 0:",
+          "context": "Compare/FunctionDef:roaster_end_step/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:543",
+          "source": "if p.name == 'Ribtruss Roaster' and p.controller == 0:",
+          "context": "Compare/FunctionDef:roaster_end_step/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_reference_events.py",
+        "tests/test_turn_clock_s1.py",
+        "tests/test_turn_clock_s2.py",
+        "tests/test_upkeep_trigger_audit.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Rise of the Witch-king",
+      "modeled_claim": {
+        "modeled": [
+          "each player sacrifices (opponents by the S8 policy), return another permanent card (creature/land/artifact/enchantment)"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:285",
+          "source": "self._edict_each_opponent('Rise of the Witch-king')",
+          "context": "Call/FunctionDef:resolve/FunctionDef:_s15_rise_of_the_witch_king/ClassDef:InteractionSpellsMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Sakura-Tribe Elder",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "sacrifice -> basic land tapped (frozen bridge)"
+        ],
+        "not_modeled": [
+          "nonbasic search is not what the card does; nothing missing"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S6",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s6.py:147",
+          "source": "if name=='Sakura-Tribe Elder':",
+          "context": "Compare/FunctionDef:_resolve_cast/ClassDef:CastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:892",
+          "source": "if not source or source.name!='Sakura-Tribe Elder' or source.controller!=0:",
+          "context": "Compare/FunctionDef:sakura_tribe_elder_sacrifice/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:894",
+          "source": "if not source or source.name!='Sakura-Tribe Elder' or source.controller!=0:",
+          "context": "Compare/FunctionDef:sakura_tribe_elder_sacrifice/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_cast_s6.py",
+        "tests/test_cast_s7.py",
+        "tests/test_stack_cp06.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v07_zone_bridge.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Sangromancer",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "opposing creature dies -> may gain 3 (frozen; S8 deaths)",
+          "opponent discards -> gain 3 (frozen exogenous only)"
+        ],
+        "not_modeled": [
+          "flying",
+          "opponents never discard (no hands)"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:70",
+          "source": "'Sangromancer':                  {'cost':(2,0,2),'power':3,'toughness':3,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:355",
+          "source": "if source.name=='Sangromancer' and self.choose_sangromancer_gain:",
+          "context": "Compare/FunctionDef:opposing_creature_dies/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:362",
+          "source": "if source.name=='Sangromancer' and self.choose_sangromancer_gain:",
+          "context": "Compare/FunctionDef:opposing_creature_dies/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Savra, Queen of the Golgari",
+      "modeled_claim": {
+        "modeled": [
+          "cast from the command zone with commander tax",
+          "black-sacrifice trigger: pay 2 life, real edict against opposing boards (S8 policy)",
+          "green-sacrifice trigger: gain 2",
+          "dies -> graveyard (dies triggers) -> command zone at the next SBA (903.9a)",
+          "attacks, commander damage (903.10a)",
+          "targeted by scripted/policy removal; hexproof via Heroic Intervention"
+        ],
+        "not_modeled": [
+          "choosing to leave her in the graveyard",
+          "partner / commander damage from other sources"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S10",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:233",
+          "source": "cands=[p for p in g.graveyard if p.creature and not p.token and p.mana_value<=3 and p.name!='Savra, Queen of the Golgari']",
+          "context": "Compare/Assign/FunctionDef:cast_when_able"
+        },
+        {
+          "location": "pab_turn_loop.py:31",
+          "source": "savra_zones=[z.cards[u].zone for zone in ('command','battlefield','graveyard','exile') for u in z.zones[zone] if z.cards[u].name=='Savra, Queen of the Golgari']",
+          "context": "Compare/Assign/FunctionDef:check_invariants"
+        },
+        {
+          "location": "pab_zones.py:92",
+          "source": "assert {self.cards[u].name for u in self.zones['command']} == {'Savra, Queen of the Golgari'}",
+          "context": "Compare/FunctionDef:__init__/ClassDef:DeckZones"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_v06_physical_zones.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match.",
+      "supplemental_evidence": [
+        "pab_commander_s10.py:52-81 (cast_commander/_resolve_commander uses imported SAVRA constant; no full-name literal)"
+      ]
+    },
+    {
+      "name": "Sedgemoor Witch",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "Magecraft Pest on every instant/sorcery cast or copy (frozen)"
+        ],
+        "not_modeled": [
+          "menace",
+          "ward (no opponent targeting of our permanents is a spell/ability with a cost; policy removal ignores ward)"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:55",
+          "source": "'Sedgemoor Witch':               {'cost':(1,0,2),'power':3,'toughness':2,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:514",
+          "source": "for _ in range(self.has('Sedgemoor Witch')):",
+          "context": "Call/Call/FunctionDef:sedgemoor_spell_cast_or_copied/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:519",
+          "source": "for _ in range(self.has('Sedgemoor Witch')):",
+          "context": "Call/Call/FunctionDef:sedgemoor_spell_cast_or_copied/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp10.py",
+        "tests/test_cast_s12.py",
+        "tests/test_cast_s13.py",
+        "tests/test_cast_s15.py",
+        "tests/test_cast_s6.py",
+        "tests/test_cast_s7.py",
+        "tests/test_grist_s16.py",
+        "tests/test_interaction_s11.py",
+        "tests/test_lands_s14.py",
+        "tests/test_lands_s9.py",
+        "tests/test_policy_s18.py",
+        "tests/test_r52_village_rites.py",
+        "tests/test_reference_events.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Shigeki, Jukai Visionary",
+      "modeled_claim": {
+        "modeled": [
+          "cast as a 1/3 enchantment creature (found missing from every frozen table while building this registry)",
+          "{1}{G}, T, return to hand: reveal four, a land tapped, rest to graveyard",
+          "channel {X}{X}{G}{G}: X nonlegendary cards from graveyard to hand"
+        ],
+        "not_modeled": [
+          "summoning-sick activation is refused (correct); nothing else"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S20",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_shigeki_s20.py:31",
+          "source": "SHIGEKI='Shigeki, Jukai Visionary'",
+          "context": "Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_shigeki_s20.py",
+        "tests/test_stack_cp06.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match.",
+      "supplemental_evidence": [
+        "pab_shigeki_s20.py (SHIGEKI name constant used by cast/activate/channel dispatch)"
+      ]
+    },
+    {
+      "name": "Skullclamp",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "equip and +1/-1 with death draw 2 (frozen fixture)"
+        ],
+        "not_modeled": [
+          "equip from the cast path (enters unattached)"
+        ],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:42",
+          "source": "'Skullclamp':              {'cost':(0,0,1)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:285",
+          "source": "lambda: self._fixture_draw(2,'Skullclamp')))",
+          "context": "Call/Call/Call/FunctionDef:_leave"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:292",
+          "source": "lambda: self._fixture_draw(2,'Skullclamp')))",
+          "context": "Call/Call/Call/FunctionDef:_leave"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_priority_s3.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v06_physical_zones.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Sol Ring",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "{C}{C} (frozen fixture)"
+        ],
+        "not_modeled": [],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:43",
+          "source": "'Sol Ring':                {'cost':(0,0,1)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:849",
+          "source": "if name=='Sol Ring':",
+          "context": "Compare/FunctionDef:tap_mana_rock/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:851",
+          "source": "if name=='Sol Ring':",
+          "context": "Compare/FunctionDef:tap_mana_rock/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_cast_s12.py",
+        "tests/test_stack_cp06.py",
+        "tests/test_turn_actions_s4.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "South Wind Avatar",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "another creature dies -> gain toughness (frozen)",
+          "lifegain drain (frozen)",
+          "deathtouch in combat (S17)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:58",
+          "source": "'South Wind Avatar':             {'cost':(1,0,3),'power':3,'toughness':4,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:238",
+          "source": "'Starscape Cleric','South Wind Avatar']:",
+          "context": "FunctionDef:gain/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:245",
+          "source": "'Starscape Cleric','South Wind Avatar']:",
+          "context": "FunctionDef:gain/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s7.py",
+        "tests/test_reference_events.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Starscape Cleric",
+      "modeled_claim": {
+        "modeled": [
+          "cast for the printed cost",
+          "lifegain drain (frozen)"
+        ],
+        "not_modeled": [
+          "Offspring {2}{B} (token copy)",
+          "flying",
+          "can't block (blocks policy would need it)"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:63",
+          "source": "'Starscape Cleric':              {'cost':(1,0,1),'power':2,'toughness':1,'colors':'B'},   # Offspring {2}{B} not modeled",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:238",
+          "source": "'Starscape Cleric','South Wind Avatar']:",
+          "context": "FunctionDef:gain/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:245",
+          "source": "'Starscape Cleric','South Wind Avatar']:",
+          "context": "FunctionDef:gain/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s7.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Swamp",
+      "modeled_claim": {
+        "modeled": [
+          "play, {B}"
+        ],
+        "not_modeled": [
+          "nothing: a basic land is fully modeled except that the frozen zones path (not the bridge) is the one that plays it"
+        ],
+        "kind": "land",
+        "physical_path_stage": "frozen v0.8",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_focus_engine.py:871",
+          "source": "if name not in ('Forest','Swamp'):",
+          "context": "Compare/FunctionDef:put_basic_land_in_fixture_library/ClassDef:Game"
+        },
+        {
+          "location": "pab_cast_s13.py:208",
+          "source": "u=next((u for u in lib if g.zones.cards[u].name in ('Swamp','Forest')),None)",
+          "context": "Compare/Call/Assign/FunctionDef:tutor_selection"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:873",
+          "source": "if name not in ('Forest','Swamp'):",
+          "context": "Compare/FunctionDef:put_basic_land_in_fixture_library/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_cast_s13.py",
+        "tests/test_cast_s15.py",
+        "tests/test_cast_s6.py",
+        "tests/test_cast_s7.py",
+        "tests/test_lands_s14.py",
+        "tests/test_lands_s9.py",
+        "tests/test_policy_s18.py",
+        "tests/test_shigeki_s20.py",
+        "tests/test_turn_actions_s4.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v06_physical_zones.py",
+        "tests/test_v07_zone_bridge.py",
+        "tests/test_v08_mana_tokens.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Takenuma, Abandoned Mire",
+      "modeled_claim": {
+        "modeled": [
+          "play, {B}, channel with legendary discount: mill 3, creature card to hand"
+        ],
+        "not_modeled": [
+          "planeswalker cards as the return target"
+        ],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:148",
+          "source": "if card.name!='Takenuma, Abandoned Mire': raise BridgeError('S14: not Takenuma')",
+          "context": "Compare/FunctionDef:channel_takenuma/ClassDef:RemainingLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:26",
+          "source": "'Phyrexian Tower','Swamp','Takenuma, Abandoned Mire',",
+          "context": "Call/Assign"
+        },
+        {
+          "location": "pab_shigeki_s20.py:34",
+          "source": "LEGENDARY_CARDS={'Savra, Queen of the Golgari','Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran Physician','Yahenni, Undying Partisan','Agent of the Ir",
+          "context": "Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Teacher's Pest",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "Pest subtype for Pest Rescuer (R01)",
+          "attack-gain (S17)",
+          "{B}{G} graveyard return tapped (frozen)"
+        ],
+        "not_modeled": [
+          "menace as evasion"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:52",
+          "source": "\"Teacher's Pest\":                {'cost':(1,1,0),'power':1,'toughness':1,'colors':'BG'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:92",
+          "source": "return frozenset({'Pest'}) if self.name == \"Teacher's Pest\" else frozenset()",
+          "context": "Compare/FunctionDef:subtypes/ClassDef:Permanent"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:92",
+          "source": "return frozenset({'Pest'}) if self.name == \"Teacher's Pest\" else frozenset()",
+          "context": "Compare/FunctionDef:subtypes/ClassDef:Permanent"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_auditfix_cp10.py",
+        "tests/test_cast_s7.py",
+        "tests/test_combat_s17.py",
+        "tests/test_r01_pest_rescuer.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v05_r01_corrections.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Tend the Pests",
+      "modeled_claim": {
+        "modeled": [
+          "cast with sacrifice, X Pests by LKI power"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S6",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s6.py:144",
+          "source": "if name=='Tend the Pests': self.make_tokens(PEST,power)",
+          "context": "Compare/FunctionDef:_resolve_cast/ClassDef:CastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:776",
+          "source": "'Tend the Pests':(1,1,0)}",
+          "context": "Dict/Assign/FunctionDef:cast_pab_spell/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:780",
+          "source": "'Tend the Pests':(1,1,0)}",
+          "context": "Dict/Assign/FunctionDef:cast_pab_spell/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_cast_s6.py",
+        "tests/test_r52_village_rites.py",
+        "tests/test_v04_cost_and_copy.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "The Hunger Tide Rises",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "chapters I–III Insects, IV sacrifice/search (frozen saga, S2 clock)"
+        ],
+        "not_modeled": [
+          "chapter IV search against the physical library (frozen fixture semantics)"
+        ],
+        "kind": "permanent",
+        "physical_path_stage": "S12",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s12.py:44",
+          "source": "'The Hunger Tide Rises':   {'cost':(0,1,2)},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:457",
+          "source": "if p.controller==0 and p.name=='The Hunger Tide Rises'),None)",
+          "context": "Compare/Call/Assign/FunctionDef:saga_chapter"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:462",
+          "source": "if p.controller==0 and p.name=='The Hunger Tide Rises'),None)",
+          "context": "Compare/Call/Assign/FunctionDef:saga_chapter"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s12.py",
+        "tests/test_v04_hunger_saga.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Underground Mortuary",
+      "modeled_claim": {
+        "modeled": [
+          "tapped, surveil 1, {B}/{G}, Swamp Forest types"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:193",
+          "source": "elif name=='Underground Mortuary':",
+          "context": "Compare/FunctionDef:play_land_policy"
+        },
+        {
+          "location": "pab_zones.py:27",
+          "source": "'Underground Mortuary','Undergrowth Stadium','Verdant Catacombs',",
+          "context": "Call/Assign"
+        },
+        {
+          "location": "pab_lands_s14.py:58",
+          "source": "SWAMP_TYPED=frozenset({'Swamp','Overgrown Tomb','Underground Mortuary'})",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py",
+        "tests/test_lands_s9.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Undergrowth Stadium",
+      "modeled_claim": {
+        "modeled": [
+          "entry condition (2+ opponents in the game), {B}/{G}"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:58",
+          "source": "'Undergrowth Stadium': {'mana':('B','G'),'enters':'tapped_unless_2_or_more_opponents'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_zones.py:27",
+          "source": "'Underground Mortuary','Undergrowth Stadium','Verdant Catacombs',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s9.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Unearth",
+      "modeled_claim": {
+        "modeled": [
+          "cast, MV<=3 creature card back (linked), Grist as a creature card (S16)",
+          "cycling (frozen bridge)"
+        ],
+        "not_modeled": [
+          "milled creature cards without event LKI (bridge limitation, except Grist)"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S13",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s13.py:151",
+          "source": "name='Unearth'; self._begin(physical_uid,name,(1,0,0))",
+          "context": "Assign/FunctionDef:_s13_unearth/ClassDef:SpellCastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:971",
+          "source": "self.trace.append(('cast','Unearth',target_uid))",
+          "context": "Call/FunctionDef:unearth/ClassDef:Game"
+        },
+        {
+          "location": "pab_zone_bridge.py:190",
+          "source": "card=next((c for c in self.zones.zone_cards('hand') if c.name=='Unearth'),None)",
+          "context": "Compare/Call/Assign/FunctionDef:cycle_unearth"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_cast_s13.py",
+        "tests/test_grist_s16.py",
+        "tests/test_policy_s18.py",
+        "tests/test_v05_fixture_cards.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Verdant Catacombs",
+      "modeled_claim": {
+        "modeled": [
+          "T, pay 1 life, sacrifice: Swamp/Forest-typed card with its own entry rule, shuffle"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S14",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s14.py:121",
+          "source": "p,card=self._linked_land(land_uid,'Verdant Catacombs')",
+          "context": "Call/Assign/FunctionDef:verdant_catacombs/ClassDef:RemainingLandsMixin"
+        },
+        {
+          "location": "pab_zones.py:27",
+          "source": "'Underground Mortuary','Undergrowth Stadium','Verdant Catacombs',",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Village Rites",
+      "modeled_claim": {
+        "modeled": [
+          "cast with sacrifice cost, draw 2 (R52 cost)"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S6",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s6.py:142",
+          "source": "if name in ('Village Rites','Deadly Dispute'): self._fixture_draw(2,name)",
+          "context": "Compare/FunctionDef:_resolve_cast/ClassDef:CastMixin"
+        },
+        {
+          "location": "pab_focus_engine.py:775",
+          "source": "costs={'Village Rites':(1,0,1),'Deadly Dispute':(1,0,1),",
+          "context": "Dict/Assign/FunctionDef:cast_pab_spell/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:779",
+          "source": "costs={'Village Rites':(1,0,1),'Deadly Dispute':(1,0,1),",
+          "context": "Dict/Assign/FunctionDef:cast_pab_spell/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s6.py",
+        "tests/test_cast_s7.py",
+        "tests/test_commander_s10.py",
+        "tests/test_lands_s9.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_r52_village_rites.py",
+        "tests/test_reference_events.py",
+        "tests/test_shigeki_s20.py",
+        "tests/test_stack_cp06.py",
+        "tests/test_v03_extended.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Viscera Seer",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "sacrifice -> scry 1 (frozen fixture; scry not applied to the physical library)"
+        ],
+        "not_modeled": [
+          "scry on the real library"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:68",
+          "source": "'Viscera Seer':                  {'cost':(1,0,0),'power':1,'toughness':1,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:664",
+          "source": "if not self.has('Viscera Seer'): raise IllegalAction('No Viscera Seer controlled')",
+          "context": "Call/FunctionDef:viscera_seer_sacrifice/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:669",
+          "source": "if not self.has('Viscera Seer'): raise IllegalAction('No Viscera Seer controlled')",
+          "context": "Call/FunctionDef:viscera_seer_sacrifice/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Warren Soultrader",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "pay 1 life + sacrifice -> Treasure (frozen fixture)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:66",
+          "source": "'Warren Soultrader':             {'cost':(1,0,2),'power':3,'toughness':3,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:689",
+          "source": "if not trader or trader.name!='Warren Soultrader' or trader.controller!=0:",
+          "context": "Compare/FunctionDef:warren_soultrader_sacrifice/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:694",
+          "source": "if not trader or trader.name!='Warren Soultrader' or trader.controller!=0:",
+          "context": "Compare/FunctionDef:warren_soultrader_sacrifice/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c48_c64_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_v03_extended.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Witherbloom Charm",
+      "modeled_claim": {
+        "modeled": [
+          "three modes: sacrifice a permanent + draw 2 / gain 5 / destroy nonland MV<=2"
+        ],
+        "not_modeled": [],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:230",
+          "source": "if mode==2: return {'resolve':lambda:self.gain(5,'Witherbloom Charm')}",
+          "context": "Call/Dict/FunctionDef:_s15_witherbloom_charm/ClassDef:InteractionSpellsMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Witherbloom Command",
+      "modeled_claim": {
+        "modeled": [
+          "two modes of four: mill 3 + land back / destroy noncreature nonland MV<=2 / -3/-1 / target opponent loses 2, gain 2"
+        ],
+        "not_modeled": [
+          "an opponent's mill (no libraries)"
+        ],
+        "kind": "spell",
+        "physical_path_stage": "S15",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s15.py:325",
+          "source": "if self._tgt(target_uid,nonland=True,noncreature=True,mv_max=2): self._destroy_any(target_uid,'Witherbloom Command')",
+          "context": "Call/FunctionDef:resolve/FunctionDef:_s15_witherbloom_command/ClassDef:InteractionSpellsMixin"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s15.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Woodland Cemetery",
+      "modeled_claim": {
+        "modeled": [
+          "entry condition (Swamp/Forest type), {B}/{G}"
+        ],
+        "not_modeled": [],
+        "kind": "land",
+        "physical_path_stage": "S9",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_lands_s9.py:57",
+          "source": "'Woodland Cemetery':   {'mana':('B','G'),'enters':'tapped_unless_swamp_or_forest'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_zones.py:28",
+          "source": "'Woodland Cemetery'",
+          "context": "Call/Assign"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_lands_s14.py",
+        "tests/test_lands_s9.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Wriggling Grub",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "dies -> two Worms (frozen)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:54",
+          "source": "'Wriggling Grub':                {'cost':(1,0,1),'power':1,'toughness':1,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:292",
+          "source": "if p.name == 'Wriggling Grub':",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        },
+        {
+          "location": "pab_focus_engine_v07.py:299",
+          "source": "if p.name == 'Wriggling Grub':",
+          "context": "Compare/FunctionDef:_leave/ClassDef:Game"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c41_c47_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_priority_s3.py",
+        "tests/test_reference_events.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Yahenni, Undying Partisan",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "opposing creature dies -> +1/+1 counter (frozen; S8 deaths)",
+          "sacrifice -> indestructible until end of turn (frozen; cleared every cleanup since S15)",
+          "haste (S17)"
+        ],
+        "not_modeled": [],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:72",
+          "source": "'Yahenni, Undying Partisan':     {'cost':(1,0,2),'power':2,'toughness':2,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:352",
+          "source": "if source.name=='Yahenni, Undying Partisan':",
+          "context": "Compare/FunctionDef:opposing_creature_dies/ClassDef:Game"
+        },
+        {
+          "location": "pab_lands_s14.py:150",
+          "source": "legends=sum(1 for q in self.permanents.values() if q.controller==0 and q.creature and q.name in (SAVRA,'Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran",
+          "context": "Compare/Call/Assign/FunctionDef:channel_takenuma"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_combat_s17.py",
+        "tests/test_interaction_s11.py",
+        "tests/test_lands_s14.py",
+        "tests/test_opponents_s8.py",
+        "tests/test_v04_cost_and_copy.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    },
+    {
+      "name": "Yawgmoth, Thran Physician",
+      "modeled_claim": {
+        "modeled": [
+          "cast",
+          "pay 1 life + sacrifice -> -1/-1 counter + draw (frozen, R48 SBA)",
+          "proliferate (frozen fixture)"
+        ],
+        "not_modeled": [
+          "protection from Humans"
+        ],
+        "kind": "creature",
+        "physical_path_stage": "S7",
+        "registry_status": "PARTIAL"
+      },
+      "code_evidence": [
+        {
+          "location": "pab_cast_s7.py:71",
+          "source": "'Yawgmoth, Thran Physician':     {'cost':(2,0,2),'power':2,'toughness':4,'colors':'B'},",
+          "context": "Dict/Assign"
+        },
+        {
+          "location": "pab_focus_engine.py:740",
+          "source": "if not source or source.name!='Yawgmoth, Thran Physician' or source.controller!=0:",
+          "context": "Compare/FunctionDef:yawgmoth_sacrifice/ClassDef:Game"
+        },
+        {
+          "location": "pab_lands_s14.py:150",
+          "source": "legends=sum(1 for q in self.permanents.values() if q.controller==0 and q.creature and q.name in (SAVRA,'Dina, Soul Steeper','Chatterfang, Squirrel General',\"Moseo, Vein's New Dean\",'Beledros Witherbloom','Yawgmoth, Thran",
+          "context": "Compare/Call/Assign/FunctionDef:channel_takenuma"
+        }
+      ],
+      "test_evidence": [
+        "tests/test_c65_c77_contracts.py",
+        "tests/test_c78_c94_contracts.py",
+        "tests/test_cast_s7.py",
+        "tests/test_lands_s14.py",
+        "tests/test_priority_s3.py",
+        "tests/test_upkeep_trigger_audit.py",
+        "tests/test_v04_cost_and_copy.py",
+        "tests/test_v07_zone_bridge.py"
+      ],
+      "verdict": "SUPPORTED",
+      "verdict_basis": "Exact runtime Python-string name match and tests/ source-text name match."
+    }
+  ]
+}

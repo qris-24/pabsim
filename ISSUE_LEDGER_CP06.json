@@ -175,7 +175,7 @@
       "priority": "P1",
       "source": "A01 audit 2026-10-18, probes replayed at CP06: persisting",
       "stage": "S9",
-      "status": "OPEN",
+      "status": "REPAIRED",
       "summary": "Colored mana double-counted when tapping lands"
     },
     {
@@ -187,7 +187,7 @@
       "priority": "P2",
       "source": "A01 audit 2026-10-18, probes replayed at CP06: persisting",
       "stage": "S11",
-      "status": "OPEN",
+      "status": "REPAIRED",
       "summary": "Impossible opponent script accepted"
     },
     {
