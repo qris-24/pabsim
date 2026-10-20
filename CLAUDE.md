@@ -1,12 +1,16 @@
 # CLAUDE.md — PABTRV3 kernel (pab_reliability_v0_8_r02_r01)
 
 ## Layout
-- `tests/` — kernel reference suite (`test_*.py`), part of the gate (test count: REFERENCE_TEST_COUNT in run_validation.py (843 at CP26)).
+- `tests/` — kernel reference suite (`test_*.py`), part of the gate (test count: REFERENCE_TEST_COUNT in run_validation.py (850 at CP28)).
 - `release_gate_tests/` — the 21 release integrity checks run by `run_validation.py`.
 - `s9_tests/` — S9 land/mana layer fixtures.
 - `r01_tests/` — R01 Pest rescuer fixtures.
 - `r52_tests/` — R52 Village Rites fixtures.
 - `decks/` — PAB v3 second deck target (CP26): Archidekt export, `PAB_V3.json`, `PAB_V3_ORACLE_SUPPLEMENT.json`; not gated.
+- `decks/ORACLE_EXCERPT_CP28.json` — pinned Oracle text (CP28) for the cards the contract references name; the
+  gate's only Oracle text source (never C:\pabsim\data). Built by `build_oracle_excerpt.py` (repo root; not run by the gate).
+- `CONTRACT_ORACLE_REFS_CP28.json` — per-contract (C41–C99) Oracle references {card, fragment} + note; drives
+  `oracle_referenced` / `oracle_refs_checked` in VALIDATION_RESULTS.json. `oracle_cr_authenticated` stays False (no CR text).
 - `frozen_*/` — frozen phase 5/6/7 and previous-test snapshots; read-only.
 - `upstream_frozen/` — frozen upstream v0.5–v0.8 sources; read-only.
 - `EVIDENCE/` — before-copies and supersession records (e.g. `EVIDENCE/CP06_SUPERSEDED/`).
@@ -15,11 +19,12 @@
 - `pab_kernel.py` is the only import point. Use `Game` / `PhysicalZoneGame` from it.
 
 ## Commands (Python 3.14.7 on Windows, PowerShell)
-- Full gate (expect `Ran N tests` / `OK`, N = REFERENCE_TEST_COUNT in run_validation.py (843 at CP26),
+- Full gate (expect `Ran N tests` / `OK`, N = REFERENCE_TEST_COUNT in run_validation.py (850 at CP28),
   and 21/21 in `VALIDATION_RESULTS.json`):
   `py -3.14 run_validation.py 2> ..\gate.txt | Out-Null; Get-Content ..\gate.txt -Tail 3`
 - Kernel suite only: `py -3.14 -m unittest discover -s tests -p "test_*.py" -q`
 - Re-pin after any tracked-file change: `py -3.14 build_manifest.py`
+- `py -3.14 build_oracle_excerpt.py` re-pins the excerpt after a mapping change (then re-pin the manifest).
 - Registry: `build_registry.py` (redirect its output; never let it print to the terminal).
 - Line endings are LF; `core.autocrlf` is `false`. Do not introduce CRLF.
 
@@ -81,7 +86,11 @@
 - CP26 follow-up: old-baseline-only marking used deck-card string literals for C41-C79/C95-C99, which
   counts fixture helpers; C42, C43, C44, C45, C50, C53, C54, C56, C58, C59, C75, C76, C78, C91, C95, C97
   reference at least one old-baseline-only card and are not marked. Review their subject cards.
-- CP28: derive oracle_cr_authenticated (run_validation.py:246, was :239) from a per-contract Oracle reference check.
+- CP28 follow-up: contracts whose rules need CR text (none in the repo): C96 has `refs: []` (mana emptying,
+  CR 106.4); CR-only parts of other contracts are named in their CONTRACT_ORACLE_REFS_CP28.json notes.
+- CP28 follow-up: cards in neither Oracle source: Skullclamp (C45 subject; C45 references only Savra),
+  Geier Reach Sanitarium and Mikokoro, Center of the Sea (C76 has `refs: []`). Source their Oracle text.
+- CP28 follow-up: C51/C52 SUBSTITUTIONS say Chatterfang "-X/-X"; the Oracle text says "+X/-X". Review the wording.
 - CP27 follow-up: CONTRACTS_C41_C94_STATUS.md has no C65–C77 re-status section; check its C65–C77
   table rows against VALIDATION_RESULTS.json (live: C69, C75, C76 PARTIAL_EXECUTED; rest EXECUTED).
 - Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer Oracle sourcing,

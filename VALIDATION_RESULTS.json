@@ -16,6 +16,9 @@
         "R22"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "High Market: modeled in S14 on PhysicalZoneGame (high_market); this test keeps the event-kernel stand-in, an exogenous gain(1) after the end-step boundary; sacrifice cost modeled as sacrifice of a controlled creature",
@@ -33,6 +36,9 @@
         "R21"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 4,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Infuse with Vitality: modeled in S15 on PhysicalZoneGame; this test keeps the event-kernel stand-in, an exogenous gain(2) base event; the Pest Rescuer +1 replacement is the kernel's own"
@@ -50,6 +56,9 @@
         "R09"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 5,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Treasure mana ability not modeled: the sacrifice is performed directly; no mana is added (mana creation is outside this contract's life-loss claims)"
@@ -65,6 +74,9 @@
         "R23"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Command zone: modeled in S10 on PhysicalZoneGame; this test keeps the event-kernel stand-in: in branch B, Savra is removed from the battlefield by an exogenous harness deletion (no death event), standing in for the commander-zone replacement"
@@ -81,6 +93,9 @@
         "R01"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -95,6 +110,9 @@
         "R14"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -109,6 +127,9 @@
         "R14"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 3,
@@ -123,6 +144,9 @@
         "R14"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 3,
@@ -137,6 +161,9 @@
         "R30"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -150,6 +177,9 @@
         "R27"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "BLOCKED_UNSUPPORTED",
       "substitutions": [
         "Offspring (token copy of Starscape Cleric on ETB) is not modeled; no copy characteristics exist to assert"
@@ -166,6 +196,9 @@
         "R13"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Chatterfang {B} activation (X, target, -X/-X) not modeled; the X=2 Squirrel sacrifices are performed directly as the cost; only sacrifice-side observations are asserted"
@@ -182,6 +215,9 @@
         "R24"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 4,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Opponent creatures and -X/-X SBA are not modeled; the target's death is the exogenous opposing_creature_dies() event; the cost Squirrel sacrifice is performed directly"
@@ -197,6 +233,9 @@
         "R29"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 4,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Blood Artist target choice is fixed by the fixture to opponent 1; no target-selection or hexproof model"
@@ -212,6 +251,9 @@
         "R29"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 8,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 1,
@@ -226,6 +268,9 @@
         "R21"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -240,6 +285,9 @@
         "R23"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 4,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Treasure mana ability not modeled; cash-in is a direct sacrifice with no mana added"
@@ -256,6 +304,9 @@
         "R14"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Phase clock: modeled in S2 (Game and PhysicalZoneGame); lore counters are not modeled, so Saga chapters stay direct; this test keeps the event-kernel stand-in: chapters I\u2013III are invoked via saga_chapter(n)"
@@ -271,6 +322,9 @@
         "R31"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Library is a fixture candidate list; shuffle is traced as unmodeled"
@@ -286,6 +340,9 @@
         "R31"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -299,6 +356,9 @@
         "R32"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 4,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Devour: modeled in S7 on PhysicalZoneGame (cast_from_hand devour_uids); this test keeps the event-kernel stand-in: Roaster is added with counters=2 and the two devoured creatures are sacrificed directly before it enters (ordering as a fixture, not a replacement-effect model)"
@@ -314,6 +374,9 @@
         "R32"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Counter added/removed by direct Permanent.counters mutation between trigger and resolution. R47 promoted: count is read at resolution. The frozen v0.7 engine's trigger-time snapshot is pinned below."
@@ -329,6 +392,9 @@
         "R33"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "BLOCKED_UNSUPPORTED",
       "substitutions": [
         "Beledros \"Pay 10 life: untap all lands\" and once-per-turn tracking are not modeled; the event kernel has no lands"
@@ -345,6 +411,9 @@
         "R01"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 5,
@@ -358,6 +427,9 @@
         "R34"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "The discard-a-card-to-draw Learn branch is not modeled (traced as not modeled); Hunt's cast is the direct method call"
@@ -373,6 +445,9 @@
         "R35"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [
         "S9 (2026-10-18) executes the contract: other-land counts 1, 2, 3 for both lands; the boundary-2 comparison; a nontoken land entering earlier in the turn is the pre-state (fixture land-drop reset)"
@@ -388,6 +463,9 @@
         "R35"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [
         "S9 + S8 execute the contract: the opponent count is the number of seats still in the game (seats 1-3 minus those that left at 0 life), never an assumed pod size"
@@ -404,6 +482,9 @@
         "R38"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 4,
       "status": "EXECUTED",
       "substitutions": [
         "S9 executes the contract: Tomb pay 2 life -> untapped (pay_life trace names the cause), no payment -> tapped; Mortuary always tapped and surveils 1 (top card traced, kept or milled by the pre-committed choice). Forest control retained."
@@ -420,6 +501,9 @@
         "R15"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [
         "S9 executes the contract: one reset game per face; the selected face is recorded on the permanent and fixes the only available colour; the other colour is refused. The permanent keeps the full card name (bridge identity rule), documented in S9_PATCH_NOTES.md"
@@ -435,6 +519,9 @@
         "R36"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
         "Asserted: basic Forest qualifies, Swamp does not, Forest enters untapped, Sakura basic-only control. NOT asserted: Overgrown Tomb / Underground Mortuary qualifying by Forest subtype, and Woodland Cemetery / Pathway exclusion \u2014 nonbasic Forest-typed search is unmodeled and fails closed"
@@ -452,6 +539,9 @@
         "R38"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED",
       "substitutions": [
         "S14 (2026-10-18) executes the contract: tap + pay 1 life + sacrifice as the activation cost (land to graveyard, life traced), search by Swamp/Forest TYPE (Swamp, Forest, Overgrown Tomb, Underground Mortuary; Woodland Cemetery refused), fetched land enters by its own rule (Tomb paid/declined), shuffle. Not asserted: resources lacking beyond life/tap (Verdant has no mana cost)."
@@ -467,6 +557,9 @@
         "R37"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 4,
       "status": "EXECUTED",
       "substitutions": [
         "S14 executes the contract: the creature is sacrificed as the mana-ability cost (frozen sacrifice()), {B}{B} is added at once (no stack), and the Pest death-gain and Savra sacrifice triggers are distinct pending triggers; {C} ability and High Market as controls."
@@ -482,6 +575,9 @@
         "R37"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [
         "S14 executes the contract: for both lands the sacrifice (and Grim Backwoods' {2}{B}{G}) is paid before the ability goes on the stack; High Market gains 1 on resolution, Grim Backwoods draws on resolution; a sacrifice-free activation (a land as the creature) is refused."
@@ -497,6 +593,9 @@
         "R38"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED",
       "substitutions": [
         "S9 executes the contract: Wastes {C} no damage; Wastes {B} one damage (traced as damage, applied as life loss, CR 120.3e; no prevention modeled); Peatland {B} pays 1 life (pay_life trace). No gain event in any case."
@@ -512,6 +611,9 @@
         "R38"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [
         "S14 executes the contract: with two cards in hand the draw happens first and the loss equals the resulting hand size (3); zero-card control loses 1; an empty library records a failed draw rather than ignoring it."
@@ -527,6 +629,9 @@
         "R39"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
         "S14: Takenuma executed \u2014 channel from hand (discard as the cost, not a land play or cast), generic 3 reduced by one per legendary creature you control to a floor of 0 (0, 1, 2, 4 legends). Boseiju NOT executed: no opponent controls an artifact, enchantment or nonbasic land in this kernel, so its channel has no legal target and is refused. Controls not asserted: a legendary non-creature land, Grist."
@@ -542,6 +647,9 @@
         "R40"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": false,
+      "oracle_refs_checked": 0,
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
         "S14: the controller's side executed \u2014 Sanitarium draws then discards, Mikokoro only draws, both {2} + tap, no tokens. Opponents have no hands or libraries (S8), so their draws/discards are traced as unmodeled, not asserted."
@@ -557,6 +665,9 @@
         "R40"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 5,
       "status": "EXECUTED",
       "substitutions": [
         "Tower/Forest/Swamp via the physical bridge; Sol Ring via the rock fixture; Grim Backwoods {C} via S14 (2026-10-18), colourless never conflated with coloured"
@@ -572,6 +683,9 @@
         "R41"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 4,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Golgari Charm's global -1/-1 mode: modeled in S15 on PhysicalZoneGame; this test keeps the event-kernel stand-in, the Yawgmoth -1/-1 counter path; cost-side triggers are discarded so only the target death is measured"
@@ -587,6 +701,9 @@
         "R42"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Heroic Intervention: modeled in S15 on PhysicalZoneGame (indestructible_until_eot + hexproof_eot); this test keeps the event-kernel stand-in: indestructible is granted by adding the creature to indestructible_until_eot (the kernel's own until-end-of-turn set). Exile is not modeled. R48 promoted: zero toughness is an SBA death. The frozen v0.7 behaviour is pinned below."
@@ -603,6 +720,9 @@
         "R43"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 5,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 4,
@@ -616,6 +736,9 @@
         "R42"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -629,6 +752,9 @@
         "R42"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Modeled in S15 (+CP03 deathtouch, CP10 opponent-owned return) on PhysicalZoneGame. Deathtouch is asserted through the kernel predicate _deathtouch(), not in a combat. Opponents have no cards or graveyards (S8): an opponent-owned body \"returns\" as a new declared body (same name/P/T), tapped, under its owner"
@@ -644,6 +770,9 @@
         "R43"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
         "Modeled in S15 on PhysicalZoneGame. NOT ASSERTED: \"this spell can't be countered\" - the kernel has no counterspell model (pab_interaction_s11.py: counterspells not modeled), so uncounterability is untestable"
@@ -659,6 +788,9 @@
         "R43"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
         "Modeled in S15 on PhysicalZoneGame. NOT ASSERTED: \"its controller may search for a basic land card, put it onto the battlefield, then shuffle\" - opponents have no libraries (S8); the search is only traced as unmodeled"
@@ -674,6 +806,9 @@
         "R44"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Modeled in S15 on PhysicalZoneGame. Each opponent's \"creature of their choice\" is chosen by the S8 stand-in policy edict_choice() (lowest power, then toughness, then uid), not by the opponent"
@@ -689,6 +824,9 @@
         "R44"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -702,6 +840,9 @@
         "R45"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Grisly Salvage: modeled in S15 on PhysicalZoneGame; this test keeps the stand-in: its resolution is composed from physical-zone primitives in the fixture (top five by library order, chosen creature/land to hand, rest to graveyard, no shuffle)"
@@ -717,6 +858,9 @@
         "R45"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -731,6 +875,9 @@
         "R18"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -744,6 +891,9 @@
         "R45"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Modeled in S20 on PhysicalZoneGame. \"Nonlegendary\" is checked against the hand-written name set pab_shigeki_s20.LEGENDARY_CARDS, not a supertype read from card data (physical cards carry no type line)"
@@ -759,6 +909,9 @@
         "R46"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "Modeled in S16 on PhysicalZoneGame. The \"1/1 Insect creature card while not on the battlefield\" static is by name (pab_grist_s16.CREATURE_CARD_NAMES and a creature=True graveyard LKI), not by a type line: physical cards carry no type line (frozen pab_zones.py; CP19 note n3)"
@@ -774,6 +927,9 @@
         "R46"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
         "Modeled in S16 on PhysicalZoneGame. NOT ASSERTED: \"if an Insect card was milled this way, put a loyalty counter on Grist and repeat\" - Grist is the deck's only Insect card and cannot be milled while on the battlefield, so the repeat branch is unreachable with this deck (implemented in grist_plus_one, not executed)"
@@ -790,6 +946,9 @@
         "R20"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 3,
@@ -804,6 +963,9 @@
         "R43"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 5,
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
         "Modeled in S15 on PhysicalZoneGame. Target bookkeeping asserted since CP23 (A-S20-10): per-mode targets, all locked at cast, re-checked at resolution (CR 608.2b). NOT ASSERTED: mode 1 on an opponent - the mill is traced unmodeled because opponents have no libraries (S8)"
@@ -820,6 +982,9 @@
         "R01"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 3,
@@ -833,6 +998,9 @@
         "R51"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": false,
+      "oracle_refs_checked": 0,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 4,
@@ -847,6 +1015,9 @@
         "R48"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 3,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
         "The synthetic \"one effect gives two creatures -1/-1\" is applied by direct minus_counters mutation; no card is modeled for it"
@@ -864,6 +1035,9 @@
         "R50"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 5,
@@ -878,6 +1052,9 @@
         "R32"
       ],
       "oracle_cr_authenticated": false,
+      "oracle_ref_errors": [],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 1,
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -885,6 +1062,7 @@
       "unexpected_successes": 0
     }
   },
+  "contracts_oracle_referenced": 57,
   "errors": 0,
   "event_tokens_mirrored_with_distinct_physical_uids_in_v08": true,
   "existing_v05_event_kernel_modified": false,
@@ -1000,8 +1178,8 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "tests_passed": 843,
-  "tests_run": 843,
+  "tests_passed": 850,
+  "tests_run": 850,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

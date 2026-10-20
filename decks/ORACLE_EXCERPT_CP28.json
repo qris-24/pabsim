@@ -1,0 +1,250 @@
+{
+  "build": "CP28",
+  "cards": {
+    "Abrupt Decay": {
+      "oracle_text": "This spell can't be countered.\nDestroy target nonland permanent with mana value 3 or less.",
+      "source": "golgari_commander.json"
+    },
+    "Agent of the Iron Throne": {
+      "oracle_text": "Commander creatures you own have \"Whenever an artifact or creature you control is put into a graveyard from the battlefield, each opponent loses 1 life.\"",
+      "source": "golgari_commander.json"
+    },
+    "Assassin's Trophy": {
+      "oracle_text": "Destroy target permanent an opponent controls. Its controller may search their library for a basic land card, put it onto the battlefield, then shuffle.",
+      "source": "golgari_commander.json"
+    },
+    "Bastion of Remembrance": {
+      "oracle_text": "When this enchantment enters, create a 1/1 white Human Soldier creature token.\nWhenever a creature you control dies, each opponent loses 1 life and you gain 1 life.",
+      "source": "golgari_commander.json"
+    },
+    "Beledros Witherbloom": {
+      "oracle_text": "Flying\nAt the beginning of each upkeep, create a 1/1 black and green Pest creature token with \"When this token dies, you gain 1 life.\"\nPay 10 life: Untap all lands you control. Activate only once each turn.",
+      "source": "golgari_commander.json"
+    },
+    "Blight Mound": {
+      "oracle_text": "Attacking Pests you control get +1/+0 and have menace.\nWhenever a nontoken creature you control dies, create a 1/1 black and green Pest creature token with \"When this token dies, you gain 1 life.\"",
+      "source": "golgari_commander.json"
+    },
+    "Blood Artist": {
+      "oracle_text": "Whenever this creature or another creature dies, target player loses 1 life and you gain 1 life.",
+      "source": "golgari_commander.json"
+    },
+    "Blooming Marsh": {
+      "oracle_text": "This land enters tapped unless you control two or fewer other lands.\n{T}: Add {B} or {G}.",
+      "source": "golgari_commander.json"
+    },
+    "Boseiju, Who Endures": {
+      "oracle_text": "{T}: Add {G}.\nChannel — {1}{G}, Discard this card: Destroy target artifact, enchantment, or nonbasic land an opponent controls. That player may search their library for a land card with a basic land type, put it onto the battlefield, then shuffle. This ability costs {1} less to activate for each legendary creature you control.",
+      "source": "golgari_commander.json"
+    },
+    "Castle Locthwain": {
+      "oracle_text": "This land enters tapped unless you control a Swamp.\n{T}: Add {B}.\n{1}{B}{B}, {T}: Draw a card, then you lose life equal to the number of cards in your hand.",
+      "source": "golgari_commander.json"
+    },
+    "Chatterfang, Squirrel General": {
+      "oracle_text": "Forestwalk (This creature can't be blocked as long as defending player controls a Forest.)\nIf one or more tokens would be created under your control, those tokens plus that many 1/1 green Squirrel creature tokens are created instead.\n{B}, Sacrifice X Squirrels: Target creature gets +X/-X until end of turn.",
+      "source": "golgari_commander.json"
+    },
+    "Command Tower": {
+      "oracle_text": "{T}: Add one mana of any color in your commander's color identity.",
+      "source": "supplement"
+    },
+    "Dark Prophecy": {
+      "oracle_text": "Whenever a creature you control dies, you draw a card and you lose 1 life.",
+      "source": "golgari_commander.json"
+    },
+    "Darkbore Pathway // Slitherbore Pathway": {
+      "oracle_text": "Darkbore Pathway\n{T}: Add {B}.\n//\nSlitherbore Pathway\n{T}: Add {G}.",
+      "source": "golgari_commander.json"
+    },
+    "Deathcap Glade": {
+      "oracle_text": "This land enters tapped unless you control two or more other lands.\n{T}: Add {B} or {G}.",
+      "source": "golgari_commander.json"
+    },
+    "Deathgreeter": {
+      "oracle_text": "Whenever another creature dies, you may gain 1 life.",
+      "source": "golgari_commander.json"
+    },
+    "Forest": {
+      "oracle_text": "({T}: Add {G}.)",
+      "source": "golgari_commander.json"
+    },
+    "Golgari Charm": {
+      "oracle_text": "Choose one —\n• All creatures get -1/-1 until end of turn.\n• Destroy target enchantment.\n• Regenerate each creature you control.",
+      "source": "golgari_commander.json"
+    },
+    "Grim Backwoods": {
+      "oracle_text": "{T}: Add {C}.\n{2}{B}{G}, {T}, Sacrifice a creature: Draw a card.",
+      "source": "golgari_commander.json"
+    },
+    "Grisly Salvage": {
+      "oracle_text": "Reveal the top five cards of your library. You may put a creature or land card from among them into your hand. Put the rest into your graveyard.",
+      "source": "golgari_commander.json"
+    },
+    "Grist, the Hunger Tide": {
+      "oracle_text": "As long as Grist isn't on the battlefield, it's a 1/1 Insect creature in addition to its other types.\n+1: Create a 1/1 black and green Insect creature token, then mill a card. If an Insect card was milled this way, put a loyalty counter on Grist and repeat this process.\n−2: You may sacrifice a creature. When you do, destroy target creature or planeswalker.\n−5: Each opponent loses life equal to the number of creature cards in your graveyard.",
+      "source": "golgari_commander.json"
+    },
+    "Heroic Intervention": {
+      "oracle_text": "Permanents you control gain hexproof and indestructible until end of turn.",
+      "source": "golgari_commander.json"
+    },
+    "High Market": {
+      "oracle_text": "{T}: Add {C}.\n{T}, Sacrifice a creature: You gain 1 life.",
+      "source": "supplement"
+    },
+    "Hunt for Specimens": {
+      "oracle_text": "Create a 1/1 black and green Pest creature token with \"When this token dies, you gain 1 life.\"\nLearn. (You may reveal a Lesson card you own from outside the game and put it into your hand, or discard a card to draw a card.)",
+      "source": "golgari_commander.json"
+    },
+    "Infuse with Vitality": {
+      "oracle_text": "Until end of turn, target creature gains deathtouch and \"When this creature dies, return it to the battlefield tapped under its owner's control.\"\nYou gain 2 life.",
+      "source": "golgari_commander.json"
+    },
+    "Llanowar Wastes": {
+      "oracle_text": "{T}: Add {C}.\n{T}: Add {B} or {G}. This land deals 1 damage to you.",
+      "source": "golgari_commander.json"
+    },
+    "Mirkwood Bats": {
+      "oracle_text": "Flying\nWhenever you create or sacrifice a token, each opponent loses 1 life.",
+      "source": "golgari_commander.json"
+    },
+    "Moldervine Reclamation": {
+      "oracle_text": "Whenever a creature you control dies, you gain 1 life and draw a card.",
+      "source": "golgari_commander.json"
+    },
+    "Moseo, Vein's New Dean": {
+      "oracle_text": "Flying\nWhen Moseo enters, create a 1/1 black and green Pest creature token with \"Whenever this token attacks, you gain 1 life.\"\nInfusion — At the beginning of your end step, if you gained life this turn, return up to one target creature card with mana value X or less from your graveyard to the battlefield, where X is the amount of life you gained this turn.",
+      "source": "golgari_commander.json"
+    },
+    "Nature's Lore": {
+      "oracle_text": "Search your library for a Forest card, put that card onto the battlefield, then shuffle.",
+      "source": "golgari_commander.json"
+    },
+    "Nurturing Peatland": {
+      "oracle_text": "{T}, Pay 1 life: Add {B} or {G}.\n{1}, {T}, Sacrifice this land: Draw a card.",
+      "source": "golgari_commander.json"
+    },
+    "Overgrown Tomb": {
+      "oracle_text": "({T}: Add {B} or {G}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+      "source": "golgari_commander.json"
+    },
+    "Pest Rescuer": {
+      "oracle_text": "At the beginning of each upkeep, if you don't control a Pest creature token, create a 1/1 black and green Pest creature token with \"When this token dies, you gain 1 life.\"\nIf you would gain life, you gain that much life plus 1 instead.",
+      "source": "golgari_commander.json"
+    },
+    "Pest Summoning": {
+      "oracle_text": "Create two 1/1 black and green Pest creature tokens with \"When this token dies, you gain 1 life.\"",
+      "source": "golgari_commander.json"
+    },
+    "Phyrexian Reclamation": {
+      "oracle_text": "{1}{B}, Pay 2 life: Return target creature card from your graveyard to your hand.",
+      "source": "golgari_commander.json"
+    },
+    "Phyrexian Tower": {
+      "oracle_text": "{T}: Add {C}.\n{T}, Sacrifice a creature: Add {B}{B}.",
+      "source": "golgari_commander.json"
+    },
+    "Poison-Tip Archer": {
+      "oracle_text": "Reach (This creature can block creatures with flying.)\nDeathtouch (Any amount of damage this deals to a creature is enough to destroy it.)\nWhenever another creature dies, each opponent loses 1 life.",
+      "source": "golgari_commander.json"
+    },
+    "Ribtruss Roaster": {
+      "oracle_text": "Devour 1 (As this creature enters, you may sacrifice any number of creatures. This creature enters with that many +1/+1 counters on it.)\nAt the beginning of your end step, create a number of 1/1 black and green Pest creature tokens equal to the number of +1/+1 counters on this creature. They have \"When this token dies, you gain 1 life.\"",
+      "source": "golgari_commander.json"
+    },
+    "Rise of the Witch-king": {
+      "oracle_text": "Each player sacrifices a creature of their choice. If you sacrificed a creature this way, you may return another permanent card from your graveyard to the battlefield.",
+      "source": "golgari_commander.json"
+    },
+    "Sakura-Tribe Elder": {
+      "oracle_text": "Sacrifice this creature: Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+      "source": "golgari_commander.json"
+    },
+    "Sangromancer": {
+      "oracle_text": "Flying\nWhenever a creature an opponent controls dies, you may gain 3 life.\nWhenever an opponent discards a card, you may gain 3 life.",
+      "source": "golgari_commander.json"
+    },
+    "Savra, Queen of the Golgari": {
+      "oracle_text": "Whenever you sacrifice a black creature, you may pay 2 life. If you do, each other player sacrifices a creature of their choice.\nWhenever you sacrifice a green creature, you may gain 2 life.",
+      "source": "golgari_commander.json"
+    },
+    "Shigeki, Jukai Visionary": {
+      "oracle_text": "{1}{G}, {T}, Return Shigeki to its owner's hand: Reveal the top four cards of your library. You may put a land card from among them onto the battlefield tapped. Put the rest into your graveyard.\nChannel — {X}{X}{G}{G}, Discard this card: Return X target nonlegendary cards from your graveyard to your hand.",
+      "source": "golgari_commander.json"
+    },
+    "Sol Ring": {
+      "oracle_text": "{T}: Add {C}{C}.",
+      "source": "supplement"
+    },
+    "Starscape Cleric": {
+      "oracle_text": "Offspring {2}{B} (You may pay an additional {2}{B} as you cast this spell. If you do, when this creature enters, create a 1/1 token copy of it.)\nFlying\nThis creature can't block.\nWhenever you gain life, each opponent loses 1 life.",
+      "source": "golgari_commander.json"
+    },
+    "Swamp": {
+      "oracle_text": "({T}: Add {B}.)",
+      "source": "golgari_commander.json"
+    },
+    "Takenuma, Abandoned Mire": {
+      "oracle_text": "{T}: Add {B}.\nChannel — {3}{B}, Discard this card: Mill three cards, then return a creature or planeswalker card from your graveyard to your hand. This ability costs {1} less to activate for each legendary creature you control.",
+      "source": "golgari_commander.json"
+    },
+    "Tend the Pests": {
+      "oracle_text": "As an additional cost to cast this spell, sacrifice a creature.\nCreate X 1/1 black and green Pest creature tokens with \"When this token dies, you gain 1 life,\" where X is the sacrificed creature's power.",
+      "source": "golgari_commander.json"
+    },
+    "The Hunger Tide Rises": {
+      "oracle_text": "(As this Saga enters and after your draw step, add a lore counter. Sacrifice after IV.)\nI, II, III — Create a 1/1 black and green Insect creature token.\nIV — Sacrifice any number of creatures. Search your library and/or graveyard for a creature card with mana value less than or equal to the number of creatures sacrificed this way and put it onto the battlefield. If you search your library this way, shuffle.",
+      "source": "golgari_commander.json"
+    },
+    "Underground Mortuary": {
+      "oracle_text": "({T}: Add {B} or {G}.)\nThis land enters tapped.\nWhen this land enters, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",
+      "source": "golgari_commander.json"
+    },
+    "Undergrowth Stadium": {
+      "oracle_text": "This land enters tapped unless you have two or more opponents.\n{T}: Add {B} or {G}.",
+      "source": "golgari_commander.json"
+    },
+    "Verdant Catacombs": {
+      "oracle_text": "{T}, Pay 1 life, Sacrifice this land: Search your library for a Swamp or Forest card, put it onto the battlefield, then shuffle.",
+      "source": "supplement"
+    },
+    "Village Rites": {
+      "oracle_text": "As an additional cost to cast this spell, sacrifice a creature.\nDraw two cards.",
+      "source": "golgari_commander.json"
+    },
+    "Warren Soultrader": {
+      "oracle_text": "Pay 1 life, Sacrifice another creature: Create a Treasure token. (It's an artifact with \"{T}, Sacrifice this token: Add one mana of any color.\")",
+      "source": "golgari_commander.json"
+    },
+    "Witherbloom Charm": {
+      "oracle_text": "Choose one —\n• You may sacrifice a permanent. If you do, draw two cards.\n• You gain 5 life.\n• Destroy target nonland permanent with mana value 2 or less.",
+      "source": "golgari_commander.json"
+    },
+    "Witherbloom Command": {
+      "oracle_text": "Choose two —\n• Target player mills three cards, then you return a land card from your graveyard to your hand.\n• Destroy target noncreature, nonland permanent with mana value 2 or less.\n• Target creature gets -3/-1 until end of turn.\n• Target opponent loses 2 life and you gain 2 life.",
+      "source": "golgari_commander.json"
+    },
+    "Wriggling Grub": {
+      "oracle_text": "When this creature dies, create two 1/1 black and green Worm creature tokens.",
+      "source": "golgari_commander.json"
+    },
+    "Yawgmoth, Thran Physician": {
+      "oracle_text": "Protection from Humans\nPay 1 life, Sacrifice another creature: Put a -1/-1 counter on up to one target creature and draw a card.\n{B}{B}, Discard a card: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "source": "golgari_commander.json"
+    }
+  },
+  "mapping": "CONTRACT_ORACLE_REFS_CP28.json",
+  "missing": [],
+  "purpose": "Pinned Oracle text for the cards named in CONTRACT_ORACLE_REFS_CP28.json; the gate reads Oracle text only from this file. Text is exactly as in the source; nothing here is certified.",
+  "sources": {
+    "golgari_commander.json": {
+      "path": "C:\\pabsim\\data\\golgari_commander.json",
+      "sha256": "f184c661a0ca6839eae6a7f41e333f7c66e08aaf2e1b9100e356ef5e2f4d8fb9"
+    },
+    "supplement": {
+      "path": "decks/PAB_V3_ORACLE_SUPPLEMENT.json",
+      "sha256": "6db67941273bdb45831755f69c4f7752618af6dce0287933951be4cdf376eca8"
+    }
+  }
+}

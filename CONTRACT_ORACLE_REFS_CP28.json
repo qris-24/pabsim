@@ -1,0 +1,266 @@
+{
+  "build": "CP28",
+  "purpose": "Per-contract Oracle references for C41-C99: each fragment is a verbatim substring of the card's Oracle text in decks/ORACLE_EXCERPT_CP28.json naming the rule text the contract's tests exercise. Oracle only: no Comprehensive Rules text exists in the repo, so no contract is CR-authenticated. A reference is not a certification.",
+  "contracts": {
+    "C41": {"refs": [
+      {"card": "Moseo, Vein's New Dean", "fragment": "At the beginning of your end step, if you gained life this turn"},
+      {"card": "High Market", "fragment": "{T}, Sacrifice a creature: You gain 1 life."}
+    ], "note": "High Market is an event-kernel stand-in in this test (SUBSTITUTIONS); non-retroactivity of the intervening-if at the end-step boundary is CR timing, not Oracle text."},
+    "C42": {"refs": [
+      {"card": "Moseo, Vein's New Dean", "fragment": "return up to one target creature card with mana value X or less from your graveyard to the battlefield, where X is the amount of life you gained this turn"},
+      {"card": "Pest Rescuer", "fragment": "If you would gain life, you gain that much life plus 1 instead."},
+      {"card": "Phyrexian Reclamation", "fragment": "{1}{B}, Pay 2 life: Return target creature card from your graveyard to your hand."},
+      {"card": "Infuse with Vitality", "fragment": "You gain 2 life."}
+    ], "note": "Infuse with Vitality's gain is an exogenous stand-in in this test (SUBSTITUTIONS). Target locking after a later gain is CR, not Oracle text."},
+    "C43": {"refs": [
+      {"card": "Agent of the Iron Throne", "fragment": "Whenever an artifact or creature you control is put into a graveyard from the battlefield, each opponent loses 1 life."},
+      {"card": "Mirkwood Bats", "fragment": "Whenever you create or sacrifice a token, each opponent loses 1 life."},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"},
+      {"card": "Blood Artist", "fragment": "Whenever this creature or another creature dies"},
+      {"card": "Blight Mound", "fragment": "Whenever a nontoken creature you control dies"}
+    ], "note": "The Treasure is a fixture token (no card in the excerpt); its mana ability is not modeled (SUBSTITUTIONS)."},
+    "C44": {"refs": [
+      {"card": "Agent of the Iron Throne", "fragment": "Commander creatures you own have"},
+      {"card": "Agent of the Iron Throne", "fragment": "Whenever an artifact or creature you control is put into a graveyard from the battlefield, each opponent loses 1 life."},
+      {"card": "Mirkwood Bats", "fragment": "Whenever you create or sacrifice a token, each opponent loses 1 life."}
+    ], "note": "Persistence of a granted trigger after its host leaves is CR, not Oracle text; the command-zone move is an exogenous stand-in (SUBSTITUTIONS)."},
+    "C45": {"refs": [
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a green creature, you may gain 2 life."}
+    ], "note": "Subject card Skullclamp is in neither source (golgari_commander.json has no colorless-identity objects; not in the supplement): its Oracle text is not referenced. Zero-toughness death is CR 704.5f, not Oracle text."},
+    "C46": {"refs": [
+      {"card": "Tend the Pests", "fragment": "As an additional cost to cast this spell, sacrifice a creature."},
+      {"card": "Tend the Pests", "fragment": "where X is the sacrificed creature's power"}
+    ], "note": "Carrion Feeder's +1/+1 counter is set by the fixture, not by its activated ability, so its text is not referenced."},
+    "C47": {"refs": [
+      {"card": "Blight Mound", "fragment": "Whenever a nontoken creature you control dies, create a 1/1 black and green Pest creature token"},
+      {"card": "Wriggling Grub", "fragment": "When this creature dies, create two 1/1 black and green Worm creature tokens."}
+    ], "note": ""},
+    "C48": {"refs": [
+      {"card": "Chatterfang, Squirrel General", "fragment": "If one or more tokens would be created under your control, those tokens plus that many 1/1 green Squirrel creature tokens are created instead."},
+      {"card": "Pest Summoning", "fragment": "Create two 1/1 black and green Pest creature tokens"},
+      {"card": "Mirkwood Bats", "fragment": "Whenever you create or sacrifice a token, each opponent loses 1 life."}
+    ], "note": ""},
+    "C49": {"refs": [
+      {"card": "Warren Soultrader", "fragment": "Pay 1 life, Sacrifice another creature: Create a Treasure token."},
+      {"card": "Chatterfang, Squirrel General", "fragment": "If one or more tokens would be created under your control, those tokens plus that many 1/1 green Squirrel creature tokens are created instead."},
+      {"card": "Mirkwood Bats", "fragment": "Whenever you create or sacrifice a token, each opponent loses 1 life."}
+    ], "note": ""},
+    "C50": {"refs": [
+      {"card": "Starscape Cleric", "fragment": "Offspring {2}{B}"},
+      {"card": "Starscape Cleric", "fragment": "create a 1/1 token copy of it"}
+    ], "note": "BLOCKED_UNSUPPORTED: the test asserts only that Offspring is absent from the kernel; the reference names the unmodeled rule text."},
+    "C51": {"refs": [
+      {"card": "Chatterfang, Squirrel General", "fragment": "{B}, Sacrifice X Squirrels: Target creature gets +X/-X until end of turn."},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a green creature, you may gain 2 life."},
+      {"card": "Mirkwood Bats", "fragment": "Whenever you create or sacrifice a token, each opponent loses 1 life."}
+    ], "note": "The activation itself is not modeled (SUBSTITUTIONS); only the sacrifice side is asserted. The SUBSTITUTIONS text says -X/-X; the Oracle text says +X/-X (recorded as a CP28 follow-up, not changed here)."},
+    "C52": {"refs": [
+      {"card": "Poison-Tip Archer", "fragment": "Whenever another creature dies, each opponent loses 1 life."},
+      {"card": "Chatterfang, Squirrel General", "fragment": "Sacrifice X Squirrels"},
+      {"card": "Mirkwood Bats", "fragment": "Whenever you create or sacrifice a token, each opponent loses 1 life."},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"}
+    ], "note": "The target's death is an exogenous SBA stand-in (SUBSTITUTIONS); toughness-0 death is CR, not Oracle text."},
+    "C53": {"refs": [
+      {"card": "Blood Artist", "fragment": "target player loses 1 life and you gain 1 life"},
+      {"card": "Bastion of Remembrance", "fragment": "Whenever a creature you control dies, each opponent loses 1 life and you gain 1 life."},
+      {"card": "Deathgreeter", "fragment": "Whenever another creature dies, you may gain 1 life."},
+      {"card": "Poison-Tip Archer", "fragment": "Whenever another creature dies, each opponent loses 1 life."}
+    ], "note": "Blood Artist's target is fixed by the fixture (SUBSTITUTIONS)."},
+    "C54": {"refs": [
+      {"card": "Blood Artist", "fragment": "Whenever this creature or another creature dies"},
+      {"card": "Deathgreeter", "fragment": "Whenever another creature dies, you may gain 1 life."},
+      {"card": "Poison-Tip Archer", "fragment": "Whenever another creature dies, each opponent loses 1 life."},
+      {"card": "Bastion of Remembrance", "fragment": "Whenever a creature you control dies"},
+      {"card": "Moldervine Reclamation", "fragment": "Whenever a creature you control dies, you gain 1 life and draw a card."},
+      {"card": "Dark Prophecy", "fragment": "Whenever a creature you control dies, you draw a card and you lose 1 life."},
+      {"card": "Sangromancer", "fragment": "Whenever a creature an opponent controls dies, you may gain 3 life."},
+      {"card": "Sangromancer", "fragment": "Whenever an opponent discards a card, you may gain 3 life."}
+    ], "note": ""},
+    "C55": {"refs": [
+      {"card": "Warren Soultrader", "fragment": "Pay 1 life, Sacrifice another creature: Create a Treasure token."},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a green creature, you may gain 2 life."}
+    ], "note": "Costs paid before the ability resolves, and paid life not counting as gain, are CR, not Oracle text."},
+    "C56": {"refs": [
+      {"card": "Warren Soultrader", "fragment": "Pay 1 life, Sacrifice another creature: Create a Treasure token."},
+      {"card": "Warren Soultrader", "fragment": "Sacrifice this token: Add one mana of any color."},
+      {"card": "Mirkwood Bats", "fragment": "Whenever you create or sacrifice a token, each opponent loses 1 life."},
+      {"card": "Agent of the Iron Throne", "fragment": "Whenever an artifact or creature you control is put into a graveyard from the battlefield, each opponent loses 1 life."}
+    ], "note": "The Treasure mana ability is not modeled; the cash-in is a direct sacrifice (SUBSTITUTIONS)."},
+    "C57": {"refs": [
+      {"card": "The Hunger Tide Rises", "fragment": "Create a 1/1 black and green Insect creature token."},
+      {"card": "Chatterfang, Squirrel General", "fragment": "If one or more tokens would be created under your control, those tokens plus that many 1/1 green Squirrel creature tokens are created instead."},
+      {"card": "Pest Rescuer", "fragment": "if you don't control a Pest creature token"}
+    ], "note": "Lore counters are not modeled; chapters are invoked directly (SUBSTITUTIONS)."},
+    "C58": {"refs": [
+      {"card": "The Hunger Tide Rises", "fragment": "Sacrifice any number of creatures. Search your library and/or graveyard for a creature card with mana value less than or equal to the number of creatures sacrificed this way and put it onto the battlefield."},
+      {"card": "The Hunger Tide Rises", "fragment": "If you search your library this way, shuffle."},
+      {"card": "The Hunger Tide Rises", "fragment": "Sacrifice after IV."}
+    ], "note": "The library is a fixture candidate list and the shuffle is traced as unmodeled (SUBSTITUTIONS)."},
+    "C59": {"refs": [
+      {"card": "The Hunger Tide Rises", "fragment": "with mana value less than or equal to the number of creatures sacrificed this way"}
+    ], "note": ""},
+    "C60": {"refs": [
+      {"card": "Ribtruss Roaster", "fragment": "As this creature enters, you may sacrifice any number of creatures. This creature enters with that many +1/+1 counters on it."},
+      {"card": "Ribtruss Roaster", "fragment": "At the beginning of your end step, create a number of 1/1 black and green Pest creature tokens equal to the number of +1/+1 counters on this creature."},
+      {"card": "Chatterfang, Squirrel General", "fragment": "If one or more tokens would be created under your control, those tokens plus that many 1/1 green Squirrel creature tokens are created instead."},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"}
+    ], "note": "Devour is a fixture ordering in this test (SUBSTITUTIONS)."},
+    "C61": {"refs": [
+      {"card": "Ribtruss Roaster", "fragment": "equal to the number of +1/+1 counters on this creature"}
+    ], "note": "Reading the count at resolution and last-known information (CR 608.2h) are CR, not Oracle text."},
+    "C62": {"refs": [
+      {"card": "Beledros Witherbloom", "fragment": "Pay 10 life: Untap all lands you control. Activate only once each turn."}
+    ], "note": "BLOCKED_UNSUPPORTED: the test asserts only that the ability is absent; the reference names the unmodeled rule text."},
+    "C63": {"refs": [
+      {"card": "Beledros Witherbloom", "fragment": "At the beginning of each upkeep, create a 1/1 black and green Pest creature token"},
+      {"card": "Pest Rescuer", "fragment": "At the beginning of each upkeep, if you don't control a Pest creature token, create a 1/1 black and green Pest creature token"}
+    ], "note": "Trigger ordering and the intervening-if recheck on resolution are CR, not Oracle text."},
+    "C64": {"refs": [
+      {"card": "Hunt for Specimens", "fragment": "Create a 1/1 black and green Pest creature token"},
+      {"card": "Hunt for Specimens", "fragment": "You may reveal a Lesson card you own from outside the game and put it into your hand, or discard a card to draw a card."}
+    ], "note": "The discard-to-draw Learn branch is not modeled (SUBSTITUTIONS); the sideboard Lesson is a pod-rule setting."},
+    "C65": {"refs": [
+      {"card": "Blooming Marsh", "fragment": "This land enters tapped unless you control two or fewer other lands."},
+      {"card": "Deathcap Glade", "fragment": "This land enters tapped unless you control two or more other lands."}
+    ], "note": ""},
+    "C66": {"refs": [
+      {"card": "Undergrowth Stadium", "fragment": "This land enters tapped unless you have two or more opponents."}
+    ], "note": ""},
+    "C67": {"refs": [
+      {"card": "Overgrown Tomb", "fragment": "As this land enters, you may pay 2 life. If you don't, it enters tapped."},
+      {"card": "Underground Mortuary", "fragment": "This land enters tapped."},
+      {"card": "Underground Mortuary", "fragment": "When this land enters, surveil 1."},
+      {"card": "Forest", "fragment": "({T}: Add {G}.)"}
+    ], "note": "One land per turn is CR, not Oracle text."},
+    "C68": {"refs": [
+      {"card": "Darkbore Pathway // Slitherbore Pathway", "fragment": "Darkbore Pathway\n{T}: Add {B}."},
+      {"card": "Darkbore Pathway // Slitherbore Pathway", "fragment": "Slitherbore Pathway\n{T}: Add {G}."}
+    ], "note": "Choosing the face on entry (modal double-faced card) is CR, not Oracle text."},
+    "C69": {"refs": [
+      {"card": "Nature's Lore", "fragment": "Search your library for a Forest card, put that card onto the battlefield, then shuffle."},
+      {"card": "Sakura-Tribe Elder", "fragment": "Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle."}
+    ], "note": "PARTIAL_EXECUTED: nonbasic Forest-typed search is unmodeled; land subtypes are type-line data, not Oracle text."},
+    "C70": {"refs": [
+      {"card": "Verdant Catacombs", "fragment": "{T}, Pay 1 life, Sacrifice this land: Search your library for a Swamp or Forest card, put it onto the battlefield, then shuffle."},
+      {"card": "Overgrown Tomb", "fragment": "As this land enters, you may pay 2 life. If you don't, it enters tapped."},
+      {"card": "Underground Mortuary", "fragment": "This land enters tapped."}
+    ], "note": "Which lands are Swamp/Forest cards is type-line data, not Oracle text."},
+    "C71": {"refs": [
+      {"card": "Phyrexian Tower", "fragment": "{T}, Sacrifice a creature: Add {B}{B}."},
+      {"card": "Phyrexian Tower", "fragment": "{T}: Add {C}."},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a green creature, you may gain 2 life."}
+    ], "note": "Mana abilities not using the stack is CR, not Oracle text."},
+    "C72": {"refs": [
+      {"card": "High Market", "fragment": "{T}, Sacrifice a creature: You gain 1 life."},
+      {"card": "Grim Backwoods", "fragment": "{2}{B}{G}, {T}, Sacrifice a creature: Draw a card."}
+    ], "note": "Costs paid on activation, before the ability goes on the stack, are CR, not Oracle text."},
+    "C73": {"refs": [
+      {"card": "Llanowar Wastes", "fragment": "{T}: Add {B} or {G}. This land deals 1 damage to you."},
+      {"card": "Llanowar Wastes", "fragment": "{T}: Add {C}."},
+      {"card": "Nurturing Peatland", "fragment": "{T}, Pay 1 life: Add {B} or {G}."}
+    ], "note": "Damage vs life payment distinction (CR 120.3e) is CR, not Oracle text."},
+    "C74": {"refs": [
+      {"card": "Castle Locthwain", "fragment": "{1}{B}{B}, {T}: Draw a card, then you lose life equal to the number of cards in your hand."}
+    ], "note": "A failed draw from an empty library is CR, not Oracle text."},
+    "C75": {"refs": [
+      {"card": "Takenuma, Abandoned Mire", "fragment": "{3}{B}, Discard this card: Mill three cards, then return a creature or planeswalker card from your graveyard to your hand."},
+      {"card": "Takenuma, Abandoned Mire", "fragment": "This ability costs {1} less to activate for each legendary creature you control."},
+      {"card": "Boseiju, Who Endures", "fragment": "Destroy target artifact, enchantment, or nonbasic land an opponent controls."}
+    ], "note": "PARTIAL_EXECUTED: Boseiju is refused (no legal target). Legendary status is type-line data, not Oracle text."},
+    "C76": {"refs": [], "note": "Subject cards Geier Reach Sanitarium and Mikokoro, Center of the Sea are in neither source (not in golgari_commander.json, not in the supplement): no Oracle text can be referenced."},
+    "C77": {"refs": [
+      {"card": "Command Tower", "fragment": "{T}: Add one mana of any color in your commander's color identity."},
+      {"card": "Forest", "fragment": "({T}: Add {G}.)"},
+      {"card": "Swamp", "fragment": "({T}: Add {B}.)"},
+      {"card": "Sol Ring", "fragment": "{T}: Add {C}{C}."},
+      {"card": "Grim Backwoods", "fragment": "{T}: Add {C}."}
+    ], "note": "Commander color identity is CR, not Oracle text."},
+    "C78": {"refs": [
+      {"card": "Golgari Charm", "fragment": "All creatures get -1/-1 until end of turn."},
+      {"card": "Yawgmoth, Thran Physician", "fragment": "Put a -1/-1 counter on up to one target creature and draw a card."},
+      {"card": "Blood Artist", "fragment": "Whenever this creature or another creature dies"},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"}
+    ], "note": "Golgari Charm's mode is a Yawgmoth stand-in in this test (SUBSTITUTIONS). Zero-toughness death not being a sacrifice is CR 704.5f, not Oracle text."},
+    "C79": {"refs": [
+      {"card": "Heroic Intervention", "fragment": "Permanents you control gain hexproof and indestructible until end of turn."},
+      {"card": "Yawgmoth, Thran Physician", "fragment": "Put a -1/-1 counter on up to one target creature and draw a card."},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"}
+    ], "note": "Indestructible is granted by a stand-in (SUBSTITUTIONS). Indestructible not stopping sacrifice or zero-toughness death is CR, not Oracle text."},
+    "C80": {"refs": [
+      {"card": "Witherbloom Charm", "fragment": "Choose one"},
+      {"card": "Witherbloom Charm", "fragment": "You may sacrifice a permanent. If you do, draw two cards."},
+      {"card": "Witherbloom Charm", "fragment": "You gain 5 life."},
+      {"card": "Witherbloom Charm", "fragment": "Destroy target nonland permanent with mana value 2 or less."},
+      {"card": "Village Rites", "fragment": "As an additional cost to cast this spell, sacrifice a creature."}
+    ], "note": ""},
+    "C81": {"refs": [
+      {"card": "Golgari Charm", "fragment": "Regenerate each creature you control."}
+    ], "note": "What regeneration does (tap, remove from combat, shield expiry) is CR, not Oracle text."},
+    "C82": {"refs": [
+      {"card": "Infuse with Vitality", "fragment": "target creature gains deathtouch"},
+      {"card": "Infuse with Vitality", "fragment": "When this creature dies, return it to the battlefield tapped under its owner's control."},
+      {"card": "Infuse with Vitality", "fragment": "You gain 2 life."}
+    ], "note": "A token not returning is CR, not Oracle text."},
+    "C83": {"refs": [
+      {"card": "Abrupt Decay", "fragment": "Destroy target nonland permanent with mana value 3 or less."}
+    ], "note": "PARTIAL_EXECUTED: \"This spell can't be countered.\" is not asserted (no counterspell model), so it is not referenced. Fizzling is CR, not Oracle text."},
+    "C84": {"refs": [
+      {"card": "Assassin's Trophy", "fragment": "Destroy target permanent an opponent controls."}
+    ], "note": "PARTIAL_EXECUTED: the opponent's basic-land search is not asserted (no opponent libraries), so it is not referenced."},
+    "C85": {"refs": [
+      {"card": "Rise of the Witch-king", "fragment": "Each player sacrifices a creature of their choice."}
+    ], "note": "Opponents' choices are made by a stand-in policy (SUBSTITUTIONS)."},
+    "C86": {"refs": [
+      {"card": "Rise of the Witch-king", "fragment": "If you sacrificed a creature this way, you may return another permanent card from your graveyard to the battlefield."}
+    ], "note": ""},
+    "C87": {"refs": [
+      {"card": "Grisly Salvage", "fragment": "Reveal the top five cards of your library. You may put a creature or land card from among them into your hand. Put the rest into your graveyard."}
+    ], "note": "The resolution is composed from physical-zone primitives in the fixture (SUBSTITUTIONS)."},
+    "C88": {"refs": [
+      {"card": "Shigeki, Jukai Visionary", "fragment": "{1}{G}, {T}, Return Shigeki to its owner's hand: Reveal the top four cards of your library. You may put a land card from among them onto the battlefield tapped. Put the rest into your graveyard."}
+    ], "note": ""},
+    "C89": {"refs": [
+      {"card": "Shigeki, Jukai Visionary", "fragment": "{X}{X}{G}{G}, Discard this card: Return X target nonlegendary cards from your graveyard to your hand."}
+    ], "note": ""},
+    "C90": {"refs": [
+      {"card": "Shigeki, Jukai Visionary", "fragment": "Return X target nonlegendary cards from your graveyard to your hand."}
+    ], "note": "Which cards are legendary is type-line data (checked by a hand-written name set, SUBSTITUTIONS), not Oracle text."},
+    "C91": {"refs": [
+      {"card": "Grist, the Hunger Tide", "fragment": "As long as Grist isn't on the battlefield, it's a 1/1 Insect creature in addition to its other types."},
+      {"card": "Rise of the Witch-king", "fragment": "you may return another permanent card from your graveyard to the battlefield"}
+    ], "note": "Starting loyalty 3 and mana value 3 are card data, not Oracle text."},
+    "C92": {"refs": [
+      {"card": "Grist, the Hunger Tide", "fragment": "Create a 1/1 black and green Insect creature token, then mill a card."}
+    ], "note": "PARTIAL_EXECUTED: the Insect-card repeat is unreachable with the deck and not referenced. One loyalty ability per turn is CR, not Oracle text."},
+    "C93": {"refs": [
+      {"card": "Grist, the Hunger Tide", "fragment": "You may sacrifice a creature. When you do, destroy target creature or planeswalker."}
+    ], "note": "Reflexive-trigger target timing (CR 603.12, 603.3d) is CR, not Oracle text."},
+    "C94": {"refs": [
+      {"card": "Witherbloom Command", "fragment": "Choose two"},
+      {"card": "Witherbloom Command", "fragment": "Target player mills three cards, then you return a land card from your graveyard to your hand."},
+      {"card": "Witherbloom Command", "fragment": "Destroy target noncreature, nonland permanent with mana value 2 or less."},
+      {"card": "Witherbloom Command", "fragment": "Target creature gets -3/-1 until end of turn."},
+      {"card": "Witherbloom Command", "fragment": "Target opponent loses 2 life and you gain 2 life."}
+    ], "note": "PARTIAL_EXECUTED: mode 1 on an opponent is not asserted (no opponent libraries). Target locking and rechecking (CR 608.2b) is CR, not Oracle text."},
+    "C95": {"refs": [
+      {"card": "Beledros Witherbloom", "fragment": "At the beginning of each upkeep, create a 1/1 black and green Pest creature token"},
+      {"card": "Pest Rescuer", "fragment": "At the beginning of each upkeep, if you don't control a Pest creature token"}
+    ], "note": "The turn clock (whose upkeep comes when) is CR, not Oracle text."},
+    "C96": {"refs": [], "note": "Mana emptying at step and phase boundaries is a game rule with no card text; CR text (106.4) would be needed."},
+    "C97": {"refs": [
+      {"card": "Yawgmoth, Thran Physician", "fragment": "Put a -1/-1 counter on up to one target creature and draw a card."},
+      {"card": "Blood Artist", "fragment": "Whenever this creature or another creature dies"},
+      {"card": "Deathgreeter", "fragment": "Whenever another creature dies, you may gain 1 life."}
+    ], "note": "SBA timing and simultaneous-death look-back (CR 704.3, 603.10) are CR, not Oracle text; the two-creature -1/-1 effect is synthetic (SUBSTITUTIONS)."},
+    "C98": {"refs": [
+      {"card": "Moseo, Vein's New Dean", "fragment": "At the beginning of your end step, if you gained life this turn"},
+      {"card": "Ribtruss Roaster", "fragment": "At the beginning of your end step, create a number of 1/1 black and green Pest creature tokens"}
+    ], "note": "The turn clock (whose end step comes when) is CR, not Oracle text."},
+    "C99": {"refs": [
+      {"card": "Ribtruss Roaster", "fragment": "equal to the number of +1/+1 counters on this creature"}
+    ], "note": "Last-known information when the source leaves (CR 608.2h) is CR, not Oracle text."}
+  }
+}

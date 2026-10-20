@@ -26,7 +26,7 @@ R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt','PASTE_ME.md'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=843   # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=850  # sum of per-file counts asserted below
 TEST_DEF_RE=re.compile(r'^\s+def test_',re.M)   # one shared definition; build_manifest.py imports it
 
 def count_test_defs(path):
@@ -37,6 +37,51 @@ def sha(path):
     path=Path(path)
     assert path.is_file(), f'missing input: {path.name}'
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+ORACLE_EXCERPT='decks/ORACLE_EXCERPT_CP28.json'      # CP28: the gate's only Oracle text source
+ORACLE_REFS='CONTRACT_ORACLE_REFS_CP28.json'
+ORACLE_SUPPLEMENT='decks/PAB_V3_ORACLE_SUPPLEMENT.json'
+_QUOTES=str.maketrans({'‘':"'",'’':"'",'“':'"','”':'"'})
+
+def oracle_normalize(text):
+    """Collapse whitespace runs to one space; curly quotes to straight."""
+    return re.sub(r'\s+',' ',text.translate(_QUOTES)).strip()
+
+def oracle_reference_check(root,contract_ids,mapping=None,excerpt=None):
+    """CP28: per contract, {'oracle_referenced','oracle_refs_checked','oracle_cr_authenticated','oracle_ref_errors'}.
+    oracle_referenced is True only if the contract has refs and every fragment is found in its card's excerpt
+    text. Fails closed (never raises): a missing/unreadable excerpt or mapping, a supplement sha256 mismatch,
+    a contract absent from the mapping or a card absent from the excerpt makes the field False with an error.
+    No CR text exists in the repo, so oracle_cr_authenticated is always False."""
+    root=Path(root); errors=[]
+    try:
+        if mapping is None: mapping=json.loads((root/ORACLE_REFS).read_text(encoding='utf-8'))
+        refs_by_contract=mapping['contracts']
+    except Exception as e:
+        refs_by_contract=None; errors.append(f'mapping unavailable: {ORACLE_REFS}: {type(e).__name__}')
+    try:
+        if excerpt is None: excerpt=json.loads((root/ORACLE_EXCERPT).read_text(encoding='utf-8'))
+        cards=excerpt['cards']
+        if excerpt['sources']['supplement']['sha256']!=hashlib.sha256((root/ORACLE_SUPPLEMENT).read_bytes()).hexdigest():
+            cards=None; errors.append(f'excerpt supplement sha256 != {ORACLE_SUPPLEMENT}')
+    except Exception as e:
+        cards=None; errors.append(f'excerpt unavailable: {ORACLE_EXCERPT}: {type(e).__name__}')
+    out={}
+    for cid in contract_ids:
+        entry=(refs_by_contract or {}).get(cid)
+        refs=entry.get('refs',[]) if isinstance(entry,dict) else []
+        errs=list(errors)
+        if refs_by_contract is not None and entry is None: errs.append(f'{cid} not in mapping')
+        found=0
+        for r in refs:
+            text=(cards or {}).get(r.get('card'),{}).get('oracle_text') if isinstance(r,dict) else None
+            if text is None:
+                if cards is not None: errs.append(f'{cid}: card not in excerpt: {r.get("card") if isinstance(r,dict) else r!r}')
+            elif oracle_normalize(r.get('fragment') or '') and oracle_normalize(r['fragment']) in oracle_normalize(text): found+=1
+            else: errs.append(f'{cid}: fragment not found in {r["card"]}')
+        out[cid]={'oracle_referenced':bool(refs) and not errs and found==len(refs),
+                  'oracle_refs_checked':len(refs),'oracle_cr_authenticated':False,'oracle_ref_errors':errs}
+    return out
 
 def _load_registry_module(root):
     spec=importlib.util.spec_from_file_location('pab_build_registry_r02',root/'build_registry.py')
@@ -160,6 +205,7 @@ def preflight(root=ROOT):
     assert n('test_v07_zone_bridge.py')==52, 'test_v07_zone_bridge.py count'
     assert n('test_v08_mana_tokens.py')==54, 'test_v08_mana_tokens.py count'
     assert n('test_pab_v3_deck_cp26.py')==5, 'test_pab_v3_deck_cp26.py count'
+    assert n('test_oracle_refs_cp28.py')==7, 'test_oracle_refs_cp28.py count'
     total=sum(n(f.name) for f in (root/'tests').glob('test_*.py'))
     assert total==REFERENCE_TEST_COUNT, f'expected {REFERENCE_TEST_COUNT} reference tests, found {total}'
     return J
@@ -243,7 +289,10 @@ def run_suites(root=ROOT,J=None):
                     'substitutions':cls.SUBSTITUTIONS,'tests_run':rr.testsRun,
                     'tests_passed':rr.testsRun-len(rr.failures)-len(rr.errors)-len(rr.skipped)-len(rr.expectedFailures),
                     'expected_failures':len(rr.expectedFailures),'unexpected_successes':len(rr.unexpectedSuccesses),
-                    'engine_test_executed':cls.STATUS!='BLOCKED_UNSUPPORTED','oracle_cr_authenticated':False}
+                    'engine_test_executed':cls.STATUS!='BLOCKED_UNSUPPORTED'}
+    # CP28: oracle_referenced / oracle_refs_checked derived from the pinned excerpt; oracle_cr_authenticated stays False.
+    oracle=oracle_reference_check(root,sorted(contracts))
+    for cid,c in contracts.items(): c.update(oracle[cid])
     contracts_ok=(len(contracts)==59 and all(c['tests_run']>0 and c['tests_passed']+c['expected_failures']==c['tests_run']
                      and c['unexpected_successes']==0 for c in contracts.values()))
 
@@ -296,6 +345,7 @@ def run_suites(root=ROOT,J=None):
      'superseded_v08_fixtures':pab_kernel.SUPERSEDED_V08_CONTRACTS,
      'frozen_engines_modified':False,
      'contracts_executed':contracts,
+     'contracts_oracle_referenced':sum(c['oracle_referenced'] for c in contracts.values()),   # CP28
      'r02_release_gate_tests_run':gate_run,
      'r02_release_gate_tests_passed':gate_passed,
      'r02_release_gate_errors':gate_errors,
