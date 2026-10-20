@@ -29,8 +29,9 @@
   before-copies in `EVIDENCE/`.
 
 ## Project rules
-- Deck (Savra + 99 mainboard) and the Pest Summoning Lesson are unchanged. Savra is the only
-  irreplaceable card.
+- Two deck targets. Old baseline (Savra + 99 + Pest Summoning Lesson): frozen, the only gated deck,
+  regression reference. PAB v3 (Savra + 99, no sideboard): frozen pending kernel completion, not gated,
+  not yet in the repo (deck file planned for CP19). Savra is the only irreplaceable card.
 - Phase 9 is NO-GO. S21 not started.
 - No sweeps, rankings, card values, or performance claims.
 - 0 cards are certified until the registry is verified against code.
@@ -45,12 +46,15 @@
 - Stop after 2 failed attempts at the same step.
 - Each stage ends with: `CP<nn>_PATCH_NOTES.md` + commit + lightweight tag `rp-CP<nn>` +
   `git push; git push origin rp-CP<nn>`.
+- Read-only audit stages also get CP<nn>_PATCH_NOTES.md; findings live in EVIDENCE/.
 - Edits to this file also require a manifest re-pin (`py -3.14 build_manifest.py`).
 
-## Open queue (see ISSUE_LEDGER_CP06.json for detail)
-- AUD-01 (A-S20-12): colored-mana double count in `pab_lands_s9.py` `tap_lands_policy`
-  (`pool = g.mana_pool + produced`).
-- AUD-02 (A-S20-13): impossible opponent script accepted in `pab_interaction_s11.py`.
-- AUD-03 (A-S20-14): tutor pre-commits library choice at cast in `pab_cast_s13.py`.
-- A-S20-05, A-S20-06, A-S20-08, A-S20-09, A-S20-10, A-S20-11: as in the ledger.
-- AUD-04 = A-S20-03, repaired at CP06.
+## Open queue (see ISSUE_LEDGER_CP06.json for detail; closed items and their CPs: CP17_PATCH_NOTES.md)
+- A-S20-05: two legal blockers do not coordinate to block menace.
+- A-S20-08: hand-authored model coverage claims not mechanically certified (CP11 audit and CP12
+  Infuse correction done; Darkbore Pathway WEAK; nothing certified).
+- A-S20-09: inherited v0.8 counters and S20 path counters coexist.
+- A-S20-10: target bookkeeping for Witherbloom Command and Grist -2.
+- Auditor constant-resolution fix.
+- Pest Rescuer Oracle sourcing.
+- `HASTE_NAMES` in `pab_combat_s17.py` is a hardcoded name list; keywords should come from card data.

@@ -252,7 +252,7 @@ def run_suites(root=ROOT,J=None):
 
     result={
      'scope':'v0.5 events + v0.6 physical zones + v0.7 bounded zone bridge + v0.8 shared-mana and mirrored token reference; NOT a playable engine',
-     'release':'v0.8+R02+R01 promoted (runner integrity; Pest Rescuer token predicate in kernel; frozen files untouched)',
+     'release':'v0.8+R02+R01 promoted (runner integrity; Pest Rescuer token predicate in kernel; audit repairs CP02-CP06, CP10a-c, CP13, CP14; frozen files untouched) through CP16',
      'frozen_deck_verified':True,
      'mainboard':99,'lands':34,'nonlands':65,'commander':1,'lesson_sideboard':1,
      'tests_run':out.testsRun,

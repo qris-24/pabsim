@@ -920,7 +920,7 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19+S20+CP02+CP03+CP04+CP06",
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19+S20+CP02+CP03+CP04+CP06+CP10a+CP10b+CP10c+CP13+CP14",
   "land_source_verified": false,
   "lands": 34,
   "lesson_sideboard": 1,
@@ -984,7 +984,12 @@
     "CP02",
     "CP03",
     "CP04",
-    "CP06"
+    "CP06",
+    "CP10a",
+    "CP10b",
+    "CP10c",
+    "CP13",
+    "CP14"
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
@@ -993,7 +998,7 @@
   "real_individual_card_library_in_new_zone_kernel": true,
   "reference_partial_nonlands": 54,
   "reference_unsupported_nonlands": 11,
-  "release": "v0.8+R02+R01 promoted (runner integrity; Pest Rescuer token predicate in kernel; frozen files untouched)",
+  "release": "v0.8+R02+R01 promoted (runner integrity; Pest Rescuer token predicate in kernel; audit repairs CP02-CP06, CP10a-c, CP13, CP14; frozen files untouched) through CP16",
   "scope": "v0.5 events + v0.6 physical zones + v0.7 bounded zone bridge + v0.8 shared-mana and mirrored token reference; NOT a playable engine",
   "shared_game_zone_mana_symbols_in_v08": true,
   "skipped": 0,
