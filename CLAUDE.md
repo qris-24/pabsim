@@ -76,13 +76,13 @@
   on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
 
 ## Next stages
-- Docs: README.md lines 63 and 66 still state pre-CP21 BLOCKED counts
-  for C65–C77 and C78–C94; reword as historical or update to CONTRACTS_C41_C94_STATUS.md.
 - CP26 follow-up: export vs evidence mismatches recorded, not resolved (High Market text whitespace;
   Verdant Catacombs printing id); see decks/PAB_V3_ORACLE_SUPPLEMENT.json.
 - CP26 follow-up: old-baseline-only marking used deck-card string literals for C41-C79/C95-C99, which
   counts fixture helpers; C42, C43, C44, C45, C50, C53, C54, C56, C58, C59, C75, C76, C78, C91, C95, C97
   reference at least one old-baseline-only card and are not marked. Review their subject cards.
-- CP27: derive oracle_cr_authenticated (run_validation.py:246, was :239) from a per-contract Oracle reference check.
+- CP28: derive oracle_cr_authenticated (run_validation.py:246, was :239) from a per-contract Oracle reference check.
+- CP27 follow-up: CONTRACTS_C41_C94_STATUS.md has no C65–C77 re-status section; check its C65–C77
+  table rows against VALIDATION_RESULTS.json (live: C69, C75, C76 PARTIAL_EXECUTED; rest EXECUTED).
 - Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer Oracle sourcing,
   A-S20-05, A-S20-09, HASTE_NAMES.

@@ -60,10 +60,11 @@ Promoted: import `Game`/`PhysicalZoneGame` from `pab_kernel.py`. Reference fixtu
 `tests/test_c48_c64_contracts.py`: 31 fixtures; 6 EXECUTED, 8 EXECUTED_WITH_SUBSTITUTION, 1 DISAGREEMENT_OBSERVED (C61 → new issue R47, design-only), 2 BLOCKED_UNSUPPORTED (C50, C62). Reference fixtures: 376. See C48_C64_EXECUTION_NOTES.md.
 
 ## C65–C77 (R35–R40, lands) executed
-`tests/test_c65_c77_contracts.py`: 20 fixtures; 2 PARTIAL_EXECUTED (C69, C77), 11 BLOCKED_UNSUPPORTED with fail-closed probes covering all 18 unsupported land names. Reference fixtures: 396. See C65_C77_EXECUTION_NOTES.md.
+`tests/test_c65_c77_contracts.py`: 20 fixtures; 2 PARTIAL_EXECUTED (C69, C77), 11 BLOCKED_UNSUPPORTED with fail-closed probes covering all 18 unsupported land names. Reference fixtures: 396. See C65_C77_EXECUTION_NOTES.md. (R02-era counts, kept as historical; current status below and in CONTRACTS_C41_C94_STATUS.md.)
+Status at CP26 (VALIDATION_RESULTS.json → contracts_executed): C65–C77 have no BLOCKED_UNSUPPORTED contract; EXECUTED C65, C66, C67, C68, C70, C71, C72, C73, C74, C77; PARTIAL_EXECUTED C69, C75, C76.
 
 ## C78–C94 (R41–R46) executed — all 54 contracts now executed or probed
-`tests/test_c78_c94_contracts.py`: 23 fixtures; 2 EXECUTED_WITH_SUBSTITUTION, 1 DISAGREEMENT_OBSERVED (C79 → new issue R48), 14 BLOCKED_UNSUPPORTED. Reference fixtures: 419. Consolidated table: CONTRACTS_C41_C94_STATUS.md.
+`tests/test_c78_c94_contracts.py`: 23 fixtures; 2 EXECUTED_WITH_SUBSTITUTION, 1 DISAGREEMENT_OBSERVED (C79 → new issue R48), 14 BLOCKED_UNSUPPORTED. Reference fixtures: 419. Consolidated table: CONTRACTS_C41_C94_STATUS.md. (R02-era counts, kept as historical; current status below and in CONTRACTS_C41_C94_STATUS.md.)
 Status after CP21/CP23 (CONTRACTS_C41_C94_STATUS.md): C78–C94 have no BLOCKED_UNSUPPORTED contract; EXECUTED C80, C81, C86, C88, C89, C93; EXECUTED_WITH_SUBSTITUTION C78, C79, C82, C85, C87, C90, C91; PARTIAL_EXECUTED C83, C84, C92, C94 (C94 opponent mill unasserted).
 
 ## R47 + R48 promoted
