@@ -26,7 +26,7 @@ R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt','PASTE_ME.md'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=850  # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=857  # sum of per-file counts asserted below
 TEST_DEF_RE=re.compile(r'^\s+def test_',re.M)   # one shared definition; build_manifest.py imports it
 
 def count_test_defs(path):
@@ -48,9 +48,10 @@ def oracle_normalize(text):
     return re.sub(r'\s+',' ',text.translate(_QUOTES)).strip()
 
 def oracle_reference_check(root,contract_ids,mapping=None,excerpt=None):
-    """CP28: per contract, {'oracle_referenced','oracle_refs_checked','oracle_cr_authenticated','oracle_ref_errors'}.
-    oracle_referenced is True only if the contract has refs and every fragment is found in its card's excerpt
-    text. Fails closed (never raises): a missing/unreadable excerpt or mapping, a supplement sha256 mismatch,
+    """CP28: per contract, {'oracle_referenced','oracle_refs_checked','oracle_cr_authenticated','oracle_ref_errors',
+    'oracle_subjects_missing'}. oracle_referenced is True only if the contract has refs and every fragment is found
+    in its card's excerpt text; CP29: and it has subjects, each with excerpt text and at least one matching ref
+    (oracle_subjects_missing lists the subjects that fail this). Fails closed (never raises): a missing/unreadable excerpt or mapping, a supplement sha256 mismatch,
     a contract absent from the mapping or a card absent from the excerpt makes the field False with an error.
     No CR text exists in the repo, so oracle_cr_authenticated is always False."""
     root=Path(root); errors=[]
@@ -70,17 +71,21 @@ def oracle_reference_check(root,contract_ids,mapping=None,excerpt=None):
     for cid in contract_ids:
         entry=(refs_by_contract or {}).get(cid)
         refs=entry.get('refs',[]) if isinstance(entry,dict) else []
+        subjects=entry.get('subjects',[]) if isinstance(entry,dict) else []
         errs=list(errors)
         if refs_by_contract is not None and entry is None: errs.append(f'{cid} not in mapping')
-        found=0
+        found=0; matched=set()
         for r in refs:
             text=(cards or {}).get(r.get('card'),{}).get('oracle_text') if isinstance(r,dict) else None
             if text is None:
                 if cards is not None: errs.append(f'{cid}: card not in excerpt: {r.get("card") if isinstance(r,dict) else r!r}')
-            elif oracle_normalize(r.get('fragment') or '') and oracle_normalize(r['fragment']) in oracle_normalize(text): found+=1
+            elif oracle_normalize(r.get('fragment') or '') and oracle_normalize(r['fragment']) in oracle_normalize(text): found+=1; matched.add(r['card'])
             else: errs.append(f'{cid}: fragment not found in {r["card"]}')
-        out[cid]={'oracle_referenced':bool(refs) and not errs and found==len(refs),
-                  'oracle_refs_checked':len(refs),'oracle_cr_authenticated':False,'oracle_ref_errors':errs}
+        # CP29: every subject card needs Oracle text in the excerpt and at least one matching ref.
+        missing=[s for s in subjects if cards is None or s not in cards or s not in matched]
+        out[cid]={'oracle_referenced':bool(refs) and bool(subjects) and not missing and not errs and found==len(refs),
+                  'oracle_refs_checked':len(refs),'oracle_cr_authenticated':False,'oracle_ref_errors':errs,
+                  'oracle_subjects_missing':missing}
     return out
 
 def _load_registry_module(root):
@@ -206,6 +211,7 @@ def preflight(root=ROOT):
     assert n('test_v08_mana_tokens.py')==54, 'test_v08_mana_tokens.py count'
     assert n('test_pab_v3_deck_cp26.py')==5, 'test_pab_v3_deck_cp26.py count'
     assert n('test_oracle_refs_cp28.py')==7, 'test_oracle_refs_cp28.py count'
+    assert n('test_oracle_subjects_cp29.py')==7, 'test_oracle_subjects_cp29.py count'
     total=sum(n(f.name) for f in (root/'tests').glob('test_*.py'))
     assert total==REFERENCE_TEST_COUNT, f'expected {REFERENCE_TEST_COUNT} reference tests, found {total}'
     return J

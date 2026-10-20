@@ -90,6 +90,12 @@
   CR 106.4); CR-only parts of other contracts are named in their CONTRACT_ORACLE_REFS_CP28.json notes.
 - CP28 follow-up: cards in neither Oracle source: Skullclamp (C45 subject; C45 references only Savra),
   Geier Reach Sanitarium and Mikokoro, Center of the Sea (C76 has `refs: []`). Source their Oracle text.
+- CP29 follow-up: False because a subject card has no Oracle text (need Oracle sourcing): C45 (Skullclamp),
+  C76 (Geier Reach Sanitarium, Mikokoro, Center of the Sea).
+- CP29 follow-up: False because `subjects: []` (subject card not a string literal in the class, or a stand-in):
+  C64 (Hunt for Specimens), C68 (Pathway via PATHWAY), C69 (Nature's Lore / Sakura-Tribe Elder), C79 (Heroic
+  Intervention stand-in), C87 (Grisly Salvage stand-in); C96 is rules-only. User (CP29): accepted False for now.
+  Open: resolve module constants as subject evidence (C68), decide on method-driven subjects (C64, C69).
 - CP28 follow-up: C51/C52 SUBSTITUTIONS say Chatterfang "-X/-X"; the Oracle text says "+X/-X". Review the wording.
 - CP27 follow-up: CONTRACTS_C41_C94_STATUS.md has no C65–C77 re-status section; check its C65–C77
   table rows against VALIDATION_RESULTS.json (live: C69, C75, C76 PARTIAL_EXECUTED; rest EXECUTED).

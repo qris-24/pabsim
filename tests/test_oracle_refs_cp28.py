@@ -27,7 +27,8 @@ class OracleRefs(unittest.TestCase):
             with self.subTest(contract=cid):
                 self.assertEqual(r['oracle_ref_errors'],[])
                 self.assertEqual(r['oracle_refs_checked'],len(self.mapping['contracts'][cid]['refs']))
-                self.assertEqual(r['oracle_referenced'],r['oracle_refs_checked']>0)
+                subjects=self.mapping['contracts'][cid].get('subjects',[])   # CP29: subject coverage required
+                self.assertEqual(r['oracle_referenced'],r['oracle_refs_checked']>0 and bool(subjects) and not r['oracle_subjects_missing'])
 
     def test_excerpt_supplement_sha256_equals_repo_file(self):
         digest=hashlib.sha256((ROOT/self.rv.ORACLE_SUPPLEMENT).read_bytes()).hexdigest()
