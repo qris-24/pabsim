@@ -69,6 +69,28 @@ def build(here=HERE):
         })
     status_counts=dict(Counter(x['status'] for x in entry))
 
+    # CP26: PAB v3 as a second, ungated deck target. Membership derived from decks/PAB_V3.json against the
+    # old-baseline inventory; every v3 card not on the old baseline is UNMODELED. No model claims.
+    v3_path=here/'decks'/'PAB_V3.json'
+    v3=json.loads(v3_path.read_text(encoding='utf-8'))
+    v3_names={v3['commander']['name']}|{e['name'] for e in v3['mainboard']}
+    old_names={r['name'] for r in rows}
+    v3_target={
+      'deck_file':'decks/PAB_V3.json','deck_file_sha256':hashlib.sha256(v3_path.read_bytes()).hexdigest(),
+      'oracle_supplement':'decks/PAB_V3_ORACLE_SUPPLEMENT.json',
+      'oracle_supplement_sha256':hashlib.sha256((here/'decks'/'PAB_V3_ORACLE_SUPPLEMENT.json').read_bytes()).hexdigest(),
+      'gated':False,'counts':v3['counts'],
+      'added_vs_old_baseline':{n:'UNMODELED' for n in sorted(v3_names-old_names)},
+      'old_baseline_only_cards':sorted(old_names-v3_names),
+      'contracts_old_baseline_only':['C62','C63','C64','C82','C85','C86','C94'],
+      'contracts_old_baseline_only_rule':('user-designated C62, C63, C64, C85, C86; plus every contract whose subject cards are all '
+          'absent from v3. Subject cards: the assert_card_refused() argument where the class has one (C80-C94: adds C82 '
+          'Infuse with Vitality, C94 Witherbloom Command; C93 is Grist, in v3), otherwise every deck-card string literal '
+          'in the class (C41-C79, C95-C99: C62, C64). See CP26_PATCH_NOTES.md'),
+      'certified':0,
+    }
+    assert len(v3_target['added_vs_old_baseline'])==19
+
     # Preserve fact that the 25 old compiler contracts did NOT pass.
     old_contracts=json.loads((source/'PAB_COMPILER_CONTRACT_RESULTS.json').read_text())
     assert len(old_contracts)==25
@@ -127,6 +149,7 @@ def build(here=HERE):
       'contracts_c41_c94_all_executed_or_probed':True,
       'contract_execution_status_source':'VALIDATION_RESULTS.json: contracts_executed (EXECUTED vs EXECUTED_WITH_SUBSTITUTION, with substitutions listed)',
       'contracts_oracle_cr_authenticated':0,
+      'pab_v3_deck_target':v3_target,
       'explicit_mana_reference_only':True,
       'full_land_engine':False,
       'limited_land_names_implemented':['Forest','Swamp','Command Tower'],   # frozen zones path; S9 adds nine on the bridge (see fixer_lands_stage_s9)

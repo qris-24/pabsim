@@ -139,3 +139,15 @@ All 59 contracts in `VALIDATION_RESULTS.json` (C41–C99) after CP22: EXECUTED 2
 C41–C94 counts after CP23: BLOCKED_UNSUPPORTED 2 (C50, C62), EXECUTED 25, EXECUTED_WITH_SUBSTITUTION 20, PARTIAL_EXECUTED 7.
 
 All 59 contracts (C41–C99) after CP23: EXECUTED 29, EXECUTED_WITH_SUBSTITUTION 21, PARTIAL_EXECUTED 7, BLOCKED_UNSUPPORTED 2.
+
+## CP26: old-baseline-only contracts (PAB v3 second target)
+
+Marked old-baseline-only (their subject cards are not in PAB v3, `decks/PAB_V3.json`): **C62, C63, C64, C82, C85, C86, C94**.
+Recorded in `PABTRV3_CARD_COVERAGE.json → summary.pab_v3_deck_target.contracts_old_baseline_only`. Statuses are unchanged;
+the old baseline stays the only gated deck, so every contract still runs against it.
+
+Rule: user-designated C62, C63, C64, C85, C86; plus every contract whose subject cards are all absent from v3. Subject cards
+are the `assert_card_refused()` argument where the class has one (C80–C94), otherwise every deck-card string literal in the
+class (C41–C79, C95–C99). Results: C82 (Infuse with Vitality) and C94 (Witherbloom Command) added; C93 is Grist, the Hunger
+Tide (in v3) and is not marked; C62 (Beledros Witherbloom) and C64 (Pest Summoning) are also rule-derived. The literal rule counts
+fixture helpers, so contracts that reference an old-baseline-only card alongside v3 cards are not marked (CP26 follow-up in CLAUDE.md).

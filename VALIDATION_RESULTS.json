@@ -1000,8 +1000,8 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "tests_passed": 838,
-  "tests_run": 838,
+  "tests_passed": 843,
+  "tests_run": 843,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

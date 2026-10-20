@@ -26,7 +26,7 @@ R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt','PASTE_ME.md'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=838   # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=843   # sum of per-file counts asserted below
 TEST_DEF_RE=re.compile(r'^\s+def test_',re.M)   # one shared definition; build_manifest.py imports it
 
 def count_test_defs(path):
@@ -159,6 +159,7 @@ def preflight(root=ROOT):
     assert n('test_v06_physical_zones.py')==56, 'test_v06_physical_zones.py count'
     assert n('test_v07_zone_bridge.py')==52, 'test_v07_zone_bridge.py count'
     assert n('test_v08_mana_tokens.py')==54, 'test_v08_mana_tokens.py count'
+    assert n('test_pab_v3_deck_cp26.py')==5, 'test_pab_v3_deck_cp26.py count'
     total=sum(n(f.name) for f in (root/'tests').glob('test_*.py'))
     assert total==REFERENCE_TEST_COUNT, f'expected {REFERENCE_TEST_COUNT} reference tests, found {total}'
     return J

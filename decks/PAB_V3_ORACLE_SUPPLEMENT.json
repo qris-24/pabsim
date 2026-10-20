@@ -1,0 +1,146 @@
+{
+  "purpose": "Oracle text for the 8 PAB v3 names absent from C:\\pabsim\\data\\golgari_commander.json (no colorless-identity objects; EVIDENCE/CP25_V3_NAME_LOOKUP.md)",
+  "certified": false,
+  "models_nothing": true,
+  "export_mana_rule": "Archidekt appends the cost after the closing quote without braces; converted digit-run + single symbols to {..}; mana_cost_export_raw kept",
+  "records": [
+    {
+      "name": "Altar of Dementia",
+      "oracle_text": "Sacrifice a creature: Target player mills cards equal to the sacrificed creature's power.",
+      "mana_cost": "{2}",
+      "mana_cost_export_raw": "2",
+      "type_line": null,
+      "scryfall_id": "169356e0-46dc-4096-8e66-36726454f104",
+      "source_file": "decks/PAB_V3_ARCHIDEKT_EXPORT.csv",
+      "source_sha256": "b3db879a4f27b5fa97fb87afcd17a16d9fba552673e957fa26cb8f356f94b104",
+      "source_tier": "user-provided Archidekt export"
+    },
+    {
+      "name": "Arcane Signet",
+      "oracle_text": "{T}: Add one mana of any color in your commander's color identity.",
+      "mana_cost": "{2}",
+      "type_line": "Artifact",
+      "scryfall_id": "c6b6117c-faab-4bbb-b851-07bd8061ef03",
+      "oracle_id": "0bc7f093-bef0-4f1a-852c-4b75ebf54838",
+      "source_file": "EVIDENCE/S12_PERMANENT_EVIDENCE.json",
+      "source_sha256": "c63e5128c61f6aa4d583364be428f25476126fe80e7c3d0bfd2918d9d5c24a3d",
+      "source_upstream_reference_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+      "source_tier": "user-provided Scryfall export",
+      "export_comparison": {
+        "oracle_text_exact": true,
+        "oracle_text_whitespace_normalized": true,
+        "mana_cost": true,
+        "scryfall_id": true
+      }
+    },
+    {
+      "name": "Ashnod's Altar",
+      "oracle_text": "Sacrifice a creature: Add {C}{C}.",
+      "mana_cost": "{3}",
+      "mana_cost_export_raw": "3",
+      "type_line": null,
+      "scryfall_id": "3c0f7157-a375-499c-92c7-d47d2e95dbad",
+      "source_file": "decks/PAB_V3_ARCHIDEKT_EXPORT.csv",
+      "source_sha256": "b3db879a4f27b5fa97fb87afcd17a16d9fba552673e957fa26cb8f356f94b104",
+      "source_tier": "user-provided Archidekt export"
+    },
+    {
+      "name": "Command Tower",
+      "oracle_text": "{T}: Add one mana of any color in your commander's color identity.",
+      "mana_cost": "",
+      "mana_cost_export_raw": "",
+      "type_line": null,
+      "scryfall_id": "1ac6cb62-45da-4e9a-84c6-09e6eacf0664",
+      "source_file": "decks/PAB_V3_ARCHIDEKT_EXPORT.csv",
+      "source_sha256": "b3db879a4f27b5fa97fb87afcd17a16d9fba552673e957fa26cb8f356f94b104",
+      "source_tier": "user-provided Archidekt export"
+    },
+    {
+      "name": "High Market",
+      "oracle_text": "{T}: Add {C}.\n{T}, Sacrifice a creature: You gain 1 life.",
+      "mana_cost": "",
+      "type_line": "Land",
+      "scryfall_id": "894aa6b6-0d08-4c43-8734-9cb7b31359c6",
+      "oracle_id": "86fb3749-37d6-48a6-8524-71e996850307",
+      "source_file": "EVIDENCE/S14_LAND_EVIDENCE.json",
+      "source_sha256": "6ffe2948aa62bdaf2c196ec9571b607024611b4df89f628af3f917df072d862c",
+      "source_upstream_reference_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+      "source_tier": "user-provided Scryfall export",
+      "export_comparison": {
+        "oracle_text_exact": false,
+        "oracle_text_whitespace_normalized": true,
+        "mana_cost": true,
+        "scryfall_id": true
+      }
+    },
+    {
+      "name": "Phyrexian Altar",
+      "oracle_text": "Sacrifice a creature: Add one mana of any color.",
+      "mana_cost": "{3}",
+      "type_line": "Artifact",
+      "scryfall_id": "95d9f93c-50a8-41a9-be98-d1900bf1c12f",
+      "oracle_id": "8d02b297-97c4-4379-9862-0a462400f66f",
+      "source_file": "EVIDENCE/S12_PERMANENT_EVIDENCE.json",
+      "source_sha256": "c63e5128c61f6aa4d583364be428f25476126fe80e7c3d0bfd2918d9d5c24a3d",
+      "source_upstream_reference_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+      "source_tier": "user-provided Scryfall export",
+      "export_comparison": {
+        "oracle_text_exact": true,
+        "oracle_text_whitespace_normalized": true,
+        "mana_cost": true,
+        "scryfall_id": true
+      }
+    },
+    {
+      "name": "Sol Ring",
+      "oracle_text": "{T}: Add {C}{C}.",
+      "mana_cost": "{1}",
+      "type_line": "Artifact",
+      "scryfall_id": "8ee443cc-e17a-493b-9c93-1f9e141a30e4",
+      "oracle_id": "6ad8011d-3471-4369-9d68-b264cc027487",
+      "source_file": "EVIDENCE/S12_PERMANENT_EVIDENCE.json",
+      "source_sha256": "c63e5128c61f6aa4d583364be428f25476126fe80e7c3d0bfd2918d9d5c24a3d",
+      "source_upstream_reference_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+      "source_tier": "user-provided Scryfall export",
+      "export_comparison": {
+        "oracle_text_exact": true,
+        "oracle_text_whitespace_normalized": true,
+        "mana_cost": true,
+        "scryfall_id": true
+      }
+    },
+    {
+      "name": "Verdant Catacombs",
+      "oracle_text": "{T}, Pay 1 life, Sacrifice this land: Search your library for a Swamp or Forest card, put it onto the battlefield, then shuffle.",
+      "mana_cost": "",
+      "type_line": "Land",
+      "scryfall_id": "94c229ea-90da-4aa0-bfda-b162fb3b5b8b",
+      "oracle_id": "67d60b24-d429-4ded-90d9-06e49f28c396",
+      "source_file": "EVIDENCE/S14_LAND_EVIDENCE.json",
+      "source_sha256": "6ffe2948aa62bdaf2c196ec9571b607024611b4df89f628af3f917df072d862c",
+      "source_upstream_reference_sha256": "8d56dc624eaa1c6cd8d46e28a45c267f6ce64d65b32cd0a478019b2fb94f2368",
+      "source_tier": "user-provided Scryfall export",
+      "export_comparison": {
+        "oracle_text_exact": true,
+        "oracle_text_whitespace_normalized": true,
+        "mana_cost": true,
+        "scryfall_id": false
+      }
+    }
+  ],
+  "evidence_vs_export_mismatches": [
+    {
+      "name": "High Market",
+      "field": "oracle_text_exact",
+      "export": "{T}: Add {C}. {T}, Sacrifice a creature: You gain 1 life.",
+      "evidence": "{T}: Add {C}.\n{T}, Sacrifice a creature: You gain 1 life."
+    },
+    {
+      "name": "Verdant Catacombs",
+      "field": "scryfall_id",
+      "export": "981b3a2e-de94-428d-8e5d-5a7ba6afe4a2",
+      "evidence": "94c229ea-90da-4aa0-bfda-b162fb3b5b8b"
+    }
+  ],
+  "mismatch_policy": "recorded, not resolved; the evidence text is the record text for the 5 evidence names"
+}
