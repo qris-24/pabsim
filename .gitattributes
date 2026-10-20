@@ -1,0 +1,2 @@
+# CP30: no line-ending conversion on any machine; frozen-file sha256 checks need byte-exact checkouts.
+* -text

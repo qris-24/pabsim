@@ -26,7 +26,8 @@
 - Re-pin after any tracked-file change: `py -3.14 build_manifest.py`
 - `py -3.14 build_oracle_excerpt.py` re-pins the excerpt after a mapping change (then re-pin the manifest).
 - Registry: `build_registry.py` (redirect its output; never let it print to the terminal).
-- Line endings are LF; `core.autocrlf` is `false`. Do not introduce CRLF.
+- Line endings are LF. `.gitattributes` (`* -text`, CP30) disables line-ending conversion in every clone,
+  whatever the machine's `core.autocrlf`. Do not introduce CRLF.
 
 ## Frozen, never edited
 - `pab_focus_engine.py`, `pab_focus_engine_v07.py`, `pab_zone_bridge.py`, `pab_zone_bridge_v08.py`, `pab_zones.py`.
@@ -81,6 +82,8 @@
   on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
 
 ## Next stages
+- CP30 follow-up: C:\pabsim-git (ChatGPT backup clone) predates .gitattributes; re-clone it or run
+  `git rm --cached -r . -q; git reset --hard` there so its files are LF.
 - CP26 follow-up: export vs evidence mismatches recorded, not resolved (High Market text whitespace;
   Verdant Catacombs printing id); see decks/PAB_V3_ORACLE_SUPPLEMENT.json.
 - CP26 follow-up: old-baseline-only marking used deck-card string literals for C41-C79/C95-C99, which
