@@ -78,3 +78,35 @@ offspring/copy tokens; Chatterfang activation and -X/-X; opponent permanents and
 S9 (2026-10-18): C65, C66, C67, C68 and C73 executed against the promoted kernel once the nine B/G fixer lands became playable (pab_lands_s9.py); see C65_C77_EXECUTION_NOTES.md.
 
 S14 (2026-10-18): C70, C71, C72, C74, C77 executed; C75, C76 partially executed (Boseiju channel has no target; opponents have no hands); see C65_C77_EXECUTION_NOTES.md.
+
+## CP21 re-status (2026-10-19)
+
+C80–C86 and C88–C94 were BLOCKED_UNSUPPORTED because their probes called the event kernel `pab_kernel.Game.add()`; S15/S16/S20 model the cards on `pab_kernel.PhysicalZoneGame` (EVIDENCE/CP19_CONTRACT_PATH_AUDIT.md c.3/c.4). Each class in `tests/test_c78_c94_contracts.py` now has `test_pzg_*` methods on PhysicalZoneGame and keeps the old refusal as `test_event_kernel_control_add_refused`. Claims source: the class's former "not modeled (…)" list plus the rules_contract column of `upstream_frozen/PABTRV3_MECHANICAL_INVENTORY.csv` (this file had no per-contract claim list). Reference fixtures: 828.
+
+| Contract | Before | After | Not asserted / stand-in |
+|---|---|---|---|
+| C80 | BLOCKED_UNSUPPORTED | EXECUTED | — |
+| C81 | BLOCKED_UNSUPPORTED | EXECUTED | — |
+| C82 | BLOCKED_UNSUPPORTED | EXECUTED_WITH_SUBSTITUTION | deathtouch via the `_deathtouch()` predicate, not combat; opponent-owned body re-declared (no opponent cards) |
+| C83 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | "can't be countered": no counterspell model |
+| C84 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | opponent's basic-land search (traced unmodeled) |
+| C85 | BLOCKED_UNSUPPORTED | EXECUTED_WITH_SUBSTITUTION | opponent's choice = S8 `edict_choice()` stand-in |
+| C86 | BLOCKED_UNSUPPORTED | EXECUTED | — |
+| C88 | BLOCKED_UNSUPPORTED | EXECUTED | — |
+| C89 | BLOCKED_UNSUPPORTED | EXECUTED | — |
+| C90 | BLOCKED_UNSUPPORTED | EXECUTED_WITH_SUBSTITUTION | "nonlegendary" = hand-written `LEGENDARY_CARDS` name set |
+| C91 | BLOCKED_UNSUPPORTED | EXECUTED_WITH_SUBSTITUTION | creature-card static by name (S16), not a type line (n3) |
+| C92 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | Insect-card repeat: unreachable with this deck |
+| C93 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | target bookkeeping, A-S20-10 (CP22) |
+| C94 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | target bookkeeping, A-S20-10 (CP22); opponent mill unmodeled |
+
+C41–C94 counts after CP21 (the table at the top is the R02-era snapshot and is left as written):
+
+| Status | Before CP21 | After CP21 |
+|---|---:|---:|
+| BLOCKED_UNSUPPORTED | 16 | 2 (C50, C62) |
+| EXECUTED | 19 | 24 |
+| EXECUTED_WITH_SUBSTITUTION | 16 | 20 |
+| PARTIAL_EXECUTED | 3 | 8 |
+
+C50 and C62 define `KERNEL_PROBE`; release check `BlockedContractsProbed` (21st) fails if a BLOCKED_UNSUPPORTED class has no probe or its probe reports the action accepted on PhysicalZoneGame. SUBSTITUTIONS text for C41, C42, C44, C57, C60, C78, C79, C87 now names the layer that models the card (CP19 note n1); statuses unchanged.

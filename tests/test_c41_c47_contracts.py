@@ -35,8 +35,9 @@ class _Base(unittest.TestCase):
 class C41(_Base):
     CONTRACT='C41'; ISSUES=['R22']
     STATUS='EXECUTED_WITH_SUBSTITUTION'
-    SUBSTITUTIONS=['High Market (unsupported land) replaced by an exogenous gain(1) after the '
-                   'end-step boundary; sacrifice cost modeled as sacrifice of a controlled creature',
+    SUBSTITUTIONS=['High Market: modeled in S14 on PhysicalZoneGame (high_market); this test keeps the event-kernel '
+                   'stand-in, an exogenous gain(1) after the end-step boundary; sacrifice cost modeled as sacrifice of a '
+                   'controlled creature',
                    'engine has no step clock: "beginning of end step" is the moseo_end_step() call; '
                    'non-retroactivity is asserted on the trigger queue and trace, not on a timing model']
 
@@ -72,8 +73,8 @@ class C41(_Base):
 class C42(_Base):
     CONTRACT='C42'; ISSUES=['R22','R21']
     STATUS='EXECUTED_WITH_SUBSTITUTION'
-    SUBSTITUTIONS=['Infuse with Vitality (unsupported nonland) replaced by an exogenous gain(2) '
-                   'base event; the Pest Rescuer +1 replacement is the kernel\'s own']
+    SUBSTITUTIONS=['Infuse with Vitality: modeled in S15 on PhysicalZoneGame; this test keeps the event-kernel stand-in, '
+                   'an exogenous gain(2) base event; the Pest Rescuer +1 replacement is the kernel\'s own']
 
     def setup_board(self):
         g=self.game(SAVRA,"Moseo, Vein's New Dean",'Pest Rescuer','Phyrexian Reclamation')
@@ -146,8 +147,9 @@ class C43(_Base):
 class C44(_Base):
     CONTRACT='C44'; ISSUES=['R23']
     STATUS='EXECUTED_WITH_SUBSTITUTION'
-    SUBSTITUTIONS=['No command zone: in branch B, Savra is removed from the battlefield by an exogenous '
-                   'harness deletion (no death event), standing in for the commander-zone replacement']
+    SUBSTITUTIONS=['Command zone: modeled in S10 on PhysicalZoneGame; this test keeps the event-kernel stand-in: in '
+                   'branch B, Savra is removed from the battlefield by an exogenous harness deletion (no death event), '
+                   'standing in for the commander-zone replacement']
 
     def test_A_savra_in_command_zone_only_bats(self):
         g,t=self.treasure_board('Agent of the Iron Throne','Mirkwood Bats')   # Savra absent from battlefield

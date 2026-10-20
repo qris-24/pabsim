@@ -1,8 +1,8 @@
 # CLAUDE.md — PABTRV3 kernel (pab_reliability_v0_8_r02_r01)
 
 ## Layout
-- `tests/` — kernel reference suite (`test_*.py`), part of the 810-test gate.
-- `release_gate_tests/` — the 20 release integrity checks run by `run_validation.py`.
+- `tests/` — kernel reference suite (`test_*.py`), part of the 828-test gate.
+- `release_gate_tests/` — the 21 release integrity checks run by `run_validation.py`.
 - `s9_tests/` — S9 land/mana layer fixtures.
 - `r01_tests/` — R01 Pest rescuer fixtures.
 - `r52_tests/` — R52 Village Rites fixtures.
@@ -14,7 +14,7 @@
 - `pab_kernel.py` is the only import point. Use `Game` / `PhysicalZoneGame` from it.
 
 ## Commands (Python 3.14.7 on Windows, PowerShell)
-- Full gate (expect `Ran 810 tests` / `OK`, and 20/20 in `VALIDATION_RESULTS.json`):
+- Full gate (expect `Ran 828 tests` / `OK`, and 21/21 in `VALIDATION_RESULTS.json`):
   `py -3.14 run_validation.py 2> ..\gate.txt | Out-Null; Get-Content ..\gate.txt -Tail 3`
 - Kernel suite only: `py -3.14 -m unittest discover -s tests -p "test_*.py" -q`
 - Re-pin after any tracked-file change: `py -3.14 build_manifest.py`
@@ -68,14 +68,15 @@
 - Auditor constant-resolution fix.
 - Pest Rescuer Oracle sourcing.
 - `HASTE_NAMES` in `pab_combat_s17.py` is a hardcoded name list; keywords should come from card data.
+- CP21 claims left unasserted (no model): C83 "can't be countered" (no counterspell model), C84
+  opponent basic-land search, C92 Grist +1 Insect-card repeat (unreachable with the deck), C94 mode 1
+  on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
 
 ## Next stages
-- CP21: re-status C80–C86 and C88–C92 with PhysicalZoneGame tests (CP19 probe calls are the
-  skeleton), keeping the Game.add refusal tests as controls; honest STATUS/SUBSTITUTIONS.
-  Refresh the [n1] SUBSTITUTIONS text in C41, C42, C44, C57, C60, C78, C79, C87.
-  Add a release check: every BLOCKED_UNSUPPORTED contract's card is refused on PhysicalZoneGame
-  (C50, C62 remain).
-- CP22: A-S20-10 (target bookkeeping for Witherbloom Command, Grist -2), then re-status C93, C94.
+- CP22: A-S20-10 (target bookkeeping for Witherbloom Command, Grist -2), then re-status C93, C94
+  (PARTIAL_EXECUTED since CP21; the gap is the only unasserted claim besides C94's opponent mill).
+- Docs follow-up (from CP21): README.md and C78_C94_EXECUTION_NOTES.md still describe C80–C94 as
+  BLOCKED_UNSUPPORTED; the CP21 re-status is recorded only in CONTRACTS_C41_C94_STATUS.md.
 - CP23: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
 - CP24: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar) + v3 deck file as second
   target, delta cards UNMODELED. Mark C62, C63, C64, C85, C86 old-baseline-only. Derive

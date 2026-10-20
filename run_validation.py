@@ -26,7 +26,7 @@ R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=810   # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=828   # sum of per-file counts asserted below
 TEST_DEF_RE=re.compile(r'^\s+def test_',re.M)   # one shared definition; build_manifest.py imports it
 
 def count_test_defs(path):
@@ -123,7 +123,7 @@ def preflight(root=ROOT):
     assert n('test_c41_c47_contracts.py')==19, 'test_c41_c47_contracts.py count'
     assert n('test_c48_c64_contracts.py')==34, 'test_c48_c64_contracts.py count'
     assert n('test_c65_c77_contracts.py')==20, 'test_c65_c77_contracts.py count'
-    assert n('test_c78_c94_contracts.py')==23, 'test_c78_c94_contracts.py count'
+    assert n('test_c78_c94_contracts.py')==41, 'test_c78_c94_contracts.py count'
     assert n('test_stack_cp06.py')==15, 'test_stack_cp06.py count'
     assert n('test_cast_s6.py')==33, 'test_cast_s6.py count'
     assert n('test_cast_s7.py')==71, 'test_cast_s7.py count'

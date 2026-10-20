@@ -126,6 +126,22 @@ class ManifestMetadata(unittest.TestCase):
         rv=load(ROOT,'run_validation')
         self.assertEqual(self._manifest()['unique_fixture_tests'],rv.REFERENCE_TEST_COUNT)
 
+class BlockedContractsProbed(unittest.TestCase):
+    """CP21: a BLOCKED_UNSUPPORTED contract must prove the block on the kernel that models cards. Every such class
+    defines a KERNEL_PROBE staticmethod (True = the card's action is accepted on pab_kernel.PhysicalZoneGame,
+    False = refused); the check fails on a missing probe or on any probe that returns True (stale status)."""
+    CONTRACT_MODULES=['test_c41_c47_contracts.py','test_c48_c64_contracts.py','test_c65_c77_contracts.py','test_c78_c94_contracts.py','test_turn_clock_s2.py','test_priority_s3.py']   # = run_validation.py contract modules
+    def test_every_blocked_contract_is_refused_on_physical_zone_game(self):
+        if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
+        blocked={}
+        for f in self.CONTRACT_MODULES:
+            spec=importlib.util.spec_from_file_location('r02gate_contracts_'+f[:-3],ROOT/'tests'/f)
+            mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+            for cls in vars(mod).values():
+                if isinstance(cls,type) and issubclass(cls,unittest.TestCase) and hasattr(cls,'CONTRACT') and cls.STATUS=='BLOCKED_UNSUPPORTED': blocked[cls.CONTRACT]=cls
+        self.assertEqual(sorted(c for c,cls in blocked.items() if not isinstance(cls.__dict__.get('KERNEL_PROBE'),staticmethod)),[],'BLOCKED_UNSUPPORTED contract without KERNEL_PROBE')
+        self.assertEqual(sorted(c for c,cls in blocked.items() if cls.KERNEL_PROBE() is not False),[],'BLOCKED_UNSUPPORTED contract accepted on PhysicalZoneGame (stale status)')
+
 class EndToEnd(unittest.TestCase):
     def test_shipped_command_runs_twice_cleanly(self):
         """`python run_validation.py` must succeed, leave inputs untouched, and
@@ -140,7 +156,7 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(reg_before,(d/'PABTRV3_CARD_COVERAGE.json').read_bytes())
         self.assertEqual(man_before,(d/'PHASE8_R02_FILE_MANIFEST.json').read_bytes())
         res=json.loads((d/'VALIDATION_RESULTS.json').read_text())
-        self.assertEqual((res['tests_run'],res['tests_passed']),(810,810))
+        self.assertEqual((res['tests_run'],res['tests_passed']),(828,828))
         self.assertEqual(res['candidate_historical_contract_passes'],149)
         self.assertEqual(res['phase8_previous_bridge_contract_passes'],52)
         self.assertEqual(res['kernel_legacy_149_replay_failures'],sorted(['test_112_teacher_pest_blocks_rescuer_at_upkeep_start','test_113_teacher_pest_entered_before_rescuer_trigger_resolves','test_91_village_rejects_mana_shortage_before_sac']))

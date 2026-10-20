@@ -13,6 +13,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
 from pab_focus_engine import (PEST, MOSEO_PEST, INSECT, SQUIRREL, TREASURE, WORM, SAVRA, IllegalAction)
 from pab_zones import ZoneError
+from pab_zone_bridge import BridgeError
 from pab_kernel import Game, PhysicalZoneGame
 
 def labels(g): return [t.label for t in g.pending]
@@ -69,6 +70,16 @@ class C49(_Base):
 class C50(_Base):
     CONTRACT='C50'; ISSUES=['R27']; STATUS='BLOCKED_UNSUPPORTED'
     SUBSTITUTIONS=['Offspring (token copy of Starscape Cleric on ETB) is not modeled; no copy characteristics exist to assert']
+    @staticmethod
+    def KERNEL_PROBE():
+        """CP21 release check (CP19 c.3): True if PhysicalZoneGame accepts the Offspring cast of Starscape Cleric
+        (or exposes any offspring attribute), False if it refuses."""
+        g=PhysicalZoneGame(); g.add(SAVRA); g.resolve()
+        if any('offspring' in n.lower() for n in dir(g)): return True
+        uid=next(u for u in g.zones.zones['library'] if g.zones.cards[u].name=='Starscape Cleric'); g.zones.search_library(selected_uid=uid,destination='hand'); g.add_mana('B','C','B','C','C')
+        try: g.cast_from_hand(uid,offspring=True)
+        except (TypeError,BridgeError,IllegalAction): return False
+        return True
     def test_blocked_offspring_not_modeled(self):
         g=self.game('Chatterfang, Squirrel General')
         self.assertFalse(hasattr(g,'cast_with_offspring'))
@@ -170,7 +181,8 @@ class C56(_Base):
 
 class C57(_Base):
     CONTRACT='C57'; ISSUES=['R31','R14']; STATUS='EXECUTED_WITH_SUBSTITUTION'
-    SUBSTITUTIONS=['No lore-counter or phase clock: chapters I–III are invoked directly via saga_chapter(n)']
+    SUBSTITUTIONS=['Phase clock: modeled in S2 (Game and PhysicalZoneGame); lore counters are not modeled, so Saga '
+                   'chapters stay direct; this test keeps the event-kernel stand-in: chapters I–III are invoked via saga_chapter(n)']
     def test_chapters_make_insects_plus_squirrels_not_pests(self):
         g=self.game('Chatterfang, Squirrel General','Pest Rescuer')
         for n in (1,2,3): g.saga_chapter(n); g.resolve()
@@ -230,8 +242,9 @@ class C59(_Base):
 
 class C60(_Base):
     CONTRACT='C60'; ISSUES=['R32']; STATUS='EXECUTED_WITH_SUBSTITUTION'
-    SUBSTITUTIONS=['Devour is not modeled: Roaster is added with counters=2 and the two devoured creatures are sacrificed '
-                   'directly before it enters (ordering as a fixture, not a replacement-effect model)']
+    SUBSTITUTIONS=['Devour: modeled in S7 on PhysicalZoneGame (cast_from_hand devour_uids); this test keeps the event-kernel '
+                   'stand-in: Roaster is added with counters=2 and the two devoured creatures are sacrificed directly before '
+                   'it enters (ordering as a fixture, not a replacement-effect model)']
     def test_two_counters_two_pests_two_squirrels_at_end_step(self):
         g=self.game(SAVRA,'Chatterfang, Squirrel General'); v1=g.add('Deathgreeter'); v2=g.add('Viscera Seer'); g.resolve()
         g.sacrifice(v1.uid); g.sacrifice(v2.uid)
@@ -271,6 +284,12 @@ class C61(_Base):
 class C62(_Base):
     CONTRACT='C62'; ISSUES=['R33']; STATUS='BLOCKED_UNSUPPORTED'
     SUBSTITUTIONS=['Beledros "Pay 10 life: untap all lands" and once-per-turn tracking are not modeled; the event kernel has no lands']
+    @staticmethod
+    def KERNEL_PROBE():
+        """CP21 release check (CP19 c.3): True if PhysicalZoneGame exposes a Beledros pay-10-life / untap-all-lands
+        method, False if it has none."""
+        g=PhysicalZoneGame()
+        return any('beledros' in n.lower() or 'pay_ten' in n.lower() or 'untap_all' in n.lower() for n in dir(g))
     def test_blocked_untap_ability_not_modeled(self):
         g=self.game('Beledros Witherbloom')
         self.assertFalse(any('beledros' in n.lower() or 'pay_ten' in n.lower() for n in dir(g)))   # S4 added a generic untap step; Beledros' ability is still absent

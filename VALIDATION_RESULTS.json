@@ -18,7 +18,7 @@
       "oracle_cr_authenticated": false,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "High Market (unsupported land) replaced by an exogenous gain(1) after the end-step boundary; sacrifice cost modeled as sacrifice of a controlled creature",
+        "High Market: modeled in S14 on PhysicalZoneGame (high_market); this test keeps the event-kernel stand-in, an exogenous gain(1) after the end-step boundary; sacrifice cost modeled as sacrifice of a controlled creature",
         "engine has no step clock: \"beginning of end step\" is the moseo_end_step() call; non-retroactivity is asserted on the trigger queue and trace, not on a timing model"
       ],
       "tests_passed": 3,
@@ -35,7 +35,7 @@
       "oracle_cr_authenticated": false,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Infuse with Vitality (unsupported nonland) replaced by an exogenous gain(2) base event; the Pest Rescuer +1 replacement is the kernel's own"
+        "Infuse with Vitality: modeled in S15 on PhysicalZoneGame; this test keeps the event-kernel stand-in, an exogenous gain(2) base event; the Pest Rescuer +1 replacement is the kernel's own"
       ],
       "tests_passed": 4,
       "tests_run": 4,
@@ -67,7 +67,7 @@
       "oracle_cr_authenticated": false,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "No command zone: in branch B, Savra is removed from the battlefield by an exogenous harness deletion (no death event), standing in for the commander-zone replacement"
+        "Command zone: modeled in S10 on PhysicalZoneGame; this test keeps the event-kernel stand-in: in branch B, Savra is removed from the battlefield by an exogenous harness deletion (no death event), standing in for the commander-zone replacement"
       ],
       "tests_passed": 2,
       "tests_run": 2,
@@ -258,7 +258,7 @@
       "oracle_cr_authenticated": false,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "No lore-counter or phase clock: chapters I\u2013III are invoked directly via saga_chapter(n)"
+        "Phase clock: modeled in S2 (Game and PhysicalZoneGame); lore counters are not modeled, so Saga chapters stay direct; this test keeps the event-kernel stand-in: chapters I\u2013III are invoked via saga_chapter(n)"
       ],
       "tests_passed": 1,
       "tests_run": 1,
@@ -301,7 +301,7 @@
       "oracle_cr_authenticated": false,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Devour is not modeled: Roaster is added with counters=2 and the two devoured creatures are sacrificed directly before it enters (ordering as a fixture, not a replacement-effect model)"
+        "Devour: modeled in S7 on PhysicalZoneGame (cast_from_hand devour_uids); this test keeps the event-kernel stand-in: Roaster is added with counters=2 and the two devoured creatures are sacrificed directly before it enters (ordering as a fixture, not a replacement-effect model)"
       ],
       "tests_passed": 2,
       "tests_run": 2,
@@ -574,7 +574,7 @@
       "oracle_cr_authenticated": false,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Golgari Charm's global -1/-1 mode is not modeled; the single modeled -1/-1 path (Yawgmoth counter) is used; cost-side triggers are discarded so only the target death is measured"
+        "Golgari Charm's global -1/-1 mode: modeled in S15 on PhysicalZoneGame; this test keeps the event-kernel stand-in, the Yawgmoth -1/-1 counter path; cost-side triggers are discarded so only the target death is measured"
       ],
       "tests_passed": 1,
       "tests_run": 1,
@@ -589,116 +589,110 @@
       "oracle_cr_authenticated": false,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Heroic Intervention not modeled; indestructible is granted by adding the creature to indestructible_until_eot (the kernel's own until-end-of-turn set). Hexproof and exile are not modeled. R48 promoted: zero toughness is an SBA death. The frozen v0.7 behaviour is pinned below."
+        "Heroic Intervention: modeled in S15 on PhysicalZoneGame (indestructible_until_eot + hexproof_eot); this test keeps the event-kernel stand-in: indestructible is granted by adding the creature to indestructible_until_eot (the kernel's own until-end-of-turn set). Exile is not modeled. R48 promoted: zero toughness is an SBA death. The frozen v0.7 behaviour is pinned below."
       ],
       "tests_passed": 5,
       "tests_run": 5,
       "unexpected_successes": 0
     },
     "C80": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R41",
         "R43"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 4,
+      "tests_run": 4,
+      "unexpected_successes": 0
+    },
+    "C81": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R42"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
+      "unexpected_successes": 0
+    },
+    "C82": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R42"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Witherbloom Charm (modes, optional resolution-time sacrifice) not modeled. The Village Rites additional-cost contrast from the contract IS executed as a control."
+        "Modeled in S15 (+CP03 deathtouch, CP10 opponent-owned return) on PhysicalZoneGame. Deathtouch is asserted through the kernel predicate _deathtouch(), not in a combat. Opponents have no cards or graveyards (S8): an opponent-owned body \"returns\" as a new declared body (same name/P/T), tapped, under its owner"
+      ],
+      "tests_passed": 3,
+      "tests_run": 3,
+      "unexpected_successes": 0
+    },
+    "C83": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R43"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "PARTIAL_EXECUTED",
+      "substitutions": [
+        "Modeled in S15 on PhysicalZoneGame. NOT ASSERTED: \"this spell can't be countered\" - the kernel has no counterspell model (pab_interaction_s11.py: counterspells not modeled), so uncounterability is untestable"
+      ],
+      "tests_passed": 3,
+      "tests_run": 3,
+      "unexpected_successes": 0
+    },
+    "C84": {
+      "engine_test_executed": true,
+      "expected_failures": 0,
+      "issues": [
+        "R43"
+      ],
+      "oracle_cr_authenticated": false,
+      "status": "PARTIAL_EXECUTED",
+      "substitutions": [
+        "Modeled in S15 on PhysicalZoneGame. NOT ASSERTED: \"its controller may search for a basic land card, put it onto the battlefield, then shuffle\" - opponents have no libraries (S8); the search is only traced as unmodeled"
       ],
       "tests_passed": 2,
       "tests_run": 2,
       "unexpected_successes": 0
     },
-    "C81": {
-      "engine_test_executed": false,
-      "expected_failures": 0,
-      "issues": [
-        "R42"
-      ],
-      "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
-      "substitutions": [
-        "Regeneration not modeled; Golgari Charm refused"
-      ],
-      "tests_passed": 1,
-      "tests_run": 1,
-      "unexpected_successes": 0
-    },
-    "C82": {
-      "engine_test_executed": false,
-      "expected_failures": 0,
-      "issues": [
-        "R42"
-      ],
-      "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
-      "substitutions": [
-        "Infuse with Vitality (granted owner-return death trigger) not modeled; opponent-owned objects not modeled"
-      ],
-      "tests_passed": 1,
-      "tests_run": 1,
-      "unexpected_successes": 0
-    },
-    "C83": {
-      "engine_test_executed": false,
-      "expected_failures": 0,
-      "issues": [
-        "R43"
-      ],
-      "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
-      "substitutions": [
-        "Abrupt Decay (targeting, MV filter, uncounterable, fizzle) not modeled; no opponent permanents"
-      ],
-      "tests_passed": 1,
-      "tests_run": 1,
-      "unexpected_successes": 0
-    },
-    "C84": {
-      "engine_test_executed": false,
-      "expected_failures": 0,
-      "issues": [
-        "R43"
-      ],
-      "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
-      "substitutions": [
-        "Assassin's Trophy not modeled; no opponent permanents or opponent library search"
-      ],
-      "tests_passed": 1,
-      "tests_run": 1,
-      "unexpected_successes": 0
-    },
     "C85": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R44"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Rise of the Witch-king not modeled; no per-player sacrifice choices"
+        "Modeled in S15 on PhysicalZoneGame. Each opponent's \"creature of their choice\" is chosen by the S8 stand-in policy edict_choice() (lowest power, then toughness, then uid), not by the opponent"
       ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "tests_passed": 2,
+      "tests_run": 2,
       "unexpected_successes": 0
     },
     "C86": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R44"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
-      "substitutions": [
-        "Rise of the Witch-king not modeled"
-      ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
       "unexpected_successes": 0
     },
     "C87": {
@@ -710,118 +704,114 @@
       "oracle_cr_authenticated": false,
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Grisly Salvage is not a kernel spell; its resolution is composed from physical-zone primitives in the fixture (top five by library order, chosen creature/land to hand, rest to graveyard, no shuffle)"
+        "Grisly Salvage: modeled in S15 on PhysicalZoneGame; this test keeps the stand-in: its resolution is composed from physical-zone primitives in the fixture (top five by library order, chosen creature/land to hand, rest to graveyard, no shuffle)"
       ],
       "tests_passed": 2,
       "tests_run": 2,
       "unexpected_successes": 0
     },
     "C88": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R45"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
-      "substitutions": [
-        "Shigeki, Jukai Visionary not modeled (self-bounce cost, top-four reveal)"
-      ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
       "unexpected_successes": 0
     },
     "C89": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R45",
         "R18"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
-      "substitutions": [
-        "Shigeki Channel {X}{X}{G}{G} not modeled"
-      ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 2,
+      "tests_run": 2,
       "unexpected_successes": 0
     },
     "C90": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R45"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Shigeki Channel legendary-exclusion targeting not modeled"
+        "Modeled in S20 on PhysicalZoneGame. \"Nonlegendary\" is checked against the hand-written name set pab_shigeki_s20.LEGENDARY_CARDS, not a supertype read from card data (physical cards carry no type line)"
       ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "tests_passed": 2,
+      "tests_run": 2,
       "unexpected_successes": 0
     },
     "C91": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R46"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Grist, the Hunger Tide not modeled; physical cards carry no type line, so zone-dependent types cannot be asserted"
+        "Modeled in S16 on PhysicalZoneGame. The \"1/1 Insect creature card while not on the battlefield\" static is by name (pab_grist_s16.CREATURE_CARD_NAMES and a creature=True graveyard LKI), not by a type line: physical cards carry no type line (frozen pab_zones.py; CP19 note n3)"
       ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "tests_passed": 2,
+      "tests_run": 2,
       "unexpected_successes": 0
     },
     "C92": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R46"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "PARTIAL_EXECUTED",
       "substitutions": [
-        "Grist +1 (Insect token, mill, repeat on Insect card) not modeled; composing the loop from mill primitives would fabricate Grist, so only the refusal is asserted"
+        "Modeled in S16 on PhysicalZoneGame. NOT ASSERTED: \"if an Insect card was milled this way, put a loyalty counter on Grist and repeat\" - Grist is the deck's only Insect card and cannot be milled while on the battlefield, so the repeat branch is unreachable with this deck (implemented in grist_plus_one, not executed)"
       ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "tests_passed": 2,
+      "tests_run": 2,
       "unexpected_successes": 0
     },
     "C93": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R46",
         "R20"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "PARTIAL_EXECUTED",
       "substitutions": [
-        "Grist -2 reflexive trigger not modeled"
+        "Modeled in S16 on PhysicalZoneGame. NOT ASSERTED: target bookkeeping, A-S20-10 (CP22) - the reflexive trigger's target is fixed when -2 is activated (target_uid), not chosen when the reflexive trigger is put on the stack, and it is not recorded as a locked target"
       ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "tests_passed": 2,
+      "tests_run": 2,
       "unexpected_successes": 0
     },
     "C94": {
-      "engine_test_executed": false,
+      "engine_test_executed": true,
       "expected_failures": 0,
       "issues": [
         "R41",
         "R43"
       ],
       "oracle_cr_authenticated": false,
-      "status": "BLOCKED_UNSUPPORTED",
+      "status": "PARTIAL_EXECUTED",
       "substitutions": [
-        "Witherbloom Command (two distinct modes, mill target player, return land) not modeled"
+        "Modeled in S15 on PhysicalZoneGame. NOT ASSERTED: target bookkeeping, A-S20-10 (CP22) - modes 2 and 3 share one target_uid, so the pair (2,3) cannot take two different targets, and target_player/target_opponent are not recorded as locked targets. Mode 1 on an opponent is traced unmodeled (opponents have no libraries, S8)"
       ],
-      "tests_passed": 1,
-      "tests_run": 1,
+      "tests_passed": 3,
+      "tests_run": 3,
       "unexpected_successes": 0
     },
     "C95": {
@@ -993,8 +983,8 @@
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
-  "r02_release_gate_tests_passed": 20,
-  "r02_release_gate_tests_run": 20,
+  "r02_release_gate_tests_passed": 21,
+  "r02_release_gate_tests_run": 21,
   "real_individual_card_library_in_new_zone_kernel": true,
   "reference_partial_nonlands": 54,
   "reference_unsupported_nonlands": 11,
@@ -1011,8 +1001,8 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "tests_passed": 810,
-  "tests_run": 810,
+  "tests_passed": 828,
+  "tests_run": 828,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }
