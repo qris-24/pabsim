@@ -1,0 +1,1422 @@
+{
+  "stage": "CP25",
+  "read_only": true,
+  "card_data": {
+    "path": "C:\\pabsim\\data\\golgari_commander.json",
+    "objects": 9877,
+    "sha256": "f184c661a0ca6839eae6a7f41e333f7c66e08aaf2e1b9100e356ef5e2f4d8fb9"
+  },
+  "derivation": {
+    "baseline": {
+      "path": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt",
+      "sha256": "c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381",
+      "lines_used": "2 (Commander), 5-90 (Mainboard); 93 (Sideboard Lesson) dropped"
+    },
+    "cp15_s1_removed": {
+      "lines": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:22-24",
+      "names": [
+        "Agent of the Iron Throne",
+        "Bastion of Remembrance",
+        "Beledros Witherbloom",
+        "Blood Artist",
+        "Demonic Tutor",
+        "Essence Warden",
+        "Geier Reach Sanitarium",
+        "Grave Pact",
+        "Grisly Salvage",
+        "Hunt for Specimens",
+        "Infuse with Vitality",
+        "Marauding Blight-Priest",
+        "Mikokoro, Center of the Sea",
+        "Sangromancer",
+        "Skullclamp",
+        "Starscape Cleric",
+        "Witherbloom Command"
+      ]
+    },
+    "cp15_s1_added": {
+      "lines": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29",
+      "names": [
+        "Agadeem's Awakening // Agadeem, the Undercrypt",
+        "Altar of Dementia",
+        "Ashnod's Altar",
+        "Beifong's Bounty Hunters",
+        "Beseech the Mirror",
+        "Bitterblossom",
+        "Bojuka Bog",
+        "Creakwood Liege",
+        "Eldritch Evolution",
+        "Fiend Artisan",
+        "Gravecrawler",
+        "Greater Good",
+        "Pitiless Plunderer",
+        "Plunge into Darkness",
+        "Sylvan Library",
+        "Tom, Bert, and William",
+        "Victimize"
+      ]
+    },
+    "cp15_s8_1_swaps": {
+      "lines": [
+        "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:182",
+        "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:183"
+      ],
+      "out_in": [
+        [
+          "Rise of the Witch-king",
+          "Ooze Garden"
+        ],
+        [
+          "Yahenni, Undying Partisan",
+          "Scavenger's Talent"
+        ]
+      ]
+    },
+    "cp15_s8_1_v3_added_crosscheck": {
+      "lines": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:191-194",
+      "agrees": true
+    },
+    "land_rule": "type_line (any face) contains 'Land'; baseline names cross-checked against frozen pab_zones.LAND_NAMES (pab_zones.py:21-29); names absent from card data classified by LAND_NAMES (Altar of Dementia, Ashnod's Altar nonland per EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:252)",
+    "result": {
+      "total": 100,
+      "commander": 1,
+      "mainboard": 99,
+      "distinct_names": 87,
+      "lands": 34,
+      "nonland": 66
+    },
+    "conflicts": []
+  },
+  "match_rule": {
+    "exact": "name equals a top-level name or card_faces[].name",
+    "normalized": "NFKD, curly->straight apostrophes, casefold, drop non [0-9a-z]"
+  },
+  "counts": {
+    "found": 79,
+    "normalized_match": 0,
+    "missing": 8
+  },
+  "missing": [
+    "Command Tower",
+    "High Market",
+    "Verdant Catacombs",
+    "Phyrexian Altar",
+    "Arcane Signet",
+    "Sol Ring",
+    "Altar of Dementia",
+    "Ashnod's Altar"
+  ],
+  "expected_missing": [
+    "Altar of Dementia",
+    "Ashnod's Altar"
+  ],
+  "unexpected_missing": [
+    "Command Tower",
+    "High Market",
+    "Verdant Catacombs",
+    "Phyrexian Altar",
+    "Arcane Signet",
+    "Sol Ring"
+  ],
+  "missing_substring_probe": {
+    "Command Tower": [],
+    "High Market": [],
+    "Verdant Catacombs": [],
+    "Phyrexian Altar": [],
+    "Arcane Signet": [],
+    "Sol Ring": [],
+    "Altar of Dementia": [],
+    "Ashnod's Altar": []
+  },
+  "normalized_hits": [],
+  "card_data_color_identity_counts": {
+    "B": 4774,
+    "G": 4669,
+    "BG": 434,
+    "colorless": 0
+  },
+  "status": "v3 list pending user approval before CP26",
+  "rows": [
+    {
+      "name": "Savra, Queen of the Golgari",
+      "zone": "commander",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        3878
+      ],
+      "json_name": "Savra, Queen of the Golgari",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Creature — Elf Shaman",
+      "mana_cost": "{2}{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:2",
+      "is_land": false
+    },
+    {
+      "name": "Mirkwood Bats",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        272
+      ],
+      "json_name": "Mirkwood Bats",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Bat",
+      "mana_cost": "{3}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:7",
+      "is_land": false
+    },
+    {
+      "name": "South Wind Avatar",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        14
+      ],
+      "json_name": "South Wind Avatar",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Snake Spirit Avatar",
+      "mana_cost": "{3}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:9",
+      "is_land": false
+    },
+    {
+      "name": "Deadly Dispute",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        2714
+      ],
+      "json_name": "Deadly Dispute",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{1}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:11",
+      "is_land": false
+    },
+    {
+      "name": "Moldervine Reclamation",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        4045
+      ],
+      "json_name": "Moldervine Reclamation",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment",
+      "mana_cost": "{3}{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:12",
+      "is_land": false
+    },
+    {
+      "name": "Plumb the Forbidden",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6827
+      ],
+      "json_name": "Plumb the Forbidden",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{1}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:13",
+      "is_land": false
+    },
+    {
+      "name": "Witherbloom Charm",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        9178
+      ],
+      "json_name": "Witherbloom Charm",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:15",
+      "is_land": false
+    },
+    {
+      "name": "Blooming Marsh",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        3989
+      ],
+      "json_name": "Blooming Marsh",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:16",
+      "is_land": true
+    },
+    {
+      "name": "Boseiju, Who Endures",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7396
+      ],
+      "json_name": "Boseiju, Who Endures",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:17",
+      "is_land": true
+    },
+    {
+      "name": "Castle Locthwain",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7366
+      ],
+      "json_name": "Castle Locthwain",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:18",
+      "is_land": true
+    },
+    {
+      "name": "Command Tower",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "missing",
+      "json_indices": [],
+      "json_name": null,
+      "type_line": null,
+      "mana_cost": null,
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:19",
+      "is_land": true
+    },
+    {
+      "name": "Darkbore Pathway // Slitherbore Pathway",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        5202
+      ],
+      "json_name": "Darkbore Pathway // Slitherbore Pathway",
+      "matched_on": "top_level_name",
+      "type_line": "Land // Land",
+      "mana_cost": " // ",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:20",
+      "is_land": true
+    },
+    {
+      "name": "Deathcap Glade",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        9522
+      ],
+      "json_name": "Deathcap Glade",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:21",
+      "is_land": true
+    },
+    {
+      "name": "Forest",
+      "zone": "mainboard",
+      "quantity": 6,
+      "status": "found",
+      "json_indices": [
+        6933
+      ],
+      "json_name": "Forest",
+      "matched_on": "top_level_name",
+      "type_line": "Basic Land — Forest",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:22",
+      "is_land": true
+    },
+    {
+      "name": "Grim Backwoods",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        3694
+      ],
+      "json_name": "Grim Backwoods",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:24",
+      "is_land": true
+    },
+    {
+      "name": "High Market",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "missing",
+      "json_indices": [],
+      "json_name": null,
+      "type_line": null,
+      "mana_cost": null,
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:25",
+      "is_land": true
+    },
+    {
+      "name": "Llanowar Wastes",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1964
+      ],
+      "json_name": "Llanowar Wastes",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:26",
+      "is_land": true
+    },
+    {
+      "name": "Nurturing Peatland",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        5549
+      ],
+      "json_name": "Nurturing Peatland",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:28",
+      "is_land": true
+    },
+    {
+      "name": "Overgrown Tomb",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        5883
+      ],
+      "json_name": "Overgrown Tomb",
+      "matched_on": "top_level_name",
+      "type_line": "Land — Swamp Forest",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:29",
+      "is_land": true
+    },
+    {
+      "name": "Phyrexian Tower",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        975
+      ],
+      "json_name": "Phyrexian Tower",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:30",
+      "is_land": true
+    },
+    {
+      "name": "Swamp",
+      "zone": "mainboard",
+      "quantity": 9,
+      "status": "found",
+      "json_indices": [
+        3384
+      ],
+      "json_name": "Swamp",
+      "matched_on": "top_level_name",
+      "type_line": "Basic Land — Swamp",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:31",
+      "is_land": true
+    },
+    {
+      "name": "Takenuma, Abandoned Mire",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6643
+      ],
+      "json_name": "Takenuma, Abandoned Mire",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:32",
+      "is_land": true
+    },
+    {
+      "name": "Underground Mortuary",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        5108
+      ],
+      "json_name": "Underground Mortuary",
+      "matched_on": "top_level_name",
+      "type_line": "Land — Swamp Forest",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:33",
+      "is_land": true
+    },
+    {
+      "name": "Undergrowth Stadium",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        4836
+      ],
+      "json_name": "Undergrowth Stadium",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:34",
+      "is_land": true
+    },
+    {
+      "name": "Verdant Catacombs",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "missing",
+      "json_indices": [],
+      "json_name": null,
+      "type_line": null,
+      "mana_cost": null,
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:35",
+      "is_land": true
+    },
+    {
+      "name": "Woodland Cemetery",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7794
+      ],
+      "json_name": "Woodland Cemetery",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:36",
+      "is_land": true
+    },
+    {
+      "name": "Chatterfang, Squirrel General",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        9322
+      ],
+      "json_name": "Chatterfang, Squirrel General",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Creature — Squirrel Warrior",
+      "mana_cost": "{2}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:37",
+      "is_land": false
+    },
+    {
+      "name": "Bogwater Lumaret",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        49
+      ],
+      "json_name": "Bogwater Lumaret",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Spirit Frog",
+      "mana_cost": "{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:38",
+      "is_land": false
+    },
+    {
+      "name": "Deathgreeter",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7086
+      ],
+      "json_name": "Deathgreeter",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Human Shaman",
+      "mana_cost": "{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:39",
+      "is_land": false
+    },
+    {
+      "name": "Teacher's Pest",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        723
+      ],
+      "json_name": "Teacher's Pest",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Skeleton Pest",
+      "mana_cost": "{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:41",
+      "is_land": false
+    },
+    {
+      "name": "Carrion Feeder",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6256
+      ],
+      "json_name": "Carrion Feeder",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Zombie",
+      "mana_cost": "{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:43",
+      "is_land": false
+    },
+    {
+      "name": "Phyrexian Altar",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "missing",
+      "json_indices": [],
+      "json_name": null,
+      "type_line": null,
+      "mana_cost": null,
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:44",
+      "is_land": false
+    },
+    {
+      "name": "Viscera Seer",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        9576
+      ],
+      "json_name": "Viscera Seer",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Vampire Wizard",
+      "mana_cost": "{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:45",
+      "is_land": false
+    },
+    {
+      "name": "Warren Soultrader",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6669
+      ],
+      "json_name": "Warren Soultrader",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Zombie Goblin Wizard",
+      "mana_cost": "{2}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:46",
+      "is_land": false
+    },
+    {
+      "name": "Yawgmoth, Thran Physician",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6261
+      ],
+      "json_name": "Yawgmoth, Thran Physician",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Creature — Human Cleric",
+      "mana_cost": "{2}{B}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:48",
+      "is_land": false
+    },
+    {
+      "name": "Cauldron of Essence",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6296
+      ],
+      "json_name": "Cauldron of Essence",
+      "matched_on": "top_level_name",
+      "type_line": "Artifact",
+      "mana_cost": "{1}{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:50",
+      "is_land": false
+    },
+    {
+      "name": "Dina, Soul Steeper",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1293
+      ],
+      "json_name": "Dina, Soul Steeper",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Creature — Dryad Druid",
+      "mana_cost": "{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:51",
+      "is_land": false
+    },
+    {
+      "name": "Golgari Charm",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        9296
+      ],
+      "json_name": "Golgari Charm",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:53",
+      "is_land": false
+    },
+    {
+      "name": "Heroic Intervention",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1412
+      ],
+      "json_name": "Heroic Intervention",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{1}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:54",
+      "is_land": false
+    },
+    {
+      "name": "Pest Rescuer",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        127
+      ],
+      "json_name": "Pest Rescuer",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Dryad Druid",
+      "mana_cost": "{2}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:56",
+      "is_land": false
+    },
+    {
+      "name": "Arcane Signet",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "missing",
+      "json_indices": [],
+      "json_name": null,
+      "type_line": null,
+      "mana_cost": null,
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:57",
+      "is_land": false
+    },
+    {
+      "name": "Golgari Signet",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1155
+      ],
+      "json_name": "Golgari Signet",
+      "matched_on": "top_level_name",
+      "type_line": "Artifact",
+      "mana_cost": "{2}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:58",
+      "is_land": false
+    },
+    {
+      "name": "Nature's Lore",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        4676
+      ],
+      "json_name": "Nature's Lore",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery",
+      "mana_cost": "{1}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:59",
+      "is_land": false
+    },
+    {
+      "name": "Prosperous Innkeeper",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        8428
+      ],
+      "json_name": "Prosperous Innkeeper",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Halfling Citizen",
+      "mana_cost": "{1}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:60",
+      "is_land": false
+    },
+    {
+      "name": "Sakura-Tribe Elder",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        8776
+      ],
+      "json_name": "Sakura-Tribe Elder",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Snake Shaman",
+      "mana_cost": "{1}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:61",
+      "is_land": false
+    },
+    {
+      "name": "Shigeki, Jukai Visionary",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7855
+      ],
+      "json_name": "Shigeki, Jukai Visionary",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Enchantment Creature — Snake Druid",
+      "mana_cost": "{1}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:62",
+      "is_land": false
+    },
+    {
+      "name": "Sol Ring",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "missing",
+      "json_indices": [],
+      "json_name": null,
+      "type_line": null,
+      "mana_cost": null,
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:63",
+      "is_land": false
+    },
+    {
+      "name": "Moseo, Vein's New Dean",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7535
+      ],
+      "json_name": "Moseo, Vein's New Dean",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Creature — Bird Skeleton Warlock",
+      "mana_cost": "{2}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:64",
+      "is_land": false
+    },
+    {
+      "name": "Phyrexian Reclamation",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        3893
+      ],
+      "json_name": "Phyrexian Reclamation",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment",
+      "mana_cost": "{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:66",
+      "is_land": false
+    },
+    {
+      "name": "Unearth",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        3042
+      ],
+      "json_name": "Unearth",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery",
+      "mana_cost": "{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:67",
+      "is_land": false
+    },
+    {
+      "name": "Abrupt Decay",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1142
+      ],
+      "json_name": "Abrupt Decay",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:68",
+      "is_land": false
+    },
+    {
+      "name": "Assassin's Trophy",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6638
+      ],
+      "json_name": "Assassin's Trophy",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:69",
+      "is_land": false
+    },
+    {
+      "name": "Immoral Bargain",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7723
+      ],
+      "json_name": "Immoral Bargain",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery",
+      "mana_cost": "{1}{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:70",
+      "is_land": false
+    },
+    {
+      "name": "Poison-Tip Archer",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        8065
+      ],
+      "json_name": "Poison-Tip Archer",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Elf Archer",
+      "mana_cost": "{2}{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:71",
+      "is_land": false
+    },
+    {
+      "name": "Dark Prophecy",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        9438
+      ],
+      "json_name": "Dark Prophecy",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment",
+      "mana_cost": "{B}{B}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:74",
+      "is_land": false
+    },
+    {
+      "name": "Grist, the Hunger Tide",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        585
+      ],
+      "json_name": "Grist, the Hunger Tide",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Planeswalker — Grist",
+      "mana_cost": "{1}{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:75",
+      "is_land": false
+    },
+    {
+      "name": "Infestation Sage",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        8167
+      ],
+      "json_name": "Infestation Sage",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Elf Warlock",
+      "mana_cost": "{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:76",
+      "is_land": false
+    },
+    {
+      "name": "Feral Appetite",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6713
+      ],
+      "json_name": "Feral Appetite",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment",
+      "mana_cost": "{2}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:78",
+      "is_land": false
+    },
+    {
+      "name": "Pest Infestation",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1092
+      ],
+      "json_name": "Pest Infestation",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery",
+      "mana_cost": "{X}{X}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:79",
+      "is_land": false
+    },
+    {
+      "name": "Reassembling Skeleton",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6126
+      ],
+      "json_name": "Reassembling Skeleton",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Skeleton Warrior",
+      "mana_cost": "{1}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:80",
+      "is_land": false
+    },
+    {
+      "name": "Ribtruss Roaster",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        5213
+      ],
+      "json_name": "Ribtruss Roaster",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Troll Druid",
+      "mana_cost": "{4}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:81",
+      "is_land": false
+    },
+    {
+      "name": "Sedgemoor Witch",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1460
+      ],
+      "json_name": "Sedgemoor Witch",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Human Warlock",
+      "mana_cost": "{2}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:82",
+      "is_land": false
+    },
+    {
+      "name": "Tend the Pests",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6203
+      ],
+      "json_name": "Tend the Pests",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{B}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:83",
+      "is_land": false
+    },
+    {
+      "name": "The Hunger Tide Rises",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        2087
+      ],
+      "json_name": "The Hunger Tide Rises",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment — Saga",
+      "mana_cost": "{2}{G}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:84",
+      "is_land": false
+    },
+    {
+      "name": "Wriggling Grub",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        8117
+      ],
+      "json_name": "Wriggling Grub",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Worm",
+      "mana_cost": "{1}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:85",
+      "is_land": false
+    },
+    {
+      "name": "Village Rites",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        2117
+      ],
+      "json_name": "Village Rites",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:86",
+      "is_land": false
+    },
+    {
+      "name": "Diabolic Intent",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        159
+      ],
+      "json_name": "Diabolic Intent",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery",
+      "mana_cost": "{1}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:88",
+      "is_land": false
+    },
+    {
+      "name": "Blight Mound",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7612
+      ],
+      "json_name": "Blight Mound",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment",
+      "mana_cost": "{2}{B}",
+      "source": "upstream_frozen/FROZEN_PABTRV3_BASELINE.txt:90",
+      "is_land": false
+    },
+    {
+      "name": "Agadeem's Awakening // Agadeem, the Undercrypt",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        3376
+      ],
+      "json_name": "Agadeem's Awakening // Agadeem, the Undercrypt",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery // Land",
+      "mana_cost": "{X}{B}{B}{B} // ",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": true
+    },
+    {
+      "name": "Altar of Dementia",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "missing",
+      "json_indices": [],
+      "json_name": null,
+      "type_line": null,
+      "mana_cost": null,
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Ashnod's Altar",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "missing",
+      "json_indices": [],
+      "json_name": null,
+      "type_line": null,
+      "mana_cost": null,
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Beifong's Bounty Hunters",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        5153
+      ],
+      "json_name": "Beifong's Bounty Hunters",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Human Mercenary",
+      "mana_cost": "{2}{B}{G}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Beseech the Mirror",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        7859
+      ],
+      "json_name": "Beseech the Mirror",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery",
+      "mana_cost": "{1}{B}{B}{B}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Bitterblossom",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        9703
+      ],
+      "json_name": "Bitterblossom",
+      "matched_on": "top_level_name",
+      "type_line": "Kindred Enchantment — Faerie",
+      "mana_cost": "{1}{B}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Bojuka Bog",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        211
+      ],
+      "json_name": "Bojuka Bog",
+      "matched_on": "top_level_name",
+      "type_line": "Land",
+      "mana_cost": "",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": true
+    },
+    {
+      "name": "Creakwood Liege",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1194
+      ],
+      "json_name": "Creakwood Liege",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Horror",
+      "mana_cost": "{1}{B/G}{B/G}{B/G}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Eldritch Evolution",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        603
+      ],
+      "json_name": "Eldritch Evolution",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery",
+      "mana_cost": "{1}{G}{G}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Fiend Artisan",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        2639
+      ],
+      "json_name": "Fiend Artisan",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Nightmare",
+      "mana_cost": "{B/G}{B/G}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Gravecrawler",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        402
+      ],
+      "json_name": "Gravecrawler",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Zombie",
+      "mana_cost": "{B}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Greater Good",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        8481
+      ],
+      "json_name": "Greater Good",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment",
+      "mana_cost": "{2}{G}{G}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Pitiless Plunderer",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6473
+      ],
+      "json_name": "Pitiless Plunderer",
+      "matched_on": "top_level_name",
+      "type_line": "Creature — Human Pirate",
+      "mana_cost": "{3}{B}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Plunge into Darkness",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        318
+      ],
+      "json_name": "Plunge into Darkness",
+      "matched_on": "top_level_name",
+      "type_line": "Instant",
+      "mana_cost": "{1}{B}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Sylvan Library",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        5722
+      ],
+      "json_name": "Sylvan Library",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment",
+      "mana_cost": "{1}{G}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Tom, Bert, and William",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        572
+      ],
+      "json_name": "Tom, Bert, and William",
+      "matched_on": "top_level_name",
+      "type_line": "Legendary Creature — Troll",
+      "mana_cost": "{3}{B}{G}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Victimize",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        1395
+      ],
+      "json_name": "Victimize",
+      "matched_on": "top_level_name",
+      "type_line": "Sorcery",
+      "mana_cost": "{2}{B}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:27-29 (§1 Added)",
+      "is_land": false
+    },
+    {
+      "name": "Ooze Garden",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        9128
+      ],
+      "json_name": "Ooze Garden",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment",
+      "mana_cost": "{1}{G}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:182 (§8.1 swap IN)",
+      "is_land": false
+    },
+    {
+      "name": "Scavenger's Talent",
+      "zone": "mainboard",
+      "quantity": 1,
+      "status": "found",
+      "json_indices": [
+        6767
+      ],
+      "json_name": "Scavenger's Talent",
+      "matched_on": "top_level_name",
+      "type_line": "Enchantment — Class",
+      "mana_cost": "{B}",
+      "source": "EVIDENCE/CP15_DECK_MIGRATION_AUDIT.md:183 (§8.1 swap IN)",
+      "is_land": false
+    }
+  ]
+}

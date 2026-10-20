@@ -46,13 +46,14 @@
 - Do not re-read files just edited.
 - Stop after 2 failed attempts at the same step.
 - Each stage ends, in order, with:
-  all code/version edits → gate run → `CP<nn>_PATCH_NOTES.md` → manifest re-pin → gate re-run
+  edits + `CP<nn>_PATCH_NOTES.md` → `py -3.14 build_manifest.py` → gate
   → `py -3.14 build_paste_me.py --stage CP<nn>` → commit → tag `rp-CP<nn>`
   → `git push; git push origin rp-CP<nn>`
   → `Get-Content PASTE_ME.md -Raw -Encoding UTF8 | Set-Clipboard`
   → final message states the PASTE_ME.md path and "copied to clipboard".
+  On gate failure: fix, re-pin, re-run gate.
   This applies to read-only stages too.
-  Never edit tracked files after the first gate run without re-running the gate.
+  Any tracked-file edit after the gate requires re-pin + gate re-run.
   Edit only the MANUAL section of PASTE_ME.md, and only when a decision changes.
 - Read-only audit stages also get CP<nn>_PATCH_NOTES.md; findings live in EVIDENCE/.
 - Every CP<nn>_PATCH_NOTES.md has "## Summary" (findings, decisions, open follow-ups; at most 12 lines).
@@ -74,9 +75,14 @@
   on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
 
 ## Next stages
-- CP25: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
+- Before CP26: user approval of the derived v3 list (EVIDENCE/CP25_V3_NAME_LOOKUP.md).
+- CP25 follow-up: golgari_commander.json has no colorless-identity cards; 8 v3 names are missing from it
+  (Altar of Dementia, Ashnod's Altar, Arcane Signet, Command Tower, High Market, Phyrexian Altar, Sol Ring,
+  Verdant Catacombs). The CP26 Oracle supplement must cover all 8.
 - CP26: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar) + v3 deck file as second
   target, delta cards UNMODELED. Mark C62, C63, C64, C85, C86 old-baseline-only. Derive
   oracle_cr_authenticated (run_validation.py:239) from a per-contract Oracle reference check.
+- Docs: README.md lines 63 and 66 still state pre-CP21 BLOCKED counts
+  for C65–C77 and C78–C94; reword as historical or update to CONTRACTS_C41_C94_STATUS.md.
 - Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer Oracle sourcing,
   A-S20-05, A-S20-09, HASTE_NAMES.
