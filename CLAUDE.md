@@ -2,7 +2,7 @@
 
 ## Layout
 - `tests/` — kernel reference suite (`test_*.py`), part of the 810-test gate.
-- `release_gate_tests/` — the 18 release integrity checks run by `run_validation.py`.
+- `release_gate_tests/` — the 20 release integrity checks run by `run_validation.py`.
 - `s9_tests/` — S9 land/mana layer fixtures.
 - `r01_tests/` — R01 Pest rescuer fixtures.
 - `r52_tests/` — R52 Village Rites fixtures.
@@ -14,7 +14,7 @@
 - `pab_kernel.py` is the only import point. Use `Game` / `PhysicalZoneGame` from it.
 
 ## Commands (Python 3.14.7 on Windows, PowerShell)
-- Full gate (expect `Ran 810 tests` / `OK`, and 18/18 in `VALIDATION_RESULTS.json`):
+- Full gate (expect `Ran 810 tests` / `OK`, and 20/20 in `VALIDATION_RESULTS.json`):
   `py -3.14 run_validation.py 2> ..\gate.txt | Out-Null; Get-Content ..\gate.txt -Tail 3`
 - Kernel suite only: `py -3.14 -m unittest discover -s tests -p "test_*.py" -q`
 - Re-pin after any tracked-file change: `py -3.14 build_manifest.py`
@@ -31,7 +31,7 @@
 ## Project rules
 - Two deck targets. Old baseline (Savra + 99 + Pest Summoning Lesson): frozen, the only gated deck,
   regression reference. PAB v3 (Savra + 99, no sideboard): frozen pending kernel completion, not gated,
-  not yet in the repo (deck file planned for CP21). Savra is the only irreplaceable card.
+  not yet in the repo (deck file planned for CP24). Savra is the only irreplaceable card.
 - Phase 9 is NO-GO. S21 not started.
 - No sweeps, rankings, card values, or performance claims.
 - 0 cards are certified until the registry is verified against code.
@@ -48,11 +48,15 @@
   gate run → `CP<nn>_PATCH_NOTES.md` → `py -3.14 build_paste_me.py --stage CP<nn>`
   → manifest re-pin → gate re-run → commit → tag `rp-CP<nn>`
   → `git push; git push origin rp-CP<nn>`
-  → `Get-Content PASTE_ME.md -Raw | Set-Clipboard`
+  → `Get-Content PASTE_ME.md -Raw -Encoding UTF8 | Set-Clipboard`
   → final message states the PASTE_ME.md path and "copied to clipboard".
   This applies to read-only stages too.
   Edit only the MANUAL section of PASTE_ME.md, and only when a decision changes.
 - Read-only audit stages also get CP<nn>_PATCH_NOTES.md; findings live in EVIDENCE/.
+- Every CP<nn>_PATCH_NOTES.md has "## Summary" (findings, decisions, open follow-ups; at most 12 lines).
+  `build_paste_me.py` copies it into PASTE_ME.md and refuses to run without it.
+- Stage-end bookkeeping, always in scope (read-only stages included): remove the closed stage from
+  "## Next stages" and add the follow-ups it raised.
 - Edits to this file also require a manifest re-pin (`py -3.14 build_manifest.py`).
 
 ## Open queue (see ISSUE_LEDGER_CP06.json for detail; closed items and their CPs: CP17_PATCH_NOTES.md)
@@ -66,17 +70,15 @@
 - `HASTE_NAMES` in `pab_combat_s17.py` is a hardcoded name list; keywords should come from card data.
 
 ## Next stages
-- CP19: read-only audit; findings to EVIDENCE/CP19_CONTRACT_PATH_AUDIT.md.
-  (a) Manifest `patches` (stops at CP06) and `scope` lag PROMOTED (through CP14);
-      find where build_manifest.py sets them.
-  (b) VALIDATION_RESULTS `unique_fixture_tests` 779 vs `tests_run` 810; explain or flag.
-  (c) For each C41–C99 test, which engine path it runs (frozen v0.7/v0.8 vs pab_kernel).
-      Flag BLOCKED_UNSUPPORTED contracts whose cards later layers model:
-      C82 / CP10c, C88–C90 / S20, C91–C93 / S16, C94 / A-S20-10.
-      Note old-baseline-only contracts: C62 Beledros, C85–C86 Rise of the Witch-king.
-  Nothing fixed in CP19.
-- CP20: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
-- CP21: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar)
-  + v3 deck file as second target; delta cards UNMODELED.
-- Then card modeling, ledger order: A-S20-10, auditor constant-resolution fix,
-  Pest Rescuer Oracle sourcing, A-S20-05, A-S20-09.
+- CP21: re-status C80–C86 and C88–C92 with PhysicalZoneGame tests (CP19 probe calls are the
+  skeleton), keeping the Game.add refusal tests as controls; honest STATUS/SUBSTITUTIONS.
+  Refresh the [n1] SUBSTITUTIONS text in C41, C42, C44, C57, C60, C78, C79, C87.
+  Add a release check: every BLOCKED_UNSUPPORTED contract's card is refused on PhysicalZoneGame
+  (C50, C62 remain).
+- CP22: A-S20-10 (target bookkeeping for Witherbloom Command, Grist -2), then re-status C93, C94.
+- CP23: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
+- CP24: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar) + v3 deck file as second
+  target, delta cards UNMODELED. Mark C62, C63, C64, C85, C86 old-baseline-only. Derive
+  oracle_cr_authenticated (run_validation.py:239) from a per-contract Oracle reference check.
+- Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer Oracle sourcing,
+  A-S20-05, A-S20-09, HASTE_NAMES.

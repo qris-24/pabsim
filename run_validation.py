@@ -27,6 +27,11 @@ RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
 REFERENCE_TEST_COUNT=810   # sum of per-file counts asserted below
+TEST_DEF_RE=re.compile(r'^\s+def test_',re.M)   # one shared definition; build_manifest.py imports it
+
+def count_test_defs(path):
+    """Static `def test_` count of one test file (no import). Shared with build_manifest.py."""
+    return len(TEST_DEF_RE.findall(Path(path).read_text()))
 
 def sha(path):
     path=Path(path)
@@ -113,7 +118,7 @@ def preflight(root=ROOT):
     assert regenerated==registry_bytes, 'coverage registry is stale: on-disk PABTRV3_CARD_COVERAGE.json != build_registry.build()'
 
     # Suite shape (static counts; preflight imports no test modules).
-    def n(f): return len(re.findall(r'^\s+def test_',(root/'tests'/f).read_text(),re.M))
+    def n(f): return count_test_defs(root/'tests'/f)
     assert sum(n(p) for p in OLD_TEST_FILES)==149, 'v0.5 regression contracts changed'
     assert n('test_c41_c47_contracts.py')==19, 'test_c41_c47_contracts.py count'
     assert n('test_c48_c64_contracts.py')==34, 'test_c48_c64_contracts.py count'
@@ -251,8 +256,8 @@ def run_suites(root=ROOT,J=None):
         if not g.wasSuccessful() or g.skipped: gate_errors=[log.getvalue()]
 
     result={
-     'scope':'v0.5 events + v0.6 physical zones + v0.7 bounded zone bridge + v0.8 shared-mana and mirrored token reference; NOT a playable engine',
-     'release':'v0.8+R02+R01 promoted (runner integrity; Pest Rescuer token predicate in kernel; audit repairs CP02-CP06, CP10a-c, CP13, CP14; frozen files untouched) through CP16',
+     'scope':'v0.5 events + v0.6 physical zones + v0.7 bounded zone bridge + v0.8 shared-mana and mirrored token reference, plus the promoted layers '+'+'.join(pab_kernel.PROMOTED)+'; NOT a playable engine',   # CP20: derived from pab_kernel.PROMOTED
+     'release':'v0.8 with promoted patches '+', '.join(pab_kernel.PROMOTED)+' (frozen files untouched)',   # CP20: derived from pab_kernel.PROMOTED
      'frozen_deck_verified':True,
      'mainboard':99,'lands':34,'nonlands':65,'commander':1,'lesson_sideboard':1,
      'tests_run':out.testsRun,

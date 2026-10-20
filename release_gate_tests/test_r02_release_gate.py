@@ -115,6 +115,17 @@ class TamperFailClosed(unittest.TestCase):
             p.write_text(json.dumps(M,indent=2,sort_keys=True)+'\n')
         self._expect(m,'R02 manifest must not pin runner output')
 
+class ManifestMetadata(unittest.TestCase):
+    """CP20: builder-derived manifest keys must agree with the kernel and the runner (shipped manifest, not a clone)."""
+    def _manifest(self): return json.loads((ROOT/'PHASE8_R02_FILE_MANIFEST.json').read_text())
+    def test_manifest_patches_equal_kernel_promoted(self):
+        if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
+        import pab_kernel
+        self.assertEqual(self._manifest()['patches'],list(pab_kernel.PROMOTED))
+    def test_manifest_unique_fixture_tests_equal_reference_count(self):
+        rv=load(ROOT,'run_validation')
+        self.assertEqual(self._manifest()['unique_fixture_tests'],rv.REFERENCE_TEST_COUNT)
+
 class EndToEnd(unittest.TestCase):
     def test_shipped_command_runs_twice_cleanly(self):
         """`python run_validation.py` must succeed, leave inputs untouched, and

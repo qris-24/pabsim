@@ -4,9 +4,11 @@ Usage:  py -3.14 build_paste_me.py --stage CP<nn>
 
 Writes only the text between <!-- AUTO:START --> and <!-- AUTO:END --> in
 PASTE_ME.md. The MANUAL section and the markers themselves are never touched.
-Exits non-zero, without writing, if a marker, VALIDATION_RESULTS.json or one of
-the required CLAUDE.md sections is missing. Standard library only. LF endings.
-Output is identical between runs except the build timestamp.
+Exits non-zero, without writing, if a marker, VALIDATION_RESULTS.json, one of
+the required CLAUDE.md sections, or the closing stage's CP<nn>_PATCH_NOTES.md
+"## Summary" section is missing. Standard library only. Written as UTF-8
+without BOM, LF endings. Output is identical between runs except the build
+timestamp.
 """
 import argparse
 import datetime
@@ -37,7 +39,7 @@ def fail(msg):
 
 def read(path):
     with open(path, 'r', encoding='utf-8', newline='') as fh:
-        return fh.read()
+        return fh.read().lstrip('\ufeff')
 
 
 def git(*args):
@@ -52,7 +54,8 @@ def git(*args):
 
 
 def claude_section(text, heading):
-    """Return the section (heading line through the line before the next '## ')."""
+    """Return the section (heading line through the line before the next '## ').
+    Used for CLAUDE.md sections and for the patch notes' '## Summary'."""
     lines = text.split('\n')
     start = None
     for i, line in enumerate(lines):
@@ -102,11 +105,24 @@ def patch_notes():
     return rows
 
 
+def stage_summary(stage):
+    """The '## Summary' section of CP<nn>_PATCH_NOTES.md for the closing stage."""
+    name = '%s_PATCH_NOTES.md' % stage
+    path = os.path.join(ROOT, name)
+    if not os.path.isfile(path):
+        fail('missing %s' % path)
+    sec = claude_section(read(path), '## Summary')
+    if sec is None:
+        fail('%s has no "## Summary" section' % name)
+    return name, sec
+
+
 def build_auto(stage):
     if not os.path.isfile(RESULTS):
         fail('missing %s' % RESULTS)
     if not os.path.isfile(CLAUDE_MD):
         fail('missing %s' % CLAUDE_MD)
+    notes_name, summary = stage_summary(stage)
     with open(RESULTS, 'r', encoding='utf-8') as fh:
         res = json.load(fh)
     claude = read(CLAUDE_MD)
@@ -135,7 +151,10 @@ def build_auto(stage):
     out.append('- Branch: %s' % branch)
     out.append('- HEAD (parent of this stage\'s commit): %s' % head)
     out.append('- Latest rp-CP tag: %s' % latest_tag())
-    out.append('- Uncommitted files (git status --porcelain): %s' % dirty)
+    out.append('- Uncommitted files (before stage commit) (git status --porcelain): %s' % dirty)
+    out.append('')
+    out.append('<!-- %s ## Summary (verbatim) -->' % notes_name)
+    out.append(summary)
     out.append('')
     out.append('## Gate (VALIDATION_RESULTS.json)')
     out.append('- tests_run / tests_passed: %s / %s'
@@ -175,8 +194,8 @@ def main():
         fail('AUTO markers missing or out of order in PASTE_ME.md')
     auto = build_auto(args.stage)
     new = current[:s + len(AUTO_START)] + '\n' + auto + current[e:]
-    new = new.replace('\r\n', '\n')
-    with open(PASTE_ME, 'w', encoding='utf-8', newline='\n') as fh:
+    new = new.replace('\r\n', '\n').replace('\r', '\n')
+    with open(PASTE_ME, 'w', encoding='utf-8', newline='\n') as fh:   # utf-8 (no BOM), LF
         fh.write(new)
     sys.stdout.write('%s %d bytes\n' % (PASTE_ME, os.path.getsize(PASTE_ME)))
 

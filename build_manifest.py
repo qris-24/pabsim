@@ -9,6 +9,9 @@ import hashlib, json, sys
 from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
+if str(HERE) not in sys.path: sys.path.insert(0,str(HERE))
+import pab_kernel                                   # CP20: patches/scope derived from the kernel
+from run_validation import count_test_defs          # CP20: the one shared `def test_` counter
 NAME='PHASE8_R02_FILE_MANIFEST.json'
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
 
@@ -22,11 +25,11 @@ def build(root=HERE):
         (outputs if rel in RUNNER_OUTPUTS else files)[rel]=sha(p)  # top-level only; nested frozen copies are inputs
     return {
       'build':'pab_reliability_v0_8_r02_r01',
-      'scope':'frozen Savra deterministic rules reference only; R02 runner integrity + R01 Pest Rescuer token predicate + R47 Roaster resolution-time count + R48 zero-toughness SBA promoted; frozen files, deck and Oracle untouched',
-      'patches':["R02", "R01", "R47", "R48", "R49", "S1", "S2", "S3", "S4", "S5", "S6", "R52", "R53", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19", "S20", "CP02", "CP03", "CP04", "CP06"],
+      'scope':'frozen Savra deterministic rules reference only, kernel '+pab_kernel.KERNEL_VERSION+' promoted in layers; frozen files, deck and Oracle untouched.',
+      'patches':list(pab_kernel.PROMOTED),
       'parent_manifest':'PHASE8_FILE_MANIFEST.json',
       'baseline_sha256':sha(root/'upstream_frozen/FROZEN_PABTRV3_BASELINE.txt'),
-      'unique_fixture_tests':779,
+      'unique_fixture_tests':sum(count_test_defs(f) for f in sorted((root/'tests').glob('test_*.py'))),
       'full_card_verified':0,
       'files_sha256':files,
       'runner_outputs_sha256_at_build':outputs,
