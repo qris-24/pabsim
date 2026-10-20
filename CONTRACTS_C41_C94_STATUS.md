@@ -110,3 +110,19 @@ C41–C94 counts after CP21 (the table at the top is the R02-era snapshot and is
 | PARTIAL_EXECUTED | 3 | 8 |
 
 C50 and C62 define `KERNEL_PROBE`; release check `BlockedContractsProbed` (21st) fails if a BLOCKED_UNSUPPORTED class has no probe or its probe reports the action accepted on PhysicalZoneGame. SUBSTITUTIONS text for C41, C42, C44, C57, C60, C78, C79, C87 now names the layer that models the card (CP19 note n1); statuses unchanged.
+
+## C95–C99 (in VALIDATION_RESULTS.json, previously undocumented)
+
+Added in CP22 (docs only; no status or test changes). Values from `VALIDATION_RESULTS.json → contracts_executed` and the live classes: C95, C96, C98, C99 in `tests/test_turn_clock_s2.py`; C97 in `tests/test_priority_s3.py`. None Oracle/CR-authenticated.
+
+| Contract | Issues | Status | Tests | Expected failures |
+|---|---|---|---:|---:|
+| C95 | R50,R01 | EXECUTED | 3 | 0 |
+| C96 | R51 | EXECUTED | 4 | 0 |
+| C97 | R24,R48 | EXECUTED_WITH_SUBSTITUTION | 3 | 0 |
+| C98 | R22,R32,R50 | EXECUTED | 5 | 0 |
+| C99 | R49,R32 | EXECUTED | 2 | 0 |
+
+C97 substitution: the synthetic "one effect gives two creatures -1/-1" is applied by direct `minus_counters` mutation; no card is modeled for it.
+
+All 59 contracts in `VALIDATION_RESULTS.json` (C41–C99) after CP22: EXECUTED 28, EXECUTED_WITH_SUBSTITUTION 21, PARTIAL_EXECUTED 8, BLOCKED_UNSUPPORTED 2.

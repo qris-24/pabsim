@@ -77,6 +77,7 @@
   (PARTIAL_EXECUTED since CP21; the gap is the only unasserted claim besides C94's opponent mill).
 - Docs follow-up (from CP21): README.md and C78_C94_EXECUTION_NOTES.md still describe C80–C94 as
   BLOCKED_UNSUPPORTED; the CP21 re-status is recorded only in CONTRACTS_C41_C94_STATUS.md.
+  C95–C99 are now documented there (CP22); README.md and C78_C94_EXECUTION_NOTES.md stay open.
 - CP23: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
 - CP24: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar) + v3 deck file as second
   target, delta cards UNMODELED. Mark C62, C63, C64, C85, C86 old-baseline-only. Derive
