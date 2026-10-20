@@ -37,12 +37,14 @@ class OracleSubjects(unittest.TestCase):
                 self.assertIsInstance(entry['subjects'],list); self.assertTrue(entry['subject_basis'].strip())
                 self.assertEqual(sorted(set(entry['subjects'])-self.literals[cid]),[])
 
-    def test_c45_false_skullclamp_missing(self):
-        self.assertFalse(self.result['C45']['oracle_referenced'])
-        self.assertIn('Skullclamp',self.result['C45']['oracle_subjects_missing'])
+    def test_c45_true_skullclamp_covered(self):   # CP31 (approved): Skullclamp Oracle text from scryfall_cp31; was False/missing
+        self.assertTrue(self.result['C45']['oracle_referenced'])
+        self.assertEqual(self.result['C45']['oracle_subjects_missing'],[])
+        self.assertEqual(self.excerpt['cards']['Skullclamp']['source'],'scryfall_cp31')
 
-    def test_c76_false(self):
-        self.assertFalse(self.result['C76']['oracle_referenced'])
+    def test_c76_true(self):   # CP31 (approved): both subject lands sourced from scryfall_cp31; was False
+        self.assertTrue(self.result['C76']['oracle_referenced'])
+        self.assertEqual(self.result['C76']['oracle_subjects_missing'],[])
 
     def test_c96_false_with_no_subjects(self):
         self.assertEqual(self.mapping['contracts']['C96']['subjects'],[])

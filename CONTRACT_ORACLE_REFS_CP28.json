@@ -26,8 +26,11 @@
     ], "note": "Persistence of a granted trigger after its host leaves is CR, not Oracle text; the command-zone move is an exogenous stand-in (SUBSTITUTIONS).", "subjects": ["Agent of the Iron Throne", "Mirkwood Bats"], "subject_basis": "test_A_savra_in_command_zone_only_bats, test_B_granted_trigger_persists_after_host_leaves; Savra is only the SAVRA constant (no literal)"},
     "C45": {"refs": [
       {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a black creature"},
-      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a green creature, you may gain 2 life."}
-    ], "note": "Subject card Skullclamp is in neither source (golgari_commander.json has no colorless-identity objects; not in the supplement): its Oracle text is not referenced. Zero-toughness death is CR 704.5f, not Oracle text.", "subjects": ["Skullclamp"], "subject_basis": "test_equip_1_1_pest_sba_death_no_sacrifice asserts the Skullclamp equipped-death draw; Savra is only the SAVRA constant"},
+      {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a green creature, you may gain 2 life."},
+      {"card": "Skullclamp", "fragment": "Equipped creature gets +1/-1."},
+      {"card": "Skullclamp", "fragment": "Whenever equipped creature dies, draw two cards."},
+      {"card": "Skullclamp", "fragment": "Equip {1}"}
+    ], "note": "CP31: Skullclamp Oracle text comes from the Scryfall source (decks/ORACLE_SOURCE_SCRYFALL_CP31.json, excerpt source scryfall_cp31); golgari_commander.json has no colorless-identity objects. Zero-toughness death is CR 704.5f, not Oracle text.", "subjects": ["Skullclamp"], "subject_basis": "test_equip_1_1_pest_sba_death_no_sacrifice asserts the Skullclamp equipped-death draw; Savra is only the SAVRA constant"},
     "C46": {"refs": [
       {"card": "Tend the Pests", "fragment": "As an additional cost to cast this spell, sacrifice a creature."},
       {"card": "Tend the Pests", "fragment": "where X is the sacrificed creature's power"}
@@ -170,7 +173,10 @@
       {"card": "Takenuma, Abandoned Mire", "fragment": "This ability costs {1} less to activate for each legendary creature you control."},
       {"card": "Boseiju, Who Endures", "fragment": "Destroy target artifact, enchantment, or nonbasic land an opponent controls."}
     ], "note": "PARTIAL_EXECUTED: Boseiju is refused (no legal target). Legendary status is type-line data, not Oracle text.", "subjects": ["Takenuma, Abandoned Mire", "Boseiju, Who Endures"], "subject_basis": "test_takenuma_discount_and_boseiju_refused; Yawgmoth/Dina/Yahenni are counted legends"},
-    "C76": {"refs": [], "note": "Subject cards Geier Reach Sanitarium and Mikokoro, Center of the Sea are in neither source (not in golgari_commander.json, not in the supplement): no Oracle text can be referenced.", "subjects": ["Geier Reach Sanitarium", "Mikokoro, Center of the Sea"], "subject_basis": "test_controller_side_of_the_symmetric_draws; Forest is a fixture land"},
+    "C76": {"refs": [
+      {"card": "Geier Reach Sanitarium", "fragment": "{2}, {T}: Each player draws a card, then discards a card."},
+      {"card": "Mikokoro, Center of the Sea", "fragment": "{2}, {T}: Each player draws a card."}
+    ], "note": "CP31: Oracle text for both subject cards comes from the Scryfall source (decks/ORACLE_SOURCE_SCRYFALL_CP31.json, excerpt source scryfall_cp31); neither is in golgari_commander.json or the supplement. Only the controller's side of each symmetric draw is executed.", "subjects": ["Geier Reach Sanitarium", "Mikokoro, Center of the Sea"], "subject_basis": "test_controller_side_of_the_symmetric_draws; Forest is a fixture land"},
     "C77": {"refs": [
       {"card": "Command Tower", "fragment": "{T}: Add one mana of any color in your commander's color identity."},
       {"card": "Forest", "fragment": "({T}: Add {G}.)"},

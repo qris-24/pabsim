@@ -156,7 +156,7 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(reg_before,(d/'PABTRV3_CARD_COVERAGE.json').read_bytes())
         self.assertEqual(man_before,(d/'PHASE8_R02_FILE_MANIFEST.json').read_bytes())
         res=json.loads((d/'VALIDATION_RESULTS.json').read_text())
-        self.assertEqual((res['tests_run'],res['tests_passed']),(857,857))
+        self.assertEqual((res['tests_run'],res['tests_passed']),(861,861))
         self.assertEqual(res['candidate_historical_contract_passes'],149)
         self.assertEqual(res['phase8_previous_bridge_contract_passes'],52)
         self.assertEqual(res['kernel_legacy_149_replay_failures'],sorted(['test_112_teacher_pest_blocks_rescuer_at_upkeep_start','test_113_teacher_pest_entered_before_rescuer_trigger_resolves','test_91_village_rejects_mana_shortage_before_sac']))

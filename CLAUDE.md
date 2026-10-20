@@ -9,6 +9,9 @@
 - `decks/` — PAB v3 second deck target (CP26): Archidekt export, `PAB_V3.json`, `PAB_V3_ORACLE_SUPPLEMENT.json`; not gated.
 - `decks/ORACLE_EXCERPT_CP28.json` — pinned Oracle text (CP28) for the cards the contract references name; the
   gate's only Oracle text source (never C:\pabsim\data). Built by `build_oracle_excerpt.py` (repo root; not run by the gate).
+- `decks/ORACLE_SOURCE_SCRYFALL_CP31.json` — third pinned Oracle source (CP31; Scryfall card fields verbatim, excerpt
+  source `scryfall_cp31`, lookup order golgari_commander.json, supplement, scryfall); never edited.
+- `decks/CP31_SCRYFALL_DECK_EXPORT.json` — the user's Scryfall deck export supplying the printing ids (sha256 in the source file).
 - `CONTRACT_ORACLE_REFS_CP28.json` — per-contract (C41–C99) Oracle references {card, fragment} + note; drives
   `oracle_referenced` / `oracle_refs_checked` in VALIDATION_RESULTS.json. `oracle_cr_authenticated` stays False (no CR text).
 - `frozen_*/` — frozen phase 5/6/7 and previous-test snapshots; read-only.
@@ -75,7 +78,9 @@
   Infuse correction done; Darkbore Pathway WEAK; nothing certified).
 - A-S20-09: inherited v0.8 counters and S20 path counters coexist.
 - Auditor constant-resolution fix.
-- Pest Rescuer Oracle sourcing.
+- Pest Rescuer fires on every upkeep per Oracle; the R01 docstring (`pab_r01_pest_rescuer.py:4`) quotes "your upkeep".
+  CP31 finding: the S2 clock already fires it on every seat's upkeep (C95), so only the docstring text is wrong
+  (EVIDENCE/CP31_PEST_RESCUER_ORACLE.md).
 - `HASTE_NAMES` in `pab_combat_s17.py` is a hardcoded name list; keywords should come from card data.
 - CP21 claims left unasserted (no model): C83 "can't be countered" (no counterspell model), C84
   opponent basic-land search, C92 Grist +1 Insect-card repeat (unreachable with the deck), C94 mode 1
@@ -91,10 +96,6 @@
   reference at least one old-baseline-only card and are not marked. Review their subject cards.
 - CP28 follow-up: contracts whose rules need CR text (none in the repo): C96 has `refs: []` (mana emptying,
   CR 106.4); CR-only parts of other contracts are named in their CONTRACT_ORACLE_REFS_CP28.json notes.
-- CP28 follow-up: cards in neither Oracle source: Skullclamp (C45 subject; C45 references only Savra),
-  Geier Reach Sanitarium and Mikokoro, Center of the Sea (C76 has `refs: []`). Source their Oracle text.
-- CP29 follow-up: False because a subject card has no Oracle text (need Oracle sourcing): C45 (Skullclamp),
-  C76 (Geier Reach Sanitarium, Mikokoro, Center of the Sea).
 - CP29 follow-up: False because `subjects: []` (subject card not a string literal in the class, or a stand-in):
   C64 (Hunt for Specimens), C68 (Pathway via PATHWAY), C69 (Nature's Lore / Sakura-Tribe Elder), C79 (Heroic
   Intervention stand-in), C87 (Grisly Salvage stand-in); C96 is rules-only. User (CP29): accepted False for now.
@@ -102,5 +103,5 @@
 - CP28 follow-up: C51/C52 SUBSTITUTIONS say Chatterfang "-X/-X"; the Oracle text says "+X/-X". Review the wording.
 - CP27 follow-up: CONTRACTS_C41_C94_STATUS.md has no C65–C77 re-status section; check its C65–C77
   table rows against VALIDATION_RESULTS.json (live: C69, C75, C76 PARTIAL_EXECUTED; rest EXECUTED).
-- Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer Oracle sourcing,
+- Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer R01 docstring text,
   A-S20-05, A-S20-09, HASTE_NAMES.

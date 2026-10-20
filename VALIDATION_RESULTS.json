@@ -98,11 +98,9 @@
       ],
       "oracle_cr_authenticated": false,
       "oracle_ref_errors": [],
-      "oracle_referenced": false,
-      "oracle_refs_checked": 2,
-      "oracle_subjects_missing": [
-        "Skullclamp"
-      ],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 5,
+      "oracle_subjects_missing": [],
       "status": "EXECUTED",
       "substitutions": [],
       "tests_passed": 2,
@@ -685,12 +683,9 @@
       ],
       "oracle_cr_authenticated": false,
       "oracle_ref_errors": [],
-      "oracle_referenced": false,
-      "oracle_refs_checked": 0,
-      "oracle_subjects_missing": [
-        "Geier Reach Sanitarium",
-        "Mikokoro, Center of the Sea"
-      ],
+      "oracle_referenced": true,
+      "oracle_refs_checked": 2,
+      "oracle_subjects_missing": [],
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
         "S14: the controller's side executed \u2014 Sanitarium draws then discards, Mikokoro only draws, both {2} + tap, no tokens. Opponents have no hands or libraries (S8), so their draws/discards are traced as unmodeled, not asserted."
@@ -1126,7 +1121,7 @@
       "unexpected_successes": 0
     }
   },
-  "contracts_oracle_referenced": 51,
+  "contracts_oracle_referenced": 53,
   "errors": 0,
   "event_tokens_mirrored_with_distinct_physical_uids_in_v08": true,
   "existing_v05_event_kernel_modified": false,
@@ -1242,8 +1237,8 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "tests_passed": 857,
-  "tests_run": 857,
+  "tests_passed": 861,
+  "tests_run": 861,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

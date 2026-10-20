@@ -69,6 +69,10 @@
       "oracle_text": "({T}: Add {G}.)",
       "source": "golgari_commander.json"
     },
+    "Geier Reach Sanitarium": {
+      "oracle_text": "{T}: Add {C}.\n{2}, {T}: Each player draws a card, then discards a card.",
+      "source": "scryfall_cp31"
+    },
     "Golgari Charm": {
       "oracle_text": "Choose one —\n• All creatures get -1/-1 until end of turn.\n• Destroy target enchantment.\n• Regenerate each creature you control.",
       "source": "golgari_commander.json"
@@ -104,6 +108,10 @@
     "Llanowar Wastes": {
       "oracle_text": "{T}: Add {C}.\n{T}: Add {B} or {G}. This land deals 1 damage to you.",
       "source": "golgari_commander.json"
+    },
+    "Mikokoro, Center of the Sea": {
+      "oracle_text": "{T}: Add {C}.\n{2}, {T}: Each player draws a card.",
+      "source": "scryfall_cp31"
     },
     "Mirkwood Bats": {
       "oracle_text": "Flying\nWhenever you create or sacrifice a token, each opponent loses 1 life.",
@@ -173,6 +181,10 @@
       "oracle_text": "{1}{G}, {T}, Return Shigeki to its owner's hand: Reveal the top four cards of your library. You may put a land card from among them onto the battlefield tapped. Put the rest into your graveyard.\nChannel — {X}{X}{G}{G}, Discard this card: Return X target nonlegendary cards from your graveyard to your hand.",
       "source": "golgari_commander.json"
     },
+    "Skullclamp": {
+      "oracle_text": "Equipped creature gets +1/-1.\nWhenever equipped creature dies, draw two cards.\nEquip {1}",
+      "source": "scryfall_cp31"
+    },
     "Sol Ring": {
       "oracle_text": "{T}: Add {C}{C}.",
       "source": "supplement"
@@ -241,6 +253,10 @@
     "golgari_commander.json": {
       "path": "C:\\pabsim\\data\\golgari_commander.json",
       "sha256": "f184c661a0ca6839eae6a7f41e333f7c66e08aaf2e1b9100e356ef5e2f4d8fb9"
+    },
+    "scryfall": {
+      "path": "decks/ORACLE_SOURCE_SCRYFALL_CP31.json",
+      "sha256": "88938b3389ac0f3c1d5fb5faf124a4d6861033d67611a62aa26692c4585c1547"
     },
     "supplement": {
       "path": "decks/PAB_V3_ORACLE_SUPPLEMENT.json",

@@ -1,0 +1,156 @@
+{
+  "object": "deck",
+  "id": "cf7a5164-c41e-4b79-95d1-725274aff029",
+  "name": "Yogurt Carbonated Combo 86",
+  "format": null,
+  "layout": "list",
+  "uri": "https://api.scryfall.com/decks/cf7a5164-c41e-4b79-95d1-725274aff029",
+  "scryfall_uri": "https://scryfall.com/@qris24/decks/cf7a5164-c41e-4b79-95d1-725274aff029",
+  "description": null,
+  "trashed": false,
+  "in_compliance": true,
+  "sections": {
+    "primary": [
+      "columna"
+    ],
+    "secondary": [
+      "columnb"
+    ]
+  },
+  "entries": {
+    "columna": [
+      {
+        "object": "deck_entry",
+        "id": "7bc697c7-9483-4950-a8b0-cf845d99ca13",
+        "deck_id": "cf7a5164-c41e-4b79-95d1-725274aff029",
+        "section": "columna",
+        "cardinality": 93.98,
+        "count": 1,
+        "raw_text": "",
+        "found": false,
+        "printing_specified": false,
+        "finish": false,
+        "card_digest": null
+      },
+      {
+        "object": "deck_entry",
+        "id": "177659c3-c9ce-4347-a7eb-2a839967c769",
+        "deck_id": "cf7a5164-c41e-4b79-95d1-725274aff029",
+        "section": "columna",
+        "cardinality": 305.73,
+        "count": 1,
+        "raw_text": "1 Skullclamp",
+        "found": true,
+        "printing_specified": true,
+        "finish": "nonfoil",
+        "card_digest": {
+          "object": "card_digest",
+          "id": "1d8b007b-3169-4ee3-80c7-781fc096fc7a",
+          "oracle_id": "65986c1b-8e51-4604-b685-d82fa7d1263a",
+          "name": "Skullclamp",
+          "scryfall_uri": "https://scryfall.com/card/msc/210/skullclamp",
+          "mana_cost": "{1}",
+          "type_line": "Artifact — Equipment",
+          "collector_number": "210",
+          "set": "msc",
+          "image_uris": {
+            "front": "https://cards.scryfall.io/large/front/1/d/1d8b007b-3169-4ee3-80c7-781fc096fc7a.jpg?1783903215"
+          }
+        }
+      },
+      {
+        "object": "deck_entry",
+        "id": "953982ba-86ac-446a-aa1d-9e9b8629f066",
+        "deck_id": "cf7a5164-c41e-4b79-95d1-725274aff029",
+        "section": "columna",
+        "cardinality": 306.73,
+        "count": 1,
+        "raw_text": "1 Mikokoro, Center of the Sea",
+        "found": true,
+        "printing_specified": true,
+        "finish": "nonfoil",
+        "card_digest": {
+          "object": "card_digest",
+          "id": "d80eb098-5433-4b1e-aad5-0fd31bf598dd",
+          "oracle_id": "a4580a1d-141e-449b-9018-e0258130634b",
+          "name": "Mikokoro, Center of the Sea",
+          "scryfall_uri": "https://scryfall.com/card/dmc/217/mikokoro-center-of-the-sea",
+          "mana_cost": "",
+          "type_line": "Legendary Land",
+          "collector_number": "217",
+          "set": "dmc",
+          "image_uris": {
+            "front": "https://cards.scryfall.io/large/front/d/8/d80eb098-5433-4b1e-aad5-0fd31bf598dd.jpg?1783921384"
+          }
+        }
+      },
+      {
+        "object": "deck_entry",
+        "id": "cb4c5dd2-596d-46ad-83b0-4705d1c7fd77",
+        "deck_id": "cf7a5164-c41e-4b79-95d1-725274aff029",
+        "section": "columna",
+        "cardinality": 307.73,
+        "count": 1,
+        "raw_text": "1 Geier Reach Sanitarium",
+        "found": true,
+        "printing_specified": true,
+        "finish": "nonfoil",
+        "card_digest": {
+          "object": "card_digest",
+          "id": "4b9c92f0-4242-4a3e-9ede-6a4935f5c75d",
+          "oracle_id": "7b9fafe7-d26a-4ed5-b4c4-ce13763770b5",
+          "name": "Geier Reach Sanitarium",
+          "scryfall_uri": "https://scryfall.com/card/lcc/335/geier-reach-sanitarium",
+          "mana_cost": "",
+          "type_line": "Legendary Land",
+          "collector_number": "335",
+          "set": "lcc",
+          "image_uris": {
+            "front": "https://cards.scryfall.io/large/front/4/b/4b9c92f0-4242-4a3e-9ede-6a4935f5c75d.jpg?1783913830"
+          }
+        }
+      },
+      {
+        "object": "deck_entry",
+        "id": "105c7778-d007-4b9c-9a8a-4e4cc73039d2",
+        "deck_id": "cf7a5164-c41e-4b79-95d1-725274aff029",
+        "section": "columna",
+        "cardinality": 308.73,
+        "count": 1,
+        "raw_text": "1 Pest Rescuer",
+        "found": true,
+        "printing_specified": true,
+        "finish": "nonfoil",
+        "card_digest": {
+          "object": "card_digest",
+          "id": "1f2a066a-7bcd-4e9d-8e52-0769cd6c8124",
+          "oracle_id": "02be0b99-d40b-4287-989b-12eb2701115c",
+          "name": "Pest Rescuer",
+          "scryfall_uri": "https://scryfall.com/card/soc/42/pest-rescuer",
+          "mana_cost": "{2}{G}",
+          "type_line": "Creature — Dryad Druid",
+          "collector_number": "42",
+          "set": "soc",
+          "image_uris": {
+            "front": "https://cards.scryfall.io/large/front/1/f/1f2a066a-7bcd-4e9d-8e52-0769cd6c8124.jpg?1783903854"
+          }
+        }
+      }
+    ],
+    "columnb": [
+      {
+        "object": "deck_entry",
+        "id": "ca9854fb-353a-493b-9e05-cb8caf743667",
+        "deck_id": "cf7a5164-c41e-4b79-95d1-725274aff029",
+        "section": "columnb",
+        "cardinality": 304.73,
+        "count": 1,
+        "raw_text": "",
+        "found": false,
+        "printing_specified": false,
+        "finish": false,
+        "card_digest": null
+      }
+    ]
+  }
+}

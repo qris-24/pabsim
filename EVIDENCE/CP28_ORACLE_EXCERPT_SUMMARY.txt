@@ -1,6 +1,7 @@
 CP28 Oracle excerpt build summary
 excerpt: decks/ORACLE_EXCERPT_CP28.json
-cards referenced: 58
+cards referenced: 61
 from golgari_commander.json: 54
 from supplement: 4
-missing (referenced but in neither source): 0 []
+from scryfall_cp31: 3
+missing (referenced but in no source): 0 []

@@ -26,7 +26,7 @@ R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt','PASTE_ME.md'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=857  # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=861  # sum of per-file counts asserted below
 TEST_DEF_RE=re.compile(r'^\s+def test_',re.M)   # one shared definition; build_manifest.py imports it
 
 def count_test_defs(path):
@@ -41,6 +41,7 @@ def sha(path):
 ORACLE_EXCERPT='decks/ORACLE_EXCERPT_CP28.json'      # CP28: the gate's only Oracle text source
 ORACLE_REFS='CONTRACT_ORACLE_REFS_CP28.json'
 ORACLE_SUPPLEMENT='decks/PAB_V3_ORACLE_SUPPLEMENT.json'
+ORACLE_SCRYFALL='decks/ORACLE_SOURCE_SCRYFALL_CP31.json'   # CP31: third pinned Oracle source
 _QUOTES=str.maketrans({'‘':"'",'’':"'",'“':'"','”':'"'})
 
 def oracle_normalize(text):
@@ -51,7 +52,7 @@ def oracle_reference_check(root,contract_ids,mapping=None,excerpt=None):
     """CP28: per contract, {'oracle_referenced','oracle_refs_checked','oracle_cr_authenticated','oracle_ref_errors',
     'oracle_subjects_missing'}. oracle_referenced is True only if the contract has refs and every fragment is found
     in its card's excerpt text; CP29: and it has subjects, each with excerpt text and at least one matching ref
-    (oracle_subjects_missing lists the subjects that fail this). Fails closed (never raises): a missing/unreadable excerpt or mapping, a supplement sha256 mismatch,
+    (oracle_subjects_missing lists the subjects that fail this). Fails closed (never raises): a missing/unreadable excerpt or mapping, a supplement or (CP31) scryfall sha256 mismatch,
     a contract absent from the mapping or a card absent from the excerpt makes the field False with an error.
     No CR text exists in the repo, so oracle_cr_authenticated is always False."""
     root=Path(root); errors=[]
@@ -65,6 +66,8 @@ def oracle_reference_check(root,contract_ids,mapping=None,excerpt=None):
         cards=excerpt['cards']
         if excerpt['sources']['supplement']['sha256']!=hashlib.sha256((root/ORACLE_SUPPLEMENT).read_bytes()).hexdigest():
             cards=None; errors.append(f'excerpt supplement sha256 != {ORACLE_SUPPLEMENT}')
+        if excerpt['sources']['scryfall']['sha256']!=hashlib.sha256((root/ORACLE_SCRYFALL).read_bytes()).hexdigest():
+            cards=None; errors.append(f'excerpt scryfall sha256 != {ORACLE_SCRYFALL}')
     except Exception as e:
         cards=None; errors.append(f'excerpt unavailable: {ORACLE_EXCERPT}: {type(e).__name__}')
     out={}
@@ -212,6 +215,7 @@ def preflight(root=ROOT):
     assert n('test_pab_v3_deck_cp26.py')==5, 'test_pab_v3_deck_cp26.py count'
     assert n('test_oracle_refs_cp28.py')==7, 'test_oracle_refs_cp28.py count'
     assert n('test_oracle_subjects_cp29.py')==7, 'test_oracle_subjects_cp29.py count'
+    assert n('test_oracle_source_cp31.py')==4, 'test_oracle_source_cp31.py count'
     total=sum(n(f.name) for f in (root/'tests').glob('test_*.py'))
     assert total==REFERENCE_TEST_COUNT, f'expected {REFERENCE_TEST_COUNT} reference tests, found {total}'
     return J

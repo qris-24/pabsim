@@ -1,0 +1,71 @@
+{
+  "build": "CP31",
+  "card_ids_from": {
+    "note": "user Scryfall deck export; supplies the printing ids",
+    "path": "decks/CP31_SCRYFALL_DECK_EXPORT.json",
+    "sha256": "54f9ed0e47e855b5d3192ecac98bde585a4c3284fee7008c044b81e7be7cb600"
+  },
+  "fetched_by": "Claude (cloud session), curl to api.scryfall.com/cards/<id>",
+  "fetched_utc": "2026-10-20T14:41Z",
+  "purpose": "Oracle text from the Scryfall API for Skullclamp, Geier Reach Sanitarium and Mikokoro, Center of the Sea (colorless identity, absent from golgari_commander.json) and Pest Rescuer (to authenticate the unverified snapshot text in pab_r01_pest_rescuer.py). Fields copied verbatim from each card object; raw_response_sha256 pins the fetched bytes (raw responses not kept: they carry volatile prices). Nothing here is certified.",
+  "records": [
+    {
+      "api_uri": "https://api.scryfall.com/cards/4b9c92f0-4242-4a3e-9ede-6a4935f5c75d",
+      "collector_number": "335",
+      "color_identity": [],
+      "id": "4b9c92f0-4242-4a3e-9ede-6a4935f5c75d",
+      "mana_cost": "",
+      "name": "Geier Reach Sanitarium",
+      "oracle_id": "7b9fafe7-d26a-4ed5-b4c4-ce13763770b5",
+      "oracle_text": "{T}: Add {C}.\n{2}, {T}: Each player draws a card, then discards a card.",
+      "raw_response_sha256": "72387fd9ef29d6082a27f055fa65e64280af1ccacc9281944303e4e1f316bd24",
+      "scryfall_uri": "https://scryfall.com/card/lcc/335/geier-reach-sanitarium?utm_source=api",
+      "set": "lcc",
+      "type_line": "Legendary Land"
+    },
+    {
+      "api_uri": "https://api.scryfall.com/cards/d80eb098-5433-4b1e-aad5-0fd31bf598dd",
+      "collector_number": "217",
+      "color_identity": [],
+      "id": "d80eb098-5433-4b1e-aad5-0fd31bf598dd",
+      "mana_cost": "",
+      "name": "Mikokoro, Center of the Sea",
+      "oracle_id": "a4580a1d-141e-449b-9018-e0258130634b",
+      "oracle_text": "{T}: Add {C}.\n{2}, {T}: Each player draws a card.",
+      "raw_response_sha256": "f39d974be7abff7b3d99b7862bfa2d3a1f32fb39cbd8f3b1301a70660ba9f5f8",
+      "scryfall_uri": "https://scryfall.com/card/dmc/217/mikokoro-center-of-the-sea?utm_source=api",
+      "set": "dmc",
+      "type_line": "Legendary Land"
+    },
+    {
+      "api_uri": "https://api.scryfall.com/cards/1f2a066a-7bcd-4e9d-8e52-0769cd6c8124",
+      "collector_number": "42",
+      "color_identity": [
+        "G"
+      ],
+      "id": "1f2a066a-7bcd-4e9d-8e52-0769cd6c8124",
+      "mana_cost": "{2}{G}",
+      "name": "Pest Rescuer",
+      "oracle_id": "02be0b99-d40b-4287-989b-12eb2701115c",
+      "oracle_text": "At the beginning of each upkeep, if you don't control a Pest creature token, create a 1/1 black and green Pest creature token with \"When this token dies, you gain 1 life.\"\nIf you would gain life, you gain that much life plus 1 instead.",
+      "raw_response_sha256": "e79839be24ab4891b3bca2a3d2c92b60956cb60412856a406f8b9314ef045d4a",
+      "scryfall_uri": "https://scryfall.com/card/soc/42/pest-rescuer?utm_source=api",
+      "set": "soc",
+      "type_line": "Creature — Dryad Druid"
+    },
+    {
+      "api_uri": "https://api.scryfall.com/cards/1d8b007b-3169-4ee3-80c7-781fc096fc7a",
+      "collector_number": "210",
+      "color_identity": [],
+      "id": "1d8b007b-3169-4ee3-80c7-781fc096fc7a",
+      "mana_cost": "{1}",
+      "name": "Skullclamp",
+      "oracle_id": "65986c1b-8e51-4604-b685-d82fa7d1263a",
+      "oracle_text": "Equipped creature gets +1/-1.\nWhenever equipped creature dies, draw two cards.\nEquip {1}",
+      "raw_response_sha256": "c2f31127da0a6a7db4e87e8283d785777cf679f1deb2c0a089bbe7976202cb5c",
+      "scryfall_uri": "https://scryfall.com/card/msc/210/skullclamp?utm_source=api",
+      "set": "msc",
+      "type_line": "Artifact — Equipment"
+    }
+  ]
+}
