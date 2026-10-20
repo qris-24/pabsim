@@ -1,7 +1,7 @@
 # CLAUDE.md — PABTRV3 kernel (pab_reliability_v0_8_r02_r01)
 
 ## Layout
-- `tests/` — kernel reference suite (`test_*.py`), part of the 828-test gate.
+- `tests/` — kernel reference suite (`test_*.py`), part of the gate (test count: REFERENCE_TEST_COUNT in run_validation.py (838 at CP24)).
 - `release_gate_tests/` — the 21 release integrity checks run by `run_validation.py`.
 - `s9_tests/` — S9 land/mana layer fixtures.
 - `r01_tests/` — R01 Pest rescuer fixtures.
@@ -14,7 +14,8 @@
 - `pab_kernel.py` is the only import point. Use `Game` / `PhysicalZoneGame` from it.
 
 ## Commands (Python 3.14.7 on Windows, PowerShell)
-- Full gate (expect `Ran 828 tests` / `OK`, and 21/21 in `VALIDATION_RESULTS.json`):
+- Full gate (expect `Ran N tests` / `OK`, N = REFERENCE_TEST_COUNT in run_validation.py (838 at CP24),
+  and 21/21 in `VALIDATION_RESULTS.json`):
   `py -3.14 run_validation.py 2> ..\gate.txt | Out-Null; Get-Content ..\gate.txt -Tail 3`
 - Kernel suite only: `py -3.14 -m unittest discover -s tests -p "test_*.py" -q`
 - Re-pin after any tracked-file change: `py -3.14 build_manifest.py`
@@ -31,7 +32,7 @@
 ## Project rules
 - Two deck targets. Old baseline (Savra + 99 + Pest Summoning Lesson): frozen, the only gated deck,
   regression reference. PAB v3 (Savra + 99, no sideboard): frozen pending kernel completion, not gated,
-  not yet in the repo (deck file planned for CP25). Savra is the only irreplaceable card.
+  not yet in the repo (deck file planned for CP26). Savra is the only irreplaceable card.
 - Phase 9 is NO-GO. S21 not started.
 - No sweeps, rankings, card values, or performance claims.
 - 0 cards are certified until the registry is verified against code.
@@ -45,12 +46,13 @@
 - Do not re-read files just edited.
 - Stop after 2 failed attempts at the same step.
 - Each stage ends, in order, with:
-  gate run → `CP<nn>_PATCH_NOTES.md` → `py -3.14 build_paste_me.py --stage CP<nn>`
-  → manifest re-pin → gate re-run → commit → tag `rp-CP<nn>`
+  all code/version edits → gate run → `CP<nn>_PATCH_NOTES.md` → manifest re-pin → gate re-run
+  → `py -3.14 build_paste_me.py --stage CP<nn>` → commit → tag `rp-CP<nn>`
   → `git push; git push origin rp-CP<nn>`
   → `Get-Content PASTE_ME.md -Raw -Encoding UTF8 | Set-Clipboard`
   → final message states the PASTE_ME.md path and "copied to clipboard".
   This applies to read-only stages too.
+  Never edit tracked files after the first gate run without re-running the gate.
   Edit only the MANUAL section of PASTE_ME.md, and only when a decision changes.
 - Read-only audit stages also get CP<nn>_PATCH_NOTES.md; findings live in EVIDENCE/.
 - Every CP<nn>_PATCH_NOTES.md has "## Summary" (findings, decisions, open follow-ups; at most 12 lines).
@@ -72,14 +74,8 @@
   on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
 
 ## Next stages
-- Docs follow-up (from CP21): README.md and C78_C94_EXECUTION_NOTES.md still describe C80–C94 as
-  BLOCKED_UNSUPPORTED; the CP21 re-status is recorded only in CONTRACTS_C41_C94_STATUS.md.
-  C95–C99 are now documented there (CP22); README.md and C78_C94_EXECUTION_NOTES.md stay open.
-  Since CP23 they should also show C93 EXECUTED and C94 PARTIAL_EXECUTED (opponent mill only).
-- Registry follow-up (from CP23): build_registry.py `contracts_blocked_unsupported` still lists
-  C80–C86, C88–C94 (pre-CP21); only C50, C62 are BLOCKED_UNSUPPORTED. Fix it with a registry re-pin.
-- CP24: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
-- CP25: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar) + v3 deck file as second
+- CP25: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
+- CP26: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar) + v3 deck file as second
   target, delta cards UNMODELED. Mark C62, C63, C64, C85, C86 old-baseline-only. Derive
   oracle_cr_authenticated (run_validation.py:239) from a per-contract Oracle reference check.
 - Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer Oracle sourcing,

@@ -33,7 +33,7 @@ Fix:
   → `run_suites()` → `main()`. The runner never writes the registry; it regenerates it in
   memory and fails closed if the shipped file is not byte-identical.
 - `PHASE8_R02_FILE_MANIFEST.json` (from `build_manifest.py`, build-only) pins every input.
-  Runner outputs (`VALIDATION_RESULTS.json`, `validation_stdout.txt`) are recorded, never verified.
+  Runner outputs (`VALIDATION_RESULTS.json`, `validation_stdout.txt`, `PASTE_ME.md` since CP24) are recorded, never verified.
   The legacy `PHASE8_FILE_MANIFEST.json` is still enforced for every file R02 did not re-version.
 - `release_gate_tests/`: separate suite (not part of the 311): determinism, double clean-clone
   build identity, read-only preflight, tamper cases requiring the specific failure message,
@@ -64,6 +64,7 @@ Promoted: import `Game`/`PhysicalZoneGame` from `pab_kernel.py`. Reference fixtu
 
 ## C78–C94 (R41–R46) executed — all 54 contracts now executed or probed
 `tests/test_c78_c94_contracts.py`: 23 fixtures; 2 EXECUTED_WITH_SUBSTITUTION, 1 DISAGREEMENT_OBSERVED (C79 → new issue R48), 14 BLOCKED_UNSUPPORTED. Reference fixtures: 419. Consolidated table: CONTRACTS_C41_C94_STATUS.md.
+Status after CP21/CP23 (CONTRACTS_C41_C94_STATUS.md): C78–C94 have no BLOCKED_UNSUPPORTED contract; EXECUTED C80, C81, C86, C88, C89, C93; EXECUTED_WITH_SUBSTITUTION C78, C79, C82, C85, C87, C90, C91; PARTIAL_EXECUTED C83, C84, C92, C94 (C94 opponent mill unasserted).
 
 ## R47 + R48 promoted
 `pab_r47_r48_sba.py` (Roaster resolution-time counter count; zero toughness as SBA, not destruction) layered on R01; `pab_kernel.py` now exports it. Reference fixtures: 420. See R47_R48_PATCH_NOTES.md.

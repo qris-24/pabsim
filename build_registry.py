@@ -89,7 +89,7 @@ def build(here=HERE):
       'superseded_frozen_v08_fixtures_s9':['test_274_unsupported_land_fails_closed','test_307_unsupported_named_nonbasic_mana_does_not_fallback'],
       'pest_rescuer_text_independently_authenticated':False,
       'contracts_executed_against_kernel':['C41','C42','C43','C44','C45','C46','C47','C48','C49','C51','C52','C53','C54','C55','C56','C57','C58','C59','C60','C61','C63','C64','C65','C66','C67','C68','C69','C70','C71','C72','C73','C74','C75','C76','C77','C78','C79','C87'],
-      'contracts_blocked_unsupported':['C50','C62','C80','C81','C82','C83','C84','C85','C86','C88','C89','C90','C91','C92','C93','C94'],
+      'contracts_blocked_unsupported':['C50','C62'],
       'unsupported_land_names_verified_fail_closed':18,   # frozen zones path; S9 bridge: 9 still fail closed
       'pest_rescuer_text_checked_against_two_web_sources_2026_10_18':'Aetherhub and EchoMTG both read "if you don\'t control a Pest creature token"; still not an official Oracle feed',
       'cr_evidence':'EVIDENCE/CR_20260619_EVIDENCE.json (MagicCompRules 20260619, official PDF)',

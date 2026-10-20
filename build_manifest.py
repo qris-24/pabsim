@@ -13,7 +13,7 @@ if str(HERE) not in sys.path: sys.path.insert(0,str(HERE))
 import pab_kernel                                   # CP20: patches/scope derived from the kernel
 from run_validation import count_test_defs          # CP20: the one shared `def test_` counter
 NAME='PHASE8_R02_FILE_MANIFEST.json'
-RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt'}
+RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt','PASTE_ME.md'}
 
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 

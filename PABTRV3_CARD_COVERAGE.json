@@ -1074,21 +1074,7 @@
     "contract_execution_status_source": "VALIDATION_RESULTS.json: contracts_executed (EXECUTED vs EXECUTED_WITH_SUBSTITUTION, with substitutions listed)",
     "contracts_blocked_unsupported": [
       "C50",
-      "C62",
-      "C80",
-      "C81",
-      "C82",
-      "C83",
-      "C84",
-      "C85",
-      "C86",
-      "C88",
-      "C89",
-      "C90",
-      "C91",
-      "C92",
-      "C93",
-      "C94"
+      "C62"
     ],
     "contracts_c41_c94_all_executed_or_probed": true,
     "contracts_c95_c99_status": "C95, C96, C98, C99 EXECUTED (tests/test_turn_clock_s2.py); C97 EXECUTED_WITH_SUBSTITUTION (tests/test_priority_s3.py)",
