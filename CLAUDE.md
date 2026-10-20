@@ -31,7 +31,7 @@
 ## Project rules
 - Two deck targets. Old baseline (Savra + 99 + Pest Summoning Lesson): frozen, the only gated deck,
   regression reference. PAB v3 (Savra + 99, no sideboard): frozen pending kernel completion, not gated,
-  not yet in the repo (deck file planned for CP24). Savra is the only irreplaceable card.
+  not yet in the repo (deck file planned for CP25). Savra is the only irreplaceable card.
 - Phase 9 is NO-GO. S21 not started.
 - No sweeps, rankings, card values, or performance claims.
 - 0 cards are certified until the registry is verified against code.
@@ -64,7 +64,6 @@
 - A-S20-08: hand-authored model coverage claims not mechanically certified (CP11 audit and CP12
   Infuse correction done; Darkbore Pathway WEAK; nothing certified).
 - A-S20-09: inherited v0.8 counters and S20 path counters coexist.
-- A-S20-10: target bookkeeping for Witherbloom Command and Grist -2.
 - Auditor constant-resolution fix.
 - Pest Rescuer Oracle sourcing.
 - `HASTE_NAMES` in `pab_combat_s17.py` is a hardcoded name list; keywords should come from card data.
@@ -73,13 +72,14 @@
   on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
 
 ## Next stages
-- CP22: A-S20-10 (target bookkeeping for Witherbloom Command, Grist -2), then re-status C93, C94
-  (PARTIAL_EXECUTED since CP21; the gap is the only unasserted claim besides C94's opponent mill).
 - Docs follow-up (from CP21): README.md and C78_C94_EXECUTION_NOTES.md still describe C80–C94 as
   BLOCKED_UNSUPPORTED; the CP21 re-status is recorded only in CONTRACTS_C41_C94_STATUS.md.
   C95–C99 are now documented there (CP22); README.md and C78_C94_EXECUTION_NOTES.md stay open.
-- CP23: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
-- CP24: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar) + v3 deck file as second
+  Since CP23 they should also show C93 EXECUTED and C94 PARTIAL_EXECUTED (opponent mill only).
+- Registry follow-up (from CP23): build_registry.py `contracts_blocked_unsupported` still lists
+  C80–C86, C88–C94 (pre-CP21); only C50, C62 are BLOCKED_UNSUPPORTED. Fix it with a registry re-pin.
+- CP24: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
+- CP25: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar) + v3 deck file as second
   target, delta cards UNMODELED. Mark C62, C63, C64, C85, C86 old-baseline-only. Derive
   oracle_cr_authenticated (run_validation.py:239) from a per-contract Oracle reference check.
 - Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer Oracle sourcing,

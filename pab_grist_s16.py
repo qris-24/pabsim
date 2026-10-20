@@ -172,12 +172,20 @@ class GristMixin(InteractionSpellsMixin):
             if t is None or not (t.creature or t.name==GRIST or getattr(t,'loyalty',None) is not None): raise BridgeError('S16: target a creature or planeswalker')
         elif target_uid is not None: raise BridgeError('S16: a target only comes with the sacrifice')
         self._loyalty_pay(g,-2,'-2')
+        def legal_target():
+            t=self.permanents.get(target_uid)
+            return t is not None and (t.creature or getattr(t,'loyalty',None) is not None)
         def resolve():
-            if sacrifice_uid is None or sacrifice_uid not in self.permanents: self.trace.append(('grist_no_sacrifice',)); return
+            # CP23 (A-S20-10): the sacrifice is chosen here (sacrifice_uid is the declared intent); the reflexive target is
+            # chosen and checked when the reflexive trigger is put on the stack (CR 603.12). With no legal target then, the
+            # trigger is never put on the stack (CR 603.3d) - not a fizzle. The target is checked again at resolution (CR 608.2b).
+            c=self.permanents.get(sacrifice_uid) if sacrifice_uid is not None else None
+            if c is None or c.controller!=0 or not c.creature: self.trace.append(('grist_no_sacrifice',)); return
             self.sacrifice(sacrifice_uid)
+            if not legal_target(): self.trace.append(('grist_minus_two_no_legal_target',target_uid)); return
+            self.trace.append(('targets_locked',(target_uid,),'Grist -2 reflexive'))
             def reflexive():
-                t=self.permanents.get(target_uid)
-                if t is None or not (t.creature or getattr(t,'loyalty',None) is not None): self.trace.append(('spell_fizzles_all_targets_illegal','Grist -2')); return
+                if not legal_target(): self.trace.append(('spell_fizzles_all_targets_illegal','Grist -2')); return
                 self._destroy_any(target_uid,'Grist -2')
             self._enqueue([Trigger('Grist -2 reflexive destroy (S16)',reflexive)])
         self.pending.append(Trigger('Grist -2 (S16)',resolve)); self.assert_bridge_integrity()

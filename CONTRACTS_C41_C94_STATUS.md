@@ -97,8 +97,8 @@ C80–C86 and C88–C94 were BLOCKED_UNSUPPORTED because their probes called the
 | C90 | BLOCKED_UNSUPPORTED | EXECUTED_WITH_SUBSTITUTION | "nonlegendary" = hand-written `LEGENDARY_CARDS` name set |
 | C91 | BLOCKED_UNSUPPORTED | EXECUTED_WITH_SUBSTITUTION | creature-card static by name (S16), not a type line (n3) |
 | C92 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | Insect-card repeat: unreachable with this deck |
-| C93 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | target bookkeeping, A-S20-10 (CP22) |
-| C94 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | target bookkeeping, A-S20-10 (CP22); opponent mill unmodeled |
+| C93 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | target bookkeeping, A-S20-10 — asserted in CP23, now EXECUTED (below) |
+| C94 | BLOCKED_UNSUPPORTED | PARTIAL_EXECUTED | target bookkeeping, A-S20-10 — asserted in CP23 (below); opponent mill unmodeled |
 
 C41–C94 counts after CP21 (the table at the top is the R02-era snapshot and is left as written):
 
@@ -126,3 +126,16 @@ Added in CP22 (docs only; no status or test changes). Values from `VALIDATION_RE
 C97 substitution: the synthetic "one effect gives two creatures -1/-1" is applied by direct `minus_counters` mutation; no card is modeled for it.
 
 All 59 contracts in `VALIDATION_RESULTS.json` (C41–C99) after CP22: EXECUTED 28, EXECUTED_WITH_SUBSTITUTION 21, PARTIAL_EXECUTED 8, BLOCKED_UNSUPPORTED 2.
+
+## CP23 re-status (2026-10-19): A-S20-10 target bookkeeping
+
+`pab_cast_s15.py` (Witherbloom Command) and `pab_grist_s16.py` (Grist -2) now keep targets per CR 608.2b / 603.12 / 603.3d; repairs tested in `tests/test_auditfix_cp23.py`. One contract method added to each class in `tests/test_c78_c94_contracts.py`. Reference fixtures: 838.
+
+| Contract | Before | After | Claim now asserted | Not asserted |
+|---|---|---|---|---|
+| C93 | PARTIAL_EXECUTED | EXECUTED | reflexive target chosen and locked when the trigger is put on the stack, after the sacrifice; no legal target → no trigger (not a fizzle) | — |
+| C94 | PARTIAL_EXECUTED | PARTIAL_EXECUTED | modes 2 and 3 take separate targets; mode 1 player, mode 4 opponent and mode 2/3 permanents locked at cast; a mode whose target became illegal does nothing (mode 1: no land return) | mode 1 on an opponent: the mill is traced unmodeled (opponents have no libraries, S8) |
+
+C41–C94 counts after CP23: BLOCKED_UNSUPPORTED 2 (C50, C62), EXECUTED 25, EXECUTED_WITH_SUBSTITUTION 20, PARTIAL_EXECUTED 7.
+
+All 59 contracts (C41–C99) after CP23: EXECUTED 29, EXECUTED_WITH_SUBSTITUTION 21, PARTIAL_EXECUTED 7, BLOCKED_UNSUPPORTED 2.

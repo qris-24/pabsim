@@ -149,6 +149,9 @@
       "cp02_status": "OPEN_UNMODIFIED",
       "cp05_status": "OPEN_UNMODIFIED",
       "cp06_status": "OPEN_UNMODIFIED",
+      "cp23_repair": "pab_cast_s15.py _s15_witherbloom_command: per-mode targets (mode2_uid/mode3_uid; target_uid kept for one of 2/3), every target locked at cast as (mode, target), mode 1 needs you or a seat in the game, CR 608.2b re-check of all targets at resolution (illegal mode does nothing; all illegal -> spell_fizzles_all_targets_illegal). pab_grist_s16.py grist_minus_two: sacrifice at resolution, reflexive target checked and locked when the trigger is created (CR 603.12); no legal target -> grist_minus_two_no_legal_target, no trigger (CR 603.3d); re-check at resolution",
+      "cp23_status": "REPAIRED_CP23",
+      "cp23_tests": "tests/test_auditfix_cp23.py",
       "evidence_class": "Requires targeted investigation",
       "fix_authorized": false,
       "issue_id": "A-S20-10",
@@ -156,6 +159,7 @@
       "priority": "P1",
       "repro_probe": null,
       "stage": "S15-S16",
+      "status": "REPAIRED_CP23",
       "summary": "Target bookkeeping for Witherbloom Command and Grist -2"
     },
     {

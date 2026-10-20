@@ -410,10 +410,8 @@ class C92(_Base):
 
 
 class C93(_Base):
-    CONTRACT='C93'; ISSUES=['R46','R20']; STATUS='PARTIAL_EXECUTED'
-    SUBSTITUTIONS=['Modeled in S16 on PhysicalZoneGame. NOT ASSERTED: target bookkeeping, A-S20-10 (CP22) - the reflexive '
-                   'trigger\'s target is fixed when -2 is activated (target_uid), not chosen when the reflexive trigger is put '
-                   'on the stack, and it is not recorded as a locked target']
+    CONTRACT='C93'; ISSUES=['R46','R20']; STATUS='EXECUTED'
+    SUBSTITUTIONS=[]
     def test_event_kernel_control_add_refused(self):
         """Event-kernel control: Game.add() still refuses the card."""
         self.assert_card_refused('Grist, the Hunger Tide')
@@ -430,13 +428,25 @@ class C93(_Base):
         with self.assertRaises(BridgeError): g2.grist_minus_two(target_uid=bear)
         self.assertEqual(gr2.loyalty,3); g2.grist_minus_two(); g2.resolve()
         self.assertIn(('grist_no_sacrifice',),g2.trace); self.assertIn(bear,g2.permanents); self.assertEqual(gr2.loyalty,1)
+    def test_pzg_reflexive_target_chosen_after_sacrifice_and_locked(self):
+        """CP23 (A-S20-10): the reflexive trigger's target is chosen and locked when the trigger is put on the stack, after
+        the sacrifice (CR 603.12); with no legal target then (here the sacrificed creature itself) the trigger is never put
+        on the stack (CR 603.3d), which is not a fizzle."""
+        g=self.pzg({1:[OGRE]}); self.grist(g); p=self.pest(g); ogre=self.opp(g,1,'Ogre')
+        g.grist_minus_two(sacrifice_uid=p.uid,target_uid=ogre); self.assertEqual([t for t in trace(g,'targets_locked') if t[2]=='Grist -2 reflexive'],[])
+        g.resolve(); lock=g.trace.index(('targets_locked',(ogre,),'Grist -2 reflexive'))
+        self.assertLess(g.trace.index(('sacrifice',p.uid,'ordinary Pest')),lock); self.assertLess(lock,g.trace.index(('destroyed_by',ogre,'Ogre','Grist -2')))
+        g2=self.pzg({1:[BEAR]}); self.grist(g2); p2=self.pest(g2)
+        g2.grist_minus_two(sacrifice_uid=p2.uid,target_uid=p2.uid); g2.resolve()
+        self.assertIn(('grist_minus_two_no_legal_target',p2.uid),g2.trace); self.assertNotIn(('spell_fizzles_all_targets_illegal','Grist -2'),g2.trace)
+        self.assertNotIn('Grist -2 reflexive destroy (S16)',[t[1] for t in trace(g2,'resolve')])
 
 
 class C94(_Base):
     CONTRACT='C94'; ISSUES=['R41','R43']; STATUS='PARTIAL_EXECUTED'
-    SUBSTITUTIONS=['Modeled in S15 on PhysicalZoneGame. NOT ASSERTED: target bookkeeping, A-S20-10 (CP22) - modes 2 and 3 share '
-                   'one target_uid, so the pair (2,3) cannot take two different targets, and target_player/target_opponent are '
-                   'not recorded as locked targets. Mode 1 on an opponent is traced unmodeled (opponents have no libraries, S8)']
+    SUBSTITUTIONS=['Modeled in S15 on PhysicalZoneGame. Target bookkeeping asserted since CP23 (A-S20-10): per-mode targets, '
+                   'all locked at cast, re-checked at resolution (CR 608.2b). NOT ASSERTED: mode 1 on an opponent - the mill is '
+                   'traced unmodeled because opponents have no libraries (S8)']
     def test_event_kernel_control_add_refused(self):
         """Event-kernel control: Game.add() still refuses the card."""
         self.assert_card_refused('Witherbloom Command')
@@ -462,6 +472,18 @@ class C94(_Base):
         self.assertNotIn(e,g.permanents); self.assertEqual(g.zones.cards[ring].zone,'graveyard')
         g.zones.move(uid,'library'); ogre=self.opp(g,2,'Ogre'); self.cast_physical(g,'Witherbloom Command','B','G',modes=(3,1),target_uid=ogre,target_player=2); g.resolve()
         self.assertEqual(g.eot_pt[ogre],(-3,-1)); self.assertIn(ogre,g.permanents); self.assertIn(('opponent_mill_unmodeled',2),g.trace)
+    def test_pzg_per_mode_targets_locked_and_rechecked(self):
+        """CP23 (A-S20-10): modes 2 and 3 take separate targets; every target (player, opponent, permanents) is locked at
+        cast; at resolution a mode whose target became illegal does nothing (mode 1: no land return either)."""
+        g=self.pzg({1:[BEAR]}); ring=self.cast_physical(g,'Sol Ring','C'); g.resolve(); e=next(k for k,v in g.linked_battlefield.items() if v==ring); bear=self.opp(g,1,'Bear')
+        self.cast_physical(g,'Witherbloom Command','B','G',modes=(2,3),mode2_uid=e,mode3_uid=bear)
+        self.assertEqual(trace(g,'targets_locked')[-1],('targets_locked',(('mode2_permanent',e),('mode3_creature',bear)),'Witherbloom Command'))
+        g.resolve(); self.assertNotIn(e,g.permanents); self.assertEqual(g.eot_pt[bear],(-3,-1))
+        g2=self.pzg(); swamp=self.to_graveyard(g2,'Swamp')
+        self.cast_physical(g2,'Witherbloom Command','B','G',modes=(1,4),target_player=2,target_opponent=3)
+        self.assertEqual(trace(g2,'targets_locked')[-1],('targets_locked',(('mode1_player',2),('mode4_opponent',3)),'Witherbloom Command'))
+        life3=g2.life[3]; g2.life[2]=0; g2.state_based_actions(); g2.resolve()
+        self.assertEqual(g2.zones.cards[swamp].zone,'graveyard'); self.assertEqual(trace(g2,'land_returned_to_hand'),[]); self.assertEqual(g2.life[3],life3-2)
 
 if __name__=='__main__':
     unittest.main()

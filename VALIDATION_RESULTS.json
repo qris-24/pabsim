@@ -790,12 +790,10 @@
         "R20"
       ],
       "oracle_cr_authenticated": false,
-      "status": "PARTIAL_EXECUTED",
-      "substitutions": [
-        "Modeled in S16 on PhysicalZoneGame. NOT ASSERTED: target bookkeeping, A-S20-10 (CP22) - the reflexive trigger's target is fixed when -2 is activated (target_uid), not chosen when the reflexive trigger is put on the stack, and it is not recorded as a locked target"
-      ],
-      "tests_passed": 2,
-      "tests_run": 2,
+      "status": "EXECUTED",
+      "substitutions": [],
+      "tests_passed": 3,
+      "tests_run": 3,
       "unexpected_successes": 0
     },
     "C94": {
@@ -808,10 +806,10 @@
       "oracle_cr_authenticated": false,
       "status": "PARTIAL_EXECUTED",
       "substitutions": [
-        "Modeled in S15 on PhysicalZoneGame. NOT ASSERTED: target bookkeeping, A-S20-10 (CP22) - modes 2 and 3 share one target_uid, so the pair (2,3) cannot take two different targets, and target_player/target_opponent are not recorded as locked targets. Mode 1 on an opponent is traced unmodeled (opponents have no libraries, S8)"
+        "Modeled in S15 on PhysicalZoneGame. Target bookkeeping asserted since CP23 (A-S20-10): per-mode targets, all locked at cast, re-checked at resolution (CR 608.2b). NOT ASSERTED: mode 1 on an opponent - the mill is traced unmodeled because opponents have no libraries (S8)"
       ],
-      "tests_passed": 3,
-      "tests_run": 3,
+      "tests_passed": 4,
+      "tests_run": 4,
       "unexpected_successes": 0
     },
     "C95": {
@@ -910,7 +908,7 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19+S20+CP02+CP03+CP04+CP06+CP10a+CP10b+CP10c+CP13+CP14",
+  "kernel_version": "v0.8+R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19+S20+CP02+CP03+CP04+CP06+CP10a+CP10b+CP10c+CP13+CP14+CP23",
   "land_source_verified": false,
   "lands": 34,
   "lesson_sideboard": 1,
@@ -979,7 +977,8 @@
     "CP10b",
     "CP10c",
     "CP13",
-    "CP14"
+    "CP14",
+    "CP23"
   ],
   "r02_registry_rewritten_by_runner": false,
   "r02_release_gate_errors": [],
@@ -988,8 +987,8 @@
   "real_individual_card_library_in_new_zone_kernel": true,
   "reference_partial_nonlands": 54,
   "reference_unsupported_nonlands": 11,
-  "release": "v0.8 with promoted patches R02, R01, R47, R48, R49, S1, S2, S3, S4, S5, S6, R52, R53, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, CP02, CP03, CP04, CP06, CP10a, CP10b, CP10c, CP13, CP14 (frozen files untouched)",
-  "scope": "v0.5 events + v0.6 physical zones + v0.7 bounded zone bridge + v0.8 shared-mana and mirrored token reference, plus the promoted layers R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19+S20+CP02+CP03+CP04+CP06+CP10a+CP10b+CP10c+CP13+CP14; NOT a playable engine",
+  "release": "v0.8 with promoted patches R02, R01, R47, R48, R49, S1, S2, S3, S4, S5, S6, R52, R53, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, CP02, CP03, CP04, CP06, CP10a, CP10b, CP10c, CP13, CP14, CP23 (frozen files untouched)",
+  "scope": "v0.5 events + v0.6 physical zones + v0.7 bounded zone bridge + v0.8 shared-mana and mirrored token reference, plus the promoted layers R02+R01+R47+R48+R49+S1+S2+S3+S4+S5+S6+R52+R53+S7+S8+S9+S10+S11+S12+S13+S14+S15+S16+S17+S18+S19+S20+CP02+CP03+CP04+CP06+CP10a+CP10b+CP10c+CP13+CP14+CP23; NOT a playable engine",
   "shared_game_zone_mana_symbols_in_v08": true,
   "skipped": 0,
   "superseded_frozen_contracts": [
@@ -1001,8 +1000,8 @@
     "test_274_unsupported_land_fails_closed",
     "test_307_unsupported_named_nonbasic_mana_does_not_fallback"
   ],
-  "tests_passed": 828,
-  "tests_run": 828,
+  "tests_passed": 838,
+  "tests_run": 838,
   "upstream_engine_edited": false,
   "v07_candidate_5_legacy_draw_sites_routed_through_shared_draw": true
 }

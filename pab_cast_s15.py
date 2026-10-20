@@ -74,7 +74,7 @@ SPELLS15={
 for _s in SPELLS15.values(): _s['additional']=None; _s['mana_value']=sum(_s['cost'])
 S15_NAMES=frozenset(SPELLS15)
 CASTABLE={**CASTABLE_S14,**SPELLS15}
-S15_KW=('target_uid','mode','modes','sacrifice_uid','return_uid','choice_uid','target_player','target_opponent')
+S15_KW=('target_uid','mode','modes','sacrifice_uid','return_uid','choice_uid','target_player','target_opponent','mode2_uid','mode3_uid')
 ENCHANTMENTS={'Bastion of Remembrance','Moldervine Reclamation','Dark Prophecy','Grave Pact','Blight Mound','Feral Appetite','Phyrexian Reclamation','Agent of the Iron Throne','The Hunger Tide Rises'}
 
 class InteractionSpellsMixin(RemainingLandsMixin):
@@ -180,15 +180,15 @@ class InteractionSpellsMixin(RemainingLandsMixin):
             return self._cast_s15(physical_uid,card,**kw)
         for k in S15_KW:
             if kw.get(k) is not None and k not in ('sacrifice_uid','target_uid'): raise BridgeError(f'S15: {k} applies only to the S15 spells')
-        return super().cast_from_hand(physical_uid,**{k:v for k,v in kw.items() if k not in ('mode','modes','return_uid','choice_uid','target_player','target_opponent')})
-    def _cast_s15(self,physical_uid,card,*,target_uid=None,mode=None,modes=None,sacrifice_uid=None,return_uid=None,choice_uid=None,target_player=None,target_opponent=None,
+        return super().cast_from_hand(physical_uid,**{k:v for k,v in kw.items() if k not in ('mode','modes','return_uid','choice_uid','target_player','target_opponent','mode2_uid','mode3_uid')})
+    def _cast_s15(self,physical_uid,card,*,target_uid=None,mode=None,modes=None,sacrifice_uid=None,return_uid=None,choice_uid=None,target_player=None,target_opponent=None,mode2_uid=None,mode3_uid=None,
                   main_phase=None,stack_empty=None,has_priority=None,**rest):
         if rest: raise BridgeError(f'S15: {card.name} takes none of {sorted(rest)}')
         name=card.name; spec=SPELLS15[name]
         self._timing(spec['kind'],main_phase=main_phase,stack_empty=stack_empty,has_priority=has_priority)
         self._preflight_cast(physical_uid,spec,None)
         handler=getattr(self,'_s15_'+name.lower().replace(' ','_').replace('-','_').replace("'",''))
-        plan=handler(target_uid=target_uid,mode=mode,modes=modes,sacrifice_uid=sacrifice_uid,return_uid=return_uid,choice_uid=choice_uid,target_player=target_player,target_opponent=target_opponent)
+        plan=handler(target_uid=target_uid,mode=mode,modes=modes,sacrifice_uid=sacrifice_uid,return_uid=return_uid,choice_uid=choice_uid,target_player=target_player,target_opponent=target_opponent,mode2_uid=mode2_uid,mode3_uid=mode3_uid)
         b,g,gen=spec['cost']
         self.stack_cards[physical_uid]=name; self.trace.append(('cast_begin',name,physical_uid))
         self.pay_mana(black=b,green=g,generic=gen)
@@ -304,17 +304,36 @@ class InteractionSpellsMixin(RemainingLandsMixin):
             spec=CREATURES[card.name]; self.zones.move(uid,'battlefield',controller=0)
             p=self.add(card.name,colors=spec['colors'],creature=True,mana_value=spec['mana_value'],power=spec['power'],toughness=spec['toughness']); self.linked_battlefield[p.uid]=uid; self.trace.append(('returned_permanent',card.name,uid,p.uid,source)); return
         self.trace.append(('return_not_a_permanent_card',uid,card.name))
-    def _s15_witherbloom_command(self,*,modes,target_uid,target_player,target_opponent,**_):
+    def _s15_witherbloom_command(self,*,modes,target_uid,target_player,target_opponent,mode2_uid=None,mode3_uid=None,**_):
+        """CP23 (A-S20-10): each mode has its own target (modes 2 and 3: mode2_uid / mode3_uid; target_uid still names
+        the one permanent when only one of 2/3 is chosen). Every chosen target is locked at cast as (mode, target).
+        Resolution (CR 608.2b): every target is re-checked first; a mode whose target is illegal does nothing (mode 1:
+        no mill and no land return); with every target illegal the spell does nothing."""
         modes=tuple(modes or ())
         if len(modes)!=2 or len(set(modes))!=2 or any(m not in (1,2,3,4) for m in modes): raise BridgeError('S15: Witherbloom Command needs two distinct modes 1-4')
-        targets=[]
-        if 1 in modes and target_player not in (0,1,2,3): raise BridgeError('S15: mode 1 needs target_player')
-        if 2 in modes and not self._tgt(target_uid,nonland=True,noncreature=True,mv_max=2): raise BridgeError('S15: mode 2 targets a noncreature nonland permanent with mana value 2 or less')
-        if 3 in modes and not self._tgt(target_uid,creature=True): raise BridgeError('S15: mode 3 targets a creature')
-        if 2 in modes or 3 in modes: targets.append(target_uid)
-        if 4 in modes and target_opponent not in self.seats_in_game(): raise BridgeError('S15: mode 4 needs target_opponent, an opponent still in the game')
+        if mode2_uid is not None and 2 not in modes: raise BridgeError('S15: mode2_uid without mode 2')
+        if mode3_uid is not None and 3 not in modes: raise BridgeError('S15: mode3_uid without mode 3')
+        if target_uid is not None:
+            if 2 in modes and 3 in modes: raise BridgeError('S15: modes 2 and 3 take mode2_uid and mode3_uid, not one target_uid')
+            if (2 in modes and mode2_uid is not None) or (3 in modes and mode3_uid is not None): raise BridgeError('S15: target_uid and a per-mode uid both given')
+            if 2 in modes: mode2_uid=target_uid
+            elif 3 in modes: mode3_uid=target_uid
+        def legal(m):
+            if m==1: return target_player==0 or target_player in self.seats_in_game()
+            if m==2: return self._tgt(mode2_uid,nonland=True,noncreature=True,mv_max=2)
+            if m==3: return self._tgt(mode3_uid,creature=True)
+            return target_opponent in self.seats_in_game()
+        if 1 in modes and not legal(1): raise BridgeError('S15: mode 1 needs target_player, you (0) or an opponent still in the game')
+        if 2 in modes and not legal(2): raise BridgeError('S15: mode 2 targets a noncreature nonland permanent with mana value 2 or less')
+        if 3 in modes and not legal(3): raise BridgeError('S15: mode 3 targets a creature')
+        if 4 in modes and not legal(4): raise BridgeError('S15: mode 4 needs target_opponent, an opponent still in the game')
+        chosen={1:('mode1_player',target_player),2:('mode2_permanent',mode2_uid),3:('mode3_creature',mode3_uid),4:('mode4_opponent',target_opponent)}
+        targets=[chosen[m] for m in modes]
         def resolve():
+            ok={m:legal(m) for m in modes}                  # CR 608.2b: all targets re-checked before any mode acts
+            if not any(ok.values()): self._fizzle('Witherbloom Command'); return
             for m in modes:
+                if not ok[m]: self.trace.append(('mode_target_illegal','Witherbloom Command',m,chosen[m])); continue
                 if m==1:
                     if target_player==0:
                         milled=self.zones.mill(3); self.trace.append(('milled',tuple(c.uid for c in milled)))
@@ -322,14 +341,13 @@ class InteractionSpellsMixin(RemainingLandsMixin):
                     land=next((u for u in self.zones.zones['graveyard'] if self.zones.cards[u].is_land),None)
                     if land is not None: self.zones.move(land,'hand'); self.trace.append(('land_returned_to_hand',land))
                 elif m==2:
-                    if self._tgt(target_uid,nonland=True,noncreature=True,mv_max=2): self._destroy_any(target_uid,'Witherbloom Command')
-                    else: self._fizzle('Witherbloom Command mode 2')
+                    if self._tgt(mode2_uid,nonland=True,noncreature=True,mv_max=2): self._destroy_any(mode2_uid,'Witherbloom Command')
+                    else: self.trace.append(('mode_target_illegal','Witherbloom Command',m,chosen[m]))
                 elif m==3:
-                    if self._tgt(target_uid,creature=True): dp,dt=self.eot_pt.get(target_uid,(0,0)); self.eot_pt[target_uid]=(dp-3,dt-1); self.trace.append(('minus_three_minus_one',target_uid))
-                    else: self._fizzle('Witherbloom Command mode 3')
+                    if self._tgt(mode3_uid,creature=True): dp,dt=self.eot_pt.get(mode3_uid,(0,0)); self.eot_pt[mode3_uid]=(dp-3,dt-1); self.trace.append(('minus_three_minus_one',mode3_uid))
+                    else: self.trace.append(('mode_target_illegal','Witherbloom Command',m,chosen[m]))
                 elif m==4:
-                    if target_opponent in self.seats_in_game(): self.life[target_opponent]-=2; self.trace.append(('target_opponent_loses',2,'Witherbloom Command')); self.trace.append(('witherbloom_command_target',target_opponent,2)); self.gain(2,'Witherbloom Command')
-                    else: self._fizzle('Witherbloom Command mode 4')
+                    self.life[target_opponent]-=2; self.trace.append(('target_opponent_loses',2,'Witherbloom Command')); self.trace.append(('witherbloom_command_target',target_opponent,2)); self.gain(2,'Witherbloom Command')
         return {'targets':targets,'resolve':resolve}
 
 # ---- driver ------------------------------------------------------------------

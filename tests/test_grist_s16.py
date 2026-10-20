@@ -58,7 +58,7 @@ class Cast(_B):
         g.resolve(); check_invariants_s16(g); self.assertNotIn(pe.uid,g.permanents); self.assertNotIn(dragon,g.permanents)
         self.assertEqual([t[2] for t in trace(g,'destroyed_by') if t[3]=='Grist -2'],['Dragon']); self.assertEqual([t[3] for t in trace(g,'opponent_creature_dies') if t[4]=='Savra black'],['Bear','Bear','Bear'])   # the reflexive destroy resolved first (newest trigger), then the Pest's Savra edict
         g2=self.game(); q,_=self.grist(g2); pe2=g2.make_tokens(PEST)[0]; g2.resolve(); bear=next(x.uid for x in g2.opponent_creatures(1) if x.name=='Bear')
-        g2.grist_minus_two(pe2.uid,bear); g2._opponent_creature_dies(bear,cause='test'); g2.resolve(); self.assertIn(('spell_fizzles_all_targets_illegal','Grist -2'),g2.trace)   # target gone in response: fizzle
+        g2.grist_minus_two(pe2.uid,bear); g2._opponent_creature_dies(bear,cause='test'); g2.resolve(); self.assertNotIn(pe2.uid,g2.permanents); self.assertIn(('grist_minus_two_no_legal_target',bear),g2.trace); self.assertNotIn(('spell_fizzles_all_targets_illegal','Grist -2'),g2.trace); self.assertEqual([x for x in trace(g2,'destroyed_by') if x[3]=='Grist -2'],[])   # target gone before the reflexive trigger exists: no trigger (CR 603.3d), not a fizzle
         self.main(g)
         with self.assertRaises(BridgeError): g.grist_minus_two()                                       # loyalty 1 - 2 < 0
         g.grist_plus_one(); g.resolve(); self.main(g); g.grist_minus_two(); g.resolve(); self.assertEqual(trace(g,'grist_no_sacrifice'),[('grist_no_sacrifice',)]); self.assertIsNone(g.grist())   # declined the sacrifice; 0 loyalty -> gone
