@@ -31,7 +31,7 @@
 ## Project rules
 - Two deck targets. Old baseline (Savra + 99 + Pest Summoning Lesson): frozen, the only gated deck,
   regression reference. PAB v3 (Savra + 99, no sideboard): frozen pending kernel completion, not gated,
-  not yet in the repo (deck file planned for CP19). Savra is the only irreplaceable card.
+  not yet in the repo (deck file planned for CP21). Savra is the only irreplaceable card.
 - Phase 9 is NO-GO. S21 not started.
 - No sweeps, rankings, card values, or performance claims.
 - 0 cards are certified until the registry is verified against code.
@@ -44,8 +44,14 @@
 - Run tests with `-q`; read tails only. No decklists or results printed to the terminal.
 - Do not re-read files just edited.
 - Stop after 2 failed attempts at the same step.
-- Each stage ends with: `CP<nn>_PATCH_NOTES.md` + commit + lightweight tag `rp-CP<nn>` +
-  `git push; git push origin rp-CP<nn>`.
+- Each stage ends, in order, with:
+  gate run → `CP<nn>_PATCH_NOTES.md` → `py -3.14 build_paste_me.py --stage CP<nn>`
+  → manifest re-pin → gate re-run → commit → tag `rp-CP<nn>`
+  → `git push; git push origin rp-CP<nn>`
+  → `Get-Content PASTE_ME.md -Raw | Set-Clipboard`
+  → final message states the PASTE_ME.md path and "copied to clipboard".
+  This applies to read-only stages too.
+  Edit only the MANUAL section of PASTE_ME.md, and only when a decision changes.
 - Read-only audit stages also get CP<nn>_PATCH_NOTES.md; findings live in EVIDENCE/.
 - Edits to this file also require a manifest re-pin (`py -3.14 build_manifest.py`).
 
@@ -58,3 +64,19 @@
 - Auditor constant-resolution fix.
 - Pest Rescuer Oracle sourcing.
 - `HASTE_NAMES` in `pab_combat_s17.py` is a hardcoded name list; keywords should come from card data.
+
+## Next stages
+- CP19: read-only audit; findings to EVIDENCE/CP19_CONTRACT_PATH_AUDIT.md.
+  (a) Manifest `patches` (stops at CP06) and `scope` lag PROMOTED (through CP14);
+      find where build_manifest.py sets them.
+  (b) VALIDATION_RESULTS `unique_fixture_tests` 779 vs `tests_run` 810; explain or flag.
+  (c) For each C41–C99 test, which engine path it runs (frozen v0.7/v0.8 vs pab_kernel).
+      Flag BLOCKED_UNSUPPORTED contracts whose cards later layers model:
+      C82 / CP10c, C88–C90 / S20, C91–C93 / S16, C94 / A-S20-10.
+      Note old-baseline-only contracts: C62 Beledros, C85–C86 Rise of the Witch-king.
+  Nothing fixed in CP19.
+- CP20: read-only lookup of all 100 PAB v3 names in C:\pabsim\data\golgari_commander.json.
+- CP21: pinned Oracle supplement (incl. Altar of Dementia, Ashnod's Altar)
+  + v3 deck file as second target; delta cards UNMODELED.
+- Then card modeling, ledger order: A-S20-10, auditor constant-resolution fix,
+  Pest Rescuer Oracle sourcing, A-S20-05, A-S20-09.
