@@ -23,7 +23,7 @@ class TerminalValidator(unittest.TestCase):
         self.assertEqual(final[4],'combat_damage')
         g.trace.append(('step_begin',final[1],final[2],'combat','end_of_combat'))
         ok,errors=clock_legal(g)
-        self.assertFalse(ok);self.assertTrue(any(e[0]=='step after nonpositive controller life' for e in errors),errors)
+        self.assertFalse(ok);self.assertTrue(any(e[0]=='step after terminal marker' for e in errors),errors)   # CP39 (K7, approved): the loss is now traced
 
     def test_04_legal_recovery_inside_single_resolution(self):
         t=[('step_begin',1,0,'precombat_main','precombat_main'),('lose_life',50,'hypothetical'),('gain',20,'hypothetical'),('step_begin',1,0,'combat','beginning_of_combat')]

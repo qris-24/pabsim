@@ -1,6 +1,6 @@
 """CP04: independent trace guard for turn advancement after an adjudicable loss/win.
 
-The S18 kernel does not consistently log an explicit `lose_game` transition;
+The S18 kernel did not consistently log an explicit `lose_game` transition (CP39 closed K7: resolve() now does);
 replay controller life from the same sources as S19's life ledger and require
 life to be positive when each new step begins. Loss within a multi-event
 resolution may be healed before the next step (so no premature death claim).

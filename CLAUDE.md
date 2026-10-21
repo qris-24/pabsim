@@ -93,12 +93,9 @@
 
 ## Next stages
 - CP31d follow-up: integrity review findings in EVIDENCE/CP31d_INTEGRITY_REVIEW.md, one stage each:
-  kernel defects K3, K6, K7 (reproduced), K14 (unconfirmed, needs CR text) (K1, K4, K9, K10, K12 closed in CP37; K2, K5, K8, K11, K13 closed in CP38); gate G2-G4 (G1 closed in CP35);
+  kernel defect K14 (unconfirmed, needs CR text) (K1, K4, K9, K10, K12 closed in CP37; K2, K5, K8, K11, K13 in CP38; K3, K6, K7 in CP39); gate G2-G4 (G1 closed in CP35);
   test hygiene T1-T6 (T7 closed in CP35);
   PABTRV3_CARD_COVERAGE.json summary (build_registry.py). Some test fixes move expectations: ask first.
-- CP37 follow-up (fold into the K3/K6/K7 stage): the S3 SBA loop traces lethal-damage deaths as 'sba_zero_toughness' (event 'zero_toughness').
-- CP38 follow-up (K3/K6/K7 stage): with every seat on exile_instead removal and seat 3 wiping at 2, S19 seed 32 raises
-  "cards on the stack ledger with nothing pending" (the controller dies mid-resolution); rp-CP37 already fails seeds 52, 56, 139 the same way.
 - CP38 follow-up (Stage C): build_model_coverage_s20.py and PABTRV3_MODEL_COVERAGE_S20.json still say Takenuma does not return planeswalker cards (CP38 returns Grist).
 - CP37 follow-up (Stage C): South Wind Avatar's lifegain reads printed toughness (pab_focus_engine_v07.py:321, frozen), so
   Skullclamp, counters and until-end-of-turn changes are ignored; needs a layered last-known-information fix.

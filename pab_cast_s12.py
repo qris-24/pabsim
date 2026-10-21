@@ -89,6 +89,7 @@ def cast_when_able(g):
     """S7 pass, then the noncreature permanents the pool can still pay for (hand order)."""
     cast=_s7.cast_when_able(g)
     for uid in list(g.zones.zones['hand']):
+        if getattr(g,'game_lost',False): break                         # CP39: the game is over (CR 104.3a)
         name=g.zones.cards[uid].name
         if name not in S12_NAMES or not _s7._affordable(g,PERMANENTS[name]): continue
         g.cast_from_hand(uid); check_invariants_s11(g); g.resolve(); check_invariants_s11(g); cast.append(name)

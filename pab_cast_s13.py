@@ -219,6 +219,7 @@ def cast_when_able(g):
     """S12 pass, then the S13 spells with fixed policies (Immoral Bargain is not driven)."""
     cast=_cast_s12(g)
     for uid in list(g.zones.zones['hand']):
+        if getattr(g,'game_lost',False): break                         # CP39: the game is over (CR 104.3a)
         name=g.zones.cards[uid].name
         if name not in S13_NAMES or not _s7._affordable(g,SPELLS[name]): continue
         kw={}
@@ -229,7 +230,8 @@ def cast_when_able(g):
                 kw['sacrifice_uid']=f
         elif name=='Hunt for Specimens': kw['learn']='lesson' if (g.learn_sideboard_allowed and g.zones.zones['outside_game']) else None
         elif name=='Pest Summoning':
-            if sum(g.mana_pool.count(c) for c in 'BG')<2: continue
+            b=min(2,g.mana_pool.count('B'))                                # CP39: the same split _s13_pest_summoning makes, plus {1}
+            if g.mana_pool.count('G')<2-b or len(g.mana_pool)<3: continue
         elif name=='Unearth':
             cands=[p for p in g.graveyard if p.creature and not p.token and p.mana_value<=3 and p.name!='Savra, Queen of the Golgari']
             if not cands: continue
@@ -237,6 +239,7 @@ def cast_when_able(g):
         elif name=='Plumb the Forbidden':
             toks=[p.uid for p in g.permanents.values() if p.controller==0 and p.token is not None and p.creature]
             if len(toks)<2: continue
+            if g.life[0]<=len(toks)+1: continue                                # CP39: N copies + the spell each lose 1 life; never the last
             kw['sacrifice_uids']=toks
         elif name=='Immoral Bargain': continue
         elif name=='Pest Infestation': kw['x']=(len(g.mana_pool)-1)//2

@@ -90,6 +90,7 @@ class CombatMixin(GristMixin):
             # CP37 (K1): lethal damage destroys (CR 704.5g/h); an indestructible creature is not destroyed (CR 702.12b)
             if p.creature and p.uid not in ids and p.uid not in self.indestructible_until_eot and self._lethally_damaged(p): base.append(p)
         return base
+    def _sba_reason(self,p): return 'lethal_damage' if self._toughness(p)>0 else super()._sba_reason(p)   # CP39
     def _lethal_damage_replacements(self):
         """CP37 (K1), before the SBA event: a lethally damaged indestructible creature stays (traced once); one with a
         regeneration shield is regenerated instead (CR 701.15a). Toughness 0 or less still kills (CR 704.5f).

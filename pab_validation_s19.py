@@ -77,15 +77,21 @@ def clock_legal(g):
             if pturn==turn:
                 if order.index(step)!=order.index(pstep)+1 or ap!=pap: problems.append(('step order',turn,pstep,step))
             else:
-                if pstep!='cleanup' or step!='untap' or turn!=pturn+1: problems.append(('turn boundary',pturn,turn,pstep,step))
-                nxt=(pap+1)%4
-                while nxt in lost: nxt=(nxt+1)%4
+                nxt=(pap+1)%4; gap=1
+                while nxt in lost: nxt=(nxt+1)%4; gap+=1                 # CP39 (K6): a skipped seat's turn number is used up
+                if pstep!='cleanup' or step!='untap' or turn!=pturn+gap: problems.append(('turn boundary',pturn,turn,pstep,step))
                 if ap!=nxt and ap not in lost: problems.append(('seat rotation',turn,pap,ap,tuple(sorted(lost))))
                 if ap in lost and step=='untap': problems.append(('lost seat began a turn',turn,ap))
         prev=(turn,ap,step)
     term_ok,term_errors=no_steps_after_terminal(g.trace)
     if not term_ok: problems.extend(term_errors)
     return (not problems),problems[:5]
+
+def stacks_ok(g):
+    """CP39: both stack ledgers and the pending queue are empty, unless the controller lost in the middle of a resolution
+    (the game ends with what was on the stack then, CR 104.3a; exactly that snapshot is accepted)."""
+    if g.game_lost and not g.pending: return (g.stack_cards,g.command_stack)==getattr(g,'loss_stacks',({},{}))
+    return g.stack_cards=={} and g.command_stack=={} and not g.pending
 
 def lost_seats_ok(g):
     """CP37 (K12): every seat that left is at 0 or less life, or has 21+ commander damage (it leaves with its life)."""
@@ -98,7 +104,7 @@ def validate_game(seed,config):
     checks['reproducible']=(g.trace==h.trace and g.life==h.life)
     ok,detail=clock_legal(g); checks['clock_legal']=ok
     led=life_ledger(g); checks['life_ledger']=(led==g.life)
-    checks['stacks_empty']=(g.stack_cards=={} and g.command_stack=={} and not g.pending)
+    checks['stacks_empty']=stacks_ok(g)                               # CP39
     checks['counts']=(g.opponent_sacrifices==sum(1 for t in g.trace if t[0]=='opponent_sacrifice') and g.commander_casts==sum(1 for t in g.trace if t[0]=='commander_cast') and g.commander_deaths==sum(1 for t in g.trace if t[0]=='commander_to_command_zone'))
     checks['lost_seats_at_zero']=lost_seats_ok(g)                     # CP37 (K12)
     z=g.zones; checks['card_identity']=(sum(1 for c in z.cards.values() if not c.token)==101 and all(z.cards[u].zone==zone for zone,us in z.zones.items() for u in us))

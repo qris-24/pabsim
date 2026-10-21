@@ -367,6 +367,7 @@ def cast_when_able(g):
     from pab_cast_s7 import _affordable, _fodder
     cast=_cast_s13(g)
     for uid in list(g.zones.zones['hand']):
+        if getattr(g,'game_lost',False): break                         # CP39: the game is over (CR 104.3a)
         name=g.zones.cards[uid].name
         if name not in S15_NAMES or not _affordable(g,SPELLS15[name]): continue
         opp=[p for s in OPPONENT_SEATS for p in g.opponent_creatures(s)]; kw={}

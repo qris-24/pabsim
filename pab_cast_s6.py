@@ -179,7 +179,7 @@ def check_invariants_s6(g):
     for uid,name in g.stack_cards.items():
         c=g.zones.cards[uid]
         if c.zone!=('stack' if getattr(g,'cp06_stack_enabled',False) else 'hand') or c.name!=name: raise _loop.InvariantError('stack ledger card not in expected physical zone')
-    if g.stack_cards and not g.pending: raise _loop.InvariantError('cards on the stack ledger with nothing pending')
+    if g.stack_cards and not g.pending and not (g.game_lost and g.stack_cards==getattr(g,'loss_stacks',({},{}))[0]): raise _loop.InvariantError('cards on the stack ledger with nothing pending')   # CP39: only what a loss mid-resolution left
 
 def _fodder(g):
     """A controlled creature the driver may sacrifice: a token, or a linked nontoken that is not Savra."""
@@ -207,6 +207,7 @@ def cast_when_able(g):
     Returns the names cast. Sacrifice spells need fodder; Nature's Lore needs a Forest in library."""
     cast=[]
     for uid in list(g.zones.zones['hand']):
+        if getattr(g,'game_lost',False): break                         # CP39: the game is over (CR 104.3a)
         name=g.zones.cards[uid].name
         spec=CASTABLE.get(name)
         if spec is None: continue

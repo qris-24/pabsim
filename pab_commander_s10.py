@@ -111,7 +111,7 @@ def check_invariants_s10(g):
     check_invariants_s8(g)
     for uid in g.command_stack:
         if g.zones.cards[uid].zone!='command': raise AssertionError('S10: command ledger card not in command zone')
-    if g.command_stack and not g.pending: raise AssertionError('S10: Savra on the command ledger with nothing pending')
+    if g.command_stack and not g.pending and not (g.game_lost and g.command_stack==getattr(g,'loss_stacks',({},{}))[1]): raise AssertionError('S10: Savra on the command ledger with nothing pending')   # CP39
     z=g.zones
     if sum(1 for u in z.zones['graveyard']+z.zones['exile'] if z.cards[u].name==SAVRA) and not g.pending:
         raise AssertionError('S10: Savra left in graveyard/exile after state-based actions')

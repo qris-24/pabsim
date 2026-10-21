@@ -8,6 +8,8 @@ Layered above pab_turn_clock.ClockMixin (S1). On every clock advance:
     and records Moseo's intervening-if admission (life gained this turn > 0);
   * entering the controller's cleanup runs reset_turn() (CR 514.2: "until end of
     turn" / "this turn" effects end).
+  * CP39 (K3): entering ANY seat's untap step sets life_gained_turn to 0, so life gained on
+    an opponent's turn no longer counts at your end step (Moseo's "this turn").
 
 Engagement rule: until the first advance the clock is unengaged and the step
 methods may be called directly (fixture shortcut, pre-S2 behaviour). After the
@@ -32,6 +34,8 @@ class StepRoutingMixin(ClockMixin):
         self.clock_engaged=True
         self._empty_mana_pool('step_end')
         turn,ap,phase,step=super().advance_step()
+        if step=='untap' and self.life_gained_turn:                 # CP39 (K3): a new turn begins
+            self.trace.append(('life_gained_turn_reset',turn,ap,self.life_gained_turn)); self.life_gained_turn=0
         if step=='upkeep':
             self._moseo_admitted=False
             super().begin_upkeep()                     # each upkeep, every seat

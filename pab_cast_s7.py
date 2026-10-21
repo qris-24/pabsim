@@ -150,6 +150,7 @@ def cast_when_able(g):
     Returns the names cast."""
     cast=[]
     for uid in list(g.zones.zones['hand']):
+        if getattr(g,'game_lost',False): break                         # CP39: the game is over (CR 104.3a)
         name=g.zones.cards[uid].name; spec=CASTABLE.get(name)
         if spec is None or not _affordable(g,spec): continue
         kw={}

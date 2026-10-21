@@ -48,6 +48,9 @@ class PriorityMixin(StepRoutingMixin):
     def _dying_by_toughness(self):
         return [p for p in self.permanents.values() if p.controller==0 and p.creature
                 and self._current_toughness(p)<=0]
+    def _sba_reason(self,p):
+        """CP39: the state-based action that kills p; S17 adds 'lethal_damage' (CR 704.5g/h)."""
+        return 'zero_toughness'
     def state_based_actions(self):
         """Perform all applicable SBAs as a single event; repeat until none apply (704.3)."""
         rounds=0
@@ -57,22 +60,31 @@ class PriorityMixin(StepRoutingMixin):
             if not dying: return rounds
             rounds+=1
             uids=[p.uid for p in dying]
-            self.trace.append(('sba_event','zero_toughness',tuple(uids)))
+            reasons={p.uid:self._sba_reason(p) for p in dying}          # CP39: read before anything leaves
+            kinds=sorted(set(reasons.values()))
+            self.trace.append(('sba_event','+'.join(kinds),tuple(uids)))
             live=self.permanents
             self.permanents=_LookBack(live,live.values())
             try:
                 for uid in uids:
-                    self.trace.append(('sba_zero_toughness',uid,'state-based'))
+                    self.trace.append(('sba_'+reasons[uid],uid,'state-based'))
                     self._leave(uid,sacrificed=False)
             finally:
                 self.permanents=dict(self.permanents)          # drop the look-back view; keep live deletions
 
+    def _snapshot_loss(self,resolving):
+        """CP39: the stack ledgers at the moment of a loss (CR 104.3a: the game ends with them as they are). Only a loss
+        while something was resolving or due may leave cards there; the invariants accept exactly this snapshot."""
+        self.loss_stacks=(dict(getattr(self,'stack_cards',{})),dict(getattr(self,'command_stack',{}))) if resolving else ({},{})
     def _inline_zero_toughness_check(self,target_uid,source):
         return                                                 # S3: general check owns this
 
     def resolve(self,max_resolutions=1000):
         n=0
         if self.life[0]<=0:
+            if not self.game_lost:
+                self.trace.append(('lose_game','life_zero_or_less'))                          # CP39 (K7)
+                self._snapshot_loss(bool(self.pending))
             self.game_lost=True; self.pending.clear(); return 0
         self.state_based_actions()                              # a player would receive priority
         while self.pending and not self.game_lost:
@@ -80,7 +92,7 @@ class PriorityMixin(StepRoutingMixin):
             t=self.pending.popleft(); self.trace.append(('resolve',t.label))
             t.action(); n+=1
             if self.life[0]<=0:
-                self.game_lost=True; self.trace.append(('lose_game','life_zero_or_less')); self.pending.clear(); break
+                self.game_lost=True; self.trace.append(('lose_game','life_zero_or_less')); self._snapshot_loss(True); self.pending.clear(); break
             self.state_based_actions()                          # between resolutions, never inside one
         return n
 
