@@ -132,10 +132,13 @@ class OpponentsMixin(CreatureCastMixin):
         return super()._enqueue(batch)
 
     # ---- players leaving, targets, drains --------------------------------------
+    def _seat_has_lost(self,seat):
+        """CP37 (K12): the loss test of the check below; S17 adds 21 commander damage (CR 704.6c) without touching life."""
+        return self.life[seat]<=0
     def state_based_actions(self):
         rounds=super().state_based_actions()
         for seat in OPPONENT_SEATS:
-            if seat in self.lost_seats or self.life[seat]>0: continue
+            if seat in self.lost_seats or not self._seat_has_lost(seat): continue
             self.lost_seats.add(seat); self.clock.lost.add(seat)
             gone=[u for u,p in self.permanents.items() if p.controller==seat]
             for u in gone: del self.permanents[u]                 # CR 800.4a: leave the game, no death

@@ -32,7 +32,8 @@ Not modeled (fail closed or documented): Starscape Cleric's optional Offspring {
 (cast only for its printed cost; a token copy is never made); the legend rule for a second
 copy of a legendary creature (CR 704.5j; singleton deck, no copy effect in the kernel);
 keywords with no kernel semantics (flying, menace, ward, haste, deathtouch, reach,
-forestwalk, protection, can't block); summoning sickness; combat.
+forestwalk, protection, can't block); summoning sickness; combat. (Later layers: S17 adds
+combat, summoning sickness, haste and deathtouch; CP37 adds flying, menace and can't block.)
 """
 from __future__ import annotations
 from pab_cast_s6 import CastMixin, CASTABLE as CASTABLE_S6, check_invariants_s6, _fodder, _tap_for

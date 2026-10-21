@@ -124,7 +124,7 @@ class CastMixin(TurnBasedActionsMixin):
         self.pay_mana(black=black,green=green,generic=generic)
         power=None
         if cost is not None:
-            power=max(0,cost.power+cost.counters-cost.minus_counters)   # LKI for Tend the Pests' X
+            power=max(0,self._current_power(cost))                      # LKI for Tend the Pests' X (CP37: current power incl. Skullclamp, until-end-of-turn and attacking-Pest bonuses)
             self.sacrifice(cost.uid)                                    # cost triggers enqueue in the frozen kernel
         self.trace.append(('cast',name))
         self.trace.append(('physical_cast',name,physical_uid,(black,green,generic),None if cost is None else cost.uid))

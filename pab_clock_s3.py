@@ -36,10 +36,18 @@ class PriorityMixin(StepRoutingMixin):
         self.sba_checks=0
         self.trigger_order_policy=None
 
+    # ---- current power and toughness (CP37, K4) ---------------------------
+    def _equipment_pt(self,uid):
+        """CP37 (K4): each Skullclamp attached to the creature gives it +1/-1 ("Equipped creature gets +1/-1")."""
+        n=sum(1 for target in self.skullclamp_attached.values() if target==uid)
+        return n,-n
+    def _current_power(self,p): return p.power+p.counters-p.minus_counters+self._equipment_pt(p.uid)[0]
+    def _current_toughness(self,p): return p.toughness+p.counters-p.minus_counters+self._equipment_pt(p.uid)[1]
+
     # ---- state-based actions --------------------------------------------
     def _dying_by_toughness(self):
         return [p for p in self.permanents.values() if p.controller==0 and p.creature
-                and p.toughness+p.counters-p.minus_counters<=0]
+                and self._current_toughness(p)<=0]
     def state_based_actions(self):
         """Perform all applicable SBAs as a single event; repeat until none apply (704.3)."""
         rounds=0

@@ -16,6 +16,8 @@ attacks only (opponents never attack: they do not decide):
       seat that it can legally block (menace from Blight Mound on attacking Pests needs two
       blockers: a creature that would be the lone blocker of a menace attacker does not block,
       CR 702.110). Opponents' creatures are generic bodies: no flying/reach on their side.
+      CP37: so they cannot block an attacker with flying (CR 702.9b: FLYING_NAMES, or a token
+      kind with flying); intrinsic menace (MENACE_NAMES) counts like Blight Mound's.
   combat damage                      at the combat_damage step, simultaneously (CR 510.2):
       unblocked attackers deal their power (printed + counters + until-end-of-turn changes +
       Feral Appetite's and Blight Mound's +1/+0 for attacking Pests) to the defending player;
@@ -25,15 +27,18 @@ attacks only (opponents never attack: they do not decide):
       Wind Avatar, Feral Appetite's attacking Pests) makes any damage lethal (CR 702.2b).
       Damage is marked (`damage_marked`), state-based actions then kill creatures with lethal
       damage (CR 704.5g, the S3 loop with look-back), and marked damage clears at cleanup.
+      CP37: lethal damage destroys, so an indestructible creature stays (CR 702.12b) and a
+      regeneration shield replaces the destruction (CR 701.15a: shield used, damage removed,
+      tapped, removed from combat); Skullclamp's +1/-1 counts in power and toughness.
   commander damage                   damage from Savra to a player is tracked per seat
       (`commander_damage`); 21 or more from her makes that seat lose at the next SBA check
-      (CR 903.10a).
+      (CR 903.10a, 704.6c). CP37: the seat leaves with its life total unchanged.
   life                               opponents' life goes down; S8 removes a seat at 0 or
       less; the controller is never attacked.
 
 Not modeled: opponents attacking, first/double strike, trample, lifelink (none in the deck),
 flying/reach on opponents' side (their bodies have no keywords), multiple blockers' damage
-order choices, combat tricks after blocks, regeneration's remove-from-combat.
+order choices, combat tricks after blocks, forestwalk (opponents control no lands).
 """
 from __future__ import annotations
 from pab_grist_s16 import GristMixin, check_invariants_s16
@@ -44,13 +49,18 @@ from pab_focus_engine import SAVRA
 
 DEATHTOUCH_NAMES={'Poison-Tip Archer','South Wind Avatar'}
 HASTE_NAMES={'Yahenni, Undying Partisan'}
+# CP37 (K9, K10): printed keywords of the old-baseline creatures per the pinned card data
+# (decks/CARDSOURCE_BG_COMMANDER_20261021.json); tests/test_auditfix_cp37.py checks them against it.
+FLYING_NAMES=frozenset({'Beledros Witherbloom','Mirkwood Bats',"Moseo, Vein's New Dean",'Sangromancer','Starscape Cleric'})
+MENACE_NAMES=frozenset({'Sedgemoor Witch',"Teacher's Pest"})
+CANT_BLOCK_NAMES=frozenset({'Carrion Feeder','Starscape Cleric'})
 COMMANDER_DAMAGE_LOSS=21
 
 class CombatMixin(GristMixin):
     def __init__(self,*a,block_policy='none',**kw):
         super().__init__(*a,**kw)
         self.block_policy=block_policy; self.attackers={}; self.blocks={}; self.damage_marked={}
-        self.commander_damage={s:0 for s in OPPONENT_SEATS}; self.combat_log=[]
+        self.commander_damage={s:0 for s in OPPONENT_SEATS}; self.combat_log=[]; self._indestructible_lethal_noted=set()
     def add(self,name,**kw):
         p=super().add(name,**kw); p.entered_turn=self.clock.turn if self.clock_engaged else 0; return p
     def make_tokens(self,kind,count=1,*,controller=0):
@@ -59,22 +69,43 @@ class CombatMixin(GristMixin):
         return made
 
     # ---- helpers ----
-    def _power(self,p):
-        v=p.power+p.counters-p.minus_counters+self.eot_pt.get(p.uid,(0,0))[0]
+    def _current_power(self,p):
+        v=super()._current_power(p)                                                # CP37 (K4): Skullclamp, until-end-of-turn changes
         if p.controller==0 and p.uid in self.attackers and 'Pest' in p.subtypes:
             v+=self.has('Feral Appetite')+self.has('Blight Mound')
-        return max(0,v)
-    def _toughness(self,p): return p.toughness+p.counters-p.minus_counters+self.eot_pt.get(p.uid,(0,0))[1]
+        return v
+    def _power(self,p): return max(0,self._current_power(p))
+    def _toughness(self,p): return self._current_toughness(p)
     def _deathtouch(self,p):
         return p.controller==0 and (p.name in DEATHTOUCH_NAMES or (p.uid in self.attackers and 'Pest' in p.subtypes and self.has('Feral Appetite')>0))
-    def _menace(self,p): return p.controller==0 and p.uid in self.attackers and 'Pest' in p.subtypes and self.has('Blight Mound')>0
+    def _menace(self,p):
+        return p.controller==0 and p.uid in self.attackers and (p.name in MENACE_NAMES or ('Pest' in p.subtypes and self.has('Blight Mound')>0))
+    def _flying(self,p): return p.controller==0 and (p.name in FLYING_NAMES or (p.token is not None and p.token.flying))   # CP37 (K9)
+    def _lethally_damaged(self,p):
+        d=self.damage_marked.get(p.uid,0)
+        return bool(d) and (d>=self._toughness(p) or bool(self.damage_marked.get(('deathtouch',p.uid))))
     def _dying_by_toughness(self):
         base=super()._dying_by_toughness(); ids={p.uid for p in base}
         for p in self.permanents.values():
-            if p.creature and p.uid not in ids:
-                d=self.damage_marked.get(p.uid,0)
-                if d and (d>=self._toughness(p) or self.damage_marked.get(('deathtouch',p.uid))): base.append(p)
+            # CP37 (K1): lethal damage destroys (CR 704.5g/h); an indestructible creature is not destroyed (CR 702.12b)
+            if p.creature and p.uid not in ids and p.uid not in self.indestructible_until_eot and self._lethally_damaged(p): base.append(p)
         return base
+    def _lethal_damage_replacements(self):
+        """CP37 (K1), before the SBA event: a lethally damaged indestructible creature stays (traced once); one with a
+        regeneration shield is regenerated instead (CR 701.15a). Toughness 0 or less still kills (CR 704.5f).
+        Runs once per check, before the event: lethal damage is only marked by combat damage, before the check."""
+        for p in list(self.permanents.values()):
+            if not p.creature or self._toughness(p)<=0 or not self._lethally_damaged(p): continue
+            if p.uid in self.indestructible_until_eot:
+                if p.uid not in self._indestructible_lethal_noted:
+                    self._indestructible_lethal_noted.add(p.uid); self.trace.append(('lethal_damage_indestructible',p.uid,p.name))
+            elif p.uid in self.regen_shields: self._regenerate(p)
+    def _regenerate(self,p):
+        super()._regenerate(p); uid=p.uid                                           # CP37 (K1): CR 701.15a in combat
+        self.damage_marked.pop(uid,None); self.damage_marked.pop(('deathtouch',uid),None)
+        self.attackers.pop(uid,None); self.blocks.pop(uid,None)
+        for bs in self.blocks.values():
+            if uid in bs: bs.remove(uid)
 
     # ---- declare attackers ----
     def declare_attackers(self,assignments):
@@ -108,7 +139,7 @@ class CombatMixin(GristMixin):
         elif step=='end_of_combat': self.attackers={}; self.blocks={}
         if step=='cleanup':
             if self.damage_marked: self.trace.append(('damage_wears_off',tuple(sorted(k for k in self.damage_marked if not isinstance(k,tuple)))))
-            self.damage_marked={}
+            self.damage_marked={}; self._indestructible_lethal_noted.clear()
         return turn,ap,phase,step
     def _declare_blocks(self):
         self.blocks={}
@@ -120,7 +151,7 @@ class CombatMixin(GristMixin):
             for b in sorted(self.opponent_creatures(seat),key=lambda q:(-self._power(q),q.uid)):
                 if b.tapped: continue
                 cands=sorted(targets,key=lambda u:(-self._power(self.permanents[u]),u))
-                pick=next((u for u in cands if not self._menace(self.permanents[u]) or len(self.blocks.get(u,[]))>=1),None)
+                pick=next((u for u in cands if not self._flying(self.permanents[u]) and (not self._menace(self.permanents[u]) or len(self.blocks.get(u,[]))>=1)),None)
                 if pick is None: continue
                 self.blocks.setdefault(pick,[]).append(b.uid)
         self.trace.append(('blocks_declared',tuple((a,tuple(bs)) for a,bs in self.blocks.items())))
@@ -144,12 +175,13 @@ class CombatMixin(GristMixin):
         self.trace.append(('combat_damage',tuple(events))); self.combat_log.append((self.clock.turn,tuple(events)))
         self.state_based_actions()
     def state_based_actions(self):
-        rounds=super().state_based_actions()
-        for seat in OPPONENT_SEATS:
+        self._lethal_damage_replacements()
+        for seat in OPPONENT_SEATS:        # CP37 (K12): traced here, the seat leaves in S8's check below; life is not changed
             if seat not in self.lost_seats and self.commander_damage[seat]>=COMMANDER_DAMAGE_LOSS:
-                self.trace.append(('commander_damage_loss',seat,self.commander_damage[seat])); self.life[seat]=min(self.life[seat],0)
-                super().state_based_actions()
-        return rounds
+                self.trace.append(('commander_damage_loss',seat,self.commander_damage[seat]))
+        return super().state_based_actions()
+    def _seat_has_lost(self,seat):
+        return super()._seat_has_lost(seat) or self.commander_damage[seat]>=COMMANDER_DAMAGE_LOSS
 
 # ---- invariants and driver ----
 def check_invariants_s17(g):

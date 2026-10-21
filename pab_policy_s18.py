@@ -26,7 +26,8 @@ hate > edict. Each firing is traced ('policy_action', seat, turn, kind, reason).
 
 Controller defense: block_policy applies to the controller too when an opponent attacks
 (PhysicalZoneGame(block_policy='none'|'all'); 'all' = each untapped controller creature
-blocks the highest-power attacker it legally can; Savra never blocks under 'all'). Damage to
+blocks the highest-power attacker it legally can; Savra never blocks under 'all'; CP37: a
+creature in CANT_BLOCK_NAMES never blocks). Damage to
 the controller goes to life[0]; the frozen resolve() adjudicates the loss at 0 or less
 (game_lost) — the first time the kernel can lose a game.
 
@@ -34,7 +35,7 @@ Not modeled: opponents attacking each other, opponents' responses or instant-spe
 threat assessment beyond these rules, opponents casting anything.
 """
 from __future__ import annotations
-from pab_combat_s17 import CombatMixin, check_invariants_s17, HASTE_NAMES
+from pab_combat_s17 import CombatMixin, check_invariants_s17, HASTE_NAMES, CANT_BLOCK_NAMES
 from pab_opponents_s8 import OPPONENT_SEATS
 from pab_zone_bridge import BridgeError
 from pab_focus_engine import SAVRA
@@ -93,7 +94,7 @@ class PolicyOpponentsMixin(CombatMixin):
         if self.block_policy!='all': self.trace.append(('blocks_declared',())); return
         targets=[u for u,s in self.attackers.items() if s==0 and u in self.permanents]
         for b in sorted(self._own_creatures(),key=lambda q:(-self._power(q),q.uid)):
-            if b.tapped or b.name==SAVRA: continue
+            if b.tapped or b.name==SAVRA or b.name in CANT_BLOCK_NAMES: continue      # CP37 (K10)
             cands=sorted(targets,key=lambda u:(-self._power(self.permanents[u]),u))
             if cands: self.blocks.setdefault(cands[0],[]).append(b.uid)
         self.trace.append(('blocks_declared',tuple((a,tuple(bs)) for a,bs in self.blocks.items())))

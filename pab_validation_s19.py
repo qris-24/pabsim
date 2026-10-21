@@ -10,7 +10,7 @@ kernel must satisfy regardless of how good the deck is:
                     - every 'pay_life' - every combat damage dealt to seat 0 recorded in the
                     trace, and each opponent's life equals 40 - drains - targeted losses -
                     combat damage - Grist -5 - Witherbloom Command (all from the trace);
-                    a seat that left ends at <= 0
+                    a seat that left ends at <= 0, or has 21+ commander damage (CP37)
   card identity     101 card identities throughout, every nontoken card in exactly one zone,
                     no token outside the battlefield (the S5–S11 invariants at every step)
   stack discipline  no card on either stack ledger at the end; nothing pending at the end
@@ -25,6 +25,7 @@ from __future__ import annotations
 import json
 from pab_kernel import PhysicalZoneGame, KERNEL_VERSION
 from pab_policy_s18 import run_game, check_invariants_s18
+from pab_combat_s17 import COMMANDER_DAMAGE_LOSS
 from pab_opponents_s8 import OPPONENT_SEATS
 from pab_turn_clock import STEPS
 from pab_turn_loop import opening_hand
@@ -61,8 +62,7 @@ def life_ledger(g):
         elif k=='combat_damage':
             for ev in t[1]:
                 if ev[0]=='player': life[ev[1]]-=ev[3]
-        elif k=='seat_leaves_game': lost.add(t[1])
-        elif k=='commander_damage_loss': life[t[1]]=min(life[t[1]],0)
+        elif k=='seat_leaves_game': lost.add(t[1])                     # CP37 (K12): a commander-damage loss does not change life
     return life
 
 def clock_legal(g):
@@ -87,6 +87,10 @@ def clock_legal(g):
     if not term_ok: problems.extend(term_errors)
     return (not problems),problems[:5]
 
+def lost_seats_ok(g):
+    """CP37 (K12): every seat that left is at 0 or less life, or has 21+ commander damage (it leaves with its life)."""
+    return all(g.life[s]<=0 or g.commander_damage[s]>=COMMANDER_DAMAGE_LOSS for s in g.lost_seats)
+
 def validate_game(seed,config):
     g=new_game(seed,config); out,turns,ledger=run_game(g,config.get('max_turns',40)); check_invariants_s18(g)
     h=new_game(seed,config); run_game(h,config.get('max_turns',40))
@@ -96,7 +100,7 @@ def validate_game(seed,config):
     led=life_ledger(g); checks['life_ledger']=(led==g.life)
     checks['stacks_empty']=(g.stack_cards=={} and g.command_stack=={} and not g.pending)
     checks['counts']=(g.opponent_sacrifices==sum(1 for t in g.trace if t[0]=='opponent_sacrifice') and g.commander_casts==sum(1 for t in g.trace if t[0]=='commander_cast') and g.commander_deaths==sum(1 for t in g.trace if t[0]=='commander_to_command_zone'))
-    checks['lost_seats_at_zero']=all(g.life[s]<=0 for s in g.lost_seats)
+    checks['lost_seats_at_zero']=lost_seats_ok(g)                     # CP37 (K12)
     z=g.zones; checks['card_identity']=(sum(1 for c in z.cards.values() if not c.token)==101 and all(z.cards[u].zone==zone for zone,us in z.zones.items() for u in us))
     observed={'outcome':out,'turns':turns,'controller_turns':len(ledger),'life':list(g.life),'lost_seats':sorted(g.lost_seats),
               'cards_cast':sum(len(r[3]) for r in ledger),'lands_played':sum(1 for r in ledger if r[1]),'commander_casts':g.commander_casts,'commander_deaths':g.commander_deaths,

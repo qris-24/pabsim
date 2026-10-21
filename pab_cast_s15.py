@@ -11,7 +11,8 @@ the frozen indestructible_until_eot set at each seat's cleanup):
   hexproof_eot     own permanents opponents' scripted actions may not target (S11 policies
                    skip them; hexproof does not stop the controller's own spells)
   regen_shields    regeneration (CR 701.15): the next destroy() this turn instead taps the
-                   creature and the shield is spent
+                   creature and the shield is spent (CP37: also lethal damage, S17; a token's
+                   physical card is tapped too)
   infused_eot      Infuse with Vitality: when the creature dies this turn it returns tapped
                    (a Trigger after the death triggers; tokens cannot return)
   destroy()        an opponent's creature is destroyed through the S8 death path (the frozen
@@ -92,9 +93,10 @@ class InteractionSpellsMixin(RemainingLandsMixin):
         return turn,ap,phase,step
 
     # ---- general machinery ----
+    def _current_power(self,p): return super()._current_power(p)+self.eot_pt.get(p.uid,(0,0))[0]           # CP37 (K4)
+    def _current_toughness(self,p): return super()._current_toughness(p)+self.eot_pt.get(p.uid,(0,0))[1]
     def _dying_by_toughness(self):
-        return [p for p in self.permanents.values() if p.creature
-                and p.toughness+p.counters-p.minus_counters+self.eot_pt.get(p.uid,(0,0))[1]<=0]
+        return [p for p in self.permanents.values() if p.creature and self._current_toughness(p)<=0]
     def _leave(self,uid,*,sacrificed):
         p=self.permanents.get(uid)
         if p is not None and p.controller!=0 and p.creature:
@@ -127,12 +129,18 @@ class InteractionSpellsMixin(RemainingLandsMixin):
         p=self.permanents.get(uid)
         if p is None: return super().destroy(uid)
         if uid in self.regen_shields and uid not in self.indestructible_until_eot:
-            self.regen_shields.discard(uid); p.tapped=True
-            ph=self.linked_battlefield.get(uid)
-            if ph is not None: self.zones.cards[ph].tapped=True
-            self.trace.append(('regenerated',uid,p.name)); return None
+            self._regenerate(p); return None
         if p.controller!=0: return self._opponent_creature_dies(uid,cause='destroy')
         return super().destroy(uid)
+    def _regenerate(self,p):
+        """CR 701.15a: the shield is used and the creature is tapped (CP37: a token's physical card too, so the bridge
+        stays consistent). S17 adds the rest: all damage removed, removed from combat."""
+        uid=p.uid; self.regen_shields.discard(uid); p.tapped=True
+        ph=self.linked_battlefield.get(uid)
+        if ph is not None: self.zones.cards[ph].tapped=True
+        tk=getattr(self,'linked_tokens',{}).get(uid)
+        if tk is not None: self.zones.cards[tk].tapped=True
+        self.trace.append(('regenerated',uid,p.name))
     def _own_creature_target(self,*,commander_only=False):
         p=super()._own_creature_target(commander_only=commander_only)
         if p is not None and p.uid in self.hexproof_eot:

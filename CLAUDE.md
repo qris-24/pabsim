@@ -85,16 +85,20 @@
   Infuse correction done; Darkbore Pathway WEAK; nothing certified).
 - A-S20-09: inherited v0.8 counters and S20 path counters coexist.
 - Auditor constant-resolution fix.
-- `HASTE_NAMES` in `pab_combat_s17.py` is a hardcoded name list; keywords should come from card data.
+- `HASTE_NAMES`, `DEATHTOUCH_NAMES`, `FLYING_NAMES`, `MENACE_NAMES`, `CANT_BLOCK_NAMES` in `pab_combat_s17.py` are
+  hardcoded name lists (checked against the pinned card data since CP37); keywords should come from card data.
 - CP21 claims left unasserted (no model): C83 "can't be countered" (no counterspell model), C84
   opponent basic-land search, C92 Grist +1 Insect-card repeat (unreachable with the deck), C94 mode 1
   on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
 
 ## Next stages
 - CP31d follow-up: integrity review findings in EVIDENCE/CP31d_INTEGRITY_REVIEW.md, one stage each:
-  kernel defects K1-K7 (reproduced), K8-K13 (read-verified), K14 (unconfirmed, needs CR text); gate G2-G4 (G1 closed in CP35);
+  kernel defects K2, K3, K5-K7 (reproduced), K8, K11, K13 (read-verified), K14 (unconfirmed, needs CR text) (K1, K4, K9, K10, K12 closed in CP37); gate G2-G4 (G1 closed in CP35);
   test hygiene T1-T6 (T7 closed in CP35);
   PABTRV3_CARD_COVERAGE.json summary (build_registry.py). Some test fixes move expectations: ask first.
+- CP37 follow-up (fold into the K3/K6/K7 stage): the S3 SBA loop traces lethal-damage deaths as 'sba_zero_toughness' (event 'zero_toughness').
+- CP37 follow-up (Stage C): South Wind Avatar's lifegain reads printed toughness (pab_focus_engine_v07.py:321, frozen), so
+  Skullclamp, counters and until-end-of-turn changes are ignored; needs a layered last-known-information fix.
 - CP30 follow-up: C:\pabsim-git (ChatGPT backup clone) predates .gitattributes; re-clone it or run
   `git rm --cached -r . -q; git reset --hard` there so its files are LF.
 - CP26 follow-up: export vs evidence mismatches recorded, not resolved (High Market text whitespace;
@@ -110,4 +114,4 @@
   Open: resolve module constants as subject evidence (C68), decide on method-driven subjects (C64, C69).
 - CP31c follow-up: compiler signatures with no covering contract (see EVIDENCE/CP31c_COMPILER_RETIREMENT.md) become new contract candidates.
 - Then the ledger, in order: auditor constant-resolution fix,
-  A-S20-05, A-S20-09, HASTE_NAMES.
+  A-S20-05, A-S20-09, keyword name lists from card data.
