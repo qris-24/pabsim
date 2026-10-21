@@ -1,0 +1,5 @@
+commit d56670a | seeds run: 500 | command: py -3.14 run_validation.py
+
+Gate: no failing test under any seed.
+
+VALIDATION_RESULTS.json: one result across all 500 seeds; identical to the committed file.
