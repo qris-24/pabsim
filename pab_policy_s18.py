@@ -70,7 +70,7 @@ class PolicyOpponentsMixin(CombatMixin):
             sv=next((p for p in own if p.name==SAVRA and p.uid in self.linked_battlefield and p.uid not in self.hexproof_eot),None)
             best=max([p for p in own if p.token is None and p.name!=SAVRA and p.uid not in self.hexproof_eot],key=lambda p:(self._power(p),-p.uid),default=None)
             if sv is not None:
-                pol['removal_budget']-=1; self._fire(seat,turn,'exile_creature' if pol.get('exile_instead') else 'destroy_commander','Savra on the battlefield'); return
+                pol['removal_budget']-=1; self._fire(seat,turn,'exile_commander' if pol.get('exile_instead') else 'destroy_commander','Savra on the battlefield'); return   # CP38 (K5)
             if best is not None and self._power(best)>=pol['removal_min_power']:
                 pol['removal_budget']-=1; self._fire(seat,turn,'exile_creature' if pol.get('exile_instead') else 'destroy_creature',f'{best.name} power {self._power(best)}'); return
         if pol.get('graveyard_hate_at') is not None and pol['graveyard_budget']>0 and gy>=pol['graveyard_hate_at']:

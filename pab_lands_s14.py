@@ -26,7 +26,8 @@ activated abilities are S14's (EVIDENCE/S14_LAND_EVIDENCE.json):
                     refused (CR 602.2b); the land itself is fully playable
   Takenuma, Abandoned Mire  {T}: B.  channel_takenuma(card_uid, return_uid=None): from hand,
                     {3}{B} less {1} per legendary creature you control, discard the card:
-                    mill three, then return a creature card from the graveyard to hand (the
+                    mill three, then return a creature or planeswalker card (CP38: Shigeki
+                    and Grist included; Shigeki counts as a legendary creature) to hand (the
                     choice is made at resolution: return_uid is a pre-commitment; None or a
                     card no longer there -> the first eligible card, or nothing)
   Geier Reach Sanitarium  {T}: C.  geier_reach(land_uid, discard_uid): {2}, {T}: you draw then
@@ -147,7 +148,7 @@ class RemainingLandsMixin(SpellCastMixin):
         card=self.zones._require_in_zone(card_uid,'hand')
         if card.name!='Takenuma, Abandoned Mire': raise BridgeError('S14: not Takenuma')
         if self.clock_engaged and self.clock.step in ('untap','cleanup'): raise BridgeError('S14: no priority in this step')
-        legends=sum(1 for q in self.permanents.values() if q.controller==0 and q.creature and q.name in (SAVRA,'Dina, Soul Steeper','Chatterfang, Squirrel General',"Moseo, Vein's New Dean",'Beledros Witherbloom','Yawgmoth, Thran Physician','Yahenni, Undying Partisan'))
+        legends=sum(1 for q in self.permanents.values() if q.controller==0 and q.creature and q.name in (SAVRA,'Dina, Soul Steeper','Chatterfang, Squirrel General',"Moseo, Vein's New Dean",'Beledros Witherbloom','Yawgmoth, Thran Physician','Yahenni, Undying Partisan','Shigeki, Jukai Visionary'))   # CP38 (K8)
         generic=max(0,3-legends); pool=self.mana_pool
         if pool.count('B')<1 or len(pool)<1+generic: raise BridgeError(f'S14: Takenuma channel needs {{{generic}}}{{B}}')
         self.pay_mana(black=1,generic=generic); self.zones.discard(card_uid); self.trace.append(('channel','Takenuma, Abandoned Mire',card_uid,generic))
@@ -183,7 +184,7 @@ class RemainingLandsMixin(SpellCastMixin):
         self.pending.append(Trigger('Mikokoro resolution (S14)',resolve)); self.assert_bridge_integrity()
 
 from pab_cast_s7 import CREATURES as _C
-_CREATURE_NAMES=frozenset(_C)|{SAVRA}
+_CREATURE_NAMES=frozenset(_C)|{SAVRA,'Shigeki, Jukai Visionary','Grist, the Hunger Tide'}   # CP38 (K8): creature or planeswalker cards
 
 # ---- driver ------------------------------------------------------------------
 LAND_MANA_DRIVER={**LAND_MANA,'Verdant Catacombs':()}      # playable; never tapped by the policy

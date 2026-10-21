@@ -50,6 +50,18 @@ class ShigekiMixin(PolicyOpponentsMixin):
         self.zones._require_in_zone(physical_uid,'stack' if getattr(self,'cp06_stack_enabled',False) else 'hand'); self.zones.move(physical_uid,'battlefield',controller=0); del self.stack_cards[physical_uid]
         p=self.add(SHIGEKI,colors='G',creature=True,mana_value=2,power=1,toughness=3); p.enchantment=True; self.linked_battlefield[p.uid]=physical_uid
         self.trace.append(('physical_creature_spell_resolved',SHIGEKI,physical_uid,p.uid)); self.assert_bridge_integrity()
+    def _return_permanent_card(self,uid,source):
+        """CP38 (K8): Shigeki returns from the graveyard as a permanent card (Rise of the Witch-king) with its own body."""
+        card=self.zones.cards[uid]
+        if card.name!=SHIGEKI or card.is_land: return super()._return_permanent_card(uid,source)
+        if any(ph==uid for ph in self.linked_graveyard.values()):              # died: the existing reanimation path, then its enchantment type
+            super()._return_permanent_card(uid,source)
+            p=next((q for e,ph in self.linked_battlefield.items() if ph==uid for q in [self.permanents.get(e)] if q is not None),None)
+            if p is not None: p.enchantment=True
+            return
+        self.zones.move(uid,'battlefield',controller=0)
+        p=self.add(SHIGEKI,colors='G',creature=True,mana_value=2,power=1,toughness=3); p.enchantment=True; self.linked_battlefield[p.uid]=uid
+        self.trace.append(('returned_permanent',SHIGEKI,uid,p.uid,source)); self.assert_bridge_integrity()
     def _tgt(self,uid,*,enchantment=False,**kw):
         p=self.permanents.get(uid)
         if enchantment and p is not None and p.controller==0 and p.name==SHIGEKI: return super()._tgt(uid,enchantment=False,**kw)
@@ -66,6 +78,7 @@ class ShigekiMixin(PolicyOpponentsMixin):
         if pool.count('G')<1 or len(pool)<2: raise BridgeError('S20: needs {1}{G}')
         self.pay_mana(green=1,generic=1); p.tapped=True; self.zones.cards[ph].tapped=True
         del self.permanents[uid]; del self.linked_battlefield[uid]; self.zones.move(ph,'hand'); self.trace.append(('shigeki_returned_to_hand',uid,ph))
+        self.skullclamp_attached={k:v for k,v in self.skullclamp_attached.items() if v!=uid}   # CP38 (K13): equipment becomes unattached
         def resolve():
             top=list(self.zones.zones['library'][:4]); self.trace.append(('revealed',tuple(top)))
             lands=[u for u in top if self.zones.cards[u].is_land]; pick=land_uid if land_uid in lands else (lands[0] if lands else None)

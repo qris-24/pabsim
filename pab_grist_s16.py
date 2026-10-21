@@ -41,7 +41,7 @@ from pab_focus_engine import Trigger, Permanent, INSECT, SAVRA
 GRIST='Grist, the Hunger Tide'
 GRIST_SPEC={'kind':'planeswalker','cost':(1,1,1),'additional':None,'mana_value':3,'loyalty':3}
 CASTABLE={**CASTABLE_S15,GRIST:GRIST_SPEC}
-CREATURE_CARD_NAMES=frozenset(CREATURES)|{SAVRA,GRIST}
+CREATURE_CARD_NAMES=frozenset(CREATURES)|{SAVRA,GRIST,'Shigeki, Jukai Visionary'}   # CP38 (K8)
 
 class GristMixin(InteractionSpellsMixin):
     def __init__(self,*a,**kw):

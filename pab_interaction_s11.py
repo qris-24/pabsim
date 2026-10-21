@@ -14,15 +14,19 @@ exogenous event with a fixed, documented target policy; nothing is inferred from
   exile_creature      same policy; the permanent leaves without dying (no triggers), the
                       card goes to zones['exile'], tokens cease; Savra then returns to the
                       command zone at the next SBA check (S10, CR 903.9a)
+  exile_commander     CP38 (K5), policy-only (S18 exile_instead): exile Savra if she is on
+                      the battlefield (same exile path); traced `no_target` otherwise
   board_wipe          every creature of every seat is destroyed as ONE event: leave-the-
                       battlefield triggers look back at the whole pre-wipe board (CR 603.10a,
                       the S3 look-back view), including the controller's own dying Blood
                       Artist / Deathgreeter / Poison-Tip Archer for every other death;
-                      indestructible creatures survive
+                      indestructible creatures survive; CP38 (K2): a creature with a
+                      regeneration shield is regenerated instead (CR 701.15a)
   graveyard_exile     every card in the controller's graveyard is exiled (Bojuka Bog style):
                       physical cards -> exile, graveyard links and LKI dropped
   edict               the controller sacrifices one creature by a fixed policy (a token if
-                      any, else the lowest-power nontoken that is not Savra, else Savra)
+                      any, else the lowest-power nontoken that is not Savra, else Savra;
+                      CP38 (K11): power is the current power, counters and Skullclamp included)
                       through the frozen sacrifice(), so Savra's own triggers fire
 
 Not modeled: counterspells, instant-speed interaction, targeted discard, bounce, -X/-X,
@@ -39,6 +43,7 @@ from pab_focus_engine import SAVRA
 import pab_cast_s7 as _s7
 
 KINDS=('destroy_commander','destroy_creature','exile_creature','board_wipe','graveyard_exile','edict')
+POLICY_ONLY_KINDS=('exile_commander',)     # CP38 (K5): fired by S18 policies, not scriptable (KINDS stays the scripted six)
 
 class InteractionMixin(CommanderMixin):
     def __init__(self,*a,**kw):
@@ -84,7 +89,7 @@ class InteractionMixin(CommanderMixin):
         own=[p for p in self.permanents.values() if p.controller==0 and p.creature and p.token is None]
         if commander_only: return next((p for p in own if p.name==SAVRA),None)
         others=[p for p in own if p.name!=SAVRA]
-        if others: return max(others,key=lambda p:(p.power+p.counters-p.minus_counters,-p.uid))
+        if others: return max(others,key=lambda p:(self._current_power(p),-p.uid))      # CP38: the power S18's reason reads
         return next((p for p in own if p.name==SAVRA),None)
 
     def _exile_own(self,p,cause):
@@ -111,8 +116,15 @@ class InteractionMixin(CommanderMixin):
         p=self._own_creature_target()
         if p is None: self.trace.append(('no_target',seat,'exile_creature')); return
         self._exile_own(p,'exile_creature')
+    def _act_exile_commander(self,seat):
+        p=self._own_creature_target(commander_only=True)
+        if p is None: self.trace.append(('no_target',seat,'exile_commander')); return
+        self._exile_own(p,'exile_commander')
     def _act_board_wipe(self,seat):
         dying=[p for p in self.permanents.values() if p.creature and p.uid not in self.indestructible_until_eot]
+        shielded=[q for q in dying if q.uid in getattr(self,'regen_shields',())]
+        for p in shielded: self._regenerate(p)                                    # CP38 (K2): destruction replaced (CR 701.15a)
+        dying=[p for p in dying if p not in shielded]
         self.trace.append(('board_wipe',seat,tuple(p.uid for p in dying)))
         live=self.permanents; self.permanents=_LookBack(live,live.values())
         try:
@@ -134,7 +146,7 @@ class InteractionMixin(CommanderMixin):
         if tokens: p=min(tokens,key=lambda q:q.uid)
         else:
             others=[q for q in own if q.name!=SAVRA]
-            p=min(others,key=lambda q:(q.power,q.uid)) if others else next(q for q in own if q.name==SAVRA)
+            p=min(others,key=lambda q:(self._current_power(q),q.uid)) if others else next(q for q in own if q.name==SAVRA)   # CP38 (K11)
         self.trace.append(('edict_against_controller',seat,p.uid,p.name))
         self.sacrifice(p.uid)
 

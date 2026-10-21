@@ -26,7 +26,7 @@ R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
 RUNNER_OUTPUTS={'VALIDATION_RESULTS.json','validation_stdout.txt','PASTE_ME.md'}
 R02_MANIFEST='PHASE8_R02_FILE_MANIFEST.json'
 MANIFEST_BUILD='pab_reliability_v0_8_r02_r01'
-REFERENCE_TEST_COUNT=882  # sum of per-file counts asserted below
+REFERENCE_TEST_COUNT=900  # sum of per-file counts asserted below
 TEST_DEF_RE=re.compile(r'^\s+def test_',re.M)   # one shared definition; build_manifest.py imports it
 
 def count_test_defs(path):
@@ -200,6 +200,7 @@ def preflight(root=ROOT):
     assert n('test_auditfix_cp14.py')==5, 'test_auditfix_cp14.py count'
     assert n('test_auditfix_cp23.py')==8, 'test_auditfix_cp23.py count'
     assert n('test_auditfix_cp37.py')==21, 'test_auditfix_cp37.py count'
+    assert n('test_auditfix_cp38.py')==18, 'test_auditfix_cp38.py count'
     assert n('test_shigeki_s20.py')==4, 'test_shigeki_s20.py count'
     assert n('test_r52_village_rites.py')==4, 'test_r52_village_rites.py count'
     assert n('test_integrated_turn_loop_s5.py')==7, 'test_integrated_turn_loop_s5.py count'

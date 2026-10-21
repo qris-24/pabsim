@@ -108,7 +108,7 @@ class OpponentsMixin(CreatureCastMixin):
     def edict_choice(self,seat):
         """Stand-in for 'a creature of their choice': lowest power, then toughness, then uid."""
         cs=self.opponent_creatures(seat)
-        return min(cs,key=lambda p:(p.power+p.counters-p.minus_counters,p.toughness+p.counters-p.minus_counters,p.uid)) if cs else None   # S15: counters count on both
+        return min(cs,key=lambda p:(self._current_power(p),self._current_toughness(p),p.uid)) if cs else None   # S15: counters count on both; CP38: current power/toughness
 
     def _edict_each_opponent(self,source):
         self.edicts_resolved+=1

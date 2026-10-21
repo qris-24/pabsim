@@ -213,7 +213,7 @@ def tutor_selection(g):
         if u is not None: return u
     u=next((u for u in lib if g.zones.cards[u].name=='Grave Pact'),None)
     if u is not None: return u
-    return next((u for u in lib if g.zones.cards[u].name in _s7.CREATURES),None)
+    return next((u for u in lib if g.zones.cards[u].name in _s7.CREATURES or g.zones.cards[u].name in ('Shigeki, Jukai Visionary','Grist, the Hunger Tide')),None)   # CP38 (K8): creature cards
 
 def cast_when_able(g):
     """S12 pass, then the S13 spells with fixed policies (Immoral Bargain is not driven)."""

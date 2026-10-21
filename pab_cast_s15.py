@@ -147,7 +147,7 @@ class InteractionSpellsMixin(RemainingLandsMixin):
             own=[q for q in self.permanents.values() if q.controller==0 and q.creature and q.token is None and q.uid not in self.hexproof_eot]
             if commander_only: return None
             others=[q for q in own if q.name!=SAVRA]
-            if others: return max(others,key=lambda q:(q.power+q.counters-q.minus_counters,-q.uid))
+            if others: return max(others,key=lambda q:(self._current_power(q),-q.uid))      # CP38
             return next((q for q in own if q.name==SAVRA),None)
         return p
     def _is_land_permanent(self,uid):
@@ -272,7 +272,7 @@ class InteractionSpellsMixin(RemainingLandsMixin):
         return {'targets':[target_uid],'resolve':resolve}
     def _s15_grisly_salvage(self,*,choice_uid,**_):
         from pab_cast_s7 import CREATURES
-        names=set(CREATURES)|{SAVRA,'Grist, the Hunger Tide'}
+        names=set(CREATURES)|{SAVRA,'Grist, the Hunger Tide','Shigeki, Jukai Visionary'}      # CP38 (K8): Shigeki is a creature card
         def resolve():
             top=list(self.zones.zones['library'][:5]); self.trace.append(('revealed',tuple(top)))
             elig=[u for u in top if self.zones.cards[u].name in names or self.zones.cards[u].is_land]
@@ -373,10 +373,10 @@ def cast_when_able(g):
         if name in ('Abrupt Decay',"Assassin's Trophy"):
             cands=[p for p in opp if name!='Abrupt Decay' or p.mana_value<=3]
             if not cands: continue
-            kw['target_uid']=max(cands,key=lambda p:(p.power,p.toughness,-p.uid)).uid
+            kw['target_uid']=max(cands,key=lambda p:(g._current_power(p),g._current_toughness(p),-p.uid)).uid   # CP38 (K11 class)
         elif name=='Witherbloom Charm': kw['mode']=2
         elif name=='Golgari Charm':
-            kills_opp=sum(1 for p in opp if p.toughness+p.counters-p.minus_counters<=1); kills_own=sum(1 for p in g.permanents.values() if p.controller==0 and p.creature and p.toughness+p.counters-p.minus_counters<=1)
+            kills_opp=sum(1 for p in opp if g._current_toughness(p)<=1); kills_own=sum(1 for p in g.permanents.values() if p.controller==0 and p.creature and g._current_toughness(p)<=1)   # CP38
             if kills_opp<=kills_own: continue
             kw['mode']=1
         elif name=='Heroic Intervention': continue
