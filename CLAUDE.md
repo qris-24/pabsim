@@ -50,6 +50,7 @@
 - 0 cards are certified until the registry is verified against code.
 - Kernel bugs found during work are fixed as found, in a layer, without stopping, unless a frozen
   expectation would move (then stop and ask).
+- Original compiler retired (CP31c): go/no-go condition 2 superseded by the kernel contract suite; 10/15 kept as history (EVIDENCE/CP31c_COMPILER_RETIREMENT.md).
 
 ## Session rules
 - Adding a test file also requires updating REFERENCE_TEST_COUNT and the per-file count in run_validation.py, the expected (tests_run, tests_passed) in release_gate_tests/test_r02_release_gate.py, build_registry.py output and the manifest; these are gate bookkeeping and always in scope.
@@ -108,5 +109,6 @@
 - CP28 follow-up: C51/C52 SUBSTITUTIONS say Chatterfang "-X/-X"; the Oracle text says "+X/-X". Review the wording.
 - CP27 follow-up: CONTRACTS_C41_C94_STATUS.md has no C65–C77 re-status section; check its C65–C77
   table rows against VALIDATION_RESULTS.json (live: C69, C75, C76 PARTIAL_EXECUTED; rest EXECUTED).
+- CP31c follow-up: compiler signatures with no covering contract (see EVIDENCE/CP31c_COMPILER_RETIREMENT.md) become new contract candidates.
 - Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer R01 docstring text,
   A-S20-05, A-S20-09, HASTE_NAMES.
