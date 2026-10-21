@@ -84,15 +84,16 @@
   Infuse correction done; Darkbore Pathway WEAK; nothing certified).
 - A-S20-09: inherited v0.8 counters and S20 path counters coexist.
 - Auditor constant-resolution fix.
-- Pest Rescuer fires on every upkeep per Oracle; the R01 docstring (`pab_r01_pest_rescuer.py:4`) quotes "your upkeep".
-  CP31 finding: the S2 clock already fires it on every seat's upkeep (C95), so only the docstring text is wrong
-  (EVIDENCE/CP31_PEST_RESCUER_ORACLE.md).
 - `HASTE_NAMES` in `pab_combat_s17.py` is a hardcoded name list; keywords should come from card data.
 - CP21 claims left unasserted (no model): C83 "can't be countered" (no counterspell model), C84
   opponent basic-land search, C92 Grist +1 Insect-card repeat (unreachable with the deck), C94 mode 1
   on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
 
 ## Next stages
+- CP31d follow-up: integrity review findings in EVIDENCE/CP31d_INTEGRITY_REVIEW.md, one stage each:
+  kernel defects K1-K7 (reproduced), K8-K13 (read-verified), K14 (unconfirmed, needs CR text); gate G1-G4;
+  test hygiene T1-T7;
+  PABTRV3_CARD_COVERAGE.json summary (build_registry.py). Some test fixes move expectations: ask first.
 - CP30 follow-up: C:\pabsim-git (ChatGPT backup clone) predates .gitattributes; re-clone it or run
   `git rm --cached -r . -q; git reset --hard` there so its files are LF.
 - CP26 follow-up: export vs evidence mismatches recorded, not resolved (High Market text whitespace;
@@ -107,8 +108,6 @@
   Intervention stand-in), C87 (Grisly Salvage stand-in); C96 is rules-only. User (CP29): accepted False for now.
   Open: resolve module constants as subject evidence (C68), decide on method-driven subjects (C64, C69).
 - CP28 follow-up: C51/C52 SUBSTITUTIONS say Chatterfang "-X/-X"; the Oracle text says "+X/-X". Review the wording.
-- CP27 follow-up: CONTRACTS_C41_C94_STATUS.md has no C65–C77 re-status section; check its C65–C77
-  table rows against VALIDATION_RESULTS.json (live: C69, C75, C76 PARTIAL_EXECUTED; rest EXECUTED).
 - CP31c follow-up: compiler signatures with no covering contract (see EVIDENCE/CP31c_COMPILER_RETIREMENT.md) become new contract candidates.
-- Then the ledger, in order: auditor constant-resolution fix, Pest Rescuer R01 docstring text,
+- Then the ledger, in order: auditor constant-resolution fix,
   A-S20-05, A-S20-09, HASTE_NAMES.

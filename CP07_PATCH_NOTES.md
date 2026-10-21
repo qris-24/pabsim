@@ -1,4 +1,4 @@
-﻿# CP07 â€” Windows path separators in preflight; manifest re-pinned (2026-10-18)
+# CP07 — Windows path separators in preflight; manifest re-pinned (2026-10-18)
 
 Kernel unchanged. No frozen file, deck, Oracle, test, or fixture edited. Suite shape unchanged: 779 tests, 18/18 release gate.
 

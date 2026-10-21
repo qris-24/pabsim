@@ -1,6 +1,7 @@
 {
   "checkpoint": "CP06_PHYSICAL_STACK_REPAIR",
   "code_checkpoint": "rp-CP06",
+  "cp31d_note": "Top-level gate, reference_tests, repair_reference_tests and stop_reason are as of CP06 and historical; the current gate result is VALIDATION_RESULTS.json.",
   "date": "2026-10-18",
   "gate": "779/779 reference fixtures + 18/18 release integrity; twice + clean extraction pending",
   "independent_expected_failures": 6,
@@ -56,6 +57,7 @@
       "cp02_status": "OPEN_UNMODIFIED",
       "cp05_status": "CP03_DEATHTOUCH_REPAIRED_RETURN_FOR_OPPONENT_OPEN",
       "cp06_status": "CP03_DEATHTOUCH_REPAIRED_RETURN_FOR_OPPONENT_OPEN",
+      "cp31d_note": "deathtouch part repaired at CP03; the opponent-return part was split out as A-S20-11 and repaired at CP10c.",
       "evidence_class": "Documented missing effect independently measured",
       "fix_authorized": true,
       "issue_id": "A-S20-04",
@@ -65,6 +67,7 @@
       "priority": "P1",
       "repro_probe": "S15_INFUSE_DEATHTOUCH",
       "stage": "S15-S17",
+      "status": "REPAIRED",
       "summary": "Infuse deathtouch omitted from damage"
     },
     {
@@ -121,6 +124,7 @@
       "cp02_status": "OPEN_UNMODIFIED",
       "cp05_status": "OPEN_UNMODIFIED",
       "cp06_status": "OPEN_UNMODIFIED",
+      "cp31d_note": "CP11 verified names against code (86 SUPPORTED, 1 WEAK, 1 UNDERCLAIM), CP12 corrected the Infuse UNDERCLAIM; not certification, 0 cards certified (CP17_PATCH_NOTES.md).",
       "evidence_class": "Coverage verification gap",
       "fix_authorized": false,
       "issue_id": "A-S20-08",
@@ -128,6 +132,7 @@
       "priority": "P1",
       "repro_probe": null,
       "stage": "S20",
+      "status": "OPEN",
       "summary": "Hand-authored model coverage claims not mechanically certified"
     },
     {
@@ -152,6 +157,7 @@
       "cp23_repair": "pab_cast_s15.py _s15_witherbloom_command: per-mode targets (mode2_uid/mode3_uid; target_uid kept for one of 2/3), every target locked at cast as (mode, target), mode 1 needs you or a seat in the game, CR 608.2b re-check of all targets at resolution (illegal mode does nothing; all illegal -> spell_fizzles_all_targets_illegal). pab_grist_s16.py grist_minus_two: sacrifice at resolution, reflexive target checked and locked when the trigger is created (CR 603.12); no legal target -> grist_minus_two_no_legal_target, no trigger (CR 603.3d); re-check at resolution",
       "cp23_status": "REPAIRED_CP23",
       "cp23_tests": "tests/test_auditfix_cp23.py",
+      "cp31d_note": "repaired at CP23 (cp23_status, cp23_tests); fix_authorized:false is the CP06 value. CLAUDE.md project rules: kernel bugs are fixed as found.",
       "evidence_class": "Requires targeted investigation",
       "fix_authorized": false,
       "issue_id": "A-S20-10",
@@ -168,11 +174,13 @@
       "cp06_status": "OPEN_UNMODIFIED",
       "cp10_status": "REPAIRED_CP10c_pab_cast_s15_opponent_body_infuse_return",
       "cp10_tests": "tests/test_auditfix_cp10.py",
+      "cp31d_note": "status filled from cp10_status (CP10c); see CP17_PATCH_NOTES.md.",
       "evidence_class": "Source-and-code limitation newly separated from A-S20-04",
       "issue_id": "A-S20-11",
       "location": "pab_cast_s15.InteractionSpellsMixin._leave",
       "priority": "P1",
       "stage": "S15",
+      "status": "REPAIRED",
       "summary": "Infuse death-return for opponent-owned creature not modeled"
     },
     {

@@ -1,4 +1,4 @@
-# Phase/step clock — dependency map and staged design (DESIGN ONLY; implementation not authorized)
+# Phase/step clock — dependency map and staged design (design record of 2026-10-18, when implementation was not yet authorized; S1-S5 have since been promoted, see the stage table below)
 
 Audit date 2026-10-18. Kernel v0.8+R02+R01+R47+R48. CR evidence: `EVIDENCE/CR_20260619_EVIDENCE.json` (MagicCompRules 20260619, SHA 7c9cd7e8…).
 

@@ -1,4 +1,71 @@
-# C41–C94 consolidated execution status (54/54) — 2026-10-18
+# C41–C99 contract execution status (current table below; the original title read "C41–C94 consolidated execution status (54/54) — 2026-10-18")
+
+## Current status (generated at CP31d from VALIDATION_RESULTS.json)
+59 contracts: 2 BLOCKED_UNSUPPORTED, 29 EXECUTED, 21 EXECUTED_WITH_SUBSTITUTION, 7 PARTIAL_EXECUTED. VALIDATION_RESULTS.json stays the live source; everything after this section is the historical record of its stage (counts, rows, blocked-mechanics list and expected-failure columns there are as of that stage, not current).
+
+| Contract | Status | Tests run | Tests passed | Expected failures |
+|---|---|---|---|---|
+| C41 | EXECUTED_WITH_SUBSTITUTION | 3 | 3 | 0 |
+| C42 | EXECUTED_WITH_SUBSTITUTION | 4 | 4 | 0 |
+| C43 | EXECUTED_WITH_SUBSTITUTION | 3 | 3 | 0 |
+| C44 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C45 | EXECUTED | 2 | 2 | 0 |
+| C46 | EXECUTED | 2 | 2 | 0 |
+| C47 | EXECUTED | 3 | 3 | 0 |
+| C48 | EXECUTED | 3 | 3 | 0 |
+| C49 | EXECUTED | 2 | 2 | 0 |
+| C50 | BLOCKED_UNSUPPORTED | 1 | 1 | 0 |
+| C51 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C52 | EXECUTED_WITH_SUBSTITUTION | 1 | 1 | 0 |
+| C53 | EXECUTED_WITH_SUBSTITUTION | 1 | 1 | 0 |
+| C54 | EXECUTED | 1 | 1 | 0 |
+| C55 | EXECUTED | 2 | 2 | 0 |
+| C56 | EXECUTED_WITH_SUBSTITUTION | 1 | 1 | 0 |
+| C57 | EXECUTED_WITH_SUBSTITUTION | 1 | 1 | 0 |
+| C58 | EXECUTED_WITH_SUBSTITUTION | 3 | 3 | 0 |
+| C59 | EXECUTED | 2 | 2 | 0 |
+| C60 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C61 | EXECUTED_WITH_SUBSTITUTION | 4 | 4 | 0 |
+| C62 | BLOCKED_UNSUPPORTED | 1 | 1 | 0 |
+| C63 | EXECUTED | 5 | 5 | 0 |
+| C64 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C65 | EXECUTED | 1 | 1 | 0 |
+| C66 | EXECUTED | 1 | 1 | 0 |
+| C67 | EXECUTED | 2 | 2 | 0 |
+| C68 | EXECUTED | 1 | 1 | 0 |
+| C69 | PARTIAL_EXECUTED | 4 | 4 | 0 |
+| C70 | EXECUTED | 1 | 1 | 0 |
+| C71 | EXECUTED | 1 | 1 | 0 |
+| C72 | EXECUTED | 1 | 1 | 0 |
+| C73 | EXECUTED | 1 | 1 | 0 |
+| C74 | EXECUTED | 1 | 1 | 0 |
+| C75 | PARTIAL_EXECUTED | 1 | 1 | 0 |
+| C76 | PARTIAL_EXECUTED | 1 | 1 | 0 |
+| C77 | EXECUTED | 4 | 4 | 0 |
+| C78 | EXECUTED_WITH_SUBSTITUTION | 1 | 1 | 0 |
+| C79 | EXECUTED_WITH_SUBSTITUTION | 5 | 5 | 0 |
+| C80 | EXECUTED | 4 | 4 | 0 |
+| C81 | EXECUTED | 2 | 2 | 0 |
+| C82 | EXECUTED_WITH_SUBSTITUTION | 3 | 3 | 0 |
+| C83 | PARTIAL_EXECUTED | 3 | 3 | 0 |
+| C84 | PARTIAL_EXECUTED | 2 | 2 | 0 |
+| C85 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C86 | EXECUTED | 2 | 2 | 0 |
+| C87 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C88 | EXECUTED | 2 | 2 | 0 |
+| C89 | EXECUTED | 2 | 2 | 0 |
+| C90 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C91 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C92 | PARTIAL_EXECUTED | 2 | 2 | 0 |
+| C93 | EXECUTED | 3 | 3 | 0 |
+| C94 | PARTIAL_EXECUTED | 4 | 4 | 0 |
+| C95 | EXECUTED | 3 | 3 | 0 |
+| C96 | EXECUTED | 4 | 4 | 0 |
+| C97 | EXECUTED_WITH_SUBSTITUTION | 3 | 3 | 0 |
+| C98 | EXECUTED | 5 | 5 | 0 |
+| C99 | EXECUTED | 2 | 2 | 0 |
+
+## Historical record
 
 Kernel v0.8+R02+R01+R47+R48. Reference fixtures: 420. Statuses from the live test classes; per-contract substitutions are in each class and in `VALIDATION_RESULTS.json → contracts_executed`. None Oracle/CR-authenticated.
 

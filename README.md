@@ -1,5 +1,7 @@
 # PABTRV3 Reliability Lab — Phase 8 (`pab_reliability_v0_8`)
 
+> **How to read this file (CP31d):** it is a stage-by-stage history. Counts, file lists and "next session" instructions in the sections below describe their own stage and are not current. Live state: `CLAUDE.md` (rules, open queue, next stages), `PASTE_ME.md` (handoff) and `VALIDATION_RESULTS.json` (gate result). Card data lives at `C:\pabsim\data\golgari_commander.json` (outside the repo).
+
 This is an isolated, **incomplete deterministic Savra reference kernel**, **not** the inherited playable simulator and **not** a deck optimizer. Frozen 100-card main/commander and a separate optional Pest Summoning Lesson. Exact baseline SHA-256: `c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381`.
 
 Run `python run_validation.py` with Python 3.10+ and standard library only.
@@ -72,9 +74,6 @@ Status after CP21/CP23 (CONTRACTS_C41_C94_STATUS.md): C78–C94 have no BLOCKED_
 
 ## R49 + clock S1 promoted
 R49: Roaster LKI when the source has left (CR 608.2h). S1: inert `TurnClock` (`pab_turn_clock.py`), carried by the kernel, consulted by nothing yet. Reference fixtures: 445. See R49_S1_PATCH_NOTES.md and PHASE_CLOCK_DEPENDENCY_MAP.md.
-
-## Clock S2 promoted
-Step boundaries now drive each-upkeep triggers, the controller's end step, mana emptying and cleanup expiry (`pab_clock_s2.py`). C95/C96/C98/C99 executed. See S2_PATCH_NOTES.md.
 
 ## Clock S2 promoted
 Step boundaries now drive each-upkeep triggers, the controller's end step, mana emptying and cleanup expiry (`pab_clock_s2.py`). C95/C96/C98/C99 executed. See S2_PATCH_NOTES.md.

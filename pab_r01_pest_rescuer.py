@@ -4,6 +4,8 @@
 Supplied text: "At the beginning of your upkeep, if you don't control a Pest
 creature token, create a 1/1 black and green Pest creature token..."
 (offline snapshot; NOT independently authenticated against official Oracle).
+Oracle (Scryfall, CP31): "At the beginning of each upkeep, ..."; the kernel fires it on every
+seat's upkeep through the S2 clock (C95). See EVIDENCE/CP31_PEST_RESCUER_ORACLE.md.
 
 Phase 5 widened `controls_pest()` to every Pest-subtype creature, so a nontoken
 Teacher's Pest wrongly suppressed the trigger. That predicate is frozen in
