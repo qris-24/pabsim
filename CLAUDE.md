@@ -12,12 +12,13 @@
 - `decks/ORACLE_SOURCE_SCRYFALL_CP31.json` — third pinned Oracle source (CP31; Scryfall card fields verbatim, excerpt
   source `scryfall_cp31`, lookup order golgari_commander.json, supplement, scryfall); never edited.
 - `decks/CP31_SCRYFALL_DECK_EXPORT.json` — the user's Scryfall deck export supplying the printing ids (sha256 in the source file).
+- `decks/CARDSOURCE_BG_COMMANDER_20261021.json` — pinned cardsource.py export (Scryfall Oracle bulk data of 2026-10-21; Commander-legal, color identity within BG incl. colorless; 12628 cards). The gate's card-data source for name resolution (CP35); never edited, a newer export is a new file.
 - `CONTRACT_ORACLE_REFS_CP28.json` — per-contract (C41–C99) Oracle references {card, fragment} + note; drives
   `oracle_referenced` / `oracle_refs_checked` in VALIDATION_RESULTS.json. `oracle_cr_authenticated` stays False (no CR text).
 - `frozen_*/` — frozen phase 5/6/7 and previous-test snapshots; read-only.
 - `upstream_frozen/` — frozen upstream v0.5–v0.8 sources; read-only.
 - `EVIDENCE/` — before-copies and supersession records (e.g. `EVIDENCE/CP06_SUPERSEDED/`).
-- Card data (Oracle text lookup): `C:\pabsim\data\golgari_commander.json` — outside the repo, read-only.
+- Card data (Oracle text lookup): `C:\pabsim\data\golgari_commander.json` — outside the repo, read-only; used only by build_oracle_excerpt.py. The gate's card data is the pinned `decks/CARDSOURCE_BG_COMMANDER_20261021.json` (CP35).
 - Layer files are named `pab_<thing>_s<n>.py` (stage layers) or `pab_*_cp<nn>.py` (checkpoint repairs).
 - `pab_kernel.py` is the only import point. Use `Game` / `PhysicalZoneGame` from it.
 
@@ -91,8 +92,8 @@
 
 ## Next stages
 - CP31d follow-up: integrity review findings in EVIDENCE/CP31d_INTEGRITY_REVIEW.md, one stage each:
-  kernel defects K1-K7 (reproduced), K8-K13 (read-verified), K14 (unconfirmed, needs CR text); gate G1-G4;
-  test hygiene T1-T7;
+  kernel defects K1-K7 (reproduced), K8-K13 (read-verified), K14 (unconfirmed, needs CR text); gate G2-G4 (G1 closed in CP35);
+  test hygiene T1-T6 (T7 closed in CP35);
   PABTRV3_CARD_COVERAGE.json summary (build_registry.py). Some test fixes move expectations: ask first.
 - CP30 follow-up: C:\pabsim-git (ChatGPT backup clone) predates .gitattributes; re-clone it or run
   `git rm --cached -r . -q; git reset --hard` there so its files are LF.

@@ -13,8 +13,12 @@ def load(root,name):
     spec=importlib.util.spec_from_file_location(f'r02gate_{name}_{abs(hash(str(root)))}',Path(root)/f'{name}.py')
     mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); return mod
 
+_CLONES=[]   # CP35 (T7): every temporary copy is removed when the module's tests finish
+def tearDownModule():
+    for p in _CLONES: shutil.rmtree(p,ignore_errors=True)
+
 def clone():
-    d=Path(tempfile.mkdtemp(prefix='pab_r02_'))/'pkg'
+    t=Path(tempfile.mkdtemp(prefix='pab_r02_')); _CLONES.append(t); d=t/'pkg'
     shutil.copytree(ROOT,d,ignore=shutil.ignore_patterns('__pycache__','.git'))
     return d
 

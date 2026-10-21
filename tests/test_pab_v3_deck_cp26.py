@@ -6,7 +6,7 @@ import hashlib, json, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 DECKS=ROOT/'decks'
-CARD_DATA=Path(r'C:\pabsim\data\golgari_commander.json')
+CARD_DATA=DECKS/'CARDSOURCE_BG_COMMANDER_20261021.json'   # CP35: pinned cardsource.py export (was C:\pabsim\data, outside the repo)
 EXPORT_SHA='b3db879a4f27b5fa97fb87afcd17a16d9fba552673e957fa26cb8f356f94b104'
 def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def load(p): return json.loads(Path(p).read_text(encoding='utf-8'))
@@ -26,11 +26,13 @@ class PabV3Deck(unittest.TestCase):
         self.assertFalse(d['gated'])
 
     def test_every_v3_name_resolves_to_card_data_or_supplement(self):
-        data={n for c in load(CARD_DATA) for n in [c['name']]+[f['name'] for f in c.get('card_faces',[])]}
+        data={n for c in load(CARD_DATA)['cards'] for n in [c['name']]+[f['name'] for f in c.get('card_faces',[])]}
         supp={r['name'] for r in self.supp['records']}
         unresolved=[n for n in self.names if n not in data and n not in supp]
         self.assertEqual(unresolved,[])
-        self.assertEqual(sorted(n for n in self.names if n not in data),sorted(supp))   # supplement covers exactly the gaps
+        self.assertEqual(sorted(n for n in self.names if n not in data),[])   # CP35: the export (BG + colorless) resolves every v3 name
+        self.assertTrue(supp<=data)   # CP35: the 8 supplement records are now also in the export; the supplement stays as evidence
+        self.assertTrue(supp<=set(self.names))   # every supplement record is still a v3 card
         self.assertEqual(len(supp),8)
 
     def test_supplement_source_sha256s_match_files(self):
