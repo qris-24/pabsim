@@ -1,7 +1,7 @@
 # CLAUDE.md — PABTRV3 kernel (pab_reliability_v0_8_r02_r01)
 
 ## Layout
-- `tests/` — kernel reference suite (`test_*.py`), part of the gate (test count: REFERENCE_TEST_COUNT in run_validation.py (850 at CP28)).
+- `tests/` — kernel reference suite (`test_*.py`), part of the gate (test count: REFERENCE_TEST_COUNT in run_validation.py).
 - `release_gate_tests/` — the 21 release integrity checks run by `run_validation.py`.
 - `s9_tests/` — S9 land/mana layer fixtures.
 - `r01_tests/` — R01 Pest rescuer fixtures.
@@ -22,7 +22,7 @@
 - `pab_kernel.py` is the only import point. Use `Game` / `PhysicalZoneGame` from it.
 
 ## Commands (Python 3.14.7 on Windows, PowerShell)
-- Full gate (expect `Ran N tests` / `OK`, N = REFERENCE_TEST_COUNT in run_validation.py (850 at CP28),
+- Full gate (expect `Ran N tests` / `OK`, N = REFERENCE_TEST_COUNT in run_validation.py,
   and 21/21 in `VALIDATION_RESULTS.json`):
   `py -3.14 run_validation.py 2> ..\gate.txt | Out-Null; Get-Content ..\gate.txt -Tail 3`
 - Kernel suite only: `py -3.14 -m unittest discover -s tests -p "test_*.py" -q`
@@ -31,6 +31,7 @@
 - Registry: `build_registry.py` (redirect its output; never let it print to the terminal).
 - Line endings are LF. `.gitattributes` (`* -text`, CP30) disables line-ending conversion in every clone,
   whatever the machine's `core.autocrlf`. Do not introduce CRLF.
+- Headless Claude Code on this machine runs commands in Git Bash; there the gate command is: py -3.14 run_validation.py > ../gate/gate_stdout.txt 2> ../gate/gate.txt (a redirect to NUL creates a stray file).
 
 ## Frozen, never edited
 - `pab_focus_engine.py`, `pab_focus_engine_v07.py`, `pab_zone_bridge.py`, `pab_zone_bridge_v08.py`, `pab_zones.py`.
@@ -38,6 +39,7 @@
 - Fixes are layered in new files (versioned subclasses / mixins), never patched into frozen ones.
 - A frozen expectation that must move = stop and ask. Document any approved supersession with
   before-copies in `EVIDENCE/`.
+- Best-effort guard for Claude Code: deny rules in .claude/settings.json. The enforcement is the launcher's scope check and the gate's frozen-file checks.
 
 ## Project rules
 - Two deck targets. Old baseline (Savra + 99 + Pest Summoning Lesson): frozen, the only gated deck,
@@ -71,6 +73,9 @@
 - Stage-end bookkeeping, always in scope (read-only stages included): remove the closed stage from
   "## Next stages" and add the follow-ups it raised.
 - Edits to this file also require a manifest re-pin (`py -3.14 build_manifest.py`).
+- Stage prompts and the launcher live outside the repo in C:\pabsim\night\ (run_stage.ps1 -Stages CP<nn>; it tags, pushes and copies PASTE_ME.md after checking the stage commit).
+- Never delete or move a tracked file by hand; use git rm / git mv inside a stage.
+- Every file on disk inside the repo is pinned by the manifest (run_validation.py checks the on-disk file set, not git's); any stray file in the repo folder fails the gate.
 
 ## Open queue (see ISSUE_LEDGER_CP06.json for detail; closed items and their CPs: CP17_PATCH_NOTES.md)
 - A-S20-05: two legal blockers do not coordinate to block menace.

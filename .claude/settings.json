@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(/pab_focus_engine.py)",
+      "Edit(pab_focus_engine.py)",
+      "Edit(/pab_focus_engine_v07.py)",
+      "Edit(pab_focus_engine_v07.py)",
+      "Edit(/pab_zone_bridge.py)",
+      "Edit(pab_zone_bridge.py)",
+      "Edit(/pab_zone_bridge_v08.py)",
+      "Edit(pab_zone_bridge_v08.py)",
+      "Edit(/pab_zones.py)",
+      "Edit(pab_zones.py)",
+      "Edit(/frozen_phase5/**)",
+      "Edit(frozen_phase5/**)",
+      "Edit(/frozen_phase6/**)",
+      "Edit(frozen_phase6/**)",
+      "Edit(/frozen_phase7/**)",
+      "Edit(frozen_phase7/**)",
+      "Edit(/frozen_previous_tests/**)",
+      "Edit(frozen_previous_tests/**)",
+      "Edit(/upstream_frozen/**)",
+      "Edit(upstream_frozen/**)",
+      "Edit(/decks/ORACLE_SOURCE_SCRYFALL_CP31.json)",
+      "Edit(decks/ORACLE_SOURCE_SCRYFALL_CP31.json)",
+      "Edit(/decks/CP31_SCRYFALL_DECK_EXPORT.json)",
+      "Edit(decks/CP31_SCRYFALL_DECK_EXPORT.json)"
+    ]
+  }
+}
