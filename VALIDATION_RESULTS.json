@@ -212,7 +212,7 @@
       "oracle_subjects_missing": [],
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Chatterfang {B} activation (X, target, -X/-X) not modeled; the X=2 Squirrel sacrifices are performed directly as the cost; only sacrifice-side observations are asserted"
+        "Chatterfang {B} activation (X, target, +X/-X) not modeled; the X=2 Squirrel sacrifices are performed directly as the cost; only sacrifice-side observations are asserted"
       ],
       "tests_passed": 2,
       "tests_run": 2,
@@ -232,7 +232,7 @@
       "oracle_subjects_missing": [],
       "status": "EXECUTED_WITH_SUBSTITUTION",
       "substitutions": [
-        "Opponent creatures and -X/-X SBA are not modeled; the target's death is the exogenous opposing_creature_dies() event; the cost Squirrel sacrifice is performed directly"
+        "Opponent creatures and +X/-X toughness-loss SBA are not modeled; the target's death is the exogenous opposing_creature_dies() event; the cost Squirrel sacrifice is performed directly"
       ],
       "tests_passed": 1,
       "tests_run": 1,

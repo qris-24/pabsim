@@ -88,7 +88,7 @@ class C50(_Base):
 
 class C51(_Base):
     CONTRACT='C51'; ISSUES=['R28','R13']; STATUS='EXECUTED_WITH_SUBSTITUTION'
-    SUBSTITUTIONS=['Chatterfang {B} activation (X, target, -X/-X) not modeled; the X=2 Squirrel sacrifices are '
+    SUBSTITUTIONS=['Chatterfang {B} activation (X, target, +X/-X) not modeled; the X=2 Squirrel sacrifices are '
                    'performed directly as the cost; only sacrifice-side observations are asserted']
     def test_two_squirrels_green_only_savra_and_two_bats(self):
         g=self.game(SAVRA); sq=g.make_tokens(SQUIRREL,2); g.resolve()        # two normal Squirrels
@@ -106,7 +106,7 @@ class C51(_Base):
 
 class C52(_Base):
     CONTRACT='C52'; ISSUES=['R28','R24']; STATUS='EXECUTED_WITH_SUBSTITUTION'
-    SUBSTITUTIONS=['Opponent creatures and -X/-X SBA are not modeled; the target\'s death is the exogenous '
+    SUBSTITUTIONS=['Opponent creatures and +X/-X toughness-loss SBA are not modeled; the target\'s death is the exogenous '
                    'opposing_creature_dies() event; the cost Squirrel sacrifice is performed directly']
     def test_target_death_no_savra_no_second_bats(self):
         g=self.game(SAVRA,'Poison-Tip Archer'); s=g.make_tokens(SQUIRREL)[0]; g.resolve()

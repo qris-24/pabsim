@@ -57,7 +57,7 @@
       {"card": "Chatterfang, Squirrel General", "fragment": "{B}, Sacrifice X Squirrels: Target creature gets +X/-X until end of turn."},
       {"card": "Savra, Queen of the Golgari", "fragment": "Whenever you sacrifice a green creature, you may gain 2 life."},
       {"card": "Mirkwood Bats", "fragment": "Whenever you create or sacrifice a token, each opponent loses 1 life."}
-    ], "note": "The activation itself is not modeled (SUBSTITUTIONS); only the sacrifice side is asserted. The SUBSTITUTIONS text says -X/-X; the Oracle text says +X/-X (recorded as a CP28 follow-up, not changed here).", "subjects": ["Chatterfang, Squirrel General", "Mirkwood Bats"], "subject_basis": "test_two_squirrels_green_only_savra_and_two_bats; Savra is only the SAVRA constant"},
+    ], "note": "The activation itself is not modeled (SUBSTITUTIONS); only the sacrifice side is asserted.", "subjects": ["Chatterfang, Squirrel General", "Mirkwood Bats"], "subject_basis": "test_two_squirrels_green_only_savra_and_two_bats; Savra is only the SAVRA constant"},
     "C52": {"refs": [
       {"card": "Poison-Tip Archer", "fragment": "Whenever another creature dies, each opponent loses 1 life."},
       {"card": "Chatterfang, Squirrel General", "fragment": "Sacrifice X Squirrels"},

@@ -107,7 +107,6 @@
   C64 (Hunt for Specimens), C68 (Pathway via PATHWAY), C69 (Nature's Lore / Sakura-Tribe Elder), C79 (Heroic
   Intervention stand-in), C87 (Grisly Salvage stand-in); C96 is rules-only. User (CP29): accepted False for now.
   Open: resolve module constants as subject evidence (C68), decide on method-driven subjects (C64, C69).
-- CP28 follow-up: C51/C52 SUBSTITUTIONS say Chatterfang "-X/-X"; the Oracle text says "+X/-X". Review the wording.
 - CP31c follow-up: compiler signatures with no covering contract (see EVIDENCE/CP31c_COMPILER_RETIREMENT.md) become new contract candidates.
 - Then the ledger, in order: auditor constant-resolution fix,
   A-S20-05, A-S20-09, HASTE_NAMES.
