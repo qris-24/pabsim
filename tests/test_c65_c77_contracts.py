@@ -15,6 +15,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
 from pab_focus_engine import SAVRA, IllegalAction
 from pab_zones import ZoneError, UnsupportedZoneMechanic
 from pab_kernel import Game, PhysicalZoneGame
+from pab_zone_bridge import BridgeError
 
 def snapshot(g):
     z=g.zones
@@ -144,7 +145,7 @@ class C70(_Land):
                 g.resolve(); g.assert_bridge_integrity(); self.assertEqual(g.zones.cards[sel].zone,'battlefield'); self.assertEqual(g.zones.cards[sel].tapped,tapped); self.assertEqual(g.life[0],life+delta)
                 self.assertEqual([x for x in g.trace if x[0]=='fetched_land_entered'][-1][1],name)
         g=self.bridge(); uid=self.to_hand(g,'Verdant Catacombs'); vc=g.play_physical_land(uid); bad=next(u for u in g.zones.zones['library'] if g.zones.cards[u].name=='Woodland Cemetery')
-        with self.assertRaises(Exception): g.verdant_catacombs(vc.uid,bad)
+        with self.assertRaisesRegex(BridgeError,'fetches a Swamp or Forest card'): g.verdant_catacombs(vc.uid,bad)   # CP42 (T5): was assertRaises(Exception)
         self.assertEqual(g.zones.cards[uid].zone,'battlefield'); self.assertEqual(g.life[0],40)                    # refused before any cost
 
 class C71(_Land):
@@ -169,7 +170,7 @@ class C72(_Land):
         g=self.bridge(); uid=self.to_hand(g,'Grim Backwoods'); gb=g.play_physical_land(uid); p=g.make_tokens(PEST)[0]; g.resolve(); g.add_mana('B','G','C','C'); d=g.cards_drawn
         g.grim_backwoods(gb.uid,p.uid); self.assertEqual(g.mana_pool,[]); self.assertNotIn(p.uid,g.permanents); self.assertEqual(g.cards_drawn,d); g.resolve(); self.assertEqual(g.cards_drawn,d+1)
         g=self.bridge(); uid=self.to_hand(g,'High Market'); hm=g.play_physical_land(uid)
-        with self.assertRaises(Exception): g.high_market(hm.uid,hm.uid)
+        with self.assertRaisesRegex(BridgeError,'the cost needs a creature you control'): g.high_market(hm.uid,hm.uid)   # CP42 (T5)
         self.assertFalse(hm.tapped)
 
 class C73(_Land):
@@ -216,7 +217,7 @@ class C75(_Land):
                 h.channel_takenuma(tk); self.assertEqual(h.mana_pool,[]); self.assertEqual(h.zones.cards[tk].zone,'graveyard'); self.assertEqual([x for x in h.trace if x[0]=='channel'][-1][3],generic)
                 self.assertEqual([x for x in h.zones.trace if x[0]=='land_played'],[]); h.resolve(); self.assertEqual(len(h.zones.zones['library']),n-3)
         g=self.bridge(); bo=self.to_hand(g,'Boseiju, Who Endures'); g.add_mana('G','C')
-        with self.assertRaises(Exception): g.boseiju_channel(bo)
+        with self.assertRaisesRegex(BridgeError,'Boseiju channel has no legal target'): g.boseiju_channel(bo)   # CP42 (T5)
         self.assertEqual(g.zones.cards[bo].zone,'hand'); self.assertEqual(g.mana_pool,['G','C'])
 
 class C76(_Land):
@@ -252,6 +253,7 @@ class C77(_Land):
         self.assertEqual(g.tap_mana_rock(r.uid),('C','C')); self.assertEqual(g.mana_pool,['C','C'])
         self.assertNotIn('B',g.mana_pool); self.assertNotIn('G',g.mana_pool)
     def test_grim_backwoods_blocked(self):
+        """CP42 (T4): 'blocked' = a coloured mana request is refused; the land taps for {C} only."""
         g=self.bridge(); gb=g.play_physical_land(self.to_hand(g,'Grim Backwoods'))                     # S14: {C} only
         from pab_zone_bridge import BridgeError
         with self.assertRaises(BridgeError): g.tap_physical_land_for_mana(gb.uid,color='B')

@@ -4,7 +4,7 @@ Same conventions as test_c41_c47_contracts.py: each class declares CONTRACT,
 ISSUES, STATUS, SUBSTITUTIONS. Statuses used here:
   EXECUTED                   every named card/mechanic modeled
   EXECUTED_WITH_SUBSTITUTION some setup element replaced by an exogenous fixture action
-  DISAGREEMENT_OBSERVED      kernel contradicts the provisional expectation (expectedFailure)
+  (CP42, T4: DISAGREEMENT_OBSERVED was listed here; no class in this file uses it)
   BLOCKED_UNSUPPORTED        the contract's core mechanic is not modeled; no test is asserted
 No contract is Oracle/CR-authenticated.
 """

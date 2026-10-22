@@ -132,5 +132,9 @@ class Driver(_B):
                 self.assertEqual([t for t,*_ in ledger],[1,5,9,13,17,21]); played|={l for _,l,_,_ in ledger if l}
                 self.assertEqual(len([l for _,l,_,_ in ledger if l]),len(trace(g,'physical_land_played')))
         self.assertTrue(played & S14_NAMES); self.assertFalse(any(l not in LAND_NAMES for l in played))
+        for name in sorted(LAND_NAMES):                                                # CP42 (T4): every land type, played directly
+            with self.subTest(land=name):
+                g=self.game(); self.play(g,name,**({'face':'Darkbore'} if '//' in name else {}))
+                self.assertEqual(sum(g.zones.cards[u].name==name for u in g.zones.zones['battlefield']),1)
 
 if __name__=='__main__': unittest.main()

@@ -92,6 +92,6 @@ class WholeGames(_B):
                     for s in OPPONENT_SEATS: g.declare_opponent_board(s,BOARD); g.set_opponent_policy(s,pol[s])
                     out,t,ledger=run_game(g,60); outcomes.add(out); self.assertIn(out,('lost','won','timeout')); self.assertLessEqual(t,61)
                     if out=='lost': self.assertTrue(g.game_lost)
-        self.assertTrue(outcomes)
+        self.assertEqual(outcomes,{'lost'})   # CP42 (T5): was assertTrue(outcomes), always true; all eight games end 'lost' (pinned)
 
 if __name__=='__main__': unittest.main()

@@ -171,6 +171,7 @@ class ScopeAndEvidence(_B):
     def test_savra_lands_and_lesson_still_fail_closed(self):
         g=self.bridge(); g.add_mana('B','G','C','C')
         for name in ('Forest','Swamp','Abrupt Decay','Golgari Charm'):     # S12/S13 widened the castable set; these still fail closed
+            # CP42 (T4): the name's 'lesson' is stale: S13 made the Lesson (Pest Summoning) castable, so it is not checked here
             uid=self.to_hand(g,name); self.refused(g,uid)
         self.assertEqual(g.zones.cards[g.zones.zones['command'][0]].name,SAVRA); self.refused(g,g.zones.zones['command'][0],exc=(BridgeError,ZoneError))
         self.refused(g,g.zones.zones['outside_game'][0])

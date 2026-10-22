@@ -41,6 +41,12 @@ class TurnLoop(unittest.TestCase):
         for t,_,_,mana in ledger:
             self.assertLessEqual(len(mana),len(g.linked_battlefield))
         self.assertEqual(g.mana_pool,[])
+        for seed in SEEDS:                                                    # CP42 (T4): equals, not just at most, and emptied at the step's end
+            with self.subTest(seed=seed):
+                g=game(seed); opening_hand(g); ledger=run_turns(g,12); lands=0
+                for t,_,played,mana in ledger:
+                    lands+=played is not None; self.assertEqual(len(mana),lands)   # every land enters untapped and untaps each turn
+                self.assertEqual([x[1] for x in g.trace if x[0]=='mana_emptied' and x[1]],[len(m) for *_,m in ledger if m])
         emptied=[x for x in g.trace if x[0]=='mana_emptied']
         self.assertEqual(sum(x[1] for x in emptied),sum(len(m) for _,_,_,m in ledger))
     def test_hand_size_accounting(self):

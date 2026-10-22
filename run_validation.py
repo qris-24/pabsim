@@ -22,7 +22,7 @@ BASELINE_SHA='c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381'
 LEGACY_MANIFEST_SHA={'FILE_MANIFEST.json':'69924bd47c7da6e0caba1daad263211dbd406e311be92dd2bb592a6fb8ff23d6',
                      'PHASE7_FILE_MANIFEST.json':'de4ed9654171d7deecbe97a48d10a2c8e45204726f5048cb5b77719aa61d2332',
                      'PHASE8_FILE_MANIFEST.json':'5466058ee90529028c6bd74d979222ba7c076c83a954d99a9896c7892b0ae1c1'}
-RELEASE_GATE_TEST_COUNT=28   # CP41 (G3): release checks a full run must execute (all must pass)
+RELEASE_GATE_TEST_COUNT=29   # CP41 (G3): release checks a full run must execute (all must pass)
 SKIPPED_GATE_EXIT=3   # CP41 (G3): exit code of a run with PAB_R02_SKIP_GATE=1 (the release gate's own inner run); never 0
 # Files explicitly re-versioned by the R02 patch. The legacy Phase 8 manifest
 # is still enforced for everything else.

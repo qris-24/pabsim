@@ -45,6 +45,8 @@ class Shigeki(unittest.TestCase):
 
 class Registry(unittest.TestCase):
     def test_registry_is_reproducible_and_complete(self):
+        """CP42 (T4): reproducible bytes; 'complete' = same cards and quantities as PABTRV3_CARD_COVERAGE.json.
+        The 'modeled' flags checked here are the file's own hand-written claims (A-S20-08), not checked against code."""
         spec=importlib.util.spec_from_file_location('mc20',ROOT/'build_model_coverage_s20.py'); m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
         data=m.build(ROOT); self.assertEqual(m.canonical_bytes(data),(ROOT/'PABTRV3_MODEL_COVERAGE_S20.json').read_bytes())
         ref={c['name']:c for c in json.loads((ROOT/'PABTRV3_CARD_COVERAGE.json').read_text(encoding='utf-8'))['cards']}

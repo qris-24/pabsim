@@ -1,5 +1,7 @@
 """CP04: clock validator that must reject continued turns after terminal outcomes."""
-import unittest
+import sys, unittest
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))   # CP42 (T6): imports work without the runner's sys.path
 from pab_terminal_audit_cp04 import no_steps_after_terminal
 from pab_validation_s19 import new_game,clock_legal,DEFAULT_CONFIG
 from pab_policy_s18 import run_game

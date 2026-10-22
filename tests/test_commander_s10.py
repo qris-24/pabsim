@@ -84,6 +84,8 @@ class DeathAndReturn(_B):
 
 class Driver(_B):
     def test_sixteen_turns_all_seeds_savra_cast_when_affordable(self):
+        """CP42 (T4): runs 20 game turns (five of ours), more than the name's sixteen. 'When affordable' is
+        checked: on the first of our turns whose lands make {2}{B}{G}, Savra is cast."""
         casts=0
         for seed in SEEDS:
             with self.subTest(seed=seed):
@@ -92,6 +94,8 @@ class Driver(_B):
                 n=sum(c.count(SAVRA) for *_,c in ledger); casts+=n; self.assertEqual(n,g.commander_casts); self.assertLessEqual(n,1)
                 if n: self.assertEqual(len(g.zones.zones['command']),0); self.assertTrue(any(p.name==SAVRA and p.uid in g.linked_battlefield for p in g.permanents.values()))
                 else: self.assertEqual(len(g.zones.zones['command']),1)
+                first=next((t for t,_,m,_ in ledger if len(m)>=4 and 'B' in m and 'G' in m),None)
+                self.assertEqual([t for t,_,_,c in ledger if SAVRA in c],[] if first is None else [first])
         self.assertGreater(casts,0)
     def test_policy_casts_savra_only_with_cost_plus_tax(self):
         g=PhysicalZoneGame(seed=3); opening_hand(g); g.advance_to('precombat_main',active_player=0)

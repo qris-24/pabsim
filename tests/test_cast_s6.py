@@ -7,7 +7,7 @@ S5-style 8-turn run where the driver casts when able. CR refs: 601.2, 608.2n, 60
 import sys, unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
-from pab_focus_engine import SAVRA, PEST, TREASURE
+from pab_focus_engine import SAVRA, PEST, TREASURE, IllegalAction
 from pab_zone_bridge import BridgeError
 from pab_zones import ZoneError
 from pab_kernel import PhysicalZoneGame
@@ -69,7 +69,7 @@ class VillageRites(_B):
     def test_r52_frozen_engine_charges_1B_kernel_paths_charge_B(self):
         from pab_focus_engine_v07 import Game as FrozenGame
         f=FrozenGame(); q=f.add('Reassembling Skeleton'); f.add_mana('B')
-        with self.assertRaises(Exception): f.cast_pab_spell('Village Rites',q.uid)    # frozen, untouched: {1}{B}
+        with self.assertRaisesRegex(IllegalAction,'Mana unavailable for PAB spell'): f.cast_pab_spell('Village Rites',q.uid)    # frozen, untouched: {1}{B}; CP42 (T5): was assertRaises(Exception)
         g=self.bridge(); p=self.pest(g); g.add_mana('B'); g.cast_pab_spell('Village Rites',p.uid); g.resolve()   # R52 kernel path: {B}
         self.assertEqual(g.mana_pool,[]); uid=self.to_hand(g,'Village Rites'); r=self.pest(g); g.add_mana('B')
         self.cast(g,uid,sacrifice_uid=r.uid); self.assertEqual(g.mana_pool,[])                                     # S6 path: {B}
@@ -127,6 +127,8 @@ class NaturesLore(_B):
         self.assertEqual(sum(1 for x in g.permanents.values() if x.token==PEST),1)     # Magecraft
     def test_refuse_wrong_zone_card_on_battlefield_name_check(self):
         g=self.bridge(); uid=self.to_hand(g,"Nature's Lore"); g.zones.move(uid,'exile'); g.add_mana('G','B')
+        self.refused(g,uid,exc=ZoneError,selected_land_uid=self.forest_in_library(g))
+        g=self.bridge(); uid=self.to_hand(g,"Nature's Lore"); g.zones.move(uid,'battlefield',controller=0); g.add_mana('G','B')   # CP42 (T4): the battlefield case the name promises
         self.refused(g,uid,exc=ZoneError,selected_land_uid=self.forest_in_library(g))
     def test_refuse_wrong_step_sorcery_in_upkeep_and_on_opponents_main(self):
         g=self.bridge(); uid=self.to_hand(g,"Nature's Lore"); f=self.forest_in_library(g)

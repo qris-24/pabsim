@@ -2,7 +2,7 @@
 
 ## Layout
 - `tests/` — kernel reference suite (`test_*.py`), part of the gate (test count: REFERENCE_TEST_COUNT in run_validation.py).
-- `release_gate_tests/` — the 21 release integrity checks run by `run_validation.py`.
+- `release_gate_tests/` — the release integrity checks run by `run_validation.py` (RELEASE_GATE_TEST_COUNT, 29 since CP42).
 - `s9_tests/` — S9 land/mana layer fixtures.
 - `r01_tests/` — R01 Pest rescuer fixtures.
 - `r52_tests/` — R52 Village Rites fixtures.
@@ -24,7 +24,7 @@
 
 ## Commands (Python 3.14.7 on Windows, PowerShell)
 - Full gate (expect `Ran N tests` / `OK`, N = REFERENCE_TEST_COUNT in run_validation.py,
-  and 28/28 release checks in `VALIDATION_RESULTS.json`, = RELEASE_GATE_TEST_COUNT):
+  and 29/29 release checks in `VALIDATION_RESULTS.json`, = RELEASE_GATE_TEST_COUNT):
   `py -3.14 run_validation.py 2> ..\gate.txt | Out-Null; Get-Content ..\gate.txt -Tail 3`
 - Kernel suite only: `py -3.14 -m unittest discover -s tests -p "test_*.py" -q`
 - Re-pin after any tracked-file change: `py -3.14 build_manifest.py`
@@ -97,7 +97,7 @@
 ## Next stages
 - CP31d follow-up: integrity review findings in EVIDENCE/CP31d_INTEGRITY_REVIEW.md, one stage each:
   kernel defect K14 (unconfirmed, needs CR text) (K1, K4, K9, K10, K12 closed in CP37; K2, K5, K8, K11, K13 in CP38; K3, K6, K7 in CP39); gate G1-G4 closed (G1 in CP35, G2-G4 in CP41);
-  test hygiene T1, T2, T4-T6 (T7 closed in CP35, T3 in CP40);
+  test hygiene T1 (documented only: frozen files; T2-T6 closed in CP40/CP42, T7 in CP35);
   PABTRV3_CARD_COVERAGE.json summary (build_registry.py). Some test fixes move expectations: ask first.
 - CP38 follow-up (Stage C): build_model_coverage_s20.py and PABTRV3_MODEL_COVERAGE_S20.json still say Takenuma does not return planeswalker cards (CP38 returns Grist).
 - CP37 follow-up (Stage C): South Wind Avatar's lifegain reads printed toughness (pab_focus_engine_v07.py:321, frozen), so

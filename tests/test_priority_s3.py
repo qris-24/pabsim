@@ -51,8 +51,9 @@ class GeneralCheck(_B):
         g=self.game(SAVRA); p=g.make_tokens(PEST)[0]; g.resolve(); g.indestructible_until_eot.add(p.uid); p.minus_counters=1; g.resolve()
         self.assertNotIn(p.uid,g.permanents); self.assertEqual(trace(g,'destroy_prevented_indestructible'),[])
     def test_repeat_until_none_apply(self):
-        """A death trigger that creates a token which itself has toughness 0 would need a second
-        SBA round; here: a second creature pushed to 0 by the first round's trigger is caught."""
+        """CP42 (T4): one creature at toughness 0 dies in one SBA event, and the check runs again before
+        priority (sba_checks >= 3). A second round caused by the first is not built here: no card in the
+        kernel lets one SBA death put another creature at toughness 0."""
         g=self.game(SAVRA,'Blight Mound'); grub=g.add('Wriggling Grub'); g.resolve(); grub.minus_counters=1; g.resolve()
         self.assertEqual(len(trace(g,'sba_event')),1); self.assertGreaterEqual(g.sba_checks,3)
     def test_skullclamp_equip_keeps_immediate_check(self):

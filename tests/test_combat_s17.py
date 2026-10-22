@@ -11,6 +11,7 @@ from pab_kernel import PhysicalZoneGame, KERNEL_VERSION, PROMOTED
 from pab_combat_s17 import check_invariants_s17, run_turns_full, attack_policy, COMMANDER_DAMAGE_LOSS
 from pab_opponents_s8 import OPPONENT_SEATS
 from pab_turn_loop import opening_hand
+from pab_validation_s19 import life_ledger
 
 BOARD=[{'name':'Bear','power':2,'toughness':2,'mana_value':2},{'name':'Wall','power':0,'toughness':4,'mana_value':3}]
 def trace(g,key): return [t for t in g.trace if t[0]==key]
@@ -87,13 +88,15 @@ class Blocks(_B):
 class Driver(_B):
     def test_full_driver_eight_seeds_forty_turns_no_blocks_and_all_blocks(self):
         for policy in ('none','all'):
-            for seed in (0,1,7,42):
+            for seed in (0,1,2,3,4,7,11,42):                                       # CP42 (T2): eight seeds, as the name says (was four)
                 with self.subTest(policy=policy,seed=seed):
                     g=PhysicalZoneGame(seed=seed,learn_sideboard_allowed=True,block_policy=policy); opening_hand(g)
                     for s in OPPONENT_SEATS: g.declare_opponent_board(s,BOARD)
                     ledger=run_turns_full(g,40); self.assertEqual(len(ledger),10); self.assertEqual(g.attackers,{}); self.assertEqual(g.damage_marked,{})
                     dealt=sum(d for _,_,_,_,_,ev in ledger for kind,*rest in ev if kind=='player' for d in [rest[2]])
-                    self.assertEqual(sum(40-g.life[s] for s in OPPONENT_SEATS if s not in g.lost_seats)+sum(40 for s in g.lost_seats)>=0,True)
+                    per={s:sum(rest[2] for _,_,_,_,_,ev in ledger for kind,*rest in ev if kind=='player' and rest[0]==s) for s in OPPONENT_SEATS}
+                    for s in OPPONENT_SEATS: self.assertGreaterEqual(40-g.life[s],per[s])        # CP42 (T2, was a tautology): opponents gain no life, so each lost at least its combat damage
+                    self.assertEqual(life_ledger(g),g.life)                                          # and the trace accounts for every life change
                     if policy=='none': self.assertGreater(dealt,0)
     def test_attack_policy_targets_lowest_life_and_keeps_savra_home_against_blockers(self):
         g=self.game(policy='all'); sv=self.savra(g); g.life[2]=10; self.next_attack_step(g)

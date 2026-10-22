@@ -1,5 +1,7 @@
 """CP06 independent migration checks; a cast spell is in the physical stack, not hand."""
-import unittest
+import sys, unittest
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))   # CP42 (T6): imports work without the runner's sys.path
 from pab_kernel import PhysicalZoneGame, KERNEL_VERSION, PROMOTED
 from pab_cast_s6 import check_invariants_s6
 from pab_focus_engine import PEST, SAVRA

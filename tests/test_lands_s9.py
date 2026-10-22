@@ -48,6 +48,7 @@ class Scope(_B):
         self.assertEqual(ev['Llanowar Wastes']['oracle_text'].count('{T}'),2); self.assertIn('Pay 1 life',ev['Nurturing Peatland']['oracle_text'])
         self.assertEqual([f['name'] for f in ev[PATHWAY]['card_faces']],['Darkbore Pathway','Slitherbore Pathway'])
     def test_other_nonbasics_still_fail_closed_and_frozen_zone_path_untouched(self):
+        """CP42 (T4): 'fail closed' = on the frozen zones path (g.zones.play_land); the bridge plays them since S14."""
         g=self.game()
         for name in sorted(LAND_NAMES-set(LAND_MANA)):                                    # S14 (2026-10-18) made these nine playable on the bridge; the frozen zones path still refuses them
             uid=self.to_hand(g,name)

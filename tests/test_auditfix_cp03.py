@@ -1,7 +1,8 @@
 """Seven independent CP03 regression checks: source contract, target and combat paths."""
 import json
-import unittest
+import sys, unittest
 from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))   # CP42 (T6): imports work without the runner's sys.path
 from pab_kernel import PhysicalZoneGame, KERNEL_VERSION, PROMOTED
 from pab_focus_engine import SAVRA
 from pab_zone_bridge import BridgeError

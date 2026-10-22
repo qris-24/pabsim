@@ -7,6 +7,11 @@ disagrees with the CR, the contract assertion is an expectedFailure and a
 sibling test pins the frozen behaviour. Where the kernel merely lacks
 a model (no active player, no step clock, no mana emptying), the probe pins
 the absence so the phase-clock milestone has an executable baseline.
+
+CP42 (T4): written before S1-S5. The probes pin the caller-driven methods (begin_upkeep,
+roaster_end_step, moseo_end_step, reset_turn, fixture_new_turn), which are unchanged. The S1-S5
+clock (advance_step) now supplies the active player and step order and empties mana pools at
+each step's end (S2, traced mana_emptied).
 """
 import sys, unittest, inspect
 from pathlib import Path
@@ -39,13 +44,14 @@ class ActivePlayerAbsent(unittest.TestCase):
         self.assertEqual(made,[2,1,1,1])          # kernel order: Rescuer resolves first, then Beledros
     def test_your_end_step_cards_cannot_be_scoped_to_a_player(self):
         """Moseo and Roaster say 'your end step'; the caller must not invoke them on
-        opponents' end steps. The kernel offers no guard."""
+        opponents' end steps. These methods offer no guard (CP42: the clock's own step order is separate)."""
         g=Game(); g.add(SAVRA); g.add('Ribtruss Roaster',counters=1); g.resolve()
         g.roaster_end_step(); self.assertIn('Ribtruss Roaster end-step',labels(g))   # fires regardless of whose end step
 
 class ManaAndEffectExpiry(unittest.TestCase):
     def test_mana_pool_not_emptied_by_any_turn_reset(self):
-        """CR 106.4: pools empty at the end of each step and phase. Kernel: no emptying (A05 reconfirmed)."""
+        """CR 106.4: pools empty at the end of each step and phase. reset_turn() and fixture_new_turn() do not
+        empty them (A05 reconfirmed); CP42: the clock's advance_step does (S2)."""
         g=Game(); g.add_mana('B','G'); g.reset_turn(); self.assertEqual(g.mana_pool,['B','G'])
         b=PhysicalZoneGame(); b.add_mana('B'); b.fixture_new_turn(); self.assertEqual(list(b.mana_pool),['B'])
     def test_until_end_of_turn_cleared_by_reset_turn(self):
