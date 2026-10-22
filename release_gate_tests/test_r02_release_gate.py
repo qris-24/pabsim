@@ -161,7 +161,7 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(reg_before,(d/'PABTRV3_CARD_COVERAGE.json').read_bytes())
         self.assertEqual(man_before,(d/'PHASE8_R02_FILE_MANIFEST.json').read_bytes())
         res=json.loads((d/'VALIDATION_RESULTS.json').read_text())
-        self.assertEqual((res['tests_run'],res['tests_passed']),(918,918))
+        self.assertEqual((res['tests_run'],res['tests_passed']),(927,927))
         self.assertIs(res['r02_release_gate_skipped'],True)   # CP41 (G3)
         self.assertEqual(res['candidate_historical_contract_passes'],149)
         self.assertEqual(res['phase8_previous_bridge_contract_passes'],52)

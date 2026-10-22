@@ -170,6 +170,10 @@ class Blocking(_B):
         self.assertEqual(kw('Flying'),set(s17.FLYING_NAMES)); self.assertEqual(kw('Menace'),set(s17.MENACE_NAMES))
         self.assertEqual(kw('Deathtouch'),set(s17.DEATHTOUCH_NAMES)); self.assertEqual(kw('Haste'),set(s17.HASTE_NAMES))
         self.assertEqual({c['name'] for c in creatures if "can't block" in c['oracle_text']},set(s17.CANT_BLOCK_NAMES))
+        # CP43: the lists are now read from this card data, so the comparison above alone is circular; the names are pinned
+        self.assertEqual((s17.FLYING_NAMES,s17.MENACE_NAMES,s17.DEATHTOUCH_NAMES,s17.HASTE_NAMES,s17.CANT_BLOCK_NAMES),
+                         ({'Beledros Witherbloom','Mirkwood Bats',"Moseo, Vein's New Dean",'Sangromancer','Starscape Cleric'},{'Sedgemoor Witch',"Teacher's Pest"},
+                          {'Poison-Tip Archer','South Wind Avatar'},{'Yahenni, Undying Partisan'},{'Carrion Feeder','Starscape Cleric'}))
         self.assertTrue(FLYING_INSECT.flying)
 
 class CommanderDamage(_B):

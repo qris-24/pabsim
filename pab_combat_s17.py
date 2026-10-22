@@ -14,8 +14,9 @@ attacks only (opponents never attack: they do not decide):
       seat blocks by a fixed, documented policy (block_policy): 'none' (default), or 'all' —
       each of the seat's untapped creatures blocks the highest-power attacker aimed at that
       seat that it can legally block (menace from Blight Mound on attacking Pests needs two
-      blockers: a creature that would be the lone blocker of a menace attacker does not block,
-      CR 702.110). Opponents' creatures are generic bodies: no flying/reach on their side.
+      blockers, CR 702.110b; CP43, A-S20-05: a blocker takes a menace attacker when another
+      untapped blocker of that seat is still to come, which then joins it, so the seat's
+      blockers coordinate). Opponents' creatures are generic bodies: no flying/reach on their side.
       CP37: so they cannot block an attacker with flying (CR 702.9b: FLYING_NAMES, or a token
       kind with flying); intrinsic menace (MENACE_NAMES) counts like Blight Mound's.
   combat damage                      at the combat_damage step, simultaneously (CR 510.2):
@@ -47,13 +48,15 @@ from pab_clock_s3 import _LookBack
 from pab_zone_bridge import BridgeError
 from pab_focus_engine import SAVRA
 
-DEATHTOUCH_NAMES={'Poison-Tip Archer','South Wind Avatar'}
-HASTE_NAMES={'Yahenni, Undying Partisan'}
-# CP37 (K9, K10): printed keywords of the old-baseline creatures per the pinned card data
-# (decks/CARDSOURCE_BG_COMMANDER_20261021.json); tests/test_auditfix_cp37.py checks them against it.
-FLYING_NAMES=frozenset({'Beledros Witherbloom','Mirkwood Bats',"Moseo, Vein's New Dean",'Sangromancer','Starscape Cleric'})
-MENACE_NAMES=frozenset({'Sedgemoor Witch',"Teacher's Pest"})
-CANT_BLOCK_NAMES=frozenset({'Carrion Feeder','Starscape Cleric'})
+from pab_keywords_cp43 import KEYWORDS
+
+# CP43: printed keywords of the old-baseline creatures, read from the pinned card data (pab_keywords_cp43.py);
+# hand-written lists with the same contents before (S17; CP37 K9, K10).
+DEATHTOUCH_NAMES=KEYWORDS['deathtouch']
+HASTE_NAMES=KEYWORDS['haste']
+FLYING_NAMES=KEYWORDS['flying']
+MENACE_NAMES=KEYWORDS['menace']
+CANT_BLOCK_NAMES=KEYWORDS['cant_block']
 COMMANDER_DAMAGE_LOSS=21
 
 class CombatMixin(GristMixin):
@@ -149,10 +152,11 @@ class CombatMixin(GristMixin):
         for seat in self.seats_in_game():
             targets=[u for u,s in self.attackers.items() if s==seat and u in self.permanents]
             if not targets: continue
-            for b in sorted(self.opponent_creatures(seat),key=lambda q:(-self._power(q),q.uid)):
-                if b.tapped: continue
-                cands=sorted(targets,key=lambda u:(-self._power(self.permanents[u]),u))
-                pick=next((u for u in cands if not self._flying(self.permanents[u]) and (not self._menace(self.permanents[u]) or len(self.blocks.get(u,[]))>=1)),None)
+            free=[b for b in sorted(self.opponent_creatures(seat),key=lambda q:(-self._power(q),q.uid)) if not b.tapped]
+            cands=sorted(targets,key=lambda u:(-self._power(self.permanents[u]),u))
+            for i,b in enumerate(free):
+                pick=next((u for u in cands if not self._flying(self.permanents[u])
+                           and (not self._menace(self.permanents[u]) or self.blocks.get(u) or i+1<len(free))),None)   # CP43 (A-S20-05): a second blocker is still to come
                 if pick is None: continue
                 self.blocks.setdefault(pick,[]).append(b.uid)
         self.trace.append(('blocks_declared',tuple((a,tuple(bs)) for a,bs in self.blocks.items())))
@@ -190,6 +194,8 @@ def check_invariants_s17(g):
     if g.attackers and g.clock.step not in ('declare_attackers','declare_blockers','combat_damage','end_of_combat'): raise AssertionError('S17: attackers outside combat')
     for a in g.attackers:
         if a in g.permanents and not g.permanents[a].tapped: raise AssertionError('S17: an attacking creature is untapped')
+    for a,bs in g.blocks.items():   # CP43 (A-S20-05): CR 702.110b
+        if a in g.permanents and g._menace(g.permanents[a]) and len(bs)==1: raise AssertionError('S17: a menace attacker has a lone blocker')
 
 def attack_policy(g):
     """Fixed policy: every legal attacker except Savra attacks the opponent with the lowest life

@@ -83,13 +83,10 @@
 - The three legacy manifests are pinned by sha256 in run_validation.py (LEGACY_MANIFEST_SHA, CP41); they never change.
 
 ## Open queue (see ISSUE_LEDGER_CP06.json for detail; closed items and their CPs: CP17_PATCH_NOTES.md)
-- A-S20-05: two legal blockers do not coordinate to block menace.
 - A-S20-08: hand-authored model coverage claims not mechanically certified (CP11 audit and CP12
   Infuse correction done; Darkbore Pathway WEAK; nothing certified).
 - A-S20-09: inherited v0.8 counters and S20 path counters coexist.
 - Auditor constant-resolution fix.
-- `HASTE_NAMES`, `DEATHTOUCH_NAMES`, `FLYING_NAMES`, `MENACE_NAMES`, `CANT_BLOCK_NAMES` in `pab_combat_s17.py` are
-  hardcoded name lists (checked against the pinned card data since CP37); keywords should come from card data.
 - CP21 claims left unasserted (no model): C83 "can't be countered" (no counterspell model), C84
   opponent basic-land search, C92 Grist +1 Insect-card repeat (unreachable with the deck), C94 mode 1
   on an opponent (no opponent libraries). Stand-ins named in C82, C85, C90, C91 SUBSTITUTIONS.
@@ -116,5 +113,4 @@
   Intervention stand-in); C96 is rules-only. User (CP29): accepted False for now.
   Open: resolve module constants as subject evidence (C68), decide on method-driven subjects (C64, C69).
 - CP31c follow-up: compiler signatures with no covering contract (see EVIDENCE/CP31c_COMPILER_RETIREMENT.md) become new contract candidates.
-- Then the ledger, in order: auditor constant-resolution fix,
-  A-S20-05, A-S20-09, keyword name lists from card data.
+- Then the ledger, in order: auditor constant-resolution fix, A-S20-09 (A-S20-05 and the keyword lists closed in CP43).
