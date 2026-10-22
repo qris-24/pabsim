@@ -149,18 +149,20 @@ class BlockedContractsProbed(unittest.TestCase):
 class EndToEnd(unittest.TestCase):
     def test_shipped_command_runs_twice_cleanly(self):
         """`python run_validation.py` must succeed, leave inputs untouched, and
-        succeed again on the second run (no self-invalidation)."""
+        succeed again on the second run (no self-invalidation). CP41 (G3): the inner run skips this suite, so it
+        exits SKIPPED_GATE_EXIT (passed, not a release pass), never 0."""
         d=clone()
         reg_before=(d/'PABTRV3_CARD_COVERAGE.json').read_bytes()
         man_before=(d/'PHASE8_R02_FILE_MANIFEST.json').read_bytes()
         env=dict(os.environ,PAB_R02_SKIP_GATE='1')  # inner run skips this suite
         for i in (1,2):
             r=subprocess.run([sys.executable,'run_validation.py'],cwd=d,env=env,capture_output=True,text=True)
-            self.assertEqual(r.returncode,0,f'run {i} failed:\n{r.stderr[-2000:]}')
+            self.assertEqual(r.returncode,load(ROOT,'run_validation').SKIPPED_GATE_EXIT,f'run {i} failed:\n{r.stderr[-2000:]}')   # CP41 (approved): was 0
         self.assertEqual(reg_before,(d/'PABTRV3_CARD_COVERAGE.json').read_bytes())
         self.assertEqual(man_before,(d/'PHASE8_R02_FILE_MANIFEST.json').read_bytes())
         res=json.loads((d/'VALIDATION_RESULTS.json').read_text())
         self.assertEqual((res['tests_run'],res['tests_passed']),(918,918))
+        self.assertIs(res['r02_release_gate_skipped'],True)   # CP41 (G3)
         self.assertEqual(res['candidate_historical_contract_passes'],149)
         self.assertEqual(res['phase8_previous_bridge_contract_passes'],52)
         self.assertEqual(res['kernel_legacy_149_replay_failures'],sorted(['test_112_teacher_pest_blocks_rescuer_at_upkeep_start','test_113_teacher_pest_entered_before_rescuer_trigger_resolves','test_91_village_rejects_mana_shortage_before_sac']))

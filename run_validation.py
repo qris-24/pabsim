@@ -16,6 +16,14 @@ OLD_TEST_FILES=['test_reference_events.py','test_v03_extended.py',
                 'test_v04_cost_and_copy.py','test_v04_hunger_saga.py',
                 'test_v05_fixture_cards.py']
 BASELINE_SHA='c9589a8f66b41cd2de67d229f1d8ddcfc61cd53130e9a5a277c63cfb91d43381'
+# CP41 (G4): the three legacy manifests are unchanged since the root commit 7e8ddfe. Pinned here, outside the manifests
+# that certify the frozen files, so a coordinated edit of a frozen file, its frozen copy, the manifests and a re-pin
+# also has to change these constants.
+LEGACY_MANIFEST_SHA={'FILE_MANIFEST.json':'69924bd47c7da6e0caba1daad263211dbd406e311be92dd2bb592a6fb8ff23d6',
+                     'PHASE7_FILE_MANIFEST.json':'de4ed9654171d7deecbe97a48d10a2c8e45204726f5048cb5b77719aa61d2332',
+                     'PHASE8_FILE_MANIFEST.json':'5466058ee90529028c6bd74d979222ba7c076c83a954d99a9896c7892b0ae1c1'}
+RELEASE_GATE_TEST_COUNT=28   # CP41 (G3): release checks a full run must execute (all must pass)
+SKIPPED_GATE_EXIT=3   # CP41 (G3): exit code of a run with PAB_R02_SKIP_GATE=1 (the release gate's own inner run); never 0
 # Files explicitly re-versioned by the R02 patch. The legacy Phase 8 manifest
 # is still enforced for everything else.
 R02_VERSIONED={'run_validation.py','build_registry.py','build_manifest.py',
@@ -37,6 +45,19 @@ def sha(path):
     path=Path(path)
     assert path.is_file(), f'missing input: {path.name}'
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def require_assertions():
+    """CP41 (G2): python -O and PYTHONOPTIMIZE strip assert statements, which would switch every check off."""
+    if not __debug__:
+        raise AssertionError('assertions are disabled (python -O or PYTHONOPTIMIZE): the gate refuses to run; run it without -O')
+
+def exit_code(ok,result):
+    """CP41 (G3): 1 = failed, or a full run that did not execute and pass all RELEASE_GATE_TEST_COUNT release checks;
+    SKIPPED_GATE_EXIT = passed with the release checks skipped (not a release pass); 0 = release pass."""
+    if not ok: return 1
+    if result['r02_release_gate_skipped']: return SKIPPED_GATE_EXIT
+    n=RELEASE_GATE_TEST_COUNT
+    return 0 if (result['r02_release_gate_tests_run'],result['r02_release_gate_tests_passed'])==(n,n) else 1
 
 ORACLE_EXCERPT='decks/ORACLE_EXCERPT_CP28.json'      # CP28: the gate's only Oracle text source
 ORACLE_REFS='CONTRACT_ORACLE_REFS_CP28.json'
@@ -100,6 +121,7 @@ def _load_registry_module(root):
 def preflight(root=ROOT):
     """All integrity checks. Read-only. Raises AssertionError with a specific
     message on the first failure. Returns the parsed coverage registry."""
+    require_assertions()   # CP41 (G2)
     root=Path(root)
     registry_bytes=(root/'PABTRV3_CARD_COVERAGE.json').read_bytes()
     J=json.loads(registry_bytes)
@@ -118,6 +140,8 @@ def preflight(root=ROOT):
 
     # Fail closed if historical reference engine, v0.6 zone source, original
     # test contracts or immutable audit inputs have been silently modified.
+    for name,digest in LEGACY_MANIFEST_SHA.items():   # CP41 (G4): anchor outside the manifests
+        assert sha(root/name)==digest, f'legacy manifest changed: {name} (frozen since the root commit 7e8ddfe; LEGACY_MANIFEST_SHA in run_validation.py)'
     for name in ['pab_focus_engine.py','pab_zones.py']:
         assert sha(root/name)==sha(root/'frozen_phase6'/name), f'frozen_phase6 drift: {name}'
     for name in OLD_TEST_FILES+['test_v06_physical_zones.py']:
@@ -163,7 +187,8 @@ def preflight(root=ROOT):
     listed=set(r02['files_sha256'])
     on_disk={p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()
              and '__pycache__' not in p.parts and '.git' not in p.parts}-RUNNER_OUTPUTS-{R02_MANIFEST}
-    assert on_disk==listed, f'R02 manifest file set mismatch: +{sorted(on_disk-listed)} -{sorted(listed-on_disk)}'
+    assert on_disk==listed, (f'R02 manifest file set mismatch: +{sorted(on_disk-listed)} -{sorted(listed-on_disk)}'   # CP41 (G4): names the fix
+        ' (+ on disk but not pinned: delete it, or run build_manifest.py if it belongs to the release; - pinned but missing)')
 
     # Registry must be reproducible in memory, byte for byte. Never rewritten here.
     reg=_load_registry_module(root)
@@ -236,6 +261,7 @@ def _replay(root,name,module_attr,replacement):
     return passed,(None if ok else log.getvalue()),failed
 
 def run_suites(root=ROOT,J=None):
+    require_assertions()   # CP41 (G2)
     root=Path(root)
     sys.path.insert(0,str(root))
     cards=J['cards']
@@ -311,7 +337,8 @@ def run_suites(root=ROOT,J=None):
 
     # R02 release-gate tests: a separate suite, never counted in the 311.
     gate_run=gate_passed=0; gate_errors=[]
-    if os.environ.get('PAB_R02_SKIP_GATE')!='1':
+    skipped=os.environ.get('PAB_R02_SKIP_GATE')=='1'   # CP41 (G3): recorded; main() never exits 0 for it
+    if not skipped:
         gate=unittest.defaultTestLoader.discover(str(root/'release_gate_tests'),pattern='test_*.py',top_level_dir=str(root))
         log=io.StringIO()
         g=unittest.TextTestRunner(stream=log,verbosity=1).run(gate)
@@ -362,6 +389,7 @@ def run_suites(root=ROOT,J=None):
      'r02_release_gate_tests_run':gate_run,
      'r02_release_gate_tests_passed':gate_passed,
      'r02_release_gate_errors':gate_errors,
+     'r02_release_gate_skipped':skipped,   # CP41 (G3)
      'r02_registry_rewritten_by_runner':False,
      'shared_game_zone_mana_symbols_in_v08':True,
      'event_tokens_mirrored_with_distinct_physical_uids_in_v08':True,
@@ -395,7 +423,10 @@ def main():
              'kernel_corrected_v05_copy_38_replay_passes','kernel_corrected_v04_copy_25_replay_passes','kernel_corrected_v08_copy_54_replay_passes','kernel_v08_replay_failures')}
     summary['contracts']={k:f"{v['status']} {v['tests_passed']}/{v['tests_run']}"+(f" (+{v['expected_failures']} expected failures)" if v['expected_failures'] else '') for k,v in result['contracts_executed'].items()}
     print(json.dumps(summary,indent=2))
-    if not ok: sys.exit(1)
+    code=exit_code(ok,result)   # CP41 (G3)
+    if code==SKIPPED_GATE_EXIT: print(f'release checks skipped (PAB_R02_SKIP_GATE=1): not a release pass, exit {code}',file=sys.stderr)
+    elif code and ok: print(f"release checks: {result['r02_release_gate_tests_passed']}/{result['r02_release_gate_tests_run']} passed, RELEASE_GATE_TEST_COUNT={RELEASE_GATE_TEST_COUNT}",file=sys.stderr)
+    if code: sys.exit(code)
 
 if __name__=='__main__':
     main()

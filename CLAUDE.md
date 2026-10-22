@@ -24,7 +24,7 @@
 
 ## Commands (Python 3.14.7 on Windows, PowerShell)
 - Full gate (expect `Ran N tests` / `OK`, N = REFERENCE_TEST_COUNT in run_validation.py,
-  and 21/21 in `VALIDATION_RESULTS.json`):
+  and 28/28 release checks in `VALIDATION_RESULTS.json`, = RELEASE_GATE_TEST_COUNT):
   `py -3.14 run_validation.py 2> ..\gate.txt | Out-Null; Get-Content ..\gate.txt -Tail 3`
 - Kernel suite only: `py -3.14 -m unittest discover -s tests -p "test_*.py" -q`
 - Re-pin after any tracked-file change: `py -3.14 build_manifest.py`
@@ -55,6 +55,8 @@
 
 ## Session rules
 - Adding a test file also requires updating REFERENCE_TEST_COUNT and the per-file count in run_validation.py, the expected (tests_run, tests_passed) in release_gate_tests/test_r02_release_gate.py, build_registry.py output and the manifest; these are gate bookkeeping and always in scope.
+- Adding a release-gate test (release_gate_tests/) also requires updating RELEASE_GATE_TEST_COUNT in run_validation.py (gate bookkeeping).
+- The gate refuses python -O / PYTHONOPTIMIZE; PAB_R02_SKIP_GATE=1 (only for the release gate's inner run) exits 3, never 0 (CP41).
 - One scoped task per session; file paths named explicitly.
 - Run tests with `-q`; read tails only. No decklists or results printed to the terminal.
 - Do not re-read files just edited.
@@ -77,7 +79,8 @@
 - Edits to this file also require a manifest re-pin (`py -3.14 build_manifest.py`).
 - Stage prompts and the launcher live outside the repo in C:\pabsim\night\ (run_stage.ps1 -Stages CP<nn>; it tags, pushes and copies PASTE_ME.md after checking the stage commit).
 - Never delete or move a tracked file by hand; use git rm / git mv inside a stage.
-- Every file on disk inside the repo is pinned by the manifest (run_validation.py checks the on-disk file set, not git's); any stray file in the repo folder fails the gate.
+- Every file on disk inside the repo is pinned by the manifest (run_validation.py checks the on-disk file set, not git's); any stray file in the repo folder fails the gate, and the error names it (CP41).
+- The three legacy manifests are pinned by sha256 in run_validation.py (LEGACY_MANIFEST_SHA, CP41); they never change.
 
 ## Open queue (see ISSUE_LEDGER_CP06.json for detail; closed items and their CPs: CP17_PATCH_NOTES.md)
 - A-S20-05: two legal blockers do not coordinate to block menace.
@@ -93,7 +96,7 @@
 
 ## Next stages
 - CP31d follow-up: integrity review findings in EVIDENCE/CP31d_INTEGRITY_REVIEW.md, one stage each:
-  kernel defect K14 (unconfirmed, needs CR text) (K1, K4, K9, K10, K12 closed in CP37; K2, K5, K8, K11, K13 in CP38; K3, K6, K7 in CP39); gate G2-G4 (G1 closed in CP35);
+  kernel defect K14 (unconfirmed, needs CR text) (K1, K4, K9, K10, K12 closed in CP37; K2, K5, K8, K11, K13 in CP38; K3, K6, K7 in CP39); gate G1-G4 closed (G1 in CP35, G2-G4 in CP41);
   test hygiene T1, T2, T4-T6 (T7 closed in CP35, T3 in CP40);
   PABTRV3_CARD_COVERAGE.json summary (build_registry.py). Some test fixes move expectations: ask first.
 - CP38 follow-up (Stage C): build_model_coverage_s20.py and PABTRV3_MODEL_COVERAGE_S20.json still say Takenuma does not return planeswalker cards (CP38 returns Grist).
