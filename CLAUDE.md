@@ -94,7 +94,7 @@
 ## Next stages
 - CP31d follow-up: integrity review findings in EVIDENCE/CP31d_INTEGRITY_REVIEW.md, one stage each:
   kernel defect K14 (unconfirmed, needs CR text) (K1, K4, K9, K10, K12 closed in CP37; K2, K5, K8, K11, K13 in CP38; K3, K6, K7 in CP39); gate G2-G4 (G1 closed in CP35);
-  test hygiene T1-T6 (T7 closed in CP35);
+  test hygiene T1, T2, T4-T6 (T7 closed in CP35, T3 in CP40);
   PABTRV3_CARD_COVERAGE.json summary (build_registry.py). Some test fixes move expectations: ask first.
 - CP38 follow-up (Stage C): build_model_coverage_s20.py and PABTRV3_MODEL_COVERAGE_S20.json still say Takenuma does not return planeswalker cards (CP38 returns Grist).
 - CP37 follow-up (Stage C): South Wind Avatar's lifegain reads printed toughness (pab_focus_engine_v07.py:321, frozen), so
@@ -110,7 +110,7 @@
   CR 106.4); CR-only parts of other contracts are named in their CONTRACT_ORACLE_REFS_CP28.json notes.
 - CP29 follow-up: False because `subjects: []` (subject card not a string literal in the class, or a stand-in):
   C64 (Hunt for Specimens), C68 (Pathway via PATHWAY), C69 (Nature's Lore / Sakura-Tribe Elder), C79 (Heroic
-  Intervention stand-in), C87 (Grisly Salvage stand-in); C96 is rules-only. User (CP29): accepted False for now.
+  Intervention stand-in); C96 is rules-only. User (CP29): accepted False for now.
   Open: resolve module constants as subject evidence (C68), decide on method-driven subjects (C64, C69).
 - CP31c follow-up: compiler signatures with no covering contract (see EVIDENCE/CP31c_COMPILER_RETIREMENT.md) become new contract candidates.
 - Then the ledger, in order: auditor constant-resolution fix,

@@ -1,7 +1,7 @@
 # C41–C99 contract execution status (current table below; the original title read "C41–C94 consolidated execution status (54/54) — 2026-10-18")
 
 ## Current status (generated at CP31d from VALIDATION_RESULTS.json)
-59 contracts: 2 BLOCKED_UNSUPPORTED, 29 EXECUTED, 21 EXECUTED_WITH_SUBSTITUTION, 7 PARTIAL_EXECUTED. VALIDATION_RESULTS.json stays the live source; everything after this section is the historical record of its stage (counts, rows, blocked-mechanics list and expected-failure columns there are as of that stage, not current).
+59 contracts: 2 BLOCKED_UNSUPPORTED, 30 EXECUTED, 20 EXECUTED_WITH_SUBSTITUTION, 7 PARTIAL_EXECUTED (CP40: C87). VALIDATION_RESULTS.json stays the live source; everything after this section is the historical record of its stage (counts, rows, blocked-mechanics list and expected-failure columns there are as of that stage, not current).
 
 | Contract | Status | Tests run | Tests passed | Expected failures |
 |---|---|---|---|---|
@@ -51,7 +51,7 @@
 | C84 | PARTIAL_EXECUTED | 2 | 2 | 0 |
 | C85 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
 | C86 | EXECUTED | 2 | 2 | 0 |
-| C87 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |
+| C87 | EXECUTED | 2 | 2 | 0 |
 | C88 | EXECUTED | 2 | 2 | 0 |
 | C89 | EXECUTED | 2 | 2 | 0 |
 | C90 | EXECUTED_WITH_SUBSTITUTION | 2 | 2 | 0 |

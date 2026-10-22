@@ -224,7 +224,7 @@
     ], "note": "", "subjects": ["Rise of the Witch-king"], "subject_basis": "test_pzg_if_you_sacrificed_return_another_permanent_card; Deathgreeter/Village Rites are fixture cards"},
     "C87": {"refs": [
       {"card": "Grisly Salvage", "fragment": "Reveal the top five cards of your library. You may put a creature or land card from among them into your hand. Put the rest into your graveyard."}
-    ], "note": "The resolution is composed from physical-zone primitives in the fixture (SUBSTITUTIONS).", "subjects": [], "subject_basis": "Grisly Salvage is a stand-in composed in the fixture (SUBSTITUTIONS), no literal in the class"},
+    ], "note": "CP40 (T3): the tests cast the kernel's Grisly Salvage (S15, PhysicalZoneGame).", "subjects": ["Grisly Salvage"], "subject_basis": "CP40: Grisly Salvage is cast from the physical hand in both tests (string literal in the class)"},
     "C88": {"refs": [
       {"card": "Shigeki, Jukai Visionary", "fragment": "{1}{G}, {T}, Return Shigeki to its owner's hand: Reveal the top four cards of your library. You may put a land card from among them onto the battlefield tapped. Put the rest into your graveyard."}
     ], "note": "", "subjects": ["Shigeki, Jukai Visionary"], "subject_basis": "test_pzg_activation_reveal_four_land_tapped_rest_to_graveyard; the other names stack the library"},

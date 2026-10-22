@@ -887,13 +887,11 @@
       ],
       "oracle_cr_authenticated": false,
       "oracle_ref_errors": [],
-      "oracle_referenced": false,
+      "oracle_referenced": true,
       "oracle_refs_checked": 1,
       "oracle_subjects_missing": [],
-      "status": "EXECUTED_WITH_SUBSTITUTION",
-      "substitutions": [
-        "Grisly Salvage: modeled in S15 on PhysicalZoneGame; this test keeps the stand-in: its resolution is composed from physical-zone primitives in the fixture (top five by library order, chosen creature/land to hand, rest to graveyard, no shuffle)"
-      ],
+      "status": "EXECUTED",
+      "substitutions": [],
       "tests_passed": 2,
       "tests_run": 2,
       "unexpected_successes": 0
@@ -1121,7 +1119,7 @@
       "unexpected_successes": 0
     }
   },
-  "contracts_oracle_referenced": 53,
+  "contracts_oracle_referenced": 54,
   "errors": 0,
   "event_tokens_mirrored_with_distinct_physical_uids_in_v08": true,
   "existing_v05_event_kernel_modified": false,
